@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Builds the showcase: snapshots each team's repo into a folder named after the
-# team, removes oversized files and anything gitleaks flags, and regenerates
-# README.md from the public Supabase views.
+# Builds the showcase: snapshots each team's repo into a folder named after its
+# project (e.g. neri-cash), removes oversized files and anything gitleaks flags,
+# and regenerates README.md from the public Supabase views.
 #
-#   scripts/build.sh               # every team
-#   scripts/build.sh "Team Name"   # just that team
+#   scripts/build.sh                     # every team
+#   scripts/build.sh neri-cash           # just that project (folder or team name)
 #
 # Needs git, gh, jq, curl (and Homebrew, if gitleaks is not installed).
 # ENV_FILE must define NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.
@@ -16,6 +16,9 @@ ENV_FILE=${ENV_FILE:-/Users/ab/Developer/claudeseattle-hack/.env.local}
 GITLEAKS_REPORT=${GITLEAKS_REPORT:-/tmp/gitleaks.json}
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 STATE="$ROOT/scripts/snapshots.json"
+# Folder names come from the project title (text before any ":" or " - ", slugified).
+# Override here when that is too long, keyed by team name.
+FOLDER_OVERRIDES='{"Datamaps for small business": "datamaps"}'
 
 for cmd in git gh jq curl; do
   command -v "$cmd" >/dev/null || { echo "missing: $cmd" >&2; exit 1; }
@@ -43,6 +46,17 @@ query() {
 query 'public_judge_entries?select=team_name,title,tagline,video_url,repo_url' > "$WORK/entries.json"
 query 'public_judge_results?select=team_name,place' > "$WORK/results.json"
 
+jq --argjson ov "$FOLDER_OVERRIDES" '
+  def slug: split(":")[0] | split(" - ")[0] | ascii_downcase
+            | gsub("[^a-z0-9.]+"; "-") | gsub("^[-.]+|[-.]+$"; "");
+  map(.folder = ($ov[.team_name] // ((.title // .team_name) | slug)))
+' "$WORK/entries.json" > "$WORK/e.json" && mv "$WORK/e.json" "$WORK/entries.json"
+
+bad=$(jq -r 'map(select(.folder | test("^[a-z0-9][a-z0-9.-]*$") | not) | .team_name)
+             + (group_by(.folder) | map(select(length > 1)) | flatten | map(.team_name))
+             + map(select(.folder == "scripts") | .team_name) | unique | .[]' "$WORK/entries.json")
+[ -z "$bad" ] || { echo "fix these folder names in FOLDER_OVERRIDES (invalid or duplicate):" >&2; echo "$bad" >&2; exit 1; }
+
 [ -f "$STATE" ] || echo '{}' > "$STATE"
 
 set_state() { # team json
@@ -60,13 +74,13 @@ parse_repo() {
   printf '%s/%s\n' "$owner" "${repo%.git}"
 }
 
-snapshot() { # team repo_url
-  local team=$1 url=$2 slug clone dest sha date license large
+snapshot() { # team repo_url folder
+  local team=$1 url=$2 folder=$3 slug clone dest old sha date license large
   slug=$(parse_repo "$url")
   clone="$WORK/clone"
-  dest="$ROOT/$team"
+  dest="$ROOT/$folder"
   rm -rf "$clone"
-  echo "==> $team ($slug)"
+  echo "==> $team -> $folder/ ($slug)"
 
   # No credential helper: only repos anyone can read get copied.
   if ! GIT_TERMINAL_PROMPT=0 git -c credential.helper= clone --quiet --depth 1 \
@@ -76,13 +90,20 @@ snapshot() { # team repo_url
       echo "    keeping the previous snapshot" >&2
     else
       rm -rf "$dest"
-      set_state "$team" "$(jq -n --arg slug "$slug" '{slug: $slug, status: "failed"}')"
+      set_state "$team" "$(jq -n --arg slug "$slug" --arg folder "$folder" '{slug: $slug, folder: $folder, status: "failed"}')"
     fi
     return 0
   fi
 
   sha=$(git -C "$clone" rev-parse HEAD)
   date=$(git -C "$clone" log -1 --format=%cs)
+
+  # Drop the folder from an earlier build if the name changed (older builds used the team name).
+  old=$(jq -r --arg t "$team" '.[$t].folder // $t' "$STATE")
+  case "$old" in
+    "$folder" | "" | . | .. | scripts | */*) ;;
+    *) [ ! -d "$ROOT/$old" ] || { echo "    removing old folder: $old/" >&2; rm -rf "${ROOT:?}/$old"; } ;;
+  esac
   rm -rf "$dest"
   mkdir -p "$dest"
   git -C "$clone" archive HEAD | tar -x -C "$dest"
@@ -96,23 +117,23 @@ snapshot() { # team repo_url
     done <<< "$large"
   fi
 
-  set_state "$team" "$(jq -n --arg slug "$slug" --arg sha "$sha" --arg date "$date" \
+  set_state "$team" "$(jq -n --arg slug "$slug" --arg folder "$folder" --arg sha "$sha" --arg date "$date" \
     --arg license "$license" --arg large "$large" \
-    '{slug: $slug, status: "ok", sha: $sha, date: $date, license: $license,
+    '{slug: $slug, folder: $folder, status: "ok", sha: $sha, date: $date, license: $license,
       large_removed: ($large | split("\n") | map(select(. != ""))), secrets_removed: []}')"
 }
 
 if [ $# -gt 0 ]; then
-  jq -e --arg t "$1" 'any(.[]; .team_name == $t)' "$WORK/entries.json" >/dev/null ||
-    { echo "no entry for team: $1" >&2; exit 1; }
-  jq --arg t "$1" 'map(select(.team_name == $t))' "$WORK/entries.json" > "$WORK/selected.json"
+  jq -e --arg t "$1" 'any(.[]; .team_name == $t or .folder == $t)' "$WORK/entries.json" >/dev/null ||
+    { echo "no entry for project or team: $1" >&2; exit 1; }
+  jq --arg t "$1" 'map(select(.team_name == $t or .folder == $t))' "$WORK/entries.json" > "$WORK/selected.json"
 else
   cp "$WORK/entries.json" "$WORK/selected.json"
 fi
 
-while IFS=$'\t' read -r team url <&3; do
-  snapshot "$team" "$url"
-done 3< <(jq -r '.[] | [.team_name, .repo_url] | @tsv' "$WORK/selected.json")
+while IFS=$'\t' read -r team url folder <&3; do
+  snapshot "$team" "$url" "$folder"
+done 3< <(jq -r '.[] | [.team_name, .repo_url, .folder] | @tsv' "$WORK/selected.json")
 
 # --- Secret scan ----------------------------------------------------------------
 
@@ -123,8 +144,9 @@ rm -f "$GITLEAKS_REPORT"
 
 jq -r '.[] | [(.File | sub("^\\./"; "")), .RuleID] | @tsv' "$GITLEAKS_REPORT" | sort -u > "$WORK/leaks.tsv"
 while IFS=$'\t' read -r file rule; do
-  team=${file%%/*}
-  if [ "$team" = "$file" ] || ! jq -e --arg t "$team" '.[$t].status == "ok"' "$STATE" >/dev/null; then
+  folder=${file%%/*}
+  team=$(jq -r --arg f "$folder" 'to_entries[] | select(.value.folder == $f and .value.status == "ok") | .key' "$STATE")
+  if [ "$folder" = "$file" ] || [ -z "$team" ]; then
     echo "gitleaks flagged a showcase file, fix it by hand: $file ($rule)" >&2
     exit 1
   fi
@@ -162,7 +184,7 @@ rows() { # ok|missing|removed
                  + (.secrets_removed | map("`\(.file)` (flagged by gitleaks: \(.rule))"));
     ($results[0] | map({(.team_name): .place}) | add // {}) as $places
     | map(. + {place: $places[.team_name], snap: $state[0][.team_name], note: $notes[0][.team_name]})
-    | sort_by([(.place // 99), (.team_name | ascii_downcase)])
+    | sort_by([(.place // 99), .folder])
     | if $want == "ok" then
         map(select(.snap.status == "ok")) | .[]
         | .snap as $s
@@ -171,14 +193,14 @@ rows() { # ok|missing|removed
            elif ($r | length) <= 3 then $r | map("<br>Removed " + .) | join("")
            else "<br>Removed \($r | length) files, see [Removed files](#removed-files)" end) as $removed
         | (if (.repo_url | test("/tree/")) then .repo_url else "https://github.com/\($s.slug)" end) as $href
-        | "| [\(.team_name | cell)](\(.team_name | @uri)/) | \(.title | cell) | \(.tagline | cell) | \(.place | award) "
+        | "| [\(.title // .team_name | cell)](\(.folder)/) | \(.team_name | cell) | \(.tagline | cell) | \(.place | award) "
           + "| [\($s.slug)](\($href))\(if .note then "<br>" + .note else "" end) "
           + "| \(if .video_url then "[Watch](\(.video_url))" else "" end) "
           + "| \(if $s.license == "NOASSERTION" then "Other" else $s.license end) "
           + "| [`\($s.sha[0:7])`](https://github.com/\($s.slug)/tree/\($s.sha)) \($s.date)\($removed) |"
       elif $want == "removed" then
         map(select(.snap.status == "ok" and (.snap | removed | length) > 0)) | .[]
-        | "\n**\(.team_name)**\n", (.snap | removed | map("- " + .) | .[])
+        | "\n**\(.folder)/** (\(.team_name))\n", (.snap | removed | map("- " + .) | .[])
       else
         map(select(.snap.status != "ok")) | .[]
         | "- **\(.team_name)**: \(.title // "" | cell) ([\(.repo_url)](\(.repo_url)))"
@@ -192,9 +214,9 @@ rows() { # ok|missing|removed
 
 Projects built at the [Claude Impact Lab Hackathon](https://hack.claudeseattle.org) in Seattle on October 25, 2026. The theme: AI tools, workflows and playbooks that small businesses can adopt.
 
-Each folder below is one team's project.
+Each folder below is one team's project, named after the project.
 
-| Team | Project | Tagline | Award | Original repo | Demo video | License | Snapshot |
+| Project | Team | Tagline | Award | Original repo | Demo video | License | Snapshot |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 EOF
   rows ok
@@ -216,13 +238,13 @@ EOF
 
 ## Use a project
 
-Copy one project (the folder name is URL-encoded):
+Copy one project by its folder name:
 
 \`\`\`bash
-npx degit $OWNER/$REPO/<Team%20Name> my-copy
+npx degit $OWNER/$REPO/<folder> my-copy
 \`\`\`
 
-For example, \`npx degit $OWNER/$REPO/RingAround my-copy\`.
+For example, \`npx degit $OWNER/$REPO/neri-cash my-copy\`.
 
 Or get everything:
 
@@ -242,7 +264,7 @@ This repository's own files (this README and \`scripts/\`) are under the [MIT Li
 
 ## Rebuilding
 
-\`scripts/build.sh\` rebuilds every project; \`scripts/build.sh "Team Name"\` rebuilds one.
+\`scripts/build.sh\` rebuilds every project; \`scripts/build.sh <folder>\` rebuilds one.
 EOF
 } > "$ROOT/README.md"
 
