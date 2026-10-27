@@ -1,0 +1,261 @@
+review_id,date,rating,source,review_text
+r001,2025-11-01,2,Yelp,"I love this cafe but the order-ahead experience needs a real fix. As far as I can tell the 'ready' notification fires when they print the ticket, not when the drink is actually done. Learned that the hard way."
+r002,2025-11-01,2,In-store survey,"too loud, hard to talk"
+r003,2025-11-02,3,Email,"Just a heads up, the lock on the restroom door doesn't fully latch. Someone walked in on me today. Pretty embarrassing for both of us."
+r004,2025-11-02,4,Google,Even with the crazy 8:30 line it's still my favorite spot. They move as fast as they can and the drinks are worth it. Just plan ahead.
+r005,2025-11-04,2,In-store survey,bathroom needs cleaning
+r006,2025-11-05,4,In-store survey,Love the vegan muffin. More vegan options pls
+r007,2025-11-06,2,Google,"Gluten free options are really limited and they sit right next to the regular pastries, same tongs. Not safe for celiacs."
+r008,2025-11-08,5,Email,"Hi Lakeview team, thank you for handling our all-hands breakfast on Thursday (60 people). Coffee carafes arrived hot, the pastry assortment was gorgeous, and your driver had everything set up in about five minutes. We'll be booking again for Q1."
+r009,2025-11-08,5,Google,"Everyone working here is genuinely kind. Not fake-cheerful, actually kind. I've been coming three times a week for over a year and somewhere along the way they made this corner of South Lake Union feel like an actual neighborhood instead of a office park. When my mom was sick last spring Marisol asked about her every single time I came in, and when she got better Priya gave me a free morning bun 'to celebrate'. I don't know how you hire for that but please keep doing it."
+r010,2025-11-09,5,Google,i didnt know a latte could taste like autumn in vermont but here we are. maple latte forever
+r011,2025-11-11,4,Yelp,Ham and gruyere croissant was flaky and salty in the best way. The plain croissant was a touch underbaked in the middle though.
+r012,2025-11-12,2,Email,"Hello, we placed a catering order for 8:30am delivery to our office on Terry Ave and it arrived at 9:20, after our meeting had already started. The food was good but the timing put us in a tough spot. Please advise how we can avoid this next time."
+r013,2025-11-13,2,In-store survey,Too expensive now
+r014,2025-11-16,4,Yelp,Maple latte is great but a little sweet. Ask for half syrup and it's perfect.
+r015,2025-11-17,4,Google,"Nice bright espresso, almost fruity. If you like dark roast you won't love it, but I do."
+r016,2025-11-18,5,Google,"The maple latte is back and I'm unreasonably happy about it. Real maple syrup, not that artificial pancake stuff. Tastes like a cozy sweater."
+r017,2025-11-20,3,Email,"Hi, I'm a regular who works from your cafe in the afternoons. The music volume has crept up over the past month or so. Could it come down a notch? I'd still come either way, just a suggestion."
+r018,2025-11-21,2,Yelp,"Morning rush is chaos. One person on register, one on bar, and the line snakes past the pastry case so you can't even see what's in it. Someone needs to rethink the flow."
+r019,2025-11-21,5,Email,"Hello, I picked up a dozen morning buns for my daughter's birthday brunch last weekend and everyone lost their minds. My mother-in-law asked for the recipe, which is the highest compliment she gives. Thank you to whoever bakes these at 4am!"
+r020,2025-11-23,5,Google,"Every shot I've had here has been pulled with care. You can watch them weigh the output on a little scale, which is always a good sign."
+r021,2025-11-27,5,Yelp,"I've been chasing the perfect morning bun since my favorite bakery in SF closed and this is it. Crunchy sugar edges, soft orange-scented middle. I bought four and froze two. They reheat great at 350 for about 5 minutes, for anyone wondering."
+r022,2025-11-27,3,Yelp,Coffee is good but the afternoon playlist goes full club mode. Bass thumping at 2pm while people are trying to work is a choice.
+r023,2025-11-27,2,Google,Third time in a row my iced latte has been mostly ice. The coffee itself tastes fine when you can find it.
+r024,2025-11-29,4,Google,"Friendly crew, good vibes, decent coffee. The tall guy with glasses (Jonah?) gives great book recommendations."
+r025,2025-11-30,4,Yelp,Love the people here. Priya always asks about my grad program and remembers what I told her the week before. It's the small things.
+r026,2025-11-30,3,Yelp,"Catering quality is great, but they want at least 48 hours notice and they're strict about it. Makes it hard for short-notice team meetings."
+r027,2025-12-02,2,Google,"Busiest window of the day and they're restocking the pastry case at the same time. Do it at 7 or 9:30, not while 30 people are waiting."
+r028,2025-12-03,4,Email,"Hello! We'd like to set up a standing weekly order for Monday mornings (2 coffee boxes, 1 decaf, 18 assorted pastries). Our admin who used to handle this left, so I'm not sure how it was set up before. Could someone get in touch? We've loved the service."
+r029,2025-12-07,1,Yelp,"Ordered a double expresso and got something that tasted like it had been sitting under the machine for five minutes. Asked for a remake and the guy looked annoyed. Not coming back for espresso, maybe for tea."
+r030,2025-12-07,3,In-store survey,app wont let me log in
+r031,2025-12-09,3,Google,"Tried the peppermint mocha, it's fine. Not as special as the maple latte they had last month."
+r032,2025-12-09,4,Yelp,"I switched from my office's free coffee to paying for this every day, which says something. The drip rotates and I've liked every one so far, though the dark roast they do on Fridays is a bit much for me."
+r033,2025-12-09,1,Yelp,"Asked if the 'vegan' cookie had butter in it. Barista wasn't sure, checked, and yep, it did. It was labeled vegan. That's a pretty big mistake for anyone with a dairy allergy."
+r034,2025-12-11,4,Google,"Took a bunch of video calls from the back corner booth and nobody complained, it's far enough from the espresso machine. Wifi held up fine."
+r035,2025-12-11,1,Email,"Hi, I've been a regular for two years and I need to say something. The weekday morning line has become unworkable. Today I waited 18 minutes, watched three people give up and leave, and the barista told me they were down a person 'again'. This isn't a one-off, it's been like this most mornings since the summer. I really don't want to switch to the chain across the street, I like you guys, but I'm getting close. Please staff up for 8 to 9am."
+r036,2025-12-11,2,Email,Feedback: the line between 8 and 9 has gotten so long it now blocks the front door. People coming in can't get past to the pickup counter. Maybe rope off a path or move the line along the window?
+r037,2025-12-12,5,Email,Just a note to the bakery team: the pumpkin morning bun you did around Thanksgiving was incredible. Please bring it back next year!!
+r038,2025-12-13,1,Google,Found grounds at the bottom of my pour over. Like a quarter inch. Gross
+r039,2025-12-15,1,Yelp,"Bathroom has been out of order for over a week with a handwritten sign on the door. For a cafe full of people drinking coffee for hours, that's a problem."
+r040,2025-12-16,3,Google,"Single restroom for the whole cafe means there's often a wait, and the keypad lock is finicky. Took me four tries with the right code."
+r041,2025-12-20,1,In-store survey,No oat milk!! again!!
+r042,2025-12-22,3,Yelp,Espresso is fine but it's not quite the third-wave experience the decor suggests. Feels like they buy good beans and then rush the pulls when it's busy.
+r043,2025-12-29,1,Google,"Downloaded the loyalty app at the counter like they asked, took 5 minutes to set up while everyone waited, and then it wouldn't even scan. What's the point."
+r044,2025-12-30,2,Google,"Catering coffee boxes were lukewarm by the time they got to us, and we're only like three blocks away. Pastries were great though."
+r045,2025-12-31,5,Yelp,As a vegan I usually just get black coffee at cafes and stare sadly at the pastry case. Here I got a vegan cinnamon roll on a Saturday that genuinely competed with the dairy stuff. Please keep it on the menu.
+r046,2025-12-31,3,Email,"Hi, our last catering order had no labels on the pastries, and a few folks with nut allergies couldn't tell what was safe to eat. Could you add labels going forward?"
+r047,2026-01-01,3,Google,"Croissants are excellent but the morning bun is too sweet for me. Lots of people love it, I'm just not much of a sugar person."
+r048,2026-01-01,2,Google,they seem totally overwhelmed every weekday morning. the staff are nice about it but nice doesn't get me to my 9am
+r049,2026-01-01,2,Google,"Names are always wrong on mobile orders. I'm Siobhan, I get it, but the app literally has my name spelled correctly. Just copy it!"
+r050,2026-01-01,2,Yelp,They took the maple latte off the menu after like 6 weeks. Why?? Bring it back.
+r051,2026-01-07,5,Google,So happy they stock a barista-style oat milk and not the watery kind. My oat cortado was perfection.
+r052,2026-01-08,3,Yelp,Baked goods are good but they run out by mid-morning even on weekdays. The case is half empty by 10.
+r053,2026-01-09,4,Yelp,"Macchiato done the traditional way, which I appreciate: a tiny cup with a dollop of foam, not a caramel milkshake. Beans are roasted locally I think? Tastes fresh."
+r054,2026-01-10,2,Google,"The bathroom code thing is annoying. I'm a paying customer, why do I need to ask a barista for a 4-digit number every time"
+r055,2026-01-13,3,In-store survey,Latte was ok. A bit too milky for my taste
+r056,2026-01-14,2,Google,I really want to support local but $7 lattes are pushing it. Might start making coffee at home again.
+r057,2026-01-18,2,Yelp,"Someone keeps cranking the music on weekends. I asked once and they turned it down, and 20 minutes later it was right back up."
+r058,2026-01-19,3,Google,"Gets really noisy at lunch, it's basically a cafeteria for the nearby offices. Not the place for a quiet chat at noon."
+r059,2026-01-21,5,In-store survey,Priya is amazing!!!
+r060,2026-01-21,2,Yelp,"The restroom code is printed on the receipt, but it changed and nobody updated the receipt. Had to get back in line to ask. Not ideal when you really need to go."
+r061,2026-01-23,5,Yelp,Marisol has been here as long as I've been coming (4 years?) and honestly she's the reason I keep coming. She knows everyone. If she ever leaves I'm following her.
+r062,2026-01-29,1,In-store survey,20 min wait. Not ok.
+r063,2026-02-01,1,Google,"Had 9 out of 10 punches on the loyalty app and it reset to zero after an update. When I asked, they said they 'can't see historical punches'. So that's just gone I guess."
+r064,2026-02-02,2,Yelp,"I get it, everybody wants coffee at 8:30. But other busy cafes manage it with a separate drip line or a second person on bar. Here it's one barista doing 40 lattes in a row while the rest of us stare at our phones."
+r065,2026-02-03,3,Yelp,"Prices are high, but from what I hear the staff are paid fairly, and I'd rather pay that than go somewhere that treats people badly."
+r066,2026-02-07,2,Google,Wifi is 'Lakeview_Guest' and it's slower than my phone hotspot. Gave up and tethered.
+r067,2026-02-07,2,Google,No oat milk at 9am on a Wednesday. How do you run out before lunch
+r068,2026-02-07,4,Google,Good spot to work for a couple hours. Wifi is fast and there's a decent number of outlets along the back wall. Gets crowded after 11.
+r069,2026-02-09,5,In-store survey,Pour-over was excellent. Ask for the Ethiopian if they have it.
+r070,2026-02-10,4,In-store survey,Staff always friendly. Dev is great
+r071,2026-02-10,4,Google,"Yes it's pricey, but it's SLU, rent must be insane. I'd rather pay $6 for great coffee from an independent shop than $5 for chain swill."
+r072,2026-02-10,4,Google,The oat milk lattes here are creamy and they steam it properly. Wish there were more savory vegan options though.
+r073,2026-02-12,2,Yelp,The mobile order shelf is where drinks go to die. Mine was lukewarm when I got there even though I arrived 'on time'. Then the next week it wasn't made at all. Pick one.
+r074,2026-02-13,2,Email,"Hello, my loyalty account is showing 0 points, but I had a free drink banked as of last week. I have screenshots. Can you restore it? The account is under this email address."
+r075,2026-02-14,2,Yelp,"Mobile ordering is a lie here. 'Ready in 5 min' means ready in 20. Just order in person, it's faster."
+r076,2026-02-14,5,Yelp,"Came in soaking wet from a downpour and Jonah handed me a stack of napkins and said 'Seattle, huh' before I'd even ordered. Small thing, made me laugh."
+r077,2026-02-15,5,Yelp,"Shoutout to Dev, who calmly handled a guy yelling about his oat milk and then turned around and made my drink with a smile. Give that man a raise."
+r078,2026-02-17,1,Google,A $7 latte and they still flip the screen around for a tip. With 25% as the default option?? Come on.
+r079,2026-02-20,2,Google,Showed up at 10:15 on a Saturday and every morning bun was gone. Every single one. If they're your signature item maybe bake more??
+r080,2026-02-22,3,In-store survey,"app said ready, wasnt. otherwise fine"
+r081,2026-02-23,4,Google,"Booked their pop-up espresso bar for a launch event in our lobby on Westlake. Two baristas, real espresso, a long line of happy engineers. Pricey but worth it."
+r082,2026-02-23,3,Google,"Lovely cafe, terrible at handling volume. Weekday 8-9 is probably when they make most of their money and it's when they seem least prepared for it."
+r083,2026-02-24,5,Google,my kids call it 'the swirly bread place'. it's the morning buns. we come every sunday
+r084,2026-02-24,2,Google,my americano tasted burnt today. like actually ashy. maybe a bad batch?? usually its fine
+r085,2026-02-24,5,Email,"I wanted to write in to compliment Marisol. My elderly father came in last Tuesday and was confused by the menu and the card reader, and she patiently walked him through it, then carried his coffee to his table. He hasn't stopped talking about her. Thank you."
+r086,2026-02-24,1,Google,"Ordered in the app at 7:50, got the 'ready!' ping at 7:56, arrived at 7:58. Waited until 8:14. This happens every week."
+r087,2026-02-25,4,Google,"Pain au chocolat had two proper batons of dark chocolate, not a sad smear. Lamination is excellent."
+r088,2026-02-26,5,Google,the bakers here deserve a raise
+r089,2026-03-03,2,Google,Oat milk upcharge is $1 now? Plus the base drink went up? My $7 latte is an $8 latte.
+r090,2026-03-04,5,Google,"the staff here are just good humans. come for the coffee, stay because they're nice to you"
+r091,2026-03-06,3,Google,Plenty of seating but only like four outlets in the whole place and they're always taken by 9am.
+r092,2026-03-06,3,Google,Mobile order was right this time! Name even spelled correct. Progress lol. Still took 10 min past the ready time though.
+r093,2026-03-06,5,Google,"dev and priya on a saturday morning is the dream team. fast, funny, and they actually talk to you"
+r094,2026-03-11,5,Yelp,Earn 300% returns in just 7 days with our new crypto staking program. Thousands of happy investors already. Click the link in my profile and use code LAKEVIEW for a bonus. Not financial advice.
+r095,2026-03-12,5,Google,"The morning bun. Oh my god the morning bun. Orange zest, cinnamon sugar, crackly outside, buttery layers inside. I have planned my commute around it."
+r096,2026-03-12,1,Google,"Bathroom was disgusting. No soap, no paper towels, and the floor was wet. At 2pm on a weekday."
+r097,2026-03-13,5,Yelp,"The morning bun. Oh my god, the morning bun. Orange zest, cinnamon sugar, crackly outside, buttery layers inside. I've planned my commute around it."
+r098,2026-03-16,2,Google,Wifi password changes constantly and it's on a tiny sign behind the register. Had to ask three times.
+r099,2026-03-18,5,In-store survey,Great place to study. Quiet in the afternoon
+r100,2026-03-19,3,In-store survey,out of almond milk
+r101,2026-03-20,4,In-store survey,Loved the croissant. Scone was dry
+r102,2026-03-20,3,In-store survey,would come more but mornings are too slow
+r103,2026-03-23,2,In-store survey,Line too long in the morning. Need more staff
+r104,2026-03-25,2,Yelp,Can't log into the rewards app. The password reset email never arrives. It's been like this for two weeks.
+r105,2026-03-28,3,Google,"Mobile order worked great the first few times. Lately the timing is way off, it says ready when they haven't even started it."
+r106,2026-03-29,2,In-store survey,Chocolate croissant was burned on the bottom
+r107,2026-03-31,2,Email,"Hi, I use a walker and the tables inside are packed so tightly that I couldn't get to the counter without people moving their chairs. It would help a lot to keep one clear path."
+r108,2026-04-01,3,Yelp,"No parking, but there's a bike rack out front, which is nice. It's always full by 8am though."
+r109,2026-04-02,3,Yelp,"If you're going on a weekday morning, budget time. The line moves, just slowly, and the baristas don't cut corners on drinks, which is part of why it's slow. Worth it on a weekend, painful on a Wednesday."
+r110,2026-04-05,1,Google,$9 for a seasonal drink. NINE. Dollars.
+r111,2026-04-11,3,In-store survey,"wifi ok, not enough plugs"
+r112,2026-04-11,2,In-store survey,prices keep going up :(
+r113,2026-04-12,1,Google,Laptop campers take up every single table from 8am to 5pm. Tried to sit down with my kid and a croissant and there was literally nowhere. Please make a few tables no-laptop.
+r114,2026-04-14,1,In-store survey,rewards app lost all my points
+r115,2026-04-15,4,Yelp,The cheddar scallion scone is a sleeper hit. Pair it with a drip coffee for a cheap breakfast that actually fills you up.
+r116,2026-04-16,5,Google,"I don't even drink coffee, I come here for the pastry case. The cardamom knot they do on weekends is something else."
+r117,2026-04-19,3,Google,"Love the place, wallet doesn't. Wish there was a cheaper basic option for people who just want a drip and go."
+r118,2026-04-22,5,Google,"The spring lavender honey latte is subtle and floral without tasting like soap, which is a hard line to walk. Very well done."
+r119,2026-04-23,5,Yelp,"Came in for a quick shot before a meeting and ended up buying a bag of beans to take home. The barista let me taste two different espressos side by side and explained why one was brighter. Didn't feel pretentious at all, just nerdy in a fun way."
+r120,2026-04-25,5,Google,Priya made me a latte with a little heart and wrote 'you got this' on my cup on a day I really needed it. I didn't even know she'd noticed I was having a rough morning.
+r121,2026-04-30,2,Google,The rush hour line is a real problem. I like this place a lot but I've started using the office kitchen instead on days I have early meetings.
+r122,2026-05-03,2,Yelp,"Espresso tasted sour, like underextracted. I mentioned it and was told 'that's how light roasts taste.' Ok, but this was not that."
+r123,2026-05-05,4,Google,"Got a twice-baked almond croissant on a whim and it was dense in a good way, basically frangipane heaven. Very messy to eat at a desk though."
+r124,2026-05-06,4,Email,"Hi, love the patio and so does my beagle. Small request: could you add a hook or two to tie leashes to? He keeps wrapping himself around the chair legs."
+r125,2026-05-06,4,Google,"Cold brew is smooth and strong, not watery like a lot of places. Wish they had a bigger size."
+r126,2026-05-07,2,In-store survey,Mobile order missing the extra shot I paid for
+r127,2026-05-08,1,Email,"Hello, I placed a mobile order at 8:05 this morning (order #4471) for a large latte and a morning bun. The app said ready at 8:12. At 8:30 it still wasn't made and when I asked, the staff had no record of it at all. My card was charged. Can I get a refund please?"
+r128,2026-05-08,2,Google,"Points don't show up for orders made at the register, only for mobile orders. Nobody told me that. Lost like 3 months of points."
+r129,2026-05-08,1,Yelp,"The 8am line is out the door every weekday and they have exactly two people working. I've been late to standup three times this month. Love the coffee, hate the wait."
+r130,2026-05-11,4,Google,"Friendly, fast, knows the regulars. Priya and Marisol especially."
+r131,2026-05-11,3,Yelp,"They added a 90 minute laptop limit on weekends. I get why, but there's no signage anywhere and it was awkward getting asked to wrap up mid-task."
+r132,2026-05-14,1,Email,Our order for 40 people was short by 12 pastries and one of the coffee boxes. We called and were told someone would bring the rest over. No one came. We were charged for the full order. Very disappointing.
+r133,2026-05-14,4,Yelp,"The house espresso is a medium roast with this chocolatey cherry thing going on. Not my usual style but it grew on me fast. Pulls are consistent, which is more than I can say for the chain across the street."
+r134,2026-05-14,3,In-store survey,"Slow at 8:15, otherwise good"
+r135,2026-05-14,3,In-store survey,"Cafe clean, restroom not so much"
+r136,2026-05-18,5,Yelp,"Morning bun + cortado is the correct order. Don't overthink it. The bun is sticky, a little salty, and still warm if you get there before 8."
+r137,2026-05-18,3,Google,"Lots of people working on laptops, which is fine, but the tables are tiny. You can fit a laptop OR a plate, not both."
+r138,2026-05-19,3,Google,The coffee is good but not 'line out the door' good imo. Fine for the neighborhood.
+r139,2026-05-19,2,Yelp,"Weekday mornings are rough. The poor barista (Dev I think?) was working so hard and still couldn't keep up. That's a management problem, not a staff problem."
+r140,2026-05-19,1,Yelp,"Line out the door, people cutting in front to grab their mobile orders, nobody knows where to stand. Total mess at 8:20 this morning."
+r141,2026-05-22,2,Google,"The acoustics in here are brutal. High ceilings, concrete floors, the espresso machine screaming, music on top of all that. I leave with a headache."
+r142,2026-05-27,3,Yelp,Prices went up again in January. Quality is still great but I've gone from daily to twice a week.
+r143,2026-05-28,2,Google,Music was way too loud for a cafe. Couldn't hear my friend across a two-person table.
+r144,2026-05-29,5,Email,"Hi there, just wanted to say the single-origin you had on last week (the Colombian one with the tasting note about panela?) was the best coffee I've had all year. Will you be getting it again? I'd buy a bag or two."
+r145,2026-05-29,4,Yelp,"Studied here for my certification exam three Saturdays in a row. Good wifi, good coffee, and the afternoon crowd is chill."
+r146,2026-05-31,3,Google,"Great coffee, but don't drive here. I circled for 15 minutes and ended up in a garage that cost more than my breakfast."
+r147,2026-06-02,5,Yelp,Finally a cafe in SLU with a gluten-free pastry that doesn't taste like cardboard. The GF orange almond cake is moist and delicious. Celiac approved!
+r148,2026-06-02,2,Google,Mobile orders all get dumped on one tiny shelf with tiny handwritten names. Took me forever to find mine and someone had already moved it to the back.
+r149,2026-06-03,5,Email,Just want to say thank you for accommodating our last-minute order this morning. I called at 7:15 needing coffee for 20 and you had it at our office by 8:00. Lifesaver.
+r150,2026-06-03,5,Yelp,Croissants are legit. They shatter everywhere when you bite in and the inside is all honeycomb. I bring a napkin and a lint roller.
+r151,2026-06-05,4,In-store survey,easy walk from the streetcar stop
+r152,2026-06-05,3,Email,Hi! I work remotely and come in most weekdays. Would you consider adding a few power strips or USB outlets at the communal table? Happy to keep buying coffee all day if I can keep my laptop alive :)
+r153,2026-06-06,5,Google,"Best cortado in South Lake Union, and I've tried basically all of them on my lunch walks. Balanced, not sour, milk steamed properly instead of scalded."
+r154,2026-06-06,5,Google,Ten stars for the staff. They're the reason this place feels different from every other SLU coffee shop full of lanyards.
+r155,2026-06-08,5,Google,"Afogato on a hot day. Vanilla ice cream, double shot poured over it at the table. Perfect afternoon pick me up"
+r156,2026-06-09,3,Google,"Nice that they have oat, almond, and soy. Less nice that they're usually out of at least one by noon."
+r157,2026-06-10,1,Google,They put my name on someone else's oat latte and I drank half of it before I realized. Mine was sitting there going cold with 'Kathy' on it. My name is Keith.
+r158,2026-06-13,2,Google,$7.25 for a 16oz oat latte. I like it here but that's getting hard to justify every day.
+r159,2026-06-13,5,Google,"I watched Marisol de-escalate a pretty tense situation with a customer who was clearly in some kind of crisis. She was calm, kind, and kept everyone safe. Huge respect."
+r160,2026-06-13,5,Yelp,Dr. Alvarez and the hygienist were so gentle with my cleaning. I've always been nervous at the dentist but they explained everything as they went. Front desk got me back in the same week for a filling.
+r161,2026-06-14,4,Google,"Good, strong coffee. Gets me through standup."
+r162,2026-06-16,4,Google,"Solid drip coffee, and refills are cheap if you're staying in. The decaf is surprisingly not terrible."
+r163,2026-06-16,4,Google,"Patio is small but lovely in the summer. Lots of dogs, which I love. Gets a bit chaotic when two big ones disagree."
+r164,2026-06-19,4,In-store survey,Nice people working here. Thanks Dev
+r165,2026-06-22,4,Google,"Croissant was beautiful, a deep golden brown, and the butter flavor was the real thing. Quality wise it's top tier."
+r166,2026-06-22,3,Email,"Small suggestion: could the mobile pickup shelf be moved away from the line? Right now you have to squeeze past the whole queue to reach it, and the app doesn't really tell you where to go when you arrive."
+r167,2026-06-23,2,Yelp,Tried to redeem my reward and the app crashed. Tried again and it said the reward was already used. I did not use it. Staff were nice but couldn't do anything about it.
+r168,2026-06-24,3,Google,Mobile ordering is convenient when it works. Maybe 60% of the time it does.
+r169,2026-06-24,2,Google,Parking is basically impossible. Street parking is all 2-hour pay and always full. Take the streetcar or walk.
+r170,2026-06-26,5,Google,"Their kouign-amann is criminally underrated. Everyone gets the morning bun but try the KA: caramelized sugar crust, chewy edges, unreal."
+r171,2026-06-27,5,Google,"If you work near the Amazon offices and need to bring breakfast to a meeting, this is the move. Easy ordering, everything labeled, and the morning buns make you look like a hero."
+r172,2026-06-30,4,Google,"Almond croissant is huge and very rich, could easily split it with someone. Get it warmed."
+r173,2026-07-01,5,Google,We walk our lab past here every morning and Marisol always has a treat for him. He literally pulls toward the door.
+r174,2026-07-02,3,Email,"Hi, is there any way to get invoices with our company's PO number on them? Our finance team keeps bouncing the receipts from our last three catering orders. Otherwise the food has been great."
+r175,2026-07-02,2,Google,Paid for the deluxe wash and they missed the whole back bumper. Tire shine was streaky too. The guy at the vacuum station was nice but the air dryers barely work.
+r176,2026-07-05,4,Google,"Staff handled a spilled drink (mine, oops) super gracefully. Cleaned it up, remade it, didn't charge me, and didn't make me feel like an idiot either."
+r177,2026-07-06,1,Google,"wrong drink, wrong name, wrong size. mobile order is broken"
+r178,2026-07-06,3,In-store survey,"Coffee is good, mocha too sweet"
+r179,2026-07-11,5,In-store survey,morning buns are the best thing in seattle no contest
+r180,2026-07-14,2,Google,"Out of oat milk. Again. Third time this month. If half your customers order oat, maybe order more oat."
+r181,2026-07-15,2,Yelp,Noticed my usual order went from $5.50 to $6.75 over the last year. That's a big jump. A heads up or some explanation would've been nice.
+r182,2026-07-15,2,In-store survey,Need more outlets!!
+r183,2026-07-17,4,Google,"Price hike stung a bit but honestly it's still cheaper than the hotel lobby cafe down the street, and way better."
+r184,2026-07-21,4,Yelp,The baristas are super friendly and quick to recommend something if you're indecisive. Priya talked me into a honey cinnamon latte and I've ordered it every time since.
+r185,2026-07-21,2,Google,Waited 22 minutes for a drip coffee at 8:30 on a Tuesday. Drip. Coffee. It's literally already made.
+r186,2026-07-22,2,In-store survey,Waited forever 8:45am. Coffee good though
+r187,2026-07-22,2,Google,"App order says 'ready', I show up, barista says 'oh we haven't gotten to that one yet'. Then why tell me it's ready??"
+r188,2026-07-26,5,Email,"Dear Lakeview team, I just want to recognize Dev. My son is autistic and can get loud and overwhelmed in busy places. Dev noticed, came over, and brought him a little cup of steamed milk 'on the house' and chatted with him about trains for a minute. It completely turned our morning around. We will be back many, many times."
+r189,2026-07-28,5,In-store survey,Love bringing my dog here!
+r190,2026-07-30,1,Google,25 minutes. I timed it. 8:10 to 8:35 on a Thursday.
+r191,2026-07-31,2,Yelp,They had my mobile order labeled with the wrong name AND it was sitting next to a drink with my actual name on it that belonged to someone else. Total confusion. We sorted it out eventually but yikes.
+r192,2026-07-31,2,Email,"Hi there, I think my loyalty account got merged with someone else's? I see orders in my history that I didn't place and my points total is way off. Not sure if it's a privacy issue but wanted to let you know."
+r193,2026-07-31,3,In-store survey,Good but pricey
+r194,2026-08-03,3,Google,"Love the cafe, hate the rewards app. It's the only thing I'd change."
+r195,2026-08-05,1,Email,"I've been a customer since you opened and I'm frankly disappointed in the price increases. A small drip coffee is now $3.95. I understand that costs go up, milk, rent, wages, all of it. But this is the third increase in about a year and none of them were announced, the numbers on the board just quietly changed. It feels like the menu is priced for the tech crowd with expense accounts and not for the rest of us who actually live in this neighborhood. I'll probably still come in sometimes, but not every morning like I used to."
+r196,2026-08-06,1,Yelp,Paid almost six bucks for a croissant that was cold and kind of bready? Maybe a bad day but the hype did not match.
+r197,2026-08-09,3,Google,"Patio is dog-friendly, which is great, but there aren't many tables out there and they get grabbed fast."
+r198,2026-08-10,4,Yelp,"My dairy-free friend and I both found stuff we liked. The vegan banana bread is great, honestly as good as the regular one."
+r199,2026-08-11,1,Google,"Stood in line for 15 min, got to the front, and they told me the espresso machine was being 'reset'. Another 10 min. On a Monday. At 8:40. I walked out."
+r200,2026-08-11,5,Yelp,"The summer iced honey cardamom cold brew is ridiculous. Refreshing, a bit spicy, not too sweet. I've had it four days in a row."
+r201,2026-08-13,3,Google,"Great place, but do not come between 8 and 9 unless you've got 20 minutes to burn. Come at 7:30 or after 9:30 and it's lovely."
+r202,2026-08-18,2,Email,"Hi, just wanted to flag that the gluten-free options are always sold out by the time I come in around 10. I have celiac disease and yours is one of the only places nearby where I can get anything. Is there a way to reserve one, or could you make a few more?"
+r203,2026-08-19,2,Yelp,The front step has no ramp and the side entrance is always locked. My friend who uses a wheelchair had to wait outside while I ordered for her. Please fix this.
+r204,2026-08-20,5,Google,"I'm a former barista and I'm picky. These folks dial in their grinder every morning, you can tell. The shots have actual crema and the milk on my cappuccino was silky. Five stars, no notes."
+r205,2026-08-25,4,Google,Dirty chai with a double shot is unreal. The espresso actually cuts through the spice instead of disappearing into it.
+r206,2026-08-26,5,Google,"The Gibraltar here is my daily ritual. Small, strong, and served at a temp you can actually drink right away."
+r207,2026-08-26,4,Google,"Ordered coffee and pastries for a team offsite. Great quality and a fair price for a group. The online catering form is clunky though, I ended up just calling."
+r208,2026-08-26,5,Google,"My unofficial office on WFH days. Big communal table, fast wifi, and no one bothers you if you nurse one coffee for a while (I definately buy a second one though)."
+r209,2026-08-28,5,Google,"Ok I'm going to be that person. I've had croissants in Paris. These are as good as the ones from the little bakery around the corner from where we stayed. Not exaggerating, and I'm not an easy grader."
+r210,2026-08-31,5,Yelp,Sat on the patio with my pup on a sunny Saturday morning. Staff came out with a dog biscuit before I'd even ordered. 10/10.
+r211,2026-09-01,2,Yelp,Every few months the menu board gets a fresh coat of higher numbers. It's become a bit of a running joke at my office.
+r212,2026-09-01,2,In-store survey,"drip coffee was lukewarm, like it had been in the carafe all morning"
+r213,2026-09-02,4,Google,"Good oat latte, and there's a decent vegan breakfast sandwich on weekends. Would love to see it on weekdays too."
+r214,2026-09-05,1,Google,App told me my order was ready. It was not ready. I stood at the pickup counter for 12 minutes watching them make other people's drinks.
+r215,2026-09-06,1,Google,App told me my order was ready. It was NOT ready. I stood at the pickup counter for 12 minutes watching them make other people's drinks!!
+r216,2026-09-07,4,Email,"Quick feedback: the new espresso blend you switched to in March is better than the old one. Less bitter, more caramel. Whoever made that call, good job."
+r217,2026-09-10,1,Yelp,"Placed a mobile order, walked over, and it was already marked as picked up. Someone took it. They wanted me to pay again. No."
+r218,2026-09-11,2,Yelp,"Why is there only one register open at peak hour?? There's a second POS sitting right there, unused."
+r219,2026-09-13,5,Google,"Marisol is the heart of this place. She remembers my order, my dog's name, and that I had a job interview last week (she asked how it went!). Customer service like that is rare."
+r220,2026-09-15,5,Google,"The team here genuinely seems to like each other and it shows. Lots of laughing behind the counter, and that energy spills over onto the customers."
+r221,2026-09-15,4,Yelp,"Lemon poppyseed muffin and a croissant, both great. Croissant is the star, buttery and layered without being greasy."
+r222,2026-09-16,5,Google,"best patio in SLU for dog people. shade in the afternoon, water bowls, and nobody gives you side eye for bringing a 90lb shepherd"
+r223,2026-09-17,5,In-store survey,Cappuccino perfect as always
+r224,2026-09-18,5,Yelp,"Our office uses Lakeview for catering every other Friday now. The morning bun boxes are a hit, and they always remember that we need a few gluten-free items."
+r225,2026-09-19,5,Google,"Dog-friendly patio with water bowls, and they keep a jar of dog treats by the register. My corgi drags me here now."
+r226,2026-09-21,4,Yelp,"Strong, smooth, no burnt aftertaste. My go-to is a 12oz americano with a splash of cream and they don't skimp on the shots."
+r227,2026-09-22,2,Google,restroom smelled bad and the trash was overflowing. otherwise nice cafe
+r228,2026-09-22,2,Yelp,"Ordered ahead to skip the line and ended up waiting longer than the people in line. The mobile queue seems to be lower priority than walk-ups, which kind of defeats the whole point."
+r229,2026-09-24,3,Google,"Great stuff, but a morning bun and a latte is now $12 with tip. That's a lunch budget."
+r230,2026-09-24,4,Email,Hello! Any idea when the maple latte is coming back this year? Asking for myself and about 6 coworkers who ask me daily.
+r231,2026-09-30,4,Yelp,"The window bar seats are great for working, and you get a little sliver of lake view if you lean. Wifi solid. Bring your own charger brick, outlets are scarce."
+r232,2026-10-02,5,In-store survey,Banana bread is so moist!! more please
+r233,2026-10-02,2,Google,"Pickup counter is a free-for-all. Someone grabbed my order, I'm assuming by accident. Staff remade it, which was nice, but that took another 10 min."
+r234,2026-10-02,1,Google,Brought back the paper punch card please. The app ate my free drink twice now.
+r235,2026-10-03,4,Google,"Seasonal menu is always fun. This fall it's a maple latte and a pumpkin chai, both solid, but the maple one wins."
+r236,2026-10-03,5,Google,"I'm new to Seattle and kind of lonely tbh. The staff here learned my name within a week. Marisol even recommended a running group that meets nearby. Small thing, big deal."
+r237,2026-10-05,2,Google,Missed my bus waiting for a latte. Again.
+r238,2026-10-05,1,In-store survey,"Paid in app, they never made it"
+r239,2026-10-09,4,Yelp,The patio heaters are a nice touch on fall mornings. Even in October we sat outside with the dog and a cappuccino.
+r240,2026-10-10,4,Google,"decent wifi, comfy chairs, and the outlet under the bench by the window is the secret good seat"
+r241,2026-10-10,3,Yelp,"Vegan options exist, which is great, but it's basically one muffin and a sad energy ball. The pastry team is clearly talented, let them make a vegan morning bun!"
+r242,2026-10-11,5,Google,Every time I bring a box of morning buns into the office I become the most popular person on the floor for a day. Worth every penny for the clout alone.
+r243,2026-10-11,4,Yelp,Pricey but you get what you pay for. Shots are double by default and the pastries are huge.
+r244,2026-10-11,3,Yelp,The new loyalty app looks nice but it logs me out every single time I open it. Then I have to do the code-by-text thing while the line waits behind me.
+r245,2026-10-12,2,Google,"Pushing a stroller in here is a nightmare. The door is heavy, there's no automatic opener, and the aisle between tables is barely wide enough."
+r246,2026-10-13,3,Yelp,"Coffee is hit or miss depending on who's on bar. Monday my flat white was perfect, Thursday it was basically a latte with sad foam. Would love more consistency."
+r247,2026-10-13,2,Google,"Loyalty app is so buggy. Half the time it won't scan, so the barista punches a paper card instead, and now I have two half-filled systems."
+r248,2026-10-13,5,In-store survey,MAPLE LATTE!!!
+r249,2026-10-13,2,In-store survey,Online order not ready when the app said
+r250,2026-10-14,2,Yelp,The wifi is fine for email but anything heavier crawls. I ran a speed test and got 3 Mbps down. Rough for a cafe that's clearly full of remote workers.
+r251,2026-10-14,2,Yelp,Wifi kept dropping every 20 minutes. Tried to do a video call and got kicked off twice. Not a work spot.
+r252,2026-10-17,3,Yelp,"Most of the staff are lovely, Marisol especially. One newer guy on weekends was pretty curt with me though. Maybe just a bad day."
+r253,2026-10-17,3,Google,Pastries looked amazing in the case but my croissant tasted like yesterday's. Maybe ask what came out of the oven today.
+r254,2026-10-19,3,Google,"Maple latte returned but it tastes different this year? Less maple, more cinnamon. Still good, just not the same."
+r255,2026-10-20,1,Google,"Seriously, hire one more person for the morning shift. You're losing customers. I counted six people leave the line while I waited."
+r256,2026-10-20,5,Google,honestly the espresso here ruined other coffee shops for me. i used to be fine with whatever and now i'm that guy
+r257,2026-10-21,3,Google,Expect a 10-15 minute wait around 8:30 on weekdays. Bring a podcast.
+r258,2026-10-22,5,Yelp,Flat white is textbook. I lived in Melbourne for two years and this is the closest I've found in Seattle.
+r259,2026-10-24,5,Google,"Buy cheap followers and real likes for your business page!! 10,000 followers only $9.99, fast delivery, 100% safe. DM us now for best price, limited time offer!!!"
+r260,2026-10-24,3,Google,"Coffee's great but the morning wait has gotten worse since the new office building opened on Westlake. Used to be 5 min, now it's 15+."

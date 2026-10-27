@@ -1,0 +1,50 @@
+# Adversarial PR review: three critic lenses comment on every PR.
+# Secrets/broken-build findings block; everything else is advisory. Humans merge.
+name: adversarial-review
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --all-groups
+      - run: uv run pytest -q
+
+  critic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            You are the adversarial reviewer for Send Check, a 9-hour hackathon
+            build. Review this PR's diff with three lenses and post findings as
+            a single review comment, grouped by lens, each finding tagged
+            [BLOCKING] or [ADVISORY]:
+
+            1. SABOTEUR — assume at least one significant flaw. Find the
+               failure mode the author missed: edge cases, unhandled errors,
+               contract violations against scorers/base.py.
+            2. SCOPE COP — docs/demo-script.md is the spec. Flag anything in
+               this diff that does not serve the 90-second demo. Cite the
+               cut list in docs/PLAN.md when it applies.
+            3. SECRETS & SAFETY — [BLOCKING] for any key, token, .env content,
+               or un-anonymized corpus data (real names, emails, companies in
+               corpus/samples/). Check the language rule in CLAUDE.md on any
+               copy changes.
+
+            Be terse. Max 10 findings. If the diff is clean, say so in one line.

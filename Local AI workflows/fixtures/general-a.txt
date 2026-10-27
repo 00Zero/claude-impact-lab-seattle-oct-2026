@@ -1,0 +1,15 @@
+FICTIONAL TRANSCRIPT — created for this demo. Not a real session. Fixture general-a v1 (development).
+
+Therapist: How did the sleep log go this week?
+Client: I filled it in five nights out of seven. I'm getting about five hours. I lie there thinking about the project deadline.
+Therapist: What thoughts come up when you're lying there?
+Client: "If this launch fails, it's on me." Over and over.
+Therapist: How strongly do you believe that thought when it shows up, zero to a hundred?
+Client: At two a.m.? Ninety. Right now, maybe fifty.
+Therapist: What's different between two a.m. and now?
+Client: Right now I remember there are eight people on the team and my lead, Jordan, signs off on everything.
+Therapist: That's useful. What would you say to a friend who had that two a.m. thought?
+Client: That one launch doesn't define them. And that they've shipped hard things before.
+Therapist: Could you write that down and keep it by the bed?
+Client: I can try that. I'll also keep doing the sleep log.
+Therapist: Good. Next week let's look at the log together and talk about the wind-down routine.

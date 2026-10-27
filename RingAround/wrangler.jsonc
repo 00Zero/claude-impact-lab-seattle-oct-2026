@@ -1,0 +1,64 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	// Production. `opennextjs-cloudflare deploy` with no --env publishes this
+	// Worker and binds it to ringaround.me. The only named environment is
+	// `preview`, used for per-PR deploys (see .github/workflows/deploy.yml).
+	"name": "ringaround",
+	"main": ".open-next/worker.js",
+	"account_id": "58e819d79d0a3a441f3359b7c4c5b7c1",
+	"compatibility_date": "2026-10-01",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"routes": [{ "pattern": "ringaround.me", "custom_domain": true }],
+	// Keep ringaround.me the only public origin, so Google OAuth redirects and
+	// session cookies always line up with AUTH_URL.
+	"workers_dev": false,
+	"preview_urls": false,
+	"vars": {
+		"AUTH_URL": "https://ringaround.me"
+	},
+	"r2_buckets": [
+		// OpenNext incremental cache. See https://opennext.js.org/cloudflare/caching
+		{ "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "ringaround-opennext-cache" }
+	],
+	// User data (profiles, saved addresses, account applications, requests).
+	// Schema lives in migrations/; CI applies it before each deploy.
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "ringaround",
+			"database_id": "34ea736b-51b9-418c-b39e-a969617dc8f8",
+			"migrations_dir": "migrations"
+		}
+	],
+	"observability": { "enabled": true },
+
+	"env": {
+		"preview": {
+			// CI overrides this with --name ringaround-preview-pr-<number>.
+			"name": "ringaround-preview",
+			// Bindings are not inherited by named environments, so everything the
+			// Worker needs is restated. "routes": [] is what keeps a preview from
+			// claiming the production hostname.
+			"routes": [],
+			"workers_dev": true,
+			"preview_urls": false,
+			"r2_buckets": [
+				{ "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "ringaround-preview-opennext-cache" }
+			],
+			// A separate database, so PR code never reads or writes real user data.
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "ringaround-preview",
+					"database_id": "9f053a1c-9fbf-4624-9506-b33dd7acfcf6",
+					"migrations_dir": "migrations"
+				}
+			],
+			"observability": { "enabled": true }
+		}
+	}
+}

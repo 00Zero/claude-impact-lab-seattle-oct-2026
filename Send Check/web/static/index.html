@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send Check</title>
+<link rel="icon" href="/favicon.ico?v=3" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+  try {
+    const t = localStorage.getItem("sendcheck.theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch {}
+</script>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --ink: #1d1d1b; --muted: #6b6a65; --line: #e3e1da;
+    --accent: #b0532c; --accent-ink: #ffffff; --field: #fbfaf7;
+    --send: #26683f; --send-bg: #e6f2ea; --fix: #8f5a0c; --fix-bg: #fbf0dc;
+    --scrap: #b23b32; --scrap-bg: #f8e3e1; --bar: #ebe9e2;
+    color-scheme: light;
+  }
+  /* Theme: "auto" follows the system; data-theme="light" or "dark" forces one */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161614; --card: #1f1f1d; --ink: #ecebe6; --muted: #a09e97; --line: #33322e;
+      --accent: #e07a4f; --accent-ink: #161614; --field: #191917;
+      --send: #6cc58f; --send-bg: #1d2e23; --fix: #e3a94b; --fix-bg: #33291a;
+      --scrap: #ec7d73; --scrap-bg: #36201e; --bar: #2c2b28;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+      --bg: #161614; --card: #1f1f1d; --ink: #ecebe6; --muted: #a09e97; --line: #33322e;
+      --accent: #e07a4f; --accent-ink: #161614; --field: #191917;
+      --send: #6cc58f; --send-bg: #1d2e23; --fix: #e3a94b; --fix-bg: #33291a;
+      --scrap: #ec7d73; --scrap-bg: #36201e; --bar: #2c2b28;
+      color-scheme: dark;
+  }
+  .theme-btn { float: right; margin: 2px 0 0 10px; font-size: 13px; padding: 4px 10px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { max-width: 1180px; margin: 0 auto; padding: 28px 20px 8px; }
+  header .logo { width: 34px; height: 34px; vertical-align: -8px; margin-right: 10px; border-radius: 8px; }
+  header h1 { margin: 0; font-size: 24px; letter-spacing: -0.01em; display: inline; }
+  header p { margin: 0 0 0 12px; color: var(--muted); display: inline; }
+  main { max-width: 1180px; margin: 0 auto; padding: 12px 20px 48px; display: grid;
+         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .card + .card, .card + .actions { margin-top: 16px; }
+  h2 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;
+       color: var(--muted); font-weight: 600; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 4px; }
+  .hint { font-weight: 400; color: var(--muted); }
+  .field { margin-bottom: 12px; }
+  input, textarea, select { width: 100%; font: inherit; color: var(--ink); background: var(--field);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; }
+  textarea { resize: vertical; min-height: 80px; }
+  #text { min-height: 170px; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  details summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+  details[open] summary { margin-bottom: 10px; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  button { font: inherit; font-weight: 600; border-radius: 8px; padding: 9px 15px; cursor: pointer;
+           border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button.link { border: 0; background: none; padding: 4px 0; color: var(--accent); }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  .tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; padding: 3px;
+          background: var(--card); margin-bottom: 14px; }
+  .tabs button { border: 0; padding: 7px 14px; border-radius: 7px; background: none; color: var(--muted); }
+  .tabs button.on { background: var(--accent); color: var(--accent-ink); }
+  .seg { border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 10px;
+         background: var(--field); }
+  .seg-head { display: grid; grid-template-columns: 1fr 110px 32px; gap: 8px; margin-bottom: 8px; }
+  .seg-head button { padding: 0; font-size: 18px; line-height: 1; color: var(--muted); }
+  .seg textarea { min-height: 54px; background: var(--card); }
+  .seg .why { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .csvbox { border: 1px dashed var(--line); border-radius: 10px; padding: 12px; margin-bottom: 14px; }
+  .csvbox.over { border-color: var(--accent); background: var(--field); }
+  .examples { margin-bottom: 14px; }
+  .examples button { padding: 6px 12px; font-size: 14px; }
+  .csvrow { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .filebtn { display: inline-block; margin: 0; font-size: 15px; font-weight: 600; border: 1px solid var(--line);
+             border-radius: 8px; padding: 9px 15px; cursor: pointer; background: var(--card); }
+  .seg input { background: var(--card); }
+  .result { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+  @media (max-width: 860px) { .result { position: static; max-height: none; overflow: visible; } }
+  #check-actions { position: sticky; bottom: 0; z-index: 2; background: var(--bg); padding: 12px 0;
+                   border-top: 1px solid var(--line); margin-top: 16px; }
+  .working { color: var(--muted); text-align: center; padding: 48px 12px; }
+  .working b { color: var(--ink); }
+  .empty { color: var(--muted); text-align: center; padding: 48px 12px; }
+  .verdict { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 10px; flex-wrap: wrap; }
+  .verdict .badge { font-size: 26px; font-weight: 800; letter-spacing: 0.04em; }
+  .verdict b { font-size: 22px; }
+  .verdict .summary { flex-basis: 100%; font-size: 14px; font-weight: 600; }
+  .send { background: var(--send-bg); color: var(--send); }
+  .fix { background: var(--fix-bg); color: var(--fix); }
+  .scrap { background: var(--scrap-bg); color: var(--scrap); }
+  .delta { margin-left: auto; font-size: 13px; color: var(--muted); }
+  .notes { margin: 12px 0 0; padding: 0; list-style: none; font-size: 13px; }
+  .notes li { padding: 8px 10px; border-left: 3px solid var(--scrap); background: var(--field);
+              border-radius: 0 6px 6px 0; margin-bottom: 6px; }
+  .notes li.info { border-left-color: var(--line); color: var(--muted); }
+  .dim { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .dim:last-child { border-bottom: 0; }
+  .dim-head { display: flex; justify-content: space-between; font-weight: 600; font-size: 14px; }
+  .bar { height: 6px; background: var(--bar); border-radius: 3px; margin: 6px 0 8px; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 3px; }
+  .dim ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
+  .tip { font-size: 13px; margin-top: 6px; }
+  .block-title { margin: 18px 0 6px; }
+  .segcard { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-top: 10px; }
+  .segcard-head { display: flex; align-items: center; gap: 10px; }
+  .segcard-head .name { font-weight: 700; }
+  .segcard-head .size { color: var(--muted); font-size: 13px; }
+  .pill { margin-left: auto; font-size: 12px; font-weight: 800; letter-spacing: 0.05em; padding: 3px 9px;
+          border-radius: 999px; white-space: nowrap; }
+  .fixbox { white-space: pre-wrap; background: var(--field); border: 1px solid var(--line);
+            border-left: 3px solid var(--fix); border-radius: 8px; padding: 12px; font-size: 14px; margin-top: 8px; }
+  .small { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor;
+             border-right-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;
+             vertical-align: -2px; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .who { float: right; font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .offline { margin: 12px 0 0; padding: 10px 12px; font-size: 13px; border-radius: 8px;
+             background: var(--field); border: 1px dashed var(--fix); color: var(--ink); }
+  .offline b { color: var(--fix); }
+  @media (max-width: 520px) {
+    header p { display: block; margin: 4px 0 0; }
+    .who { float: none; display: block; margin-top: 10px; }
+    .tabs { display: flex; width: 100%; }
+    .tabs button { flex: 1; white-space: nowrap; padding: 7px 4px; font-size: 13px; }
+  }
+  .sig-preview { white-space: pre-wrap; font-size: 13px; background: var(--field); border: 1px solid var(--line);
+                 border-radius: 8px; padding: 10px; color: var(--muted); }
+  .reason { margin-top: 10px; padding: 12px 14px; font-size: 16px; font-weight: 650; line-height: 1.35;
+            background: var(--field); border-left: 4px solid var(--line); border-radius: 0 8px 8px 0; }
+  .reason.send { border-left-color: var(--send); }
+  .reason.fix { border-left-color: var(--fix); }
+  .reason.scrap { border-left-color: var(--scrap); }
+  .reason-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+                  text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .segcard .reason { font-size: 14px; padding: 8px 10px; }
+  .needs { margin-top: 8px; font-size: 14px; }
+  details.why { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+  details.why summary { font-size: 14px; color: var(--muted); }
+  .fixbox.clamp { max-height: 190px; overflow: auto; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <img class="logo" src="/logo.png?v=3" alt="" width="34" height="34"><h1>Send Check</h1>
+  <p>One email to many people is many emails. Check how each group will read it before you send.</p>
+  <button type="button" class="theme-btn" id="theme-btn" aria-label="Color theme"></button>
+  <span class="who" id="who"></span>
+</header>
+<main>
+  <form id="form">
+    <div class="tabs" role="tablist" aria-label="What to check">
+      <button type="button" role="tab" id="tab-person" class="on" aria-selected="true">One person</button>
+      <button type="button" role="tab" id="tab-list" aria-selected="false">A list (segments)</button>
+      <button type="button" role="tab" id="tab-profile" aria-selected="false">Your profile</button>
+    </div>
+
+    <section class="card" id="profile-card" hidden>
+      <h2>Your profile</h2>
+      <p class="small" style="margin:-6px 0 12px">Saved in this browser only, and used in every check: suggested fixes end with your signature, and Send Check uses only the facts you give here about your business.</p>
+      <div class="row">
+        <div class="field"><label for="p-name">Your name</label><input id="p-name" placeholder="Chirag Patankar" autocomplete="name"></div>
+        <div class="field"><label for="p-title">Title</label><input id="p-title" placeholder="Owner"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="p-company">Company</label><input id="p-company" placeholder="Cascade Self Storage" autocomplete="organization"></div>
+        <div class="field"><label for="p-website">Website</label><input id="p-website" placeholder="cascadestorage.example" inputmode="url"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="p-phone">Phone</label><input id="p-phone" placeholder="(206) 555-0100" autocomplete="tel"></div>
+        <div class="field"><label for="p-email">Email</label><input id="p-email" placeholder="you@company.example" autocomplete="email"></div>
+      </div>
+      <div class="field">
+        <label for="p-signature">Email signature <span class="hint">(exactly as it should appear)</span></label>
+        <textarea id="p-signature" style="min-height:90px" placeholder="Thanks,&#10;Chirag Patankar&#10;Owner, Cascade Self Storage&#10;(206) 555-0100"></textarea>
+        <button type="button" class="link" id="p-build-sig">Build it from my details</button>
+      </div>
+      <div class="field">
+        <label for="p-about">About your business <span class="hint">(what you offer, and results you can honestly cite)</span></label>
+        <textarea id="p-about" placeholder="Climate-controlled units in Fremont and Ballard. 24/7 gate access. Rated 4.8 on Google from 310 reviews."></textarea>
+      </div>
+      <div class="field">
+        <label for="p-samples">Emails you've sent <span class="hint">(2–3, a line with --- between them; used for "sounds like you")</span></label>
+        <textarea id="p-samples" style="min-height:100px"></textarea>
+      </div>
+      <div class="actions">
+        <button type="button" class="primary" id="p-save">Save profile</button>
+        <button type="button" id="p-clear">Clear</button>
+        <span class="small" id="p-status" style="margin:0"></span>
+      </div>
+    </section>
+
+    <div class="actions examples" id="examples-row">
+      <span class="hint" style="font-size:13px">Try an example:</span>
+      <button type="button" data-example="saltwind">Apology</button>
+      <button type="button" data-example="price">Price increase</button>
+      <button type="button" data-example="winback">Win-back</button>
+      <button type="button" data-example="cold">Cold email</button>
+    </div>
+
+    <section class="card" id="draft-card">
+      <h2>1 · Your email</h2>
+      <div class="row">
+        <div class="field">
+          <label for="message_type">Message type</label>
+          <select id="message_type">
+            <option value="customer">To my customers</option>
+            <option value="cold">Cold first touch</option>
+            <option value="follow_up">Follow-up</option>
+            <option value="warm">Warm / referral</option>
+            <option value="post_meeting">After a meeting</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="channel">Channel</label>
+          <select id="channel">
+            <option value="email">Email</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label for="subject">Subject <span class="hint">(optional)</span></label><input id="subject"></div>
+      <div class="field"><label for="text">Message</label><textarea id="text" required placeholder="Paste the draft here."></textarea></div>
+    </section>
+
+    <section class="card" id="list-card">
+      <h2>2 · Who's on the list</h2>
+      <p class="small" style="margin:-6px 0 12px">Split the list by facts you already have: how long they've been customers, last visit, plan, payment history.</p>
+      <div class="csvbox" id="csv-drop">
+        <div class="csvrow">
+          <label class="filebtn">Upload customer list<input type="file" id="csv-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden></label>
+          <button type="button" id="csv-sample">Use sample list</button>
+          <button type="button" class="primary" id="csv-go" disabled>Auto-segment</button>
+        </div>
+        <div class="small">CSV or Excel (.xlsx). Drop a file here, <button type="button" class="link" id="csv-paste-toggle" style="font-size:12px">paste CSV text</button>, or add segments by hand below. Claude sees only column summaries; names, emails, and phone numbers are never sent.</div>
+        <div class="small" id="csv-status" style="font-weight:600"></div>
+        <textarea id="csv-paste" hidden placeholder="Paste CSV here, header row first: customer_id,move_in_date,rate_type,..." style="margin-top:8px;min-height:90px"></textarea>
+      </div>
+      <div id="segments"></div>
+      <button type="button" class="link" id="add-seg">+ Add segment</button>
+    </section>
+
+    <section class="card" id="person-card" hidden>
+      <h2>2 · Who it's for</h2>
+      <div class="row">
+        <div class="field"><label for="name">Name</label><input id="name" placeholder="Dana Lee"></div>
+        <div class="field"><label for="role">Role</label><input id="role" placeholder="Owner"></div>
+      </div>
+      <div class="field"><label for="company">Company</label><input id="company" placeholder="Northside Remodeling"></div>
+      <div class="field">
+        <label for="website">Company website <span class="hint">(optional, public business site only)</span></label>
+        <div class="csvrow" style="flex-wrap:nowrap">
+          <input id="website" placeholder="northsideremodeling.com" inputmode="url">
+          <button type="button" id="site-read" style="white-space:nowrap">Read site</button>
+        </div>
+        <div class="small" id="site-status">Send Check reads the page when you check the draft. Social profiles aren't read: paste what you need below.</div>
+      </div>
+      <div class="field">
+        <label for="context">What you know about them <span class="hint">(public work posts, bio, CRM notes)</span></label>
+        <textarea id="context" placeholder="Work-related only."></textarea>
+      </div>
+    </section>
+
+
+    <div class="actions" style="margin-top:16px" id="check-actions">
+      <button type="submit" class="primary" id="go">Check draft</button>
+      <span class="hint" style="font-size:13px" id="go-hint">Checks your email against every group on the list.</span>
+    </div>
+    <div class="small" id="voice-hint"></div>
+  </form>
+
+  <section class="result">
+    <div class="card" id="out" aria-live="polite"><div class="empty">1. Write your email.<br>2. Add who it's for: one person, or a whole list.<br>3. Press <b>Check draft</b>.<br><br>Or try an example at the top.</div></div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const LABELS = { slop: "Sounds human", personalization: "Speaks to their situation",
+                 recipient_fit: "Right offer and framing", mechanics: "Length & ask" };
+const PERSON_LABELS = { ...LABELS, personalization: "Personalization", recipient_fit: "Fits this recipient" };
+let mode = "person";
+let lastScore = null;
+
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const color = (n) => n >= 75 ? "var(--send)" : n >= 45 ? "var(--fix)" : "var(--scrap)";
+
+// ---- mode tabs ----
+let emailMode = "person";
+function setMode(m) {
+  mode = m;
+  if (m !== "profile") emailMode = m;
+  $("tab-list").classList.toggle("on", m === "list");
+  $("tab-person").classList.toggle("on", m === "person");
+  $("tab-profile").classList.toggle("on", m === "profile");
+  ["person", "list", "profile"].forEach((k) => $("tab-" + k).setAttribute("aria-selected", String(m === k)));
+  $("list-card").hidden = m !== "list";
+  $("person-card").hidden = m !== "person";
+  $("profile-card").hidden = m !== "profile";
+  ["examples-row", "draft-card", "check-actions", "voice-hint"].forEach((id) => $(id).hidden = m === "profile");
+  $("go-hint").textContent = m === "list" ? "Checks your email against every group on the list."
+                                          : "Checks your email against this person.";
+}
+$("tab-list").onclick = () => setMode("list");
+$("tab-person").onclick = () => setMode("person");
+$("tab-profile").onclick = () => { fillProfileForm(); setMode("profile"); };
+
+// ---- color theme: auto (system) -> light -> dark ----
+const THEME_KEY = "sendcheck.theme";
+const THEME_LABEL = { auto: "◐ Auto", light: "☀ Light", dark: "☾ Dark" };
+const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+function currentTheme() { return document.documentElement.dataset.theme || "auto"; }
+function showTheme() {
+  const t = currentTheme();
+  const shown = t === "auto" ? (systemDark.matches ? "dark" : "light") : t;
+  $("theme-btn").textContent = THEME_LABEL[t];
+  $("theme-btn").title = t === "auto" ? `Following your system (${shown}). Click to change.` : "Click to change the theme.";
+}
+$("theme-btn").onclick = () => {
+  const next = { auto: "light", light: "dark", dark: "auto" }[currentTheme()];
+  if (next === "auto") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = next;
+  try { next === "auto" ? localStorage.removeItem(THEME_KEY) : localStorage.setItem(THEME_KEY, next); } catch {}
+  showTheme();
+};
+systemDark.addEventListener("change", showTheme);
+showTheme();
+
+// ---- sender profile (this browser only) ----
+const PROFILE_KEY = "sendcheck.profile.v1";
+const PROFILE_FIELDS = ["name", "title", "company", "website", "phone", "email", "signature", "about", "samples"];
+let profile = {};
+try { profile = JSON.parse(localStorage.getItem(PROFILE_KEY) || "{}") || {}; } catch { profile = {}; }
+
+function senderFields() {
+  const { samples, ...sender } = profile;
+  return sender;
+}
+function showWho() {
+  // Status only; the Your profile tab is the one place to edit it
+  $("who").innerHTML = profile.name
+    ? `Signed as <b>${esc(profile.name)}</b>${profile.company ? ", " + esc(profile.company) : ""}` : "";
+  const n = splitEmails(profile.samples || "").length;
+  $("voice-hint").innerHTML = n
+    ? `"Sounds like you" compares the draft with the ${n} email${n > 1 ? "s" : ""} saved in your profile.`
+    : `Add a few emails you've sent in <b>Your profile</b> to check the draft sounds like you.`;
+}
+function fillProfileForm() {
+  PROFILE_FIELDS.forEach((k) => $("p-" + k).value = profile[k] || "");
+  $("p-status").textContent = profile.name ? "Saved on this device." : "";
+}
+$("p-build-sig").onclick = () => {
+  const v = (k) => $("p-" + k).value.trim();
+  const role = [v("title"), v("company")].filter(Boolean).join(", ");
+  $("p-signature").value = ["Thanks,", v("name"), role, v("phone"), v("website")].filter(Boolean).join("\n");
+};
+$("p-save").onclick = () => {
+  profile = {};
+  PROFILE_FIELDS.forEach((k) => { const v = $("p-" + k).value.trim(); if (v) profile[k] = v; });
+  try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); $("p-status").textContent = "Saved on this device. Used in every check."; }
+  catch { $("p-status").textContent = "Couldn't save in this browser (private mode?). It still applies until you reload."; }
+  showWho();
+  setMode(emailMode);
+};
+$("p-clear").onclick = () => {
+  profile = {};
+  try { localStorage.removeItem(PROFILE_KEY); } catch {}
+  fillProfileForm();
+  $("p-status").textContent = "Cleared from this device.";
+  showWho();
+};
+
+// ---- segment editor ----
+function addSegment(seg = {}) {
+  const div = document.createElement("div");
+  div.className = "seg";
+  div.innerHTML = `<div class="seg-head">
+      <input class="s-label" placeholder="Segment, e.g. 10-year tenants" value="${esc(seg.label)}">
+      <input class="s-size" type="number" min="0" placeholder="How many" value="${seg.size ?? ""}">
+      <button type="button" title="Remove segment">×</button>
+    </div>
+    <textarea class="s-facts" placeholder="Facts you have: tenure, last visit, plan, what they pay, payment history, past agreements">${esc(seg.facts)}</textarea>
+    ${seg.why ? `<div class="why">Why this group: ${esc(seg.why)}</div>` : ""}`;
+  div.querySelector("button").onclick = () => div.remove();
+  $("segments").appendChild(div);
+}
+$("add-seg").onclick = () => addSegment();
+
+// ---- company website ----
+$("site-read").onclick = async () => {
+  const url = $("website").value.trim();
+  if (!url) { $("site-status").textContent = "Enter the company's website first."; return; }
+  const btn = $("site-read");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Reading…';
+  try {
+    const res = await fetch("/api/fetch_site", { method: "POST", headers: { "Content-Type": "application/json" },
+                                                 body: JSON.stringify({ url }) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || `server returned ${res.status}`);
+    $("site-status").textContent = `Read "${data.title || data.url}" (${data.chars.toLocaleString()} characters): ${data.preview}…`;
+  } catch (e) {
+    $("site-status").textContent = `Couldn't read it: ${e.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Read site";
+  }
+};
+
+// ---- CSV auto-segmentation ----
+let csvText = "", xlsxB64 = "", csvName = "";
+function csvReady({ text = "", xlsx = "", name }) {
+  csvText = text;
+  xlsxB64 = xlsx;
+  csvName = name;
+  const count = text ? `${Math.max(0, text.trim().split(/\r?\n/).length - 1)} customers` : "Excel file";
+  $("csv-status").textContent = `${name}: ${count} loaded. Paste the draft, then press Auto-segment.`;
+  $("csv-go").disabled = false;
+}
+function toBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(binary);
+}
+async function loadFile(file) {
+  const name = file.name.toLowerCase();
+  if (name.endsWith(".xls") || name.endsWith(".numbers")) {
+    $("csv-status").textContent = `${file.name}: save it as .xlsx or CSV first (File > Save As or Export).`;
+    return;
+  }
+  if (name.endsWith(".xlsx")) csvReady({ xlsx: toBase64(await file.arrayBuffer()), name: file.name });
+  else csvReady({ text: await file.text(), name: file.name });
+}
+$("csv-file").onchange = (e) => e.target.files[0] && loadFile(e.target.files[0]);
+const drop = $("csv-drop");
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", (e) => {
+  e.preventDefault();
+  drop.classList.remove("over");
+  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+$("csv-paste-toggle").onclick = () => { $("csv-paste").hidden = false; $("csv-paste").focus(); };
+$("csv-paste").oninput = (e) => e.target.value.trim() && csvReady({ text: e.target.value, name: "Pasted list" });
+$("csv-sample").onclick = async () => {
+  const res = await fetch("/api/sample_csv");
+  csvReady({ text: await res.text(), name: "cascade-storage-customers.csv (synthetic)" });
+};
+$("csv-go").onclick = async () => {
+  if (!$("text").value.trim()) {
+    $("csv-status").textContent = "First write or paste your email in step 1 above (or try an example). The groups depend on what the email says.";
+    $("text").scrollIntoView({ behavior: "smooth", block: "center" });
+    $("text").focus();
+    return;
+  }
+  const btn = $("csv-go");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Finding segments…';
+  try {
+    const res = await fetch("/api/segment_csv", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ csv_text: csvText, xlsx_base64: xlsxB64, text: $("text").value, subject: $("subject").value }) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || `server returned ${res.status}`);
+    if (!data.segments.length) throw new Error(data.notes || "no segments found");
+    $("segments").innerHTML = "";
+    data.segments.forEach(addSegment);
+    const skipped = data.columns_skipped.length ? ` Kept private: ${data.columns_skipped.join(", ")}.` : "";
+    $("csv-status").textContent = `${data.segments.length} segments from ${data.rows} customers in ${csvName}. Edit them below if needed.${skipped}`;
+  } catch (e) {
+    $("csv-status").textContent = `Couldn't segment the CSV: ${e.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Auto-segment";
+  }
+};
+const segments = () => [...document.querySelectorAll(".seg")].map((d) => ({
+  label: d.querySelector(".s-label").value.trim(),
+  size: parseInt(d.querySelector(".s-size").value || "0", 10),
+  facts: d.querySelector(".s-facts").value.trim(),
+})).filter((s) => s.label);
+
+// ---- requests ----
+function base() {
+  return {
+    text: $("text").value, subject: $("subject").value, channel: $("channel").value,
+    message_type: $("message_type").value,
+    owner_samples: splitEmails(profile.samples || ""),
+    sender: senderFields(),
+  };
+}
+const splitEmails = (t) => t.split(/^\s*---\s*$/m).map((s) => s.trim()).filter(Boolean);
+
+async function run(previous = null) {
+  const btn = $("go");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Checking…';
+  try {
+    const listMode = mode === "list";
+    if (listMode && !segments().length) throw new Error("add at least one segment");
+    $("out").innerHTML = `<div class="working"><span class="spinner"></span><b>Checking your draft.</b><br>` +
+      `Reading it against ${listMode ? "each group" : "this person"}. This can take up to a minute.</div>`;
+    $("out").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    const body = listMode ? { ...base(), segments: segments() }
+      : { ...base(), recipient: { name: $("name").value, role: $("role").value, company: $("company").value,
+                                  context: $("context").value, website: $("website").value } };
+    const res = await fetch(listMode ? "/api/score_list" : "/api/score", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(typeof err.detail === "string" ? err.detail : `server returned ${res.status}`);
+    }
+    const data = await res.json();
+    listMode ? renderList(data) : renderPerson(data, previous);
+    $("out").closest(".result").scrollTop = 0;
+    $("out").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) {
+    $("out").innerHTML = `<div class="empty">Couldn't check this draft: ${esc(e.message)}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Check draft";
+  }
+}
+
+// ---- rendering ----
+// Layout: verdict and score, the one-line reason right below, then the
+// suggested version (fix) or what it needs (scrap); details stay collapsed.
+const REASON_LABEL = { send: "Why it's ready", fix: "Why it needs a fix", scrap: "Why it's a scrap" };
+const ISSUE = /^(blocks send|disqualified|wrong for this reader)/;
+
+// Shown when the Claude judge didn't run, so identical or estimated scores don't read as a bug.
+const JUDGE_OFF = /no Claude API key|judge unavailable|judge turned off/;
+const offlineHtml = (cards) => cards.some((c) => JUDGE_OFF.test(c.notes || ""))
+  ? `<div class="offline"><b>Judge offline.</b> Personalization and fit are estimates, not measured. These scores come from the script checks only.</div>` : "";
+
+function parts(card) {
+  const notes = card.notes ? card.notes.split(" | ") : [];
+  const pick = (prefix) => (notes.find((n) => n.startsWith(prefix)) || "").slice(prefix.length);
+  const rest = notes.filter((n) => !n.startsWith("reason: ") && !n.startsWith("what it needs: "));
+  return { reason: pick("reason: "), needs: pick("what it needs: "),
+           issues: rest.filter((n) => ISSUE.test(n)), info: rest.filter((n) => !ISSUE.test(n)) };
+}
+const reasonHtml = (verdict, reason) => reason ? `<div class="reason ${verdict}">
+    <span class="reason-label">${REASON_LABEL[verdict]}</span>${esc(reason)}</div>` : "";
+const needsHtml = (needs) => needs ? `<div class="needs"><b>What it needs:</b> ${esc(needs)}</div>` : "";
+const dimHtml = (d, labels) => `<div class="dim">
+    <div class="dim-head"><span>${labels[d.name] || d.name}</span><span>${d.score}</span></div>
+    <div class="bar"><span style="width:${d.score}%;background:${color(d.score)}"></span></div>
+    ${d.evidence.length ? `<ul>${d.evidence.slice(0, 3).map((e) => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
+    ${d.suggestion ? `<div class="tip">→ ${esc(d.suggestion)}</div>` : ""}
+  </div>`;
+const listHtml = (items, cls) => items.length
+  ? `<ul class="notes">${items.map((n) => `<li class="${cls}">${esc(n)}</li>`).join("")}</ul>` : "";
+function detailsHtml(title, dims, labels, issues = [], info = []) {
+  const count = issues.length + dims.filter((d) => d.score < 75).length;
+  return `<details class="why"><summary>${title}${count ? ` · ${count} to look at` : ""}</summary>
+      ${listHtml(issues, "")}${listHtml(info, "info")}
+      ${dims.map((d) => dimHtml(d, labels)).join("")}
+    </details>`;
+}
+
+function renderPerson(card, previous) {
+  lastScore = card.score;
+  const p = parts(card);
+  const delta = previous !== null ? `<span class="delta">was ${previous}/100</span>` : "";
+  let html = `<div class="verdict ${card.verdict}">
+      <span class="badge">${card.verdict.toUpperCase()}</span><span><b>${card.score}</b>/100</span>${delta}</div>`;
+  html += offlineHtml([card]);
+  html += reasonHtml(card.verdict, p.reason);
+  if (card.verdict === "scrap") html += needsHtml(p.needs);
+  if (card.suggested_fix) {
+    html += `<h2 class="block-title">Suggested version (approve before use)</h2>
+      <div class="fixbox">${esc(card.suggested_fix)}</div>
+      <div class="actions" style="margin-top:10px">
+        <button class="primary" type="button" id="approve">Approve &amp; re-check</button>
+        <button type="button" id="copy">Copy</button>
+      </div>`;
+  }
+  html += detailsHtml("Why this score", card.dimensions, PERSON_LABELS, p.issues, p.info);
+  html += `<div class="small">Nothing is sent. Approving puts the version in the message box and checks it again.</div>`;
+  $("out").innerHTML = html;
+  if (card.suggested_fix) {
+    $("approve").onclick = () => { $("text").value = card.suggested_fix; run(lastScore); };
+    $("copy").onclick = async () => { await navigator.clipboard.writeText(card.suggested_fix); $("copy").textContent = "Copied"; };
+  }
+}
+
+function renderList(data) {
+  const results = data.segments;
+  // Notes and draft-level scores are the same for every group: show them once.
+  const noteSets = results.map((r) => r.scorecard.notes ? r.scorecard.notes.split(" | ") : []);
+  const shared = noteSets[0].filter((n) => !n.startsWith("reason: ") && noteSets.every((s) => s.includes(n)));
+  const draftDims = results[0].scorecard.dimensions.filter((d) => d.name === "slop" || d.name === "mechanics");
+
+  let html = `<div class="verdict ${data.verdict}">
+      <span class="badge">${data.verdict.toUpperCase()}</span><span><b>${data.score}</b>/100</span>
+      <span class="summary">${esc(data.summary)}</span></div>`;
+  html += offlineHtml(results.map((r) => r.scorecard));
+  html += results.map((r, i) => {
+    const c = r.scorecard;
+    const p = parts(c);
+    const own = (list) => list.filter((n) => !shared.includes(n));
+    const dims = c.dimensions.filter((d) => d.name === "personalization" || d.name === "recipient_fit");
+    return `<div class="segcard">
+      <div class="segcard-head">
+        <span class="name">${esc(r.segment.label)}</span>
+        ${r.segment.size ? `<span class="size">${r.segment.size} people</span>` : ""}
+        <span class="pill ${c.verdict}">${c.verdict.toUpperCase()} · ${c.score}</span>
+      </div>
+      ${reasonHtml(c.verdict, p.reason)}
+      ${c.verdict === "scrap" ? needsHtml(p.needs) : ""}
+      ${c.suggested_fix ? `<div class="fixbox clamp">${esc(c.suggested_fix)}</div>
+          <div class="actions" style="margin-top:8px"><button type="button" data-copy="${i}">Copy version</button></div>` : ""}
+      ${detailsHtml("Details", dims, LABELS, own(p.issues), own(p.info))}
+    </div>`;
+  }).join("");
+  html += detailsHtml("The draft itself (same for every group)", draftDims, LABELS,
+                      shared.filter((n) => ISSUE.test(n)), shared.filter((n) => !ISSUE.test(n)));
+  html += `<div class="small">Approve a version before you use it. Nothing is sent.</div>`;
+  $("out").innerHTML = html;
+  document.querySelectorAll("[data-copy]").forEach((b) => b.onclick = async () => {
+    await navigator.clipboard.writeText(results[+b.dataset.copy].scorecard.suggested_fix);
+    b.textContent = "Copied";
+  });
+}
+
+$("form").addEventListener("submit", (e) => { e.preventDefault(); run(); });
+
+// ---- examples (fictional businesses from corpus/fixtures) ----
+const EXAMPLES = {
+  saltwind: {
+    mode: "list", type: "customer", subject: "An apology from all of us at Saltwind",
+    csv: { name: "saltwind", label: "saltwind-tours-guests.csv (synthetic)" },
+    text: "Hi there!\n\nYou may have seen some recent reviews mentioning problems with our tours this summer. We want you to know we hear you, and we're truly sorry. We've made some changes to our transportation partners to make sure it never happens again.\n\nAs a thank-you for your patience, anyone who had a less-than-perfect experience with us can enjoy 20% off their next adventure. Just reply to this email!\n\nWarmly,\nThe Saltwind Team",
+    segments: [
+      { label: "Stranded at the ferry", size: 31, facts: "Paid for a tour on Aug 9 or Aug 16, 2026 and were left at the ferry terminal when the pickup shuttle did not show; the tour did not run for them" },
+      { label: "2027 trip booked", size: 58, facts: "Already booked a 2027 trip and paid a deposit ($150 to $200); no problems on file" },
+      { label: "Repeat guests", size: 140, facts: "3 or more trips, most recent trip between 2024 and 2026; no shuttle problem on file" },
+      { label: "One-time, 2019 to 2023", size: 171, facts: "Took one trip between 2019 and 2023 and have not booked since; no contact in years" },
+      { label: "Recent one-trip guests", size: 120, facts: "One or two trips, most recent in 2024 to 2026; no shuttle problem on file, nothing booked ahead" },
+    ],
+  },
+  price: {
+    mode: "list", type: "customer", subject: "Important update about your storage rate",
+    csv: { name: "cascade", label: "cascade-storage-customers.csv (synthetic)" },
+    text: "Hi,\n\nDue to rising operating costs, including insurance, utilities, and property taxes, we will be increasing rates by 12% effective December 1, 2026.\n\nWe know price increases are never welcome, but our costs have gone up significantly and we can no longer absorb them.\n\nThank you for your understanding.\n\nCascade Self Storage Management",
+    segments: [
+      { label: "Month-to-month renters", size: 140, facts: "Renting under 6 months, month-to-month, standard rate, no prior rate changes" },
+      { label: "10-year tenants", size: 60, facts: "Continuous rental for 10+ years, never missed a payment, paying the standard rate" },
+      { label: "Negotiated-rate customers", size: 90, facts: "Negotiated a discounted rate in writing last year; rate agreement on file" },
+      { label: "Commercial units", size: 50, facts: "Small businesses renting commercial units, invoiced monthly, pay by company card or ACH" },
+    ],
+  },
+  winback: {
+    mode: "list", type: "customer", subject: "We miss you and your pup!",
+    text: "It's been a while! Come back and see us. Book this month and get $10 off any groom.\n\nWe've missed you!\n\nLakeview Pet Grooming",
+    segments: [
+      { label: "Lapsed 3 months", size: 180, facts: "Booked every 6 weeks for 2+ years; last visit 3 months ago; pet names and service history on file" },
+      { label: "Lapsed 14 months", size: 130, facts: "Regular until 14 months ago; last visit 14 months ago; average groom $85" },
+      { label: "Groupon one-timers", size: 100, facts: "Visited once with a Groupon deal; never booked at full price" },
+    ],
+  },
+  cold: {
+    mode: "person", type: "cold", subject: "Quick question",
+    name: "Dana Lee", role: "Owner", company: "Northside Remodeling",
+    context: "Runs a 14-person remodeling firm in Seattle. Recent public post: \"Lost two jobs this month because our crew schedules got crossed on the Fremont kitchen remodel. Spreadsheets aren't cutting it anymore.\"",
+    text: "Hi Dana,\n\nI hope this email finds you well. I came across your profile and was impressed by your work at Northside Remodeling.\n\nWe help companies like yours leverage our cutting-edge AI-powered solution to unlock growth. Our platform streamlines scheduling, and our team has years of experience.\n\nWould you be open to a quick call? Are you the right person to speak to about this? Let me know if this resonates!\n\nBest regards,\nSam",
+  },
+};
+
+document.querySelectorAll("[data-example]").forEach((b) => b.onclick = async () => {
+  const ex = EXAMPLES[b.dataset.example];
+  setMode(ex.mode);
+  $("message_type").value = ex.type;
+  $("subject").value = ex.subject;
+  $("text").value = ex.text;
+  if (ex.segments) {
+    $("segments").innerHTML = "";
+    ex.segments.forEach(addSegment);
+  } else {
+    ["name", "role", "company", "context"].forEach((k) => $(k).value = ex[k]);
+  }
+  // Load the example's own guest or customer list, so Auto-segment works right away.
+  if (ex.csv) {
+    try {
+      const res = await fetch(`/api/sample_csv?name=${ex.csv.name}`);
+      if (res.ok) csvReady({ text: await res.text(), name: ex.csv.label });
+    } catch { /* the segments above still work without the list */ }
+  }
+});
+
+addSegment();
+addSegment();
+setMode("person");
+showWho();
+$("message_type").value = "cold";
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>GTMagic: Isotype Count sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#fbfbf8;--ink:#1d1d1b;--red:#d9402b;--blue:#2c5aa0;--ochre:#e3a72f;--grey:#c9c7c0;--muted:#6b6a66}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;font-family:Jost,system-ui,sans-serif;background:var(--g);color:var(--ink);display:grid;grid-template-columns:260px 1fr}
+nav{background:var(--ink);color:#fff;padding:28px 24px;display:flex;flex-direction:column;gap:22px}
+.mark{font:700 24px Jost}.mark span{color:var(--ochre)}
+.badge{align-self:flex-start;font:500 12px Jost;letter-spacing:.12em;border:1.5px solid var(--ochre);color:var(--ochre);padding:4px 8px}
+.legend{margin-top:auto;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.legend div{display:flex;gap:10px;align-items:center}
+.sw{width:14px;height:14px}
+main{padding:40px 120px 0;display:flex;flex-direction:column;gap:28px;position:relative}
+.who{font:500 12px Jost;letter-spacing:.14em;color:var(--muted);margin-bottom:6px}
+.gt p{font-size:23px;line-height:1.4;max-width:720px}
+.me{align-self:flex-end;max-width:560px;background:#ecebe5;padding:16px 20px}
+.me p{font-size:18px;line-height:1.5}
+.plate{border-top:3px solid var(--ink);padding-top:18px;max-width:900px}
+.plate h3{font:700 18px Jost;margin-bottom:14px}
+.prow{display:grid;grid-template-columns:30px 340px 1fr 40px;align-items:center;gap:12px;padding:8px 0}
+.prow b{font:700 20px Jost}.prow span{font-size:15px;color:#3b3a37}.prow i{font:700 18px Jost;font-style:normal;text-align:right}
+.figs{display:flex;gap:3px}
+.fig{width:14px;height:30px;position:relative}
+.fig::before{content:"";position:absolute;left:3px;top:0;width:8px;height:8px;border-radius:50%;background:currentColor}
+.fig::after{content:"";position:absolute;left:1px;top:10px;width:12px;height:20px;background:currentColor;border-radius:3px 3px 0 0}
+.r{color:var(--red)}.b{color:var(--blue)}.o{color:var(--ochre)}.n{color:var(--grey)}
+.sim{font:500 13px Jost;letter-spacing:.06em;color:var(--muted);margin-top:12px}
+.composer{position:absolute;left:120px;right:120px;bottom:28px;display:flex;gap:10px}
+.composer input{flex:1;height:54px;border:2px solid var(--ink);background:#fff;padding:0 18px;font:18px Jost}
+.composer button{height:54px;padding:0 26px;background:var(--red);color:#fff;border:0;font:700 16px Jost}
+</style></head>
+<body>
+<nav>
+  <div class="mark">GT<span>Magic</span></div>
+  <div class="badge">EXAMPLE RUN</div>
+  <div class="legend">
+    <div><i class="sw" style="background:var(--red)"></i>Office managers</div>
+    <div><i class="sw" style="background:var(--blue)"></i>Event planners</div>
+    <div><i class="sw" style="background:var(--ochre)"></i>Founders</div>
+    <div><i class="sw" style="background:var(--grey)"></i>None of these</div>
+  </div>
+</nav>
+<main>
+  <div class="gt"><div class="who">GTMAGIC</div><p>What do you sell, and who do you think buys it most?</p></div>
+  <div class="me"><div class="who">YOU</div><p>A neighbourhood bakery adding office catering. I think office managers at small tech firms are our best customers.</p></div>
+  <div class="gt"><div class="who">GTMAGIC</div><p>31 of 48 customers have chosen so far. One figure is one customer.</p></div>
+  <div class="plate">
+    <h3>Which message would make you act?</h3>
+    <div class="prow"><b>A</b><span>Breakfast that lands before the meeting starts</span><div class="figs"><i class="fig r"></i><i class="fig r"></i><i class="fig r"></i><i class="fig r"></i><i class="fig r"></i><i class="fig r"></i><i class="fig b"></i><i class="fig b"></i><i class="fig b"></i><i class="fig o"></i><i class="fig o"></i><i class="fig o"></i><i class="fig o"></i></div><i>13</i></div>
+    <div class="prow"><b>C</b><span>Your current headline</span><div class="figs"><i class="fig b"></i><i class="fig b"></i><i class="fig b"></i><i class="fig r"></i><i class="fig o"></i><i class="fig o"></i><i class="fig o"></i></div><i>7</i></div>
+    <div class="prow"><b>B</b><span>Feed the whole team without the spreadsheet</span><div class="figs"><i class="fig r"></i><i class="fig r"></i><i class="fig b"></i><i class="fig o"></i><i class="fig o"></i></div><i>5</i></div>
+    <div class="prow"><b>–</b><span>None of these</span><div class="figs"><i class="fig n"></i><i class="fig n"></i></div><i>2</i></div>
+    <div class="sim">Simulated preference · n = 31 so far · not a conversion rate</div>
+  </div>
+  <div class="composer"><input placeholder="Ask about the results…"><button>Send</button></div>
+</main>
+</body></html>

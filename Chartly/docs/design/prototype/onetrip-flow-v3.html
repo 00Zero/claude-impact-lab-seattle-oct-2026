@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OneTrip Flow v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E3DD; --panel:#FFFFFF; --ink:#101214; --muted:#565B63; --line:#D9D7D0;
+  --page:#FBFBF8; --card:#FFFFFF; --chip:#F0EFEA;
+  --accent:#C5F23A; --accent-ink:#101214; --accent-strong:#3F5A00; --accent-soft:#F1FBD3;
+  --ok:#17733F; --ok-soft:#DCF0E3; --bad:#B42318; --bad-soft:#FBE3E0; --wait:#5B616B; --wait-soft:#ECEDEF; --med:#8A5A00;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,sans-serif}
+h1,h2,h3,.disp{font-family:Archivo,Inter,sans-serif;letter-spacing:-.015em;margin:0}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px}
+button{font:inherit;cursor:pointer;color:inherit}
+/* review chrome */
+.ctl{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+.ctlin{max-width:1320px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.brand{font-family:Archivo;font-weight:800;font-size:17px;display:flex;align-items:center;gap:8px}
+.logo{width:24px;height:24px;border-radius:7px;background:var(--accent);color:var(--accent-ink);display:inline-grid;place-items:center;font-size:13px;font-weight:800}
+.steps{display:flex;gap:5px;flex-wrap:wrap;flex:1 1 600px}
+.step{border:1px solid var(--line);background:transparent;color:var(--muted);padding:4px 9px;border-radius:999px;font-size:12px;font-weight:600}
+.step.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.step .g{opacity:.6;margin-right:3px}
+.seg{display:inline-flex;background:var(--chip);border-radius:11px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:8px;font-weight:700;font-size:13px}
+.seg button.on{background:var(--panel);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.opts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted)}
+.ot{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:600;color:var(--muted)}
+.ot.on{background:var(--accent-soft);border-color:var(--accent-strong);color:var(--ink)}
+.stagewrap{max-width:1320px;margin:0 auto;padding:18px 16px 50px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.cap{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.vpwrap{position:relative;width:100%;max-width:1280px;height:820px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.14);background:var(--page)}
+.vpwrap.phone{width:390px;height:844px;border-radius:32px;border:8px solid #0C0E10}
+.vp{height:100%;overflow:auto;container-type:inline-size;background:var(--page);position:relative}
+.navb{display:flex;gap:8px}
+/* ui kit */
+.btn{border:0;border-radius:14px;min-height:52px;padding:0 18px;font-weight:700;background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+.btn.ghost{background:var(--card);border:1.5px solid var(--line)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.block{width:100%}
+.btn.sm{min-height:40px;padding:0 12px;border-radius:11px;font-size:14px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.link{color:var(--accent-strong);font-weight:700;background:none;border:0;padding:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.muted{color:var(--muted)} .small{font-size:13px}
+.label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.row{display:flex;gap:8px;align-items:center} .between{justify-content:space-between} .wrapr{flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border-radius:999px;padding:7px 12px;font-size:13.5px;font-weight:600;margin:0 6px 6px 0;border:1.5px solid transparent}
+.chip.sel{background:var(--accent-soft);border-color:var(--accent-strong)}
+.st{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.st.wait{background:var(--wait-soft);color:var(--wait)} .st.ready{background:var(--accent);color:var(--accent-ink)} .st.done{background:var(--ok-soft);color:var(--ok)} .st.bad{background:var(--bad-soft);color:var(--bad)}
+.conf{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:4px 9px;border-radius:8px;border:1.5px solid;white-space:nowrap}
+.conf.high{color:var(--ok);border-color:var(--ok)} .conf.low{color:var(--wait);border-color:#AAB0B8}
+input,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px;margin:5px 0 14px}
+textarea{min-height:84px;resize:none}
+.fl{font-size:13px;font-weight:700}
+.sw{width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;flex:none;border:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s}
+.sw.on{background:var(--ink)} .sw.on::after{left:21px}
+.photo{border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;position:relative;background:#333}
+.photo svg{width:100%;height:100%;display:block}
+.blur svg{filter:blur(4px)}
+.tag{font-size:11px;font-weight:700;position:absolute;top:8px;left:8px;background:rgba(0,0,0,.65);color:#fff;padding:3px 8px;border-radius:6px}
+.pin{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:var(--accent);color:var(--accent-ink);border:2.5px solid #101214;display:grid;place-items:center;font-weight:800;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pin.pulse{opacity:0;transform:scale(.3);transition:opacity .3s,transform .35s cubic-bezier(.3,1.6,.5,1)}
+.pin.pulse.in{opacity:1;transform:none}
+.alert{border-radius:12px;padding:12px;font-size:14.5px;font-weight:600;margin:10px 0}
+.alert.bad{background:var(--bad-soft);color:var(--bad)} .alert.ok{background:var(--ok-soft);color:var(--ok)} .alert.warn{background:#FBF0D6;color:#7A5200}
+/* sticky bottom action bar inside the scrolling viewport */
+.actbar{position:sticky;bottom:0;background:var(--page);border-top:1px solid var(--line);padding:12px 18px 16px;display:flex;gap:8px;z-index:3}
+/* customer */
+.cwrap{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+.cbody{flex:1;padding:16px 18px 18px;font-size:17px}
+.curl{font-size:11px;color:var(--muted);text-align:center;padding:8px 0 0}
+.q{font-family:Archivo;font-size:24px;font-weight:700;margin:4px 0 6px;line-height:1.15}
+.help{color:var(--muted);margin-bottom:14px;font-size:15px}
+.because{display:flex;gap:8px;align-items:flex-start;background:var(--accent-soft);border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:12px}
+.opt{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;min-height:58px;padding:0 16px;margin-bottom:9px;font-weight:600;font-size:17px}
+.opt.sel{border-color:var(--accent-strong);background:var(--accent-soft)}
+.opt.sel::after{content:"✓";font-weight:800;color:var(--accent-strong)}
+.effort{display:flex;gap:10px;margin:16px 0}
+.effort div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;font-size:14px}
+.effort b{display:block;font-family:Archivo;font-size:24px}
+.ln{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.dot{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:13px;font-weight:800;background:var(--chip);color:var(--muted)}
+.dot.go{background:var(--accent);color:var(--accent-ink)} .dot.spin{border:3px solid var(--line);border-top-color:var(--accent-strong);background:transparent;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.rv{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.rv:first-child{border-top:0} .rv span:last-child{font-weight:700;text-align:right}
+/* app shell */
+.appbar{position:sticky;top:0;z-index:4;background:var(--page);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 18px}
+.appnav{display:none;gap:18px;font-weight:600;color:var(--muted)} .appnav .on{color:var(--ink)}
+.tabbar{position:sticky;bottom:0;z-index:4;display:flex;justify-content:space-around;border-top:1px solid var(--line);padding:8px 0 14px;font-size:12px;color:var(--muted);font-weight:600;background:var(--page)}
+.tabbar span{display:flex;flex-direction:column;align-items:center} .tabbar i{width:28px;height:4px;border-radius:4px;display:block;margin-bottom:5px} .tabbar .on{color:var(--ink)} .tabbar .on i{background:var(--accent)}
+.split{display:block}
+.listcol{padding:12px 18px}
+.detailcol{padding:0 18px 18px}
+.reqcard{display:flex;gap:12px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:12px;margin-bottom:9px;min-height:84px;cursor:pointer}
+.reqcard.sel{border-color:var(--ink)}
+.thumb{width:56px;height:56px;border-radius:12px;overflow:hidden;flex:none;background:var(--chip);display:grid;place-items:center;color:var(--muted);font-size:20px}
+.thumb svg{width:100%;height:100%}
+.reqcard .t{flex:1;min-width:0}
+.addr{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sec{margin:16px 0 8px}
+.bhead{position:sticky;top:0;z-index:3;background:var(--page);padding:12px 0 10px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.qa{display:flex;gap:6px;margin-top:8px}
+.qa button{flex:1;min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font-weight:700;font-size:13.5px}
+.verdict{border:2px solid var(--ink);border-radius:16px;padding:14px;margin-bottom:10px;background:var(--card)}
+.why{font-size:14.5px;margin-top:6px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-size:15px;cursor:pointer}
+.check:first-of-type{border-top:0}
+.box{width:22px;height:22px;border-radius:6px;border:2px solid var(--ink);flex:none;display:grid;place-items:center;font-weight:800;font-size:13px}
+.check.on .box{background:var(--accent);border-color:var(--accent-strong)}
+.check.on .txt{text-decoration:line-through;color:var(--muted)}
+.pthumbs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pthumb{position:relative;cursor:pointer}
+.nbadge{position:absolute;bottom:8px;left:8px;background:var(--accent);color:var(--accent-ink);font-size:11.5px;font-weight:800;padding:3px 8px;border-radius:7px}
+details{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--card);margin-bottom:10px}
+summary{font-weight:700;cursor:pointer}
+.kv{display:grid;grid-template-columns:96px 1fr;gap:8px 10px;font-size:14px;margin-top:10px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600}
+.copy{font-size:11px;font-weight:700;color:var(--accent-strong);margin-left:6px;background:none;border:0}
+.toast{position:sticky;bottom:90px;margin:12px 18px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:12px;font-size:14px;font-weight:600}
+/* viewer overlay */
+.viewer{position:absolute;inset:0;z-index:30;background:rgba(12,14,16,.96);color:#fff;display:flex;flex-direction:column;overflow:auto}
+.vhead{display:flex;justify-content:space-between;align-items:center;padding:14px 18px}
+.vseg{display:inline-flex;background:#25292E;border-radius:11px;padding:3px}
+.vseg button{border:0;background:transparent;color:#C9CDD2;padding:7px 12px;border-radius:8px;font-weight:700;font-size:13px}
+.vseg button.on{background:var(--accent);color:var(--accent-ink)}
+.vbody{padding:0 18px 18px;display:grid;gap:16px;max-width:1100px;margin:0 auto;width:100%}
+.vbody .photo{border-color:#333}
+.note{display:flex;gap:10px;align-items:flex-start;background:#1C1F23;border-radius:12px;padding:12px;margin-bottom:8px;font-size:14.5px}
+.note .n{width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}
+.note .n.ans{background:#3A3F45;color:#fff}
+.note small{display:block;color:#A9AFB6;margin-top:3px}
+/* landing */
+.lnav{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;max-width:1160px;margin:0 auto}
+.hero{max-width:1160px;margin:0 auto;padding:14px 22px 34px;display:grid;gap:28px}
+.hero h1{font-size:40px;line-height:1.02}
+.hl{background:linear-gradient(transparent 58%,var(--accent) 58%)}
+.value{font-size:17px;color:var(--muted);max-width:480px;margin:14px 0 20px}
+.demo{position:relative}
+.demo .bcard{position:relative;margin-top:-30px;margin-left:12%;margin-right:4%;box-shadow:0 18px 40px rgba(0,0,0,.18);opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.demo .bcard.in{opacity:1;transform:none}
+.demolab{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.7);color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:8px}
+.credit{position:absolute;right:10px;top:10px;font-size:10.5px;color:#fff;background:rgba(0,0,0,.55);padding:3px 7px;border-radius:6px}.credit a{color:inherit}
+.funnel{display:grid;gap:8px}
+.fstep{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fstep span{font-size:13px;color:var(--muted)}
+.fstep .fn{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.fstep.on{background:var(--accent);border-color:var(--accent-strong)}
+.fstep.on .fn,.fstep.on span{color:var(--accent-ink)}
+.lsec{max-width:1160px;margin:0 auto;padding:0 22px 30px}
+.steps3{display:grid;gap:12px}
+.n3{font-family:Archivo;font-weight:800;font-size:12.5px;color:var(--accent-strong)}
+.cost{background:var(--ink);color:#fff;border-radius:18px;padding:22px;display:grid;gap:16px}
+.cost b{font-family:Archivo;font-size:30px;display:block;color:var(--accent)}
+.src2{display:block;font-size:11.5px;opacity:.6;margin-top:6px}
+.lfoot{border-top:1px solid var(--line);padding:18px 22px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted);max-width:1160px;margin:0 auto}
+/* responsive via container width */
+@container (min-width: 760px){
+  .hero{grid-template-columns:1.05fr 1fr;align-items:center;padding-top:30px}
+  .hero h1{font-size:56px}
+  .steps3{grid-template-columns:repeat(3,1fr)}
+  .cost{grid-template-columns:repeat(3,1fr)}
+  .funnel{grid-template-columns:repeat(4,1fr)}
+  .appnav{display:flex}
+  .tabbar{display:none}
+  .split{display:grid;grid-template-columns:380px 1fr;min-height:calc(100% - 61px)}
+  .listcol{border-right:1px solid var(--line);padding:16px}
+  .detailcol{padding:0 28px 24px;max-width:760px}
+  .vbody{grid-template-columns:1.5fr 1fr;align-items:start}
+  .phone-only{display:none !important}
+  .cbody{padding-top:28px}
+}
+@container (max-width: 759px){ .desk-only{display:none !important} }
+</style>
+</head>
+<body>
+<div class="ctl"><div class="ctlin">
+  <div class="brand"><span class="logo">1</span>OneTrip <span class="muted small" style="font-family:Inter;font-weight:500">· flow v3</span></div>
+  <div class="seg" id="dev"><button data-d="desktop">🖥 Desktop</button><button data-d="phone">📱 Phone</button></div>
+  <div class="opts" id="opts"></div>
+  <div class="steps" id="steps"></div>
+</div></div>
+<div class="stagewrap">
+  <div class="cap" id="cap"></div>
+  <div class="vpwrap" id="vpwrap"><div class="vp" id="vp"></div><div id="overlay"></div></div>
+  <div class="navb"><button class="btn ghost sm" id="prev">← Back</button><button class="btn dark sm" id="next">Next screen →</button></div>
+</div>
+
+<script>
+const S={i:0,dev:'desktop',q:0,photo:0,shot:{0:0,1:0},read:0,checked:{},sent:false,deleted:false,
+  viewer:null,ai:true,answers:{fan:'No, it’s still',hum:'Yes, humming',thermo:'Yes, it’s warm',smell:'No'},
+  opt:{voice:true,savings:true,parts:true,range:true}};
+const OPT=[['voice','Mic'],['savings','Near-misses stat'],['parts','Parts buy link'],['range','Price range']];
+const SCREENS=[
+ ['landing','Landing','Pro'],['login','Log in','Pro'],['onboard','Set up','Pro'],['empty','First run','Pro'],['requests','Requests + brief','Pro'],
+ ['newreq','New request','Pro'],['share','Send link','Pro'],
+ ['cwelcome','Welcome','Customer'],['cphoto','Photos','Customer'],['creading','Reading photos','Customer'],['cquestions','Questions','Customer'],['creview','Review','Customer'],['cdone','Sent','Customer'],
+ ['brief','Service brief','Pro'],['settings','Settings','Pro']];
+const QS=[
+ {id:'fan',short:'Outdoor fan spinning?',because:'Your outdoor unit photo shows a <b>Carrier 3-ton AC</b>.',q:'With the AC on, is the big fan on top of the outdoor unit spinning?',help:'Look from a few feet away. Don’t touch it.',opts:['Yes, it’s spinning','No, it’s still','Not sure']},
+ {id:'hum',short:'Humming sound?',because:'A still fan can mean a weak part we can bring with us.',q:'Do you hear a hum or buzz from the outdoor unit?',help:'Stand next to it for a few seconds.',opts:['Yes, humming','No sound','Not sure']},
+ {id:'thermo',short:'Vent air warm?',because:'Your thermostat photo shows <b>Cool, set to 72°</b>, with the room at 81°.',q:'Is the air coming out of your vents warm?',help:'Hold your hand near a vent.',opts:['Yes, it’s warm','No, it feels cool','Not sure']},
+ {id:'smell',short:'Burning smell?',because:'This keeps you safe.',q:'Any burning smell, smoke, or sparks near the unit?',help:'',opts:['No','Yes','Not sure']}];
+const NOTES={0:[{n:1,x:72.5,y:71.5,t:'Label: Carrier 24ACC636A003, 3-ton, 230V',s:'Identifies the equipment and the capacitor rating to bring'},
+                {n:2,x:50,y:24,t:'Fan on top of the unit',s:'Drew says it isn’t spinning while the unit runs'},
+                {n:3,x:30,y:60,t:'No visible damage, ice, or debris on the coils',s:'Makes a blocked or frozen coil less likely'}],
+            1:[{n:1,x:50,y:42,t:'Set to Cool, 72°, room at 81°',s:'The thermostat is calling for cooling, so it’s not the cause'}]};
+const HERO_PINS=[{n:1,x:66.5,y:43},{n:2,x:47,y:59},{n:3,x:71.5,y:47}];
+const ANS_NOTES=[{t:'“Yes, humming” from the outdoor unit',s:'Power is reaching the unit, so the fan can’t start'},{t:'“Stopped after the heat wave”',s:'Capacitors often fail after long hot runs'}];
+const $=s=>document.querySelector(s);
+const at=k=>SCREENS.findIndex(s=>s[0]===k);
+function go(i){S.i=Math.max(0,Math.min(SCREENS.length-1,i));S.viewer=null;if(SCREENS[S.i][0]==='creading')startReading();render();$('#vp').scrollTop=0}
+
+/* illustrations */
+function condenserSVG(){let f='';for(let x=70;x<330;x+=9)f+=`<line x1="${x}" y1="95" x2="${x}" y2="260" stroke="#8C9096" stroke-width="2"/>`;
+return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#7FA36A"/><rect y="240" width="400" height="60" fill="#B6AE9D"/><rect x="60" y="70" width="280" height="200" rx="10" fill="#C9CCD0"/>${f}<ellipse cx="200" cy="72" rx="110" ry="14" fill="#5D6268"/><circle cx="200" cy="72" r="10" fill="#2F3337"/>
+<rect x="250" y="190" width="80" height="50" rx="4" fill="#FAFAF7" stroke="#999"/><text x="256" y="205" font-size="8" font-family="Inter" font-weight="700" fill="#1A3C8F">CARRIER</text><text x="256" y="216" font-size="7" font-family="Inter" fill="#333">MOD 24ACC636A003</text><text x="256" y="226" font-size="7" font-family="Inter" fill="#333">SER 2919E1••••</text><text x="256" y="236" font-size="7" font-family="Inter" fill="#333">208/230V 1PH</text></svg>`}
+function thermoSVG(){return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#E7E1D6"/><rect x="130" y="70" width="140" height="160" rx="18" fill="#FBFBF8" stroke="#CFC8BB"/><rect x="148" y="92" width="104" height="70" rx="8" fill="#1D2B24"/><text x="200" y="136" text-anchor="middle" font-size="30" font-family="Inter" font-weight="700" fill="#9BE7B1">72°</text><text x="200" y="154" text-anchor="middle" font-size="10" font-family="Inter" fill="#9BE7B1">COOL · ROOM 81°</text><circle cx="175" cy="195" r="10" fill="#E3DED3"/><circle cx="225" cy="195" r="10" fill="#E3DED3"/></svg>`}
+const PH=[condenserSVG,thermoSVG];
+const pins=(idx,anim)=>NOTES[idx].map((p,k)=>`<span class="pin ${anim?'pulse':''}" style="left:${p.x}%;top:${p.y}%;">${p.n}</span>`).join('');
+
+/* shells */
+const CU='onetrip.app/i/7KQ2';
+function cust(body,bar){return `<div class="cwrap"><div class="curl">🔒 ${CU}</div><div class="cbody">${body}</div>${bar?`<div class="actbar">${bar}</div>`:''}</div>`}
+function app(inner,{tab=0,noTabs=false}={}){return `<div class="appbar"><div class="brand"><span class="logo">1</span><span>OneTrip</span></div>
+<div class="appnav"><span class="${tab===0?'on':''}">Requests</span><span class="${tab===1?'on':''}">Settings</span></div>
+<div class="row"><span class="small muted desk-only">Coolside Heating &amp; Air</span><div class="thumb" style="width:34px;height:34px;border-radius:50%;font-size:13px;font-weight:800">M</div></div></div>
+${inner}${noTabs?'':`<div class="tabbar">${['Requests','Settings'].map((t,i)=>`<span class="${i===tab?'on':''}"><i></i>${t}</span>`).join('')}</div>`}`}
+
+/* pieces */
+function req(n,addr,issue,tone,status,thumb,ago,sel,click){return `<div class="reqcard ${sel?'sel':''}" onclick="${click||''}"><div class="thumb">${thumb}</div><div class="t"><div class="row between"><b>${n}</b><span class="small muted">${ago}</span></div><div class="addr">${addr}</div><div class="row between" style="margin-top:4px"><span class="small">${issue}</span><span class="st ${tone}">${status}</span></div></div></div>`}
+function reqList(sel){return `${S.opt.savings?`<div class="card row between" style="background:var(--ink);color:#fff;border:0"><div><div class="small" style="opacity:.75">Near misses caught this month</div><div class="disp" style="font-size:24px;font-weight:800">4 · ~$960</div></div><div class="small" style="opacity:.7;text-align:right">at ~$240<br>per trip</div></div>`:''}
+<div class="row between"><div class="label sec">Needs your eyes · 2</div><button class="btn sm desk-only" onclick="go(at('newreq'))">+ New request</button></div>
+${req('Drew K.','14 Alder Ln, Redmond','AC not cooling','ready','Brief ready',condenserSVG(),'2m',sel,"S.dev==='phone'?go(at('brief')):0")}
+${req('Priya S.','880 Pine St #4, Kirkland','Furnace won’t ignite','ready','Brief ready','🔥','1h')}
+<div class="label sec">Waiting on customer · 1</div>${req('Tom R.','2210 NE 8th, Bellevue','Water under indoor unit','wait','Link sent','⏳','25m')}
+<div class="label sec">Done · 3</div>${req('Ana L.','503 Lake Dr, Redmond','Thermostat blank','done','Reviewed','✓','Yesterday')}
+<button class="btn block phone-only" style="margin-top:10px" onclick="go(at('newreq'))">+ New request</button>`}
+function brief(){return `<div class="bhead"><div class="row between"><button class="link small phone-only" onclick="go(at('requests'))">← Requests</button><span class="st ready">Brief ready</span></div>
+<h2 style="font-size:24px;margin-top:4px">Drew K.</h2><div class="addr">14 Alder Ln, Redmond · AC not cooling · sent 2 min ago</div>
+<div class="qa"><button>📞 Call</button><button>💬 Text</button><button>🧭 Directions</button></div></div>
+<div class="verdict"><div class="row between"><span class="label">Likely cause</span><span class="conf high">● High</span></div>
+<div class="disp" style="font-size:20px;font-weight:800;margin-top:4px;line-height:1.2">Failed run capacitor</div>
+<div class="why">Fan won’t spin but the unit hums. The thermostat is calling for cool.</div>
+<button class="link" style="margin-top:8px" onclick="openViewer(0)">See why →</button></div>
+<div class="card"><div class="label">Bring</div>${[['cap','Dual run capacitor 45/5 µF, 440V',S.opt.parts],['cont','Contactor 30A 2-pole (backup)',false],['meter','Multimeter with capacitance',false]].map(([k,t,l])=>`<div class="check ${S.checked[k]?'on':''}" onclick="S.checked['${k}']=!S.checked['${k}'];render()"><div class="box">${S.checked[k]?'✓':''}</div><div class="txt">${t}${l?`<div class="small" style="color:var(--accent-strong);font-weight:700">Order from your supplier · coming soon</div>`:''}</div></div>`).join('')}</div>
+<div class="card"><div class="label">Confirm on site</div><div style="margin-top:6px">Test the capacitor before swapping it. If the fan still won’t start, check the motor.</div>
+<div class="small muted" style="margin-top:8px">Also possible: stuck contactor, failed fan motor <span class="conf low" style="margin-left:4px">◔ Low</span></div></div>
+<div class="label sec">Photos · tap to see the AI’s notes</div>
+<div class="pthumbs">${[0,1].map(i=>`<div class="pthumb" onclick="openViewer(${i})"><div class="photo">${PH[i]()}</div><span class="nbadge">${NOTES[i].length} AI note${NOTES[i].length>1?'s':''}</span></div>`).join('')}</div>
+<details style="margin-top:12px"><summary>More details</summary>
+<dl class="kv"><dt>Equipment</dt><dd>Carrier 3-ton AC</dd><dt>Model</dt><dd><span class="mono">24ACC636A003</span><button class="copy">COPY</button></dd><dt>Serial</dt><dd><span class="mono">2919E1••••</span><button class="copy">COPY</button></dd><dt>Thermostat</dt><dd>Cool · 72° · room 81°</dd><dt>Safety</dt><dd>${S.answers.smell==='Yes'?'<span class="st bad">⚠ Burning smell</span>':'No smell or sparks'}</dd>${S.opt.range?`<dt>Estimate</dt><dd>$150–$350, shown to Drew</dd>`:''}</dl>
+<div class="label" style="margin-top:14px">What the AI didn’t see</div><div class="small" style="margin-top:4px">Inside the service panel (Drew wasn’t asked to open it) and the breaker.</div>
+<div class="label" style="margin-top:14px">Drew’s answers</div>${qList().map(Q=>`<div class="rv"><span class="muted">${Q.short}</span><span>${S.answers[Q.id]||'Skipped'}</span></div>`).join('')}<div class="rv"><span class="muted">Anything else</span><span>“Stopped after the heat wave”</span></div></details>
+<details><summary>Photos and privacy</summary><div class="small" style="margin-top:8px">${S.deleted?'✓ Photos deleted.':'Photos are deleted automatically 30 days after you mark this done.'}</div>${S.deleted?'':`<button class="btn ghost sm" style="margin-top:10px;color:var(--bad)" onclick="S.deleted=true;render()">Delete photos now</button>`}</details>
+<div class="actbar" style="margin:0 -18px"><button class="btn ghost" style="flex:1">Ask for a photo</button><button class="btn" style="flex:1.4">Mark reviewed</button></div>`}
+function qList(){return S.answers.fan==='Yes, it’s spinning'?QS.filter(q=>q.id!=='hum'):QS}
+
+/* screens */
+const V={
+landing(){return `<div class="lnav"><div class="brand"><span class="logo">1</span>OneTrip</div><div class="row"><button class="link desk-only">GitHub</button><button class="btn ghost sm" onclick="go(at('login'))">Log in</button></div></div>
+<div class="hero"><div><h1>Know what’s broken <span class="hl">before you roll the truck.</span></h1>
+<p class="value"><b style="color:var(--ink)">One trip, not two.</b> Your customer sends photos from a text, and you get a one-screen brief: what’s wrong, why, and what to load in the truck.</p>
+<div class="row wrapr"><button class="btn" onclick="go(at('login'))">Start free</button><button class="btn ghost" onclick="go(at('brief'))">See a sample brief</button></div>
+<div class="small muted" style="margin-top:12px">Free · Open source · No app for your customers</div></div>
+<div class="demo"><div class="photo" style="aspect-ratio:1920/1337;background:#ddd"><img src="assets/ac-condenser.jpg" alt="Customer photo of a Carrier outdoor AC unit" style="width:100%;height:100%;object-fit:cover;display:block">${HERO_PINS.map(p=>`<span class="pin pulse" style="left:${p.x}%;top:${p.y}%">${p.n}</span>`).join('')}<span class="demolab">Customer’s photo, read by OneTrip</span><span class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Carrier_Outdoor_Split_Air_Conditioner_Heat_Pump_System_(55005181522).jpg" target="_blank" rel="noopener">Tony Webster</a>, CC BY 4.0</span></div>
+<div class="card bcard"><div class="row between"><span class="label">Likely cause</span><span class="conf high">● High</span></div><div class="disp" style="font-size:18px;font-weight:800;margin:4px 0 8px">Failed run capacitor</div>
+<div class="small"><b>①</b> Carrier outdoor unit · <b>②</b> fan not spinning · <b>③</b> lines intact, no ice</div><div class="small" style="margin-top:6px"><b>Bring:</b> run capacitor · contactor · multimeter</div></div></div></div>
+<div class="lsec"><div class="steps3">
+<div class="card"><div class="n3">NO GUESSWORK</div><h3 style="margin:6px 0 4px;font-size:18px">Know the cost and time before you go</h3><span class="muted small">Likely cause, parts list, and a price range before you roll, so neither of you gets surprised on site.</span></div>
+<div class="card"><div class="n3">NO MISSED JOBS</div><h3 style="margin:6px 0 4px;font-size:18px">Don’t lose the job to a second visit</h3><span class="muted small">A customer who waits two days for a part calls someone else. Fix it the first time and keep them.</span></div>
+<div class="card"><div class="n3">NEAR MISSES</div><h3 style="margin:6px 0 4px;font-size:18px">See the trips you almost lost</h3><span class="muted small">Every brief that changed what you loaded is counted, so you can see the second trips you avoided.</span></div></div></div>
+<div class="lsec"><div class="steps3"><div class="card"><div class="n3">1 · 10 SECONDS</div><h3 style="margin:6px 0 4px;font-size:18px">Add the request</h3><span class="muted small">Name, number, and what they said.</span></div>
+<div class="card"><div class="n3">2 · 90 SECONDS</div><h3 style="margin:6px 0 4px;font-size:18px">They snap photos</h3><span class="muted small">From a text. Questions are written from their photos.</span></div>
+<div class="card"><div class="n3">3 · BEFORE YOU LEAVE</div><h3 style="margin:6px 0 4px;font-size:18px">You load the right parts</h3><span class="muted small">Model, likely cause, and why, with every reason pinned on the photo.</span></div></div></div>
+<div class="lsec"><div class="label" style="margin-bottom:10px">Where OneTrip fits</div>
+<div class="funnel"><div class="fstep"><div class="fn">Not us</div><b>Customer finds you</b><span>Google, Thumbtack, referrals, your truck wrap</span></div>
+<div class="fstep"><div class="fn">Not us</div><b>You book the job</b><span>Phone, text, Jobber, Housecall Pro, a paper calendar</span></div>
+<div class="fstep on"><div class="fn">OneTrip</div><b>Before the visit</b><span>Photos, the right questions, a brief, the right parts</span></div>
+<div class="fstep"><div class="fn">You</div><b>Fix it in one trip</b><span>No second visit, no lost afternoon</span></div></div>
+<p class="muted" style="margin:12px 0 0;max-width:720px"><b style="color:var(--ink)">We don’t sell leads or match you with customers.</b> No lead fees, no bidding. OneTrip starts after you’ve won the job, and makes that first visit count. It works alongside whatever you already use.</p></div>
+<div class="lsec"><div class="label" style="margin-bottom:10px">For any trade</div><span class="chip">HVAC</span><span class="chip">Electrical</span><span class="chip">Plumbing</span><span class="chip">Appliance repair</span><span class="chip">Garage doors</span><span class="chip">Handyman</span></div>
+<div class="lsec"><div class="cost"><div><b>1 in 4</b>field service visits don’t fix the problem on the first trip<span class="src2">The Service Council, 2017</span></div><div><b>51%</b>of those failed first visits come down to missing or wrong parts<span class="src2">Aberdeen Group, 2013</span></div><div><b>$0</b>OneTrip is free and open source<span class="src2">MIT license</span></div></div></div>
+<div class="lsec"><div class="card row between wrapr"><div><b>Your customers’ photos stay private.</b><div class="small muted">Stored privately, location data removed, deleted automatically after the job.</div></div><button class="link">How we handle photos →</button></div></div>
+<div class="lfoot"><span>OneTrip · MIT licensed</span><span>Privacy · GitHub</span></div>`},
+
+login(){return `<div class="cwrap"><div class="cbody" style="padding-top:60px"><div class="brand" style="font-size:24px"><span class="logo">1</span>OneTrip</div>
+<h2 style="font-size:30px;margin:26px 0 6px">Log in or sign up</h2><p class="muted" style="font-size:15px">We’ll email you a 6-digit code. No password.</p>
+<label class="fl">Work email</label><input value="marco@coolsidehvac.com">
+<div class="card" style="background:var(--chip);border:0"><div class="small muted">Code sent to marco@coolsidehvac.com</div><div class="row" style="margin-top:8px">${'481926'.split('').map(d=>`<div style="flex:1;height:52px;border-radius:12px;background:var(--card);border:1.5px solid var(--line);display:grid;place-items:center;font-family:Archivo;font-size:22px;font-weight:700">${d}</div>`).join('')}</div><div class="small" style="margin-top:8px">Or tap the link in the email.</div></div></div>
+<div class="actbar"><button class="btn block" onclick="go(at('onboard'))">Continue</button></div></div>`},
+
+onboard(){return `<div class="cwrap"><div class="cbody"><h2 style="font-size:26px;margin:10px 0 4px">Set up your shop</h2><p class="muted small">About a minute. You can change it later.</p>
+<label class="fl">Business name</label><input value="Coolside Heating & Air"><label class="fl">Business phone (shown to customers)</label><input value="(425) 555-0190">
+<div class="fl">What do you do?</div><div style="margin:8px 0 12px">${['HVAC','Electrical','Plumbing','Appliance repair','Garage doors','Handyman'].map((t,i)=>`<span class="chip ${i===0?'sel':''}">${t}</span>`).join('')}</div>
+${S.opt.range?`<div class="row"><div style="flex:1"><label class="fl">Service call</label><input value="$89"></div><div style="flex:1"><label class="fl">Hourly</label><input value="$135"></div></div><div class="card row between"><div><b class="small">Show customers a price range</b><div class="small muted">Built from your rates.</div></div><button class="sw on"></button></div>`:''}</div>
+<div class="actbar"><button class="btn block" onclick="go(at('empty'))">Finish</button></div></div>`},
+
+empty(){return app(`<div class="cwrap" style="min-height:auto"><div class="cbody"><div class="card" style="text-align:center;padding:24px 18px"><div style="font-size:34px">📭</div><h3 style="margin:8px 0 4px">No requests yet</h3><p class="muted small" style="margin:0 0 14px">Send your first link, or try it on yourself to see what customers see.</p>
+<button class="btn block" onclick="go(at('newreq'))">+ New request</button><div style="height:8px"></div><button class="btn ghost block" onclick="go(at('cwelcome'))">Send myself a test request</button></div>
+<div class="card small"><b>Tip:</b> Add OneTrip to your home screen so it opens like an app. <button class="link">Show me how</button></div></div></div>`)},
+
+requests(){return app(`<div class="split"><div class="listcol">${reqList(true)}</div><div class="detailcol desk-only">${brief()}</div></div>`)},
+brief(){return app(`<div class="split"><div class="listcol desk-only">${reqList(true)}</div><div class="detailcol">${brief()}</div></div>`,{noTabs:true})},
+
+newreq(){return app(`<div class="cwrap" style="min-height:auto"><div class="cbody" style="font-size:15px"><div class="row between"><h2 style="font-size:24px">New request</h2><button class="link" onclick="go(at('requests'))">Cancel</button></div>
+<div style="height:12px"></div><label class="fl">Customer first name</label><input value="Drew"><label class="fl">Mobile number</label><input value="(425) 555-0148">
+<div class="fl">What’s going on?</div><div style="margin:8px 0 6px">${['AC not cooling','No heat','Water leak','Noisy unit','Thermostat','Other'].map((t,i)=>`<span class="chip ${i===0?'sel':''}">${t}</span>`).join('')}</div>
+<button class="link small" style="margin:6px 0 14px">+ Add address or a note (optional)</button>
+<div class="card small"><b>Drew will be asked for</b><div class="muted" style="margin-top:4px">📷 The outdoor unit with its label · 📷 The thermostat screen<br>Then a few questions written from those photos.</div></div>
+<button class="btn block" onclick="go(at('share'))">Create link</button></div></div>`)},
+
+share(){return app(`<div class="cwrap" style="min-height:auto"><div class="cbody" style="font-size:15px"><div class="row between"><h2 style="font-size:24px">Send to Drew</h2><button class="link" onclick="go(at('requests'))">Done</button></div>
+<div class="label" style="margin:14px 0 6px">Message, sent from your phone</div>
+<div class="card" style="background:var(--chip);border:0">Hi Drew, it’s Marco from Coolside Heating &amp; Air. So I can bring the right parts on the first trip, can you snap 2 photos and answer a few taps? About 90 seconds, no app: <b style="color:var(--accent-strong)">${CU}</b></div>
+<div class="small muted" style="margin:-2px 0 14px">Nothing is sent automatically. You see exactly what goes out.</div>
+<button class="btn block" onclick="S.sent=true;render()">💬 Text Drew</button><div style="height:8px"></div>
+<div class="row"><button class="btn ghost sm" style="flex:1">WhatsApp</button><button class="btn ghost sm" style="flex:1">Copy link</button><button class="btn ghost sm" style="flex:1">QR code</button></div>
+${S.sent?`<div class="alert ok">✓ Sent. We’ll let you know when Drew finishes.</div>`:''}</div></div>`)},
+
+cwelcome(){return cust(`<div class="row" style="gap:12px;margin-top:8px"><div style="width:52px;height:52px;border-radius:15px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-family:Archivo">CH</div><div><b>Coolside Heating &amp; Air</b><div class="small muted">(425) 555-0190 · Marco</div></div></div>
+<h2 style="font-size:30px;margin:24px 0 8px;line-height:1.08">Help Marco fix your AC in one trip.</h2><p class="muted" style="font-size:16px">A few photos of your AC so he brings the right parts.</p>
+<div class="effort"><div><b>2</b>photos</div><div><b>~3</b>quick taps</div><div><b>90s</b>total</div></div>
+<div class="small muted">No app or account. Only Coolside sees your photos, and they’re deleted 30 days after your job. We’ll never ask you to open covers or touch wiring.</div>`,
+`<button class="btn block" onclick="S.photo=0;go(at('cphoto'))">Start with photos</button>`)},
+
+cphoto(){const P=[{t:'Photo 1 of 2: the outdoor unit',h:'Stand back so the whole unit fits, with the label on its side in focus. Keep people out of the photo.',ok:'We read: <b>Carrier 24ACC636</b> · 3-ton · serial found'},
+ {t:'Photo 2 of 2: your thermostat screen',h:'Just the screen, so we can see the setting and room temperature.',ok:'We read: <b>Cool · set 72° · room 81°</b>'}];
+const p=P[S.photo],n=S.shot[S.photo],blurry=S.photo===0&&n===1;
+const body=`<div class="q">${p.t}</div><div class="help">${p.h}</div>
+${n===0?`<div class="photo"><span class="tag">Like this</span>${PH[S.photo]()}</div><button class="link" style="margin-top:12px">I can’t get this photo</button>`
+:`<div class="photo ${blurry?'blur':''}">${PH[S.photo]()}</div>${blurry?`<div class="alert warn">The label is a little blurry. Step closer and hold still.</div>`:`<div class="alert ok">✓ ${p.ok}</div>`}`}`;
+let bar;if(n===0)bar=`<button class="btn ghost" style="flex:1">Choose photo</button><button class="btn" style="flex:2" onclick="snap()">📷 Take photo</button>`;
+else if(blurry)bar=`<button class="btn ghost" style="flex:1" onclick="S.shot[0]=2;render()">Use anyway</button><button class="btn" style="flex:2" onclick="snap()">Retake</button>`;
+else bar=`<button class="btn block" onclick="${S.photo===0?'S.photo=1;render()':`go(at('creading'))`}">${S.photo===0?'Next photo':'Done with photos'}</button>`;
+return cust(body,bar)},
+
+creading(){const L=[['Outdoor unit','Carrier 3-ton AC, label read'],['Thermostat','Set to cool, room is 81°'],['Your questions','Written for your AC']];
+return cust(`<div class="q" style="margin-top:10px">Looking at your photos…</div><div class="help">A few seconds. Marco will see everything you sent.</div>
+${L.map((l,i)=>`<div class="ln"><span class="dot ${S.read>i?'go':S.read===i?'spin':''}">${S.read>i?'✓':''}</span><div><b>${l[0]}</b><div class="small muted">${S.read>i?l[1]:'…'}</div></div></div>`).join('')}`,
+`<button class="btn block" ${S.read<3?'disabled':''} onclick="S.q=0;go(at('cquestions'))">${S.read<3?'Almost ready…':'Answer a few quick questions'}</button>`)},
+
+cquestions(){const list=qList();if(S.q>=list.length)return describe();const Q=list[S.q],a=S.answers[Q.id],danger=Q.id==='smell'&&a==='Yes';
+return cust(`<div class="row between" style="margin-bottom:10px"><button class="link" onclick="S.q>0?(S.q--,render()):go(at('cphoto'))">← Back</button><span class="small muted">Almost done</span></div>
+<div class="because">💡 <span>${Q.because}</span></div><div class="q">${Q.q}</div>${Q.help?`<div class="help">${Q.help}</div>`:''}
+${Q.opts.map(o=>`<button class="opt ${a===o?'sel':''}" onclick="answer('${Q.id}','${o.replace(/'/g,"\\'")}')">${o}</button>`).join('')}
+${danger?`<div class="alert bad">⚠ Turn the AC off at the thermostat and stay away from the unit. If you see smoke or flames, call 911. Marco has been told this is urgent.</div>`:''}`,
+`<button class="btn block" onclick="S.q++;render()">${a?'Next':'Skip'}</button>`)},
+
+creview(){return cust(`<div class="q" style="margin-top:8px">Look right?</div><div class="help">Tap anything to change it.</div>
+<div class="row" style="gap:8px;margin-bottom:12px"><div class="photo" style="flex:1">${condenserSVG()}</div><div class="photo" style="flex:1">${thermoSVG()}</div></div>
+<div class="card">${qList().map((Q,i)=>`<div class="rv" onclick="S.q=${i};go(at('cquestions'))"><span class="muted">${Q.short}</span><span>${S.answers[Q.id]||'Skipped'}</span></div>`).join('')}<div class="rv"><span class="muted">Anything else</span><span>“Stopped after the heat wave”</span></div></div>`,
+`<button class="btn block" onclick="go(at('cdone'))">Send to Marco</button>`)},
+
+cdone(){return cust(`<div style="text-align:center;padding-top:30px"><div style="width:76px;height:76px;margin:0 auto;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:38px">✓</div>
+<h2 style="font-size:28px;margin:18px 0 6px">Sent to Marco</h2><p class="muted" style="font-size:16px">He’ll text you from (425) 555-0190 to set a time.</p></div>
+<div class="card"><div class="label">What happens next</div><div style="margin-top:6px;font-size:16px">Marco reviews your photos and brings the likely part, so it can be one visit.</div></div>
+${S.opt.range?`<div class="card"><div class="label">Estimated cost</div><div class="disp" style="font-size:28px;font-weight:800;margin-top:2px">$150 – $350</div><div class="small muted">Based on what you shared. Marco confirms on site.</div></div>`:''}
+<div class="small muted" style="text-align:center">You can close this page.</div>`)},
+
+settings(){return app(`<div class="cwrap" style="min-height:auto"><div class="cbody" style="font-size:15px"><h2 style="font-size:24px;margin-bottom:12px">Settings</h2>
+<div class="card"><div class="label">Business</div><label class="fl" style="display:block;margin-top:10px">Name</label><input value="Coolside Heating & Air"><label class="fl">Phone shown to customers</label><input value="(425) 555-0190" style="margin-bottom:4px"></div>
+${S.opt.range?`<div class="card"><div class="label">Rates</div><div class="row" style="margin-top:10px"><div style="flex:1"><label class="fl">Service call</label><input value="$89"></div><div style="flex:1"><label class="fl">Hourly</label><input value="$135"></div></div><div class="row between"><span class="small"><b>Show customers a price range</b></span><button class="sw on"></button></div></div>`:''}
+<div class="card"><div class="label">Photos and privacy</div><div class="small" style="margin:10px 0 6px"><b>Delete customer photos</b> after a request is marked done:</div>
+<div>${['7 days','30 days','90 days'].map((t,i)=>`<span class="chip ${i===1?'sel':''}">${t}</span>`).join('')}</div>
+<div class="small muted" style="margin:6px 0 12px">Photos are stored privately and have location data removed on upload. Customer links expire after 7 days.</div>
+<button class="btn ghost sm" style="color:var(--bad)">Delete all photos for completed requests</button></div>
+<div class="card row between"><span><b>Log out</b><div class="small muted">marco@coolsidehvac.com</div></span><button class="btn ghost sm">Log out</button></div></div></div>`,{tab:1})}
+};
+function describe(){return cust(`<div class="row between" style="margin-bottom:10px"><button class="link" onclick="S.q--;render()">← Back</button><span class="small muted">Last one, optional</span></div>
+<div class="q">Anything else Marco should know?</div><div class="help">In your own words.</div>
+<div class="row" style="align-items:flex-start"><textarea>Stopped after the heat wave</textarea>${S.opt.voice?`<button class="btn ghost" style="width:52px;padding:0;margin-top:5px">🎙</button>`:''}</div>`,
+`<button class="btn block" onclick="go(at('creview'))">Review and send</button>`)}
+
+/* photo viewer */
+function openViewer(i){S.viewer=i;S.ai=true;render()}
+function viewer(){const i=S.viewer;if(i===null)return '';const notes=NOTES[i];
+return `<div class="viewer"><div class="vhead"><button class="link" style="color:#fff" onclick="S.viewer=null;render()">✕ Close</button>
+<div class="vseg"><button class="${S.ai?'on':''}" onclick="S.ai=true;render()">AI notes</button><button class="${!S.ai?'on':''}" onclick="S.ai=false;render()">Plain photo</button></div>
+<span class="small" style="color:#A9AFB6">Photo ${i+1} of 2</span></div>
+<div class="vbody"><div class="photo">${PH[i]()}${S.ai?pins(i,false):''}</div>
+<div>${S.ai?`<div class="label" style="color:#A9AFB6;margin-bottom:8px">What the AI saw</div>${notes.map(p=>`<div class="note"><span class="n">${p.n}</span><div>${p.t}<small>${p.s}</small></div></div>`).join('')}
+${i===0?`<div class="label" style="color:#A9AFB6;margin:14px 0 8px">From Drew’s answers</div>${ANS_NOTES.map(a=>`<div class="note"><span class="n ans">💬</span><div>${a.t}<small>${a.s}</small></div></div>`).join('')}`:''}
+<div class="small" style="color:#A9AFB6;margin-top:10px">Pin positions are approximate. The notes are the source of truth.</div>`
+:`<div class="small" style="color:#A9AFB6">Plain photo, exactly as Drew sent it.</div>`}
+<div class="row" style="margin-top:14px">${[0,1].map(k=>`<button class="btn sm ${k===i?'':'ghost'}" style="${k===i?'':'background:#1C1F23;border-color:#333;color:#fff'}" onclick="S.viewer=${k};render()">Photo ${k+1}</button>`).join('')}</div></div></div></div>`}
+
+function snap(){S.shot[S.photo]++;render()}
+function answer(id,o){S.answers[id]=o;render()}
+let timer;function startReading(){S.read=0;clearInterval(timer);timer=setInterval(()=>{S.read++;if(SCREENS[S.i][0]==='creading')render();if(S.read>=3)clearInterval(timer)},900)}
+
+function render(){const [k,name,grp]=SCREENS[S.i];
+ $('#steps').innerHTML=SCREENS.map((s,i)=>`<button class="step ${i===S.i?'on':''}" onclick="go(${i})"><span class="g">${s[2]==='Customer'?'Customer ·':'Pro ·'}</span>${s[1]}</button>`).join('');
+ $('#cap').textContent=`${grp==='Customer'?'Customer':'Contractor'} · ${name} · ${S.dev==='phone'?'phone (390px)':'desktop'}`;
+ $('#vpwrap').className='vpwrap '+(S.dev==='phone'?'phone':'');
+ $('#vp').innerHTML=V[k]();$('#overlay').innerHTML=viewer();
+ $('#prev').disabled=S.i===0;$('#next').disabled=S.i===SCREENS.length-1;
+ if(k==='landing'){const els=[...document.querySelectorAll('#vp .pin.pulse'),document.querySelector('#vp .bcard')];els.forEach((el,n)=>setTimeout(()=>el&&el.classList.add('in'),500+n*650));}
+ document.querySelectorAll('#dev button').forEach(b=>b.classList.toggle('on',b.dataset.d===S.dev));
+ $('#opts').innerHTML='Optional: '+OPT.map(([k,l])=>`<button class="ot ${S.opt[k]?'on':''}" onclick="S.opt['${k}']=!S.opt['${k}'];render()">${l}</button>`).join('');}
+document.querySelectorAll('#dev button').forEach(b=>b.onclick=()=>{S.dev=b.dataset.d;render()});
+$('#prev').onclick=()=>go(S.i-1);$('#next').onclick=()=>go(S.i+1);
+render();
+</script>
+</body>
+</html>

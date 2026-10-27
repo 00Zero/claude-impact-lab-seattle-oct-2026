@@ -1,0 +1,12 @@
+{
+  "business": "Sweet Rose Bakery",
+  "source": {"type": "sqlite", "path": "bakery.db"},
+  "approval_threshold_cents": 50000,
+  "payment_tools": {
+    "mcp__bakery__pay_bill": {
+      "bill_id": "bill_id",
+      "amount_cents": "amount_cents",
+      "to_account": "to_account"
+    }
+  }
+}

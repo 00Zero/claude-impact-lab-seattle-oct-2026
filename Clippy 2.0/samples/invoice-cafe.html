@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Invoice INV-2026-10418</title>
+<style>
+  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #222; background: #fff; margin: 0; padding: 48px 56px; font-size: 14px; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #1f4e79; padding-bottom: 18px; }
+  .brand { font-size: 24px; font-weight: 700; color: #1f4e79; }
+  .muted { color: #666; line-height: 1.5; }
+  h1 { margin: 0; font-size: 30px; letter-spacing: 2px; color: #1f4e79; text-align: right; }
+  .meta td { padding: 2px 0 2px 16px; text-align: right; }
+  .parties { display: flex; gap: 80px; margin: 28px 0; }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #1f4e79; font-weight: 700; margin-bottom: 4px; }
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items th { background: #1f4e79; color: #fff; text-align: left; padding: 8px 10px; font-size: 12px; }
+  table.items td { padding: 9px 10px; border-bottom: 1px solid #ddd; }
+  table.items tr:nth-child(even) td { background: #f5f8fb; }
+  .num { text-align: right; white-space: nowrap; }
+  .totals { width: 320px; margin-left: auto; margin-top: 16px; border-collapse: collapse; }
+  .totals td { padding: 6px 10px; }
+  .totals .grand td { border-top: 2px solid #1f4e79; font-weight: 700; font-size: 16px; }
+  .foot { margin-top: 40px; font-size: 12px; color: #666; border-top: 1px solid #ddd; padding-top: 12px; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <div class="brand">Northwest Restaurant Supply</div>
+      <div class="muted">22415 84th Ave S<br>Kent, WA 98032<br>(253) 555-0147 · orders@nwrestaurantsupply.example</div>
+    </div>
+    <div>
+      <h1>INVOICE</h1>
+      <table class="meta">
+        <tr><td class="muted">Invoice #</td><td><b>INV-2026-10418</b></td></tr>
+        <tr><td class="muted">Invoice date</td><td>October 14, 2026</td></tr>
+        <tr><td class="muted">Customer #</td><td>C-20871</td></tr>
+        <tr><td class="muted">Terms</td><td>Net 15</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="parties">
+    <div>
+      <div class="label">Bill to</div>
+      <div class="muted"><b style="color:#222">Maria's Café</b><br>1408 E Pine St<br>Seattle, WA 98122</div>
+    </div>
+    <div>
+      <div class="label">Ship to</div>
+      <div class="muted"><b style="color:#222">Maria's Café</b><br>1408 E Pine St<br>Seattle, WA 98122</div>
+    </div>
+  </div>
+
+  <table class="items">
+    <tr><th>Item #</th><th>Description</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Amount</th></tr>
+    <tr><td>NWR-4471</td><td>Bread Flour, Unbleached, 50 lb bag</td><td class="num">1</td><td class="num">$72.00</td><td class="num">$72.00</td></tr>
+    <tr><td>NWR-2208</td><td>Granulated Sugar, Extra Fine, 25 lb bag</td><td class="num">2</td><td class="num">$24.50</td><td class="num">$49.00</td></tr>
+    <tr><td>NWR-7135</td><td>12 oz Paper Hot Cups, White, 1000 ct case</td><td class="num">1</td><td class="num">$119.00</td><td class="num">$119.00</td></tr>
+    <tr><td>NWR-7140</td><td>12 oz Hot Cup Lids, Black Sip-Thru, 1000 ct case</td><td class="num">1</td><td class="num">$68.00</td><td class="num">$68.00</td></tr>
+    <tr><td>NWR-5502</td><td>Dinner Napkins, 2-Ply White, 3000 ct case</td><td class="num">1</td><td class="num">$54.00</td><td class="num">$54.00</td></tr>
+    <tr><td>DEL</td><td>Delivery Fee</td><td class="num">1</td><td class="num">$15.00</td><td class="num">$15.00</td></tr>
+  </table>
+
+  <table class="totals">
+    <tr><td class="muted">Subtotal</td><td class="num">$377.00</td></tr>
+    <tr><td class="muted">Sales tax (10.25%)</td><td class="num">$38.64</td></tr>
+    <tr class="grand"><td>Total due</td><td class="num">$415.64</td></tr>
+  </table>
+
+  <div class="foot">
+    Please make checks payable to Northwest Restaurant Supply. Questions about this invoice? Call (253) 555-0147.<br>
+    Thank you for your business!
+  </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+{
+ "intro": "Suppose you are browsing social media, where you see posts of different news articles. We will ask you to consider whether you would share several news articles that vary on the following features: Headline: \"Two Elderly Men Sneak Out of Nursing Home To Attend Heavy Metal Festival\" \"Kansas Man Asks Judge To Allow Him to Have Sword Fight With Ex-Wife\" \"Authorities Scrample To Find Stolen Solid Gold Toilet\" \"Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000\" Source: Reddit.com vs. Quora.com vs. BBC News vs. PBS News Content Type: Entertaining vs. Informative Political Lean: Conservative vs. Liberal Number of Likes: 20 vs. 200 vs. 2,000 Each article will include one of the above headlines, sources, content type, political lean, and number of likes.",
+ "instruction": "Please indicate how likely you would be to share each of the following news articles by choosing a number on the seven-point scale (1 represents \"Very unlikely to share\" and 7 represents \"Very likely to share\").",
+ "cards": [
+  {
+   "id": "c01",
+   "text": "Headline: \"Authorities Scramble To Find Stolen Solid Gold Toilet\". Source: Quora.com. Content Type: Entertaining. Political Lean: Conservative. Number of Likes: 20 likes",
+   "headline": "Authorities Scramble To Find Stolen Solid Gold Toilet",
+   "source": "Quora.com",
+   "content": "Entertaining",
+   "lean": "Conservative",
+   "likes": "20"
+  },
+  {
+   "id": "c02",
+   "text": "Headline: \"Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival\". Source: BBCNews. Content Type: Informative. Political Lean: Liberal. Number of Likes: 200likes",
+   "headline": "Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival",
+   "source": "BBC News",
+   "content": "Informative",
+   "lean": "Liberal",
+   "likes": "200"
+  },
+  {
+   "id": "c03",
+   "text": "Headline: \"Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000\". Source: PBSNews. Content Type: Entertaining. Political Lean: Conservative. Number of Likes: 200likes",
+   "headline": "Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000",
+   "source": "PBS News",
+   "content": "Entertaining",
+   "lean": "Conservative",
+   "likes": "200"
+  },
+  {
+   "id": "c04",
+   "text": "Headline: \"Authorities Scramble To Find Stolen Solid Gold Toilet\". Source: Quora.com. Content Type: Entertaining. Political Lean: Liberal. Number of Likes: 2,000likes",
+   "headline": "Authorities Scramble To Find Stolen Solid Gold Toilet",
+   "source": "Quora.com",
+   "content": "Entertaining",
+   "lean": "Liberal",
+   "likes": "2000"
+  },
+  {
+   "id": "c05",
+   "text": "Headline: \"Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival\". Source: BBCNews. Content Type: Entertaining. Political Lean: Conservative. Number of Likes: 20likes",
+   "headline": "Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival",
+   "source": "BBC News",
+   "content": "Entertaining",
+   "lean": "Conservative",
+   "likes": "20"
+  },
+  {
+   "id": "c06",
+   "text": "Headline: \"Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival\". Source: Reddit.com. Content Type: Entertaining. Political Lean: Liberal. Number of Likes: 2,000likes",
+   "headline": "Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival",
+   "source": "Reddit.com",
+   "content": "Entertaining",
+   "lean": "Liberal",
+   "likes": "2000"
+  },
+  {
+   "id": "c07",
+   "text": "Headline: \"Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife\". Source: Quora.com. Content Type: Informative. Political Lean: Conservative. Number of Likes: 20likes",
+   "headline": "Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife",
+   "source": "Quora.com",
+   "content": "Informative",
+   "lean": "Conservative",
+   "likes": "20"
+  },
+  {
+   "id": "c08",
+   "text": "Headline: \"Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000\". Source: Reddit.com. Content Type: Informative. Political Lean: Liberal. Number of Likes: 20 likes",
+   "headline": "Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000",
+   "source": "Reddit.com",
+   "content": "Informative",
+   "lean": "Liberal",
+   "likes": "20"
+  },
+  {
+   "id": "c09",
+   "text": "Headline: \"Authorities Scramble To Find Stolen Solid Gold Toilet\". Source: Reddit.com. Content Type: Informative. Political Lean: Conservative. Number of Likes: 200likes",
+   "headline": "Authorities Scramble To Find Stolen Solid Gold Toilet",
+   "source": "Reddit.com",
+   "content": "Informative",
+   "lean": "Conservative",
+   "likes": "200"
+  },
+  {
+   "id": "c10",
+   "text": "Headline: \"Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000\". Source: BBCNews. Content Type: Entertaining. Political Lean: Conservative. Number of Likes: 2,000likes",
+   "headline": "Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000",
+   "source": "BBC News",
+   "content": "Entertaining",
+   "lean": "Conservative",
+   "likes": "2000"
+  },
+  {
+   "id": "c11",
+   "text": "Headline: \"Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival\". Source: PBSNews. Content Type: Informative. Political Lean: Conservative. Number of Likes: 2,000likes",
+   "headline": "Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival",
+   "source": "PBS News",
+   "content": "Informative",
+   "lean": "Conservative",
+   "likes": "2000"
+  },
+  {
+   "id": "c12",
+   "text": "Headline: \"Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife\". Source: PBSNews. Content Type: Informative. Political Lean: Liberal. Number of Likes: 2,000likes",
+   "headline": "Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife",
+   "source": "PBS News",
+   "content": "Informative",
+   "lean": "Liberal",
+   "likes": "2000"
+  },
+  {
+   "id": "c13",
+   "text": "Headline: \"Authorities Scramble To Find Stolen Solid Gold Toilet\". Source: BBCNews. Content Type: Informative. Political Lean: Conservative. Number of Likes: 2,000likes",
+   "headline": "Authorities Scramble To Find Stolen Solid Gold Toilet",
+   "source": "BBC News",
+   "content": "Informative",
+   "lean": "Conservative",
+   "likes": "2000"
+  },
+  {
+   "id": "c14",
+   "text": "Headline: \"Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival\". Source: Quora.com. Content Type: Entertaining. Political Lean: Conservative. Number of Likes: 200likes",
+   "headline": "Two Elderly Men Sneak Out Of Nursing Home To Attend Heavy Metal Festival",
+   "source": "Quora.com",
+   "content": "Entertaining",
+   "lean": "Conservative",
+   "likes": "200"
+  },
+  {
+   "id": "c15",
+   "text": "Headline: \"Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife\". Source: BBCNews. Content Type: Entertaining. Political Lean: Liberal. Number of Likes: 200likes",
+   "headline": "Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife",
+   "source": "BBC News",
+   "content": "Entertaining",
+   "lean": "Liberal",
+   "likes": "200"
+  },
+  {
+   "id": "c16",
+   "text": "Headline: \"Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife\". Source: Reddit.com. Content Type: Entertaining. Political Lean: Conservative. Number of Likes: 2,000likes",
+   "headline": "Kansas Man Asks Judge To Allow Him To Have Sword Fight With Ex-Wife",
+   "source": "Reddit.com",
+   "content": "Entertaining",
+   "lean": "Conservative",
+   "likes": "2000"
+  },
+  {
+   "id": "c17",
+   "text": "Headline: \"Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000\". Source: Quora.com. Content Type: Informative. Political Lean: Liberal. Number of Likes: 2,000likes",
+   "headline": "Applications To Become Japanese Billionaire Yusaku Maezawa's Girlfriend Have Topped 20,000",
+   "source": "Quora.com",
+   "content": "Informative",
+   "lean": "Liberal",
+   "likes": "2000"
+  },
+  {
+   "id": "c18",
+   "text": "Headline: \"Authorities Scramble To Find Stolen Solid Gold Toilet\". Source: PBSNews. Content Type: Entertaining. Political Lean: Liberal. Number of Likes: 20likes",
+   "headline": "Authorities Scramble To Find Stolen Solid Gold Toilet",
+   "source": "PBS News",
+   "content": "Entertaining",
+   "lean": "Liberal",
+   "likes": "20"
+  }
+ ]
+}

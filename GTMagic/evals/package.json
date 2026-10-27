@@ -1,0 +1,20 @@
+{
+  "name": "gtmagic-evals",
+  "private": true,
+  "type": "module",
+  "description": "Known-answer evals: score GTMagic and one-prompt baselines against a real founder's ground truth",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/megastudy.test.ts",
+    "megastudy": "tsx src/megastudy/cli.ts"
+  },
+  "dependencies": {
+    "csv-parse": "^7.0.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

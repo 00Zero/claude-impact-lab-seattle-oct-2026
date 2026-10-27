@@ -1,0 +1,89 @@
+{
+  "title": "What Rainier Paws' customers are saying",
+  "flags": {
+    "p138": "crypto trading spam",
+    "p016": "fake review seller"
+  },
+  "clusters": {
+    "0": {
+      "label": "Booking app double books",
+      "summary": "Since the spring app update, customers report double bookings, appointments cancelled or moved on their own, and even no-show fees charged for app-cancelled visits.",
+      "action": "Roll back or fix the app update, refund every no-show fee charged on an app-cancelled booking, and offer phone booking until it is stable."
+    },
+    "1": {
+      "label": "Daycare tires dogs out",
+      "summary": "Owners love that daycare sends their high-energy or anxious dogs home happy, calm and exhausted, and they appreciate staff knowing each dog and texting updates.",
+      "action": "Feature these quotes on the website and offer a two-days-a-week daycare package for high-energy breeds."
+    },
+    "2": {
+      "label": "Everyone loves Kenji",
+      "summary": "Kenji is praised as a meticulous, patient groomer whose clients follow him, though he is so popular that his slots are hard to get.",
+      "action": "Prompt Kenji's clients to prebook their next groom at checkout, and have Kenji mentor other groomers on scissor work."
+    },
+    "3": {
+      "label": "Pickups run hours late",
+      "summary": "Dogs are ready hours after the quoted time, with some crated all day waiting their turn and owners stuck at the counter or in their cars.",
+      "action": "Quote pickup windows based on the actual day's schedule, and text owners as soon as a delay becomes clear rather than at the end."
+    },
+    "4": {
+      "label": "Surprise fees and price hikes",
+      "summary": "Customers are upset by de-matting and other add-on fees that appear only at pickup and by repeated price increases; the group also includes one thank-you for a donated charity groom.",
+      "action": "Call before adding any fee over the quote, and make the website prices match what the counter charges."
+    },
+    "5": {
+      "label": "Kennel cough outbreak",
+      "summary": "A kennel cough outbreak spread through daycare and many owners heard about it secondhand, though several praise the stricter vaccine rule that followed.",
+      "action": "Write a simple plan for emailing all daycare families the same day any illness is spotted, and keep the vaccine requirement."
+    },
+    "6": {
+      "label": "Daycare webcam keeps breaking",
+      "summary": "The daycare live cam is a major reason people choose and pay for daycare, but it is frozen or offline for days or weeks at a time.",
+      "action": "Replace or repair the camera setup this month and post a status update whenever it goes down."
+    },
+    "7": {
+      "label": "Doodles shaved, not teddy",
+      "summary": "Owners who asked for a fluffy teddy bear cut got their doodles shaved, often with no phone call first; one owner says a printed photo with written lengths finally got it right.",
+      "action": "Require a call before any shave-down and use a written cut card with a photo and blade length for every doodle groom."
+    },
+    "8": {
+      "label": "Gentle with nervous dogs",
+      "summary": "Owners are moved by the patient handling of fearful, anxious and elderly dogs, though a couple of reports describe bleeding nicks that nobody mentioned at pickup.",
+      "action": "Offer the 'happy visit' intro as a named service, and make telling the owner about any nick at pickup a firm rule."
+    },
+    "9": {
+      "label": "Brooke's cuts hit or miss",
+      "summary": "Brooke is kind and improving, but her scissor work on faces and feet is uneven and some clients ask for Kenji instead.",
+      "action": "Pair Brooke with Kenji for scissor-finish practice and give her longer slots so she isn't rushed."
+    },
+    "10": {
+      "label": "People want cat grooming",
+      "summary": "Cat owners are asking for grooming and nail trims, and they are confused because the website says 'pet grooming' and the app lets them book a cat.",
+      "action": "Remove 'cat' from the app and change the website to say 'dog grooming', or test cat nail trims if demand looks strong."
+    },
+    "11": {
+      "label": "Cramped shared parking lot",
+      "summary": "The small lot shared with the laundromat is chaotic at morning dropoff and the tow signs confuse people; the group also includes one unrelated happy family review.",
+      "action": "Ask the laundromat about reserving a few spots for dropoff, and tell new clients where to park on the side street."
+    },
+    "12": {
+      "label": "Walk-in nail trims",
+      "summary": "The cheap, fast walk-in nail trims are a favorite, but people are frustrated by no weekend hours, no tap to pay, and a 'walk-ins welcome' sign that isn't always true.",
+      "action": "Post the actual walk-in hours on the sign and online, and add tap to pay at the counter."
+    },
+    "13": {
+      "label": "Treats and retail shelf",
+      "summary": "Customers love the local treats and paw balm but say the shelf is small and the popular items are often sold out; one former customer asks about shipping.",
+      "action": "Keep the best sellers like the salmon jerky, freeze-dried chicken and dental chews stocked, and consider simple online orders for customers who have moved away."
+    },
+    "14": {
+      "label": "Clipper burn and nicks",
+      "summary": "Several dogs came home with clipper burn, rashes, or small cuts near the eyelid and lip, and some needed vet care.",
+      "action": "Check blade temperature and use longer blades on bellies and sanitary areas, and follow up with a call after any skin issue."
+    },
+    "15": {
+      "label": "Photo events and good vibes",
+      "summary": "This group mixes praise for the Halloween and holiday charity photo events with general comments about the clean shop and cute Instagram, plus one lukewarm review.",
+      "action": "Plan the next holiday photo charity event and promote it on Instagram."
+    }
+  }
+}

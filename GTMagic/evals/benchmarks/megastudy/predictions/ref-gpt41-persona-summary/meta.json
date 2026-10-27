@@ -1,0 +1,6 @@
+{
+ "source": "Twin-2K-500-Mega-Study results.zip: results/infotainment/persona_summary_2025-08-01",
+ "model": "gpt-4.1",
+ "temperature": 0.7,
+ "note": "Published twin predictions (persona from all 4 waves unless the folder says otherwise); reference row, not our run."
+}

@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* OneTrip design tokens. See docs/design/README.md. */
+@theme {
+  --color-accent: #c5f23a;
+  --color-accent-ink: #101214;
+  --color-accent-strong: #3f5a00;
+  --color-accent-soft: #f1fbd3;
+
+  --color-ink: #101214;
+  --color-muted: #565b63;
+  --color-line: #d9d7d0;
+  --color-page: #fbfbf8;
+  --color-chip: #f0efea;
+
+  --color-ok: #17733f;
+  --color-ok-soft: #dcf0e3;
+  --color-wait: #5b616b;
+  --color-wait-soft: #ecedef;
+  --color-danger: #b42318;
+  --color-danger-soft: #fbe3e0;
+  --color-caution: #7a5200;
+  --color-caution-soft: #fbf0d6;
+}
+
+/* Font variables come from next/font in app/layout.tsx. */
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-archivo);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@keyframes pin-pop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  70% { transform: translate(-50%, -50%) scale(1.15); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+}

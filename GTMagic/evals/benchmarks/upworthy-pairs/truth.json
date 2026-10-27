@@ -1,0 +1,1702 @@
+{
+ "pair-001": {
+  "testId": "5408eaa1844567ec2d00003b",
+  "eyecatcherId": "5408a878844567846c000006",
+  "A": {
+   "headline": "File This Under Awesome Things About The Universe That I Had No Clue About",
+   "clicks": 34,
+   "impressions": 6191,
+   "ctr": 0.005491842997900178
+  },
+  "B": {
+   "headline": "Some Scientists Built A Road Map To The Galaxies Beyond The Milky Way That Is Kind Of Trippy",
+   "clicks": 18,
+   "impressions": 6139,
+   "ctr": 0.0029320736276266493
+  },
+  "winner": "A"
+ },
+ "pair-002": {
+  "testId": "53ec5244441a0bedf6000012",
+  "eyecatcherId": "53ec51fd2667edcf66000017",
+  "A": {
+   "headline": "It's Hard To Take Lesbian Porn Seriously When You Have Lesbians Explaining It Like This",
+   "clicks": 49,
+   "impressions": 3087,
+   "ctr": 0.015873015873015872
+  },
+  "B": {
+   "headline": "Who Doesn't  Like Certain Parts Of Lesbian Porn? These Lesbians.",
+   "clicks": 29,
+   "impressions": 3026,
+   "ctr": 0.009583608724388631
+  },
+  "winner": "A"
+ },
+ "pair-003": {
+  "testId": "536957fd21f4ad1b43000005",
+  "eyecatcherId": "536956c721f4ad95d9000008",
+  "A": {
+   "headline": "Great Words: 'The Only Time You Look In Your Neighbor's Bowl Is To Make Sure They Have Enough.'",
+   "clicks": 37,
+   "impressions": 2698,
+   "ctr": 0.013713862120088955
+  },
+  "B": {
+   "headline": "I Can't Tell You How Often I've Heard 'It's Not Fair!' From Adorable Kids, But Wow, What A Comeback!",
+   "clicks": 121,
+   "impressions": 2896,
+   "ctr": 0.0417817679558011
+  },
+  "winner": "B"
+ },
+ "pair-004": {
+  "testId": "53502624b921b4234c000025",
+  "eyecatcherId": "535005b4f55522a89800000b",
+  "A": {
+   "headline": "I Never Thought A Slice Of Pie Would Make Me So Angry",
+   "clicks": 51,
+   "impressions": 2300,
+   "ctr": 0.02217391304347826
+  },
+  "B": {
+   "headline": "90 Percent Of US Households Are Fighting Over One Tiny Slice Of Pie",
+   "clicks": 24,
+   "impressions": 2238,
+   "ctr": 0.010723860589812333
+  },
+  "winner": "A"
+ },
+ "pair-005": {
+  "testId": "54f8bed93737324288b00000",
+  "eyecatcherId": "54f75feb3135360019360100",
+  "A": {
+   "headline": "8 things to try when you start to feel sick (because science!)",
+   "clicks": 26,
+   "impressions": 2564,
+   "ctr": 0.01014040561622465
+  },
+  "B": {
+   "headline": "Honey, garlic, and booze? 8 ways to beat a sickness faster.",
+   "clicks": 7,
+   "impressions": 2560,
+   "ctr": 0.002734375
+  },
+  "winner": "A"
+ },
+ "pair-006": {
+  "testId": "547e25ca63646200211e0000",
+  "eyecatcherId": "547e239d616133001e2e0000",
+  "A": {
+   "headline": "5 Silly Ways Orgs Trying To Do Good In The World Are Held Back That For-Profit Companies Aren't",
+   "clicks": 13,
+   "impressions": 3083,
+   "ctr": 0.0042166720726565035
+  },
+  "B": {
+   "headline": "He Got A Standing Ovation For An Utter Takedown Of The Way We Do Charity",
+   "clicks": 32,
+   "impressions": 3032,
+   "ctr": 0.010554089709762533
+  },
+  "winner": "B"
+ },
+ "pair-007": {
+  "testId": "5418662d93f6334c2c000067",
+  "eyecatcherId": "5418669a93f633f31c00007e",
+  "A": {
+   "headline": "At First, What He\u2019s Describing Is A Little \u2026 Depressing. But Then, He Brings It Home. With Love.",
+   "clicks": 50,
+   "impressions": 3869,
+   "ctr": 0.012923235978288964
+  },
+  "B": {
+   "headline": "\u2018Why I Think The World Should End\u2019",
+   "clicks": 8,
+   "impressions": 3787,
+   "ctr": 0.002112490097702667
+  },
+  "winner": "A"
+ },
+ "pair-008": {
+  "testId": "51945e818349c80a980067c9",
+  "eyecatcherId": "5332bb651fae79f09f004e63",
+  "A": {
+   "headline": "An American Woman And Her 3 American Children Watch Their Dad Get Deported For No Good Reason",
+   "clicks": 35,
+   "impressions": 2825,
+   "ctr": 0.012389380530973451
+  },
+  "B": {
+   "headline": "The Stupidest, Cruelest Reason To Deport Someone Ever",
+   "clicks": 65,
+   "impressions": 2760,
+   "ctr": 0.02355072463768116
+  },
+  "winner": "B"
+ },
+ "pair-009": {
+  "testId": "53ff7a5950f4f32d70000030",
+  "eyecatcherId": "53f679b6b1f6b2d92b000028",
+  "A": {
+   "headline": "As A Kid, She Watched Apartments Burn. As An Adult She Went Back To Build Something Beautiful.",
+   "clicks": 8,
+   "impressions": 3079,
+   "ctr": 0.0025982461838259174
+  },
+  "B": {
+   "headline": "She Grew Up Just Blocks From A River \u2026 So Why Had She Never Seen It Before?",
+   "clicks": 20,
+   "impressions": 3076,
+   "ctr": 0.006501950585175552
+  },
+  "winner": "B"
+ },
+ "pair-010": {
+  "testId": "53dfb90b006f3491ea00004c",
+  "eyecatcherId": "53e1213743eda7c26d000027",
+  "A": {
+   "headline": "The Next Time Someone Asks You 'What Was She Wearing?', Just Ask Them To Watch This",
+   "clicks": 64,
+   "impressions": 4018,
+   "ctr": 0.015928322548531607
+  },
+  "B": {
+   "headline": "Some People Put The Responsibility On Women To Not Get Raped. That Seems Slightly Backwards. A Lot.",
+   "clicks": 27,
+   "impressions": 3898,
+   "ctr": 0.006926629040533607
+  },
+  "winner": "A"
+ },
+ "pair-011": {
+  "testId": "530f7225fa892230d8000033",
+  "eyecatcherId": "5332f762a2fc90ead0000fab",
+  "A": {
+   "headline": "Jon Stewart Teaches Arizona How Morality Works",
+   "clicks": 119,
+   "impressions": 2221,
+   "ctr": 0.053579468707789284
+  },
+  "B": {
+   "headline": "Dear Arizona, It's Time We Had A Talk About What Morality Is, And What It Isn't. HINT: Isn't = You.",
+   "clicks": 67,
+   "impressions": 2277,
+   "ctr": 0.029424681598594644
+  },
+  "winner": "A"
+ },
+ "pair-012": {
+  "testId": "550b617435303400183d0000",
+  "eyecatcherId": "550a24926235630018960000",
+  "A": {
+   "headline": "What happens when you ask cute kids to dig through a jar of cash and pull out bills featuring women?",
+   "clicks": 22,
+   "impressions": 2032,
+   "ctr": 0.010826771653543307
+  },
+  "B": {
+   "headline": "The faces on paper money haven't changed since 1929. You know what's missing? Women.",
+   "clicks": 5,
+   "impressions": 2019,
+   "ctr": 0.0024764735017335313
+  },
+  "winner": "A"
+ },
+ "pair-013": {
+  "testId": "53065c4b0a1ed1076b000029",
+  "eyecatcherId": "5332f891a2fc90ead0001534",
+  "A": {
+   "headline": "A Schoolyard Hero's Great Bravery Is All In A Name",
+   "clicks": 20,
+   "impressions": 2501,
+   "ctr": 0.007996801279488205
+  },
+  "B": {
+   "headline": "A Little Boy Becomes A Hero Just 'cause Of What His Mama And Papa Gave Him",
+   "clicks": 35,
+   "impressions": 2501,
+   "ctr": 0.013994402239104359
+  },
+  "winner": "B"
+ },
+ "pair-014": {
+  "testId": "516e0c6f65282900020067b1",
+  "eyecatcherId": "5332bacf1fae79f09f004133",
+  "A": {
+   "headline": "Want Another Reason To Turn Off Fox News? You\u2019re Welcome \n",
+   "clicks": 21,
+   "impressions": 2781,
+   "ctr": 0.007551240560949299
+  },
+  "B": {
+   "headline": "Behind Organized Hate\u2019s Playbook",
+   "clicks": 9,
+   "impressions": 2946,
+   "ctr": 0.003054989816700611
+  },
+  "winner": "A"
+ },
+ "pair-015": {
+  "testId": "53cec3dfd7c914f75e000027",
+  "eyecatcherId": "53cec408d7c9142dd9000026",
+  "A": {
+   "headline": "Think Getting Bullied On The Internet Isn't That Big A Deal? Ask The 1 in 4 Americans Who Have Been.",
+   "clicks": 8,
+   "impressions": 2526,
+   "ctr": 0.003167062549485352
+  },
+  "B": {
+   "headline": "Read This If You've Ever Been Bullied On The Internet. Or If You Bully People On The Internet.",
+   "clicks": 28,
+   "impressions": 2553,
+   "ctr": 0.010967489228358794
+  },
+  "winner": "B"
+ },
+ "pair-016": {
+  "testId": "5416e7c0f0fde2efca000053",
+  "eyecatcherId": "54137992e1fd5209c000003a",
+  "A": {
+   "headline": "She Didn't Get A Standing Ovation For This Speech... And The Reason Shouldn't Surprise You.",
+   "clicks": 52,
+   "impressions": 3533,
+   "ctr": 0.01471836965751486
+  },
+  "B": {
+   "headline": "'Mo' Money, Mo' Problems'? Yup. That's Exactly What's Going On Here.",
+   "clicks": 18,
+   "impressions": 3497,
+   "ctr": 0.005147269087789534
+  },
+  "winner": "A"
+ },
+ "pair-017": {
+  "testId": "53f3c8f911fdbfb6c800004f",
+  "eyecatcherId": "53f3d43511fdbfea76000063",
+  "A": {
+   "headline": "1 Simple Act That Can Save The Lives Of 9000 Dogs ... Every Day",
+   "clicks": 15,
+   "impressions": 3517,
+   "ctr": 0.004264998578333807
+  },
+  "B": {
+   "headline": "The Most Crucial Piece Of Information You Need To Know Before Getting Your Next Pet",
+   "clicks": 30,
+   "impressions": 3559,
+   "ctr": 0.008429334082607475
+  },
+  "winner": "B"
+ },
+ "pair-018": {
+  "testId": "54b46ab53164630018890000",
+  "eyecatcherId": "54b46bd53164630024670000",
+  "A": {
+   "headline": "Imagine Once Your Dog Got Old, That You Swapped Him For A Pup? Meet 'Puppy Swap.'",
+   "clicks": 26,
+   "impressions": 2830,
+   "ctr": 0.009187279151943463
+  },
+  "B": {
+   "headline": "Seriously? There's A Swap Service So You Only Ever Own Pups And Not Adult Dogs? Unbelievable.",
+   "clicks": 9,
+   "impressions": 2861,
+   "ctr": 0.0031457532331352674
+  },
+  "winner": "A"
+ },
+ "pair-019": {
+  "testId": "519d02357f7bed0012002959",
+  "eyecatcherId": "5332bb811fae79f09f00515e",
+  "A": {
+   "headline": "You Will Not Believe Who Just Joined The Top Secret Power That Controls Everything In The World",
+   "clicks": 17,
+   "impressions": 3670,
+   "ctr": 0.004632152588555858
+  },
+  "B": {
+   "headline": "The Illuminati Sure Have Been Lowering Their Standards For Membership Lately",
+   "clicks": 36,
+   "impressions": 3575,
+   "ctr": 0.01006993006993007
+  },
+  "winner": "B"
+ },
+ "pair-020": {
+  "testId": "53db0c0607a243945a000005",
+  "eyecatcherId": "53d981d7fb5574a15d00007e",
+  "A": {
+   "headline": "When 'How Are You Feeling Today' Was The Scariest Question A Doctor Could Ask",
+   "clicks": 18,
+   "impressions": 3656,
+   "ctr": 0.004923413566739606
+  },
+  "B": {
+   "headline": "A Creepy Historical Reason Why People Lie About Their Feelings To This Day",
+   "clicks": 57,
+   "impressions": 3574,
+   "ctr": 0.01594851706771125
+  },
+  "winner": "B"
+ },
+ "pair-021": {
+  "testId": "54870c9864333800180f0000",
+  "eyecatcherId": "54870b8f65313000241c0000",
+  "A": {
+   "headline": "Colbert Was Talking Smack, So The President Took Over His Show For 7 Minutes To Make A Point",
+   "clicks": 89,
+   "impressions": 3446,
+   "ctr": 0.025827045850261174
+  },
+  "B": {
+   "headline": "He Said He Could Do The President's Job Better Than The President. My How The Tables Have Turned.",
+   "clicks": 54,
+   "impressions": 3546,
+   "ctr": 0.015228426395939087
+  },
+  "winner": "A"
+ },
+ "pair-022": {
+  "testId": "54b1b8573438380021380000",
+  "eyecatcherId": "54af527333323600210b0000",
+  "A": {
+   "headline": "When This School Flipped Day And Night, It Woke Everyone Right Up",
+   "clicks": 43,
+   "impressions": 2738,
+   "ctr": 0.015704894083272462
+  },
+  "B": {
+   "headline": "For The Kids Who Think The Problem Is Them, This School Took A Long, Hard Look At Itself",
+   "clicks": 11,
+   "impressions": 2802,
+   "ctr": 0.0039257673090649535
+  },
+  "winner": "A"
+ },
+ "pair-023": {
+  "testId": "51b0e3ed39cbdb33f500b6d0",
+  "eyecatcherId": "5332bbc51fae79f09f005829",
+  "A": {
+   "headline": "In Their Yearbook, They're \"Cutest Couple\", But In My Book, They're \"Most Inspiring\"",
+   "clicks": 49,
+   "impressions": 3558,
+   "ctr": 0.013771781899943788
+  },
+  "B": {
+   "headline": "High Schoolers Cement Cute-Equality While Making Yearbook History",
+   "clicks": 26,
+   "impressions": 3529,
+   "ctr": 0.007367526211391329
+  },
+  "winner": "A"
+ },
+ "pair-024": {
+  "testId": "5514750d32393200183e0000",
+  "eyecatcherId": "5519c1c1373836000cc60000",
+  "A": {
+   "headline": "An infographic about how to reduce heart disease and anxiety with one fluffy friend.",
+   "clicks": 4,
+   "impressions": 2070,
+   "ctr": 0.001932367149758454
+  },
+  "B": {
+   "headline": "The magic power of self-healing cats, explained.",
+   "clicks": 15,
+   "impressions": 2040,
+   "ctr": 0.007352941176470588
+  },
+  "winner": "B"
+ },
+ "pair-025": {
+  "testId": "543548d19f48002245000048",
+  "eyecatcherId": "54346d41d2cea7d7d5000017",
+  "A": {
+   "headline": "A Comedian Takes On 'Slutty' Halloween Costumes In 3 Hilarious, NSFW Minutes",
+   "clicks": 93,
+   "impressions": 4004,
+   "ctr": 0.023226773226773228
+  },
+  "B": {
+   "headline": "3 Minutes Of NSFW Amazingness Is All She Needs To Destroy The Idea Of 'Slutty' Halloween",
+   "clicks": 58,
+   "impressions": 4077,
+   "ctr": 0.014226146676477803
+  },
+  "winner": "A"
+ },
+ "pair-026": {
+  "testId": "548626603831610024480000",
+  "eyecatcherId": "5486242f38316100187c0000",
+  "A": {
+   "headline": "When He Came Out To His Boss, He Didn't Expect The Question That Came Next",
+   "clicks": 41,
+   "impressions": 3048,
+   "ctr": 0.013451443569553806
+  },
+  "B": {
+   "headline": "A Dude Talks About Being A Dude And Why Said Dudeness Worried His Parents",
+   "clicks": 13,
+   "impressions": 3118,
+   "ctr": 0.004169339320076972
+  },
+  "winner": "A"
+ },
+ "pair-027": {
+  "testId": "515f3d4eeee8940002000414",
+  "eyecatcherId": "5332ba1d1fae79f09f002d42",
+  "A": {
+   "headline": "Watch Roger Ebert Tell A Sanctimonious White Dude To Shut His Preachy Race-Obsessed Pie Hole",
+   "clicks": 110,
+   "impressions": 2781,
+   "ctr": 0.039554117224020136
+  },
+  "B": {
+   "headline": "The One Where Roger Ebert Tells A Sanctimonious White Dude To Stop Telling Asians How To Act Asian",
+   "clicks": 84,
+   "impressions": 2825,
+   "ctr": 0.029734513274336283
+  },
+  "winner": "A"
+ },
+ "pair-028": {
+  "testId": "5490fb27306134001e300000",
+  "eyecatcherId": "5490dffc306134001e100000",
+  "A": {
+   "headline": "This Video Starts Out With Holiday Cheer, But Ends With A Tragedy Many Of Us Create",
+   "clicks": 17,
+   "impressions": 4163,
+   "ctr": 0.004083593562334855
+  },
+  "B": {
+   "headline": "Make Sure You Have Your Grandma\u2019s Number Ready. By The End Of This Video, You\u2019ll Need It.",
+   "clicks": 6,
+   "impressions": 4051,
+   "ctr": 0.0014811157738829918
+  },
+  "winner": "A"
+ },
+ "pair-029": {
+  "testId": "54b85cfa35663600131b0000",
+  "eyecatcherId": "54b85e29356636001c390000",
+  "A": {
+   "headline": "Salmon, Crab, Lobster, \u2013 Nothing Better Right? Well, There's A Dark Secret You Should Know About.",
+   "clicks": 31,
+   "impressions": 3413,
+   "ctr": 0.009082918253735717
+  },
+  "B": {
+   "headline": "If You Like Fish You're Gonna Love What These Guys Do With It",
+   "clicks": 11,
+   "impressions": 3279,
+   "ctr": 0.003354681305275999
+  },
+  "winner": "A"
+ },
+ "pair-030": {
+  "testId": "517873f25400d80002001804",
+  "eyecatcherId": "5332bb031fae79f09f004600",
+  "A": {
+   "headline": "Three Guys Pull A Prank So Hard They Might Die For It",
+   "clicks": 48,
+   "impressions": 2187,
+   "ctr": 0.02194787379972565
+  },
+  "B": {
+   "headline": "Dictators Have A Way Of Killing People Who Do This Kind Of Thing",
+   "clicks": 23,
+   "impressions": 2287,
+   "ctr": 0.010056843025797988
+  },
+  "winner": "A"
+ },
+ "pair-031": {
+  "testId": "52d0b522e550b3554a000059",
+  "eyecatcherId": "5332fde2a2fc90ead0002d8d",
+  "A": {
+   "headline": "We're Spending Money We Don't Have To Lock Up People Who Aren't Dangerous",
+   "clicks": 8,
+   "impressions": 2385,
+   "ctr": 0.0033542976939203353
+  },
+  "B": {
+   "headline": "The Numbers Behind Why America Has So Many People In Prison",
+   "clicks": 40,
+   "impressions": 2347,
+   "ctr": 0.017043033659991477
+  },
+  "winner": "B"
+ },
+ "pair-032": {
+  "testId": "51500f3fff58c80002008c89",
+  "eyecatcherId": "5332ba351fae79f09f002f96",
+  "A": {
+   "headline": "Why Can't The United States Supreme Court Be As Cool As The Supreme Court Of Mexico?",
+   "clicks": 39,
+   "impressions": 2533,
+   "ctr": 0.015396762731938412
+  },
+  "B": {
+   "headline": "Are You Kidding Me, America? How Is This Even Still An Issue?",
+   "clicks": 67,
+   "impressions": 2646,
+   "ctr": 0.025321239606953892
+  },
+  "winner": "B"
+ },
+ "pair-033": {
+  "testId": "5390746caa2af3c4bf000091",
+  "eyecatcherId": "538e6768ca747214dc000011",
+  "A": {
+   "headline": "One Studio's Approach To Honest Filmmaking Has Me Screaming 'Take My Money!'",
+   "clicks": 38,
+   "impressions": 3933,
+   "ctr": 0.00966183574879227
+  },
+  "B": {
+   "headline": "I'd Love To See More Films With Actors Like These",
+   "clicks": 21,
+   "impressions": 3816,
+   "ctr": 0.00550314465408805
+  },
+  "winner": "A"
+ },
+ "pair-034": {
+  "testId": "54062fcb4ca493891000004a",
+  "eyecatcherId": "5406337eb38b994a4400004b",
+  "A": {
+   "headline": "The True Story Of The Women Who Secretly Run Hollywood That No One Wants You To Know About",
+   "clicks": 31,
+   "impressions": 6165,
+   "ctr": 0.0050283860502838605
+  },
+  "B": {
+   "headline": "Hollywood Has Some Shocking Secrets But I Have To Say This Is One Of The Most Surprising",
+   "clicks": 58,
+   "impressions": 6287,
+   "ctr": 0.009225385716557977
+  },
+  "winner": "B"
+ },
+ "pair-035": {
+  "testId": "542b2d8a227ed8b74400002d",
+  "eyecatcherId": "542c06d534120fc01c00000f",
+  "A": {
+   "headline": "What Kinds Of Magic Happens When A River Returns To The Sea?",
+   "clicks": 62,
+   "impressions": 5799,
+   "ctr": 0.01069149853423004
+  },
+  "B": {
+   "headline": "In The West They Say \"Whiskey Is For Drinkin' And Water Is For Fightin'.\" Not These Guys.",
+   "clicks": 34,
+   "impressions": 5707,
+   "ctr": 0.005957595934816892
+  },
+  "winner": "A"
+ },
+ "pair-036": {
+  "testId": "53640434d2b3b8505f000018",
+  "eyecatcherId": "53596fb4f878ac074f00000a",
+  "A": {
+   "headline": "Hear How This Make Up Artist Responds When Women Apologize For Their Faces",
+   "clicks": 83,
+   "impressions": 2764,
+   "ctr": 0.030028943560057888
+  },
+  "B": {
+   "headline": "Hey Laaaaaadies \u2014 Shouldn't We Stop Beating Ourselves Up About Being Ugly, Fat, And Horrible Now?",
+   "clicks": 43,
+   "impressions": 2821,
+   "ctr": 0.015242821694434599
+  },
+  "winner": "A"
+ },
+ "pair-037": {
+  "testId": "543b6c99c6130a2f13000030",
+  "eyecatcherId": "543b6a0f47df54d1ac000032",
+  "A": {
+   "headline": "She Can't Help But Do This One Thing ... And She Wants Us To Understand Why",
+   "clicks": 44,
+   "impressions": 3119,
+   "ctr": 0.014107085604360373
+  },
+  "B": {
+   "headline": "A Detailed Description Of What It's Like To Compulsively Pull Out Your Own Hair",
+   "clicks": 25,
+   "impressions": 3125,
+   "ctr": 0.008
+  },
+  "winner": "A"
+ },
+ "pair-038": {
+  "testId": "515c5f7766c7d70002001c73",
+  "eyecatcherId": "5332ba1c1fae79f09f002d2a",
+  "A": {
+   "headline": "If You Think Old People Aren't Nearly As Cool As Young People, Then You Haven't Seen This Yet",
+   "clicks": 95,
+   "impressions": 3236,
+   "ctr": 0.029357231149567366
+  },
+  "B": {
+   "headline": "When Amy Poehler Interviews A Storyteller, Magic Happens",
+   "clicks": 63,
+   "impressions": 3172,
+   "ctr": 0.01986128625472888
+  },
+  "winner": "A"
+ },
+ "pair-039": {
+  "testId": "5143608e220cb800020009ed",
+  "eyecatcherId": "5332ba4e1fae79f09f00326e",
+  "A": {
+   "headline": "How To Placate A Mansplainer While Ignoring Him Entirely, With Your Host, Hillary Rodham Clinton",
+   "clicks": 22,
+   "impressions": 1003,
+   "ctr": 0.02193419740777667
+  },
+  "B": {
+   "headline": "How To Talk To Scared, Condescending, Misinformed, Old, White Dudes With Your Host Hillary Clinton",
+   "clicks": 47,
+   "impressions": 1022,
+   "ctr": 0.04598825831702544
+  },
+  "winner": "B"
+ },
+ "pair-040": {
+  "testId": "5507153a333330001c680000",
+  "eyecatcherId": "550715aa3637660024670000",
+  "A": {
+   "headline": "Gay black men speak candidly about their dating lives.",
+   "clicks": 13,
+   "impressions": 2172,
+   "ctr": 0.005985267034990792
+  },
+  "B": {
+   "headline": "Black men who have dated outside of their race talk about some heart-dropping letdown moments.",
+   "clicks": 34,
+   "impressions": 2248,
+   "ctr": 0.015124555160142349
+  },
+  "winner": "B"
+ },
+ "pair-041": {
+  "testId": "53c4651276a1344d87000040",
+  "eyecatcherId": "53c40bfa72263e3cb900005d",
+  "A": {
+   "headline": "One Brilliant Kid One-Upped A Design Adults Have Been Using For Decades",
+   "clicks": 75,
+   "impressions": 3056,
+   "ctr": 0.02454188481675393
+  },
+  "B": {
+   "headline": "An 11-Year-Old Just Scienced His Way To An Inventive Design That's Better Than What We're Using Now",
+   "clicks": 37,
+   "impressions": 3006,
+   "ctr": 0.012308715901530274
+  },
+  "winner": "A"
+ },
+ "pair-042": {
+  "testId": "536a74794e2f5ad4ba000008",
+  "eyecatcherId": "53599734f4a1300969000002",
+  "A": {
+   "headline": "These Tiny Computers Are Giving Us Data We've Never Had Before, And May Help Us Live Healthier Lives",
+   "clicks": 20,
+   "impressions": 3540,
+   "ctr": 0.005649717514124294
+  },
+  "B": {
+   "headline": "How I Learned To Stop Worrying And Love The Wearable Computer",
+   "clicks": 48,
+   "impressions": 3543,
+   "ctr": 0.013547840812870448
+  },
+  "winner": "B"
+ },
+ "pair-043": {
+  "testId": "53f37ee311fdbfa3d3000041",
+  "eyecatcherId": "53f2606831c37c798b000022",
+  "A": {
+   "headline": "If You Support These Companies, You're One Sick Puppy.",
+   "clicks": 39,
+   "impressions": 3553,
+   "ctr": 0.010976639459611595
+  },
+  "B": {
+   "headline": "Outsmarting This Billion Dollar Industry Might Get You A Big Kiss From Your Best Friend",
+   "clicks": 6,
+   "impressions": 3572,
+   "ctr": 0.0016797312430011197
+  },
+  "winner": "A"
+ },
+ "pair-044": {
+  "testId": "5460e529bf971b7e10000020",
+  "eyecatcherId": "546144cd2e1676f5e500006d",
+  "A": {
+   "headline": "A Standup Comic Performs At TED And I Can't Stop Laughing (Bonus: You Might Learn Something)",
+   "clicks": 39,
+   "impressions": 2998,
+   "ctr": 0.013008672448298866
+  },
+  "B": {
+   "headline": "He's OK With Robbing A Bank, As Long As He Gets To Do It With A Gun",
+   "clicks": 15,
+   "impressions": 3053,
+   "ctr": 0.00491320013101867
+  },
+  "winner": "A"
+ },
+ "pair-045": {
+  "testId": "54248087996e9056b80000b9",
+  "eyecatcherId": "54247f09996e90e2c4000082",
+  "A": {
+   "headline": "On My List Of Ways To Fight Homelessness 'Jail' Is Number 'Are You Kidding, WTF?'",
+   "clicks": 13,
+   "impressions": 4060,
+   "ctr": 0.0032019704433497538
+  },
+  "B": {
+   "headline": "Since When Is Being Homeless A Crime? Well, Since Yesterday.",
+   "clicks": 44,
+   "impressions": 4082,
+   "ctr": 0.010779029887310143
+  },
+  "winner": "B"
+ },
+ "pair-046": {
+  "testId": "5398d417d5d9001fca000005",
+  "eyecatcherId": "53a1b3270a0cb8e7a7000064",
+  "A": {
+   "headline": "An Astronaut's Suggestion On How To Fix Politics Would Be Expensive, But Probably Pretty Effective",
+   "clicks": 44,
+   "impressions": 5223,
+   "ctr": 0.00842427723530538
+  },
+  "B": {
+   "headline": "I Would Want To Be A Politician If There Was A Trip To Space In The Deal",
+   "clicks": 16,
+   "impressions": 5105,
+   "ctr": 0.0031341821743388833
+  },
+  "winner": "A"
+ },
+ "pair-047": {
+  "testId": "5488d4643863370024350000",
+  "eyecatcherId": "548885f96132350021010000",
+  "A": {
+   "headline": "Not Sure Why Investing In These 225 Million Women Is *That* Important? Check Out These Numbers.",
+   "clicks": 8,
+   "impressions": 2984,
+   "ctr": 0.002680965147453083
+  },
+  "B": {
+   "headline": "Not Sure Why Birth Spacing Is *That* Important? Check Out These Numbers.",
+   "clicks": 50,
+   "impressions": 3079,
+   "ctr": 0.016239038648911984
+  },
+  "winner": "B"
+ },
+ "pair-048": {
+  "testId": "53c45608cc86149f4d00001a",
+  "eyecatcherId": "53bf1358f8df068d8a00006e",
+  "A": {
+   "headline": "Stressing Out Is Cave Woman Biochemistry, She Says, And There's A Remedy",
+   "clicks": 29,
+   "impressions": 3076,
+   "ctr": 0.00942782834850455
+  },
+  "B": {
+   "headline": "Yelling At People You Love Is Cave Woman Biochemistry That She Has An Antidote For",
+   "clicks": 52,
+   "impressions": 3003,
+   "ctr": 0.017316017316017316
+  },
+  "winner": "B"
+ },
+ "pair-049": {
+  "testId": "5369833b3e6451a95700000e",
+  "eyecatcherId": "5369892cd97926b82600000d",
+  "A": {
+   "headline": "The Crash Of The Music Industry Is Giving Rise To Even Worse Music",
+   "clicks": 18,
+   "impressions": 2953,
+   "ctr": 0.0060954961056552655
+  },
+  "B": {
+   "headline": "The Song That Will Almost Certainly Never Be Used In A Commercial",
+   "clicks": 61,
+   "impressions": 3069,
+   "ctr": 0.019876181166503748
+  },
+  "winner": "B"
+ },
+ "pair-050": {
+  "testId": "5304a2187cdc444760000008",
+  "eyecatcherId": "5332b6491fae79f09f000cf2",
+  "A": {
+   "headline": "No Matter What Side Of The Gun Debate You're On, I Think We Can All Agree On One Thing",
+   "clicks": 45,
+   "impressions": 2502,
+   "ctr": 0.017985611510791366
+  },
+  "B": {
+   "headline": "When It Comes To Guns, Can We Agree On At Least This Much?",
+   "clicks": 25,
+   "impressions": 2560,
+   "ctr": 0.009765625
+  },
+  "winner": "A"
+ },
+ "pair-051": {
+  "testId": "542898edadfe30de19000031",
+  "eyecatcherId": "54287bea389e1cc89b000020",
+  "A": {
+   "headline": "2 Women Take On The Ridiculous Sex Tips Found In Mags, Then Give Their Own Version",
+   "clicks": 66,
+   "impressions": 3122,
+   "ctr": 0.02114029468289558
+  },
+  "B": {
+   "headline": "You Can Read The Silly Sex Tips In Mags Or You Can Hear 2 Real Women Get Real Honest",
+   "clicks": 37,
+   "impressions": 3177,
+   "ctr": 0.01164620711362921
+  },
+  "winner": "A"
+ },
+ "pair-052": {
+  "testId": "5420be281afbe8fce4000083",
+  "eyecatcherId": "5420ef2e1afbe83d40000095",
+  "A": {
+   "headline": "Facebook And Google Say They Don\u2019t Know Your Password. How Can This Be True?",
+   "clicks": 11,
+   "impressions": 4588,
+   "ctr": 0.0023975588491717526
+  },
+  "B": {
+   "headline": "If A Company E-Mails You Your Password When You Say You Forgot It? Run.",
+   "clicks": 34,
+   "impressions": 4679,
+   "ctr": 0.007266509938020945
+  },
+  "winner": "B"
+ },
+ "pair-053": {
+  "testId": "54dd2ef23862620028430000",
+  "eyecatcherId": "54dd2d57336332001a4d0000",
+  "A": {
+   "headline": "This test will tell you whether you're prejudiced without knowing it. I dare you to take it.",
+   "clicks": 40,
+   "impressions": 1535,
+   "ctr": 0.026058631921824105
+  },
+  "B": {
+   "headline": "'Whether' and 'how' is not the right question. The important question is 'why'.",
+   "clicks": 6,
+   "impressions": 1510,
+   "ctr": 0.003973509933774834
+  },
+  "winner": "A"
+ },
+ "pair-054": {
+  "testId": "516dfd44accfd300020029c2",
+  "eyecatcherId": "5332bace1fae79f09f00411b",
+  "A": {
+   "headline": "This Straight, White Dude Is Standing Under Something That Makes Me Really Hopeful",
+   "clicks": 36,
+   "impressions": 2876,
+   "ctr": 0.012517385257301807
+  },
+  "B": {
+   "headline": "What\u2019s This Straight, White Dude Carrying That Made Him A Hero To Many?",
+   "clicks": 56,
+   "impressions": 2956,
+   "ctr": 0.018944519621109608
+  },
+  "winner": "B"
+ },
+ "pair-055": {
+  "testId": "53df9b07006f347b5d00000e",
+  "eyecatcherId": "53df9a8e006f3491ea000031",
+  "A": {
+   "headline": "Good People Are Sometimes A Little Bit Racist And These Comedians Have An Interesting Solution",
+   "clicks": 75,
+   "impressions": 3686,
+   "ctr": 0.020347259902333152
+  },
+  "B": {
+   "headline": "When Your Loved Ones  Get Awkward About People Who Don\u2019t Look Like Them, You Gotta Laugh",
+   "clicks": 42,
+   "impressions": 3585,
+   "ctr": 0.011715481171548118
+  },
+  "winner": "A"
+ },
+ "pair-056": {
+  "testId": "53a7a7be4a8b066f66000019",
+  "eyecatcherId": "53a7a61a8fb8a0b79600000d",
+  "A": {
+   "headline": "If You're Dating Someone, And You Get This Phone Call, Run, Don't Walk, Away",
+   "clicks": 130,
+   "impressions": 4089,
+   "ctr": 0.031792614331132306
+  },
+  "B": {
+   "headline": "The Scariest Thing About This Phone Call Is How Common It Is",
+   "clicks": 64,
+   "impressions": 4025,
+   "ctr": 0.015900621118012423
+  },
+  "winner": "A"
+ },
+ "pair-057": {
+  "testId": "536af9a5c02b17654c000053",
+  "eyecatcherId": "536a4eb1da1b7ddad5000029",
+  "A": {
+   "headline": "Raising The Minimum Wage Will Help HOW MANY Working Mothers?!",
+   "clicks": 8,
+   "impressions": 3337,
+   "ctr": 0.00239736290080911
+  },
+  "B": {
+   "headline": "When My Mom Was Still Able To Work, She'd Have Loved A Gift Like This",
+   "clicks": 24,
+   "impressions": 3329,
+   "ctr": 0.00720937218383899
+  },
+  "winner": "B"
+ },
+ "pair-058": {
+  "testId": "54b16ed16361620015260000",
+  "eyecatcherId": "54b149a9343838001e150000",
+  "A": {
+   "headline": "Is Your State One Of The 18 That's Extremely Hostile To Women's Rights?",
+   "clicks": 12,
+   "impressions": 2820,
+   "ctr": 0.00425531914893617
+  },
+  "B": {
+   "headline": "If You're A Woman Living In These 27 States, Your Neighbours Are Pretty Pissed At 1 Of Your Rights",
+   "clicks": 35,
+   "impressions": 2803,
+   "ctr": 0.012486621476988941
+  },
+  "winner": "B"
+ },
+ "pair-059": {
+  "testId": "54f5ef0c6634320026c80000",
+  "eyecatcherId": "54f5ecae323561000c570000",
+  "A": {
+   "headline": "Sharks are pretty nice to us considering how many we kill every day. Here's how it's going down.",
+   "clicks": 7,
+   "impressions": 3040,
+   "ctr": 0.002302631578947368
+  },
+  "B": {
+   "headline": "One of the most beautifully shot videos I've ever seen that makes be feel ugly to be a human",
+   "clicks": 43,
+   "impressions": 3040,
+   "ctr": 0.014144736842105264
+  },
+  "winner": "B"
+ },
+ "pair-060": {
+  "testId": "52eb9c2517d1b0f2d800002d",
+  "eyecatcherId": "5332b88d1fae79f09f001db2",
+  "A": {
+   "headline": "After A Huge Online Campaign, A Man Who Tried To Kill Himself Tracks Down The Man Who Stopped Him",
+   "clicks": 209,
+   "impressions": 5873,
+   "ctr": 0.03558658266643964
+  },
+  "B": {
+   "headline": "He Was About To Take His Own Life \u2014 Until A Man Stopped Him. Here He Meets Him Face To Face Again.",
+   "clicks": 260,
+   "impressions": 6031,
+   "ctr": 0.04311059525783452
+  },
+  "winner": "B"
+ },
+ "pair-061": {
+  "testId": "53bdae572c277d5011000053",
+  "eyecatcherId": "53bc656c9a9bf1ca99000009",
+  "A": {
+   "headline": "Mother Nature Figured Out How To Fix Global Warming. Surprisingly, We Still Aren't Listening To Her.",
+   "clicks": 43,
+   "impressions": 3621,
+   "ctr": 0.011875172604252969
+  },
+  "B": {
+   "headline": "Mother Nature Gave Us The Blue Print To Reverse Climate Change And We Still Aren't Listening",
+   "clicks": 24,
+   "impressions": 3849,
+   "ctr": 0.006235385814497272
+  },
+  "winner": "A"
+ },
+ "pair-062": {
+  "testId": "53275415754725852e000015",
+  "eyecatcherId": "5332b5911fae79f09f0005d6",
+  "A": {
+   "headline": "Attention, Hip Hop: 4 Something Has To Change.",
+   "clicks": 45,
+   "impressions": 2490,
+   "ctr": 0.018072289156626505
+  },
+  "B": {
+   "headline": "After 4 Decades Of Bull$#*t, Rapper Kid Cudi Has Had Enough",
+   "clicks": 76,
+   "impressions": 2526,
+   "ctr": 0.030087094220110848
+  },
+  "winner": "B"
+ },
+ "pair-063": {
+  "testId": "54de7d5d336464000c8d0000",
+  "eyecatcherId": "54e27ba366303800283b0000",
+  "A": {
+   "headline": "She made a cool invention. Now she's using it to save 12 million people.",
+   "clicks": 21,
+   "impressions": 1524,
+   "ctr": 0.013779527559055118
+  },
+  "B": {
+   "headline": "Know someone going to Sao Paolo for vacation? Here's a 2-minute primer for them.",
+   "clicks": 4,
+   "impressions": 1519,
+   "ctr": 0.0026333113890717576
+  },
+  "winner": "A"
+ },
+ "pair-064": {
+  "testId": "54496dc06f0fb38fef0000bf",
+  "eyecatcherId": "54496b9db8fbabf5e40000a9",
+  "A": {
+   "headline": "A Corroded Pipe Caused The Explosion In This Town. Now Corroded Rules Could Cause Another Disaster.",
+   "clicks": 28,
+   "impressions": 4326,
+   "ctr": 0.006472491909385114
+  },
+  "B": {
+   "headline": "If This Sorta Thing Doesn't Make You Worry About Local Politics, I Really Don't Know What Will",
+   "clicks": 86,
+   "impressions": 4385,
+   "ctr": 0.019612314709236033
+  },
+  "winner": "B"
+ },
+ "pair-065": {
+  "testId": "53b44001cf4a0c3e61000039",
+  "eyecatcherId": "53b1dbd3d98e8a6f18000002",
+  "A": {
+   "headline": "A Terrifying Truth Of Domestic Violence Displayed By A Lone Woman Who Never Leaves Her Couch",
+   "clicks": 49,
+   "impressions": 2876,
+   "ctr": 0.017037552155771907
+  },
+  "B": {
+   "headline": "There\u2019s A Group Of Soccer Fans That Wanted A World Cup Win For Reasons More Heartbreaking Than Most",
+   "clicks": 19,
+   "impressions": 2755,
+   "ctr": 0.006896551724137931
+  },
+  "winner": "A"
+ },
+ "pair-066": {
+  "testId": "53fbbe54842e029f3800004d",
+  "eyecatcherId": "53fba844a637027c6c00003a",
+  "A": {
+   "headline": "LEGOs Are A Lot Less Fun For Kids When They\u2019re Covered In Oil. Or So I Hear.",
+   "clicks": 18,
+   "impressions": 3094,
+   "ctr": 0.005817711700064641
+  },
+  "B": {
+   "headline": "A Slimy Truth That Will Give You Pause Before Buying LEGOs",
+   "clicks": 51,
+   "impressions": 3100,
+   "ctr": 0.016451612903225808
+  },
+  "winner": "B"
+ },
+ "pair-067": {
+  "testId": "53e3d2566dcda7392900000e",
+  "eyecatcherId": "53e3b9763c57bba568000003",
+  "A": {
+   "headline": "One Major Difference Between Fantasy And Reality For Some Folks, Totally Explained In 2 Minutes",
+   "clicks": 11,
+   "impressions": 2556,
+   "ctr": 0.004303599374021909
+  },
+  "B": {
+   "headline": "She's Not Saying You Can't Like The Hunger Games Anymore, But There Is Some Big Stuff It Got Wrong",
+   "clicks": 30,
+   "impressions": 2532,
+   "ctr": 0.011848341232227487
+  },
+  "winner": "B"
+ },
+ "pair-068": {
+  "testId": "546feba60e78bd6ff900001a",
+  "eyecatcherId": "546fb73e0f6b596759000086",
+  "A": {
+   "headline": "You Don't Have To Like Linkin Park's Music. What Matters Is That They're Care About Climate Change.",
+   "clicks": 13,
+   "impressions": 3018,
+   "ctr": 0.004307488402915839
+  },
+  "B": {
+   "headline": "I Haven't Listened To Linkin Park Since College. But They Caught My Ear With This.",
+   "clicks": 38,
+   "impressions": 3040,
+   "ctr": 0.0125
+  },
+  "winner": "B"
+ },
+ "pair-069": {
+  "testId": "539cbfc2ddf110e08f00001c",
+  "eyecatcherId": "539c4442ddf110f849000010",
+  "A": {
+   "headline": "It's Hard To Know How The World Looks, Sounds, And Feels To Someone Who Has Autism, But This Helps",
+   "clicks": 97,
+   "impressions": 4168,
+   "ctr": 0.023272552783109406
+  },
+  "B": {
+   "headline": "Experience For 60 Seconds How The World Looks, Sounds, And Feels Like To Someone Who Has Autism",
+   "clicks": 127,
+   "impressions": 4139,
+   "ctr": 0.030683740033824597
+  },
+  "winner": "B"
+ },
+ "pair-070": {
+  "testId": "546d55fc26714c6c44000025",
+  "eyecatcherId": "546d1b49545240e55400005d",
+  "A": {
+   "headline": "Her Answers To Questions From Strangers Strikes The Perfect Balance Of Actual Information And Snark",
+   "clicks": 60,
+   "impressions": 10009,
+   "ctr": 0.005994604855629933
+  },
+  "B": {
+   "headline": "If You Can Make It Through The Whole Thing Without Saying 'I've Wondered That', You Get A Slow Clap",
+   "clicks": 143,
+   "impressions": 10128,
+   "ctr": 0.014119273301737756
+  },
+  "winner": "B"
+ },
+ "pair-071": {
+  "testId": "53f8ef8284a00df47d000008",
+  "eyecatcherId": "53f8bc2e84a00d4ed1000009",
+  "A": {
+   "headline": "The Next Time I Face Some Sexist BS, I'm Going To Try To Be As Gracious As This Young Lady",
+   "clicks": 48,
+   "impressions": 5117,
+   "ctr": 0.009380496384600352
+  },
+  "B": {
+   "headline": "When I Grow Up, I Want To Be As Poised As This 13-Year-Old Girl",
+   "clicks": 24,
+   "impressions": 5079,
+   "ctr": 0.004725339633786178
+  },
+  "winner": "A"
+ },
+ "pair-072": {
+  "testId": "517724b1835940000200358f",
+  "eyecatcherId": "5332baf51fae79f09f0044bb",
+  "A": {
+   "headline": "The Most Physically Damaging Thing Fox News Has Ever Done",
+   "clicks": 69,
+   "impressions": 2068,
+   "ctr": 0.033365570599613155
+  },
+  "B": {
+   "headline": "Fox News Accidentally Ruins Years Of Climate Change Research With Bad Journalism",
+   "clicks": 38,
+   "impressions": 2149,
+   "ctr": 0.017682643089809214
+  },
+  "winner": "A"
+ },
+ "pair-073": {
+  "testId": "5535034e3533360018020000",
+  "eyecatcherId": "5534152f3466330024260000",
+  "A": {
+   "headline": "Meet the transformer shoe that can help kids in poverty for up to 5 years",
+   "clicks": 25,
+   "impressions": 2041,
+   "ctr": 0.01224889759921607
+  },
+  "B": {
+   "headline": "He met dozens of kids who didn't have shoes. So he invented 5 pairs in 1.",
+   "clicks": 45,
+   "impressions": 2009,
+   "ctr": 0.022399203583872575
+  },
+  "winner": "B"
+ },
+ "pair-074": {
+  "testId": "515ca54abbd60200020090e9",
+  "eyecatcherId": "5332ba1c1fae79f09f002d2e",
+  "A": {
+   "headline": "A Bunch Of Nerds Got Tired Of Cyberbullies So They Used Their Powers Of Science To Fight Them",
+   "clicks": 61,
+   "impressions": 3040,
+   "ctr": 0.02006578947368421
+  },
+  "B": {
+   "headline": "You Know Who Bullies Pick On? Nerds. You Know Who Stops Bullies With Science? Nerds.",
+   "clicks": 29,
+   "impressions": 2824,
+   "ctr": 0.010269121813031162
+  },
+  "winner": "A"
+ },
+ "pair-075": {
+  "testId": "551c0c33653831000c4e0000",
+  "eyecatcherId": "551c0c1e3763320018bd0100",
+  "A": {
+   "headline": "Burglars are criminals for having what isn't theirs. These people are criminals for NOT having.",
+   "clicks": 16,
+   "impressions": 2046,
+   "ctr": 0.007820136852394917
+  },
+  "B": {
+   "headline": "Utah has an idea that'll make all the other states angry that they didn't think of it first.",
+   "clicks": 42,
+   "impressions": 2041,
+   "ctr": 0.020578147966683
+  },
+  "winner": "B"
+ },
+ "pair-076": {
+  "testId": "52ec463f4c6da1adb800001a",
+  "eyecatcherId": "5332b8a91fae79f09f001e4c",
+  "A": {
+   "headline": "It's Like The Super Bowl But For Hippies And People Who Care About Breathing",
+   "clicks": 14,
+   "impressions": 2083,
+   "ctr": 0.00672107537205953
+  },
+  "B": {
+   "headline": "The Denver-Seattle Rivalry Has Been Brewing For Years. It Ends Now, With This Infographic.",
+   "clicks": 28,
+   "impressions": 1932,
+   "ctr": 0.014492753623188406
+  },
+  "winner": "B"
+ },
+ "pair-077": {
+  "testId": "51ad3e3d1918ffe5510005fd",
+  "eyecatcherId": "5332b7791fae79f09f0016fa",
+  "A": {
+   "headline": "Ahhhh! Can Corporations REALLY Patent Human Genes!?",
+   "clicks": 13,
+   "impressions": 3599,
+   "ctr": 0.003612114476243401
+  },
+  "B": {
+   "headline": "A Major Obstacle To Global Badassery, Explained (In 60 Seconds)",
+   "clicks": 30,
+   "impressions": 3552,
+   "ctr": 0.008445945945945946
+  },
+  "winner": "B"
+ },
+ "pair-078": {
+  "testId": "53166b59fd77e2747e000036",
+  "eyecatcherId": "5332f6a0a2fc90ead0000c6d",
+  "A": {
+   "headline": "A Man Who Prosecuted Nazis Gives Us 3 Fundamental Requirements For World Peace",
+   "clicks": 52,
+   "impressions": 4499,
+   "ctr": 0.01155812402756168
+  },
+  "B": {
+   "headline": "If We Want Peace, He Says The \u2018Rule Of Force\u2019 Just Ain't Cutting It. Here's Why.",
+   "clicks": 33,
+   "impressions": 4499,
+   "ctr": 0.007334963325183374
+  },
+  "winner": "A"
+ },
+ "pair-079": {
+  "testId": "53ecf9e7441a0b0d73000039",
+  "eyecatcherId": "53ed03150d60d062e800003d",
+  "A": {
+   "headline": "How To Make Sure You're Not Teaching The World To Be Boring",
+   "clicks": 8,
+   "impressions": 3093,
+   "ctr": 0.0025864856126737797
+  },
+  "B": {
+   "headline": "Wanna Wake Up In The Mornings With 'I'm Gonna Be Awesome' On Your Mind? Follow His Lead.",
+   "clicks": 20,
+   "impressions": 3075,
+   "ctr": 0.0065040650406504065
+  },
+  "winner": "B"
+ },
+ "pair-080": {
+  "testId": "54a431d26235320024320000",
+  "eyecatcherId": "54a43288656533001b4a0000",
+  "A": {
+   "headline": "He's Calling For The End Of Magazines. I Kind Of Agree With Him.",
+   "clicks": 13,
+   "impressions": 2906,
+   "ctr": 0.004473503097040606
+  },
+  "B": {
+   "headline": "A Guy Points Out How Some Standards Of Beauty Aren't Actually Real",
+   "clicks": 31,
+   "impressions": 2696,
+   "ctr": 0.011498516320474777
+  },
+  "winner": "B"
+ },
+ "pair-081": {
+  "testId": "5537f08161623400182f0400",
+  "eyecatcherId": "553af5f6633633000cc80000",
+  "A": {
+   "headline": "Bruce Jenner: 'I'm a woman.'  The former 'world's greatest athlete' comes out.",
+   "clicks": 46,
+   "impressions": 2048,
+   "ctr": 0.0224609375
+  },
+  "B": {
+   "headline": "Bruce Jenner sits down with ABC News, contributing to a national dialogue about transgender issues.",
+   "clicks": 16,
+   "impressions": 2071,
+   "ctr": 0.00772573635924674
+  },
+  "winner": "A"
+ },
+ "pair-082": {
+  "testId": "5455405df65b0fc800000016",
+  "eyecatcherId": "54554e2cb4b911817000002f",
+  "A": {
+   "headline": "The Next Time You Meet A Nice Guy, Know There's Probably A Parent Like Her Not Far Behind",
+   "clicks": 47,
+   "impressions": 3893,
+   "ctr": 0.012072951451322887
+  },
+  "B": {
+   "headline": "How It's Not Just Females Getting A Raw Deal By Gender Roles",
+   "clicks": 14,
+   "impressions": 3849,
+   "ctr": 0.0036373083917900753
+  },
+  "winner": "A"
+ },
+ "pair-083": {
+  "testId": "53ac5f16f33bfc43dd000011",
+  "eyecatcherId": "53ac70782273895b7b00002d",
+  "A": {
+   "headline": "They Spoke Their Minds. They Celebrated. Now They Want To Know How To Get Happy And Live.",
+   "clicks": 18,
+   "impressions": 3078,
+   "ctr": 0.005847953216374269
+  },
+  "B": {
+   "headline": "Some People Called Them \u2018Unnatural\u2019 \u2014 But They're Like, Just Call Me Free Honey!",
+   "clicks": 36,
+   "impressions": 3060,
+   "ctr": 0.011764705882352941
+  },
+  "winner": "B"
+ },
+ "pair-084": {
+  "testId": "544a4f1337d2881d0800002f",
+  "eyecatcherId": "544a4d8801814845e1000031",
+  "A": {
+   "headline": "How A Shooting In Canada's Parliament Showed The Difference Between American And Canadian Media",
+   "clicks": 146,
+   "impressions": 5430,
+   "ctr": 0.026887661141804787
+  },
+  "B": {
+   "headline": "This Side-By-Side Comparison Of American And Canadian Media On The Parliament Shooting Says A Lot",
+   "clicks": 207,
+   "impressions": 5415,
+   "ctr": 0.03822714681440443
+  },
+  "winner": "B"
+ },
+ "pair-085": {
+  "testId": "53d7fecb3fad60da3b000013",
+  "eyecatcherId": "53d7e8d23fad6078b6000068",
+  "A": {
+   "headline": "Two College Kids Kind Of Just Forever Changed The Way I Look At Boxes. Yep, Boxes.",
+   "clicks": 58,
+   "impressions": 3007,
+   "ctr": 0.01928832723644829
+  },
+  "B": {
+   "headline": "Two Young Guys Just Forever Changed The Way I Look At ... Boxes?",
+   "clicks": 35,
+   "impressions": 3105,
+   "ctr": 0.011272141706924315
+  },
+  "winner": "A"
+ },
+ "pair-086": {
+  "testId": "53f414651ae86f6bbf000010",
+  "eyecatcherId": "53f2cabf56f7377ded000014",
+  "A": {
+   "headline": "Not Dead Yet? Great! You've Still Got Time For This.",
+   "clicks": 9,
+   "impressions": 3297,
+   "ctr": 0.00272975432211101
+  },
+  "B": {
+   "headline": "Billionaire Can't Wait To Die",
+   "clicks": 23,
+   "impressions": 3266,
+   "ctr": 0.007042253521126761
+  },
+  "winner": "B"
+ },
+ "pair-087": {
+  "testId": "5368f1ec94b4476bb200004c",
+  "eyecatcherId": "5368f1b6b1caf19372000042",
+  "A": {
+   "headline": "When You Take The Sexism Out Of Headlines, The Results Are Hilarious. (But Should They Be?)",
+   "clicks": 103,
+   "impressions": 3225,
+   "ctr": 0.03193798449612403
+  },
+  "B": {
+   "headline": "Taylor Swift Goes Out In Mildly Breezy Weather, And Other Not Shocking News",
+   "clicks": 56,
+   "impressions": 3136,
+   "ctr": 0.017857142857142856
+  },
+  "winner": "A"
+ },
+ "pair-088": {
+  "testId": "533d5fd6ee9efe487300001f",
+  "eyecatcherId": "533d6e3e909d4235bd00001c",
+  "A": {
+   "headline": "If You Look At It From This Perspective, An Iconic Disney Villain Is Really More Of A Hero",
+   "clicks": 56,
+   "impressions": 2381,
+   "ctr": 0.023519529609407813
+  },
+  "B": {
+   "headline": "Disney Slimmed Down An Iconic Figure And Here\u2019s Why They Shouldn\u2019t Even Have Gone There",
+   "clicks": 108,
+   "impressions": 2480,
+   "ctr": 0.043548387096774194
+  },
+  "winner": "B"
+ },
+ "pair-089": {
+  "testId": "54e4f4433032380028a60000",
+  "eyecatcherId": "54e4f30c30323800289f0000",
+  "A": {
+   "headline": "Listen to the parts they've auditioned for and try not to say 'WTF?'",
+   "clicks": 23,
+   "impressions": 2035,
+   "ctr": 0.011302211302211302
+  },
+  "B": {
+   "headline": "He wonders if it's all in his head. But when you hear their stories...you realize it's not.",
+   "clicks": 9,
+   "impressions": 2092,
+   "ctr": 0.004302103250478011
+  },
+  "winner": "A"
+ },
+ "pair-090": {
+  "testId": "5398cd2073acb6d87c0000ae",
+  "eyecatcherId": "539f15b03f94b4095d000029",
+  "A": {
+   "headline": "The Recycling Mistake Millions Of People Make Every Day",
+   "clicks": 78,
+   "impressions": 4136,
+   "ctr": 0.018858800773694392
+  },
+  "B": {
+   "headline": "Why Are We Cheating On Recycling? Recycling Loves Us And Wants Us To Be Happy.",
+   "clicks": 20,
+   "impressions": 4018,
+   "ctr": 0.004977600796416127
+  },
+  "winner": "A"
+ },
+ "pair-091": {
+  "testId": "553f4cf0616464000c450000",
+  "eyecatcherId": "553f5c10616464001c4f0000",
+  "A": {
+   "headline": "Some songs are bad for the earth, because they're being played on instruments ripped from nature.",
+   "clicks": 11,
+   "impressions": 2012,
+   "ctr": 0.0054671968190854875
+  },
+  "B": {
+   "headline": "A new term is being coined: Sustainable Musician \u2014 one who makes music without hurting the planet.",
+   "clicks": 3,
+   "impressions": 2028,
+   "ctr": 0.0014792899408284023
+  },
+  "winner": "A"
+ },
+ "pair-092": {
+  "testId": "53f42ff444df8303dd00001d",
+  "eyecatcherId": "53f3ebd344df8303dd00000d",
+  "A": {
+   "headline": "The Last Ice Bucket Challenge You Need To See \u2013 And You Really Should See It",
+   "clicks": 68,
+   "impressions": 2971,
+   "ctr": 0.02288791652642208
+  },
+  "B": {
+   "headline": "If You Were Going Through What He Is, You'd Take The Ice Bucket Challenge And Cry About It Too",
+   "clicks": 28,
+   "impressions": 3041,
+   "ctr": 0.009207497533706017
+  },
+  "winner": "A"
+ },
+ "pair-093": {
+  "testId": "5512c864343863002cac0000",
+  "eyecatcherId": "5512c5fb6237650024990000",
+  "A": {
+   "headline": "She was being threatened by people who wouldn't show their faces. Her supporters signed their names.",
+   "clicks": 10,
+   "impressions": 2593,
+   "ctr": 0.0038565368299267257
+  },
+  "B": {
+   "headline": "She still doesn't know who posted, \"Bash that bitch's head in.\" But she knows they meant her head.",
+   "clicks": 24,
+   "impressions": 2457,
+   "ctr": 0.009768009768009768
+  },
+  "winner": "B"
+ },
+ "pair-094": {
+  "testId": "51ad3cc71918ff3e110004e7",
+  "eyecatcherId": "5332bbae1fae79f09f00558d",
+  "A": {
+   "headline": "Why We Need To Be A Little Less O-M-G! And A Little More Z-E-N.",
+   "clicks": 17,
+   "impressions": 3536,
+   "ctr": 0.004807692307692308
+  },
+  "B": {
+   "headline": "Hey, Employers! Here's Why You Might Want To Hire People Who Bomb Their Interviews.",
+   "clicks": 46,
+   "impressions": 3544,
+   "ctr": 0.012979683972911963
+  },
+  "winner": "B"
+ },
+ "pair-095": {
+  "testId": "53342ccea4e3ce666b00005a",
+  "eyecatcherId": "53342cf9a4e3ce8aee00003c",
+  "A": {
+   "headline": "An Actress And A Media Mogul Talk About Beauty Standards",
+   "clicks": 29,
+   "impressions": 2794,
+   "ctr": 0.010379384395132427
+  },
+  "B": {
+   "headline": "Actress Cameron Diaz Points Out A Pretty Solid Problem With A Certain Type Of Beauty Product",
+   "clicks": 83,
+   "impressions": 2752,
+   "ctr": 0.030159883720930234
+  },
+  "winner": "B"
+ },
+ "pair-096": {
+  "testId": "5143606b220cb800020005d1",
+  "eyecatcherId": "5332ba221fae79f09f002de5",
+  "A": {
+   "headline": "Those Idiots From \u201cJackass\u201d Have Nothing On This Air Force Vet",
+   "clicks": 17,
+   "impressions": 2834,
+   "ctr": 0.005998588567395907
+  },
+  "B": {
+   "headline": "Meet The Man Who\u2019ll Save At Least A Few Of Your Lives One Day",
+   "clicks": 7,
+   "impressions": 2834,
+   "ctr": 0.0024700070571630206
+  },
+  "winner": "A"
+ },
+ "pair-097": {
+  "testId": "54944d753261630018410000",
+  "eyecatcherId": "537e459e10eb8cb71600000c",
+  "A": {
+   "headline": "Archie Bunker\u2019s Summary Of What Equal Pay Would Do To America Reminds Me Of Fox 'News' Shows",
+   "clicks": 25,
+   "impressions": 3010,
+   "ctr": 0.008305647840531562
+  },
+  "B": {
+   "headline": "Archie Bunker\u2019s Brilliant (?) Summary Of What Equal Pay Would Do To America",
+   "clicks": 149,
+   "impressions": 9251,
+   "ctr": 0.016106366879256297
+  },
+  "winner": "B"
+ },
+ "pair-098": {
+  "testId": "535c9442819b4d8d14000031",
+  "eyecatcherId": "535010beb921b4d66a000019",
+  "A": {
+   "headline": "Stop Ripping On That Friend Who Still Has A Flip Phone. They're Doing A Lot Better Than You.",
+   "clicks": 77,
+   "impressions": 2501,
+   "ctr": 0.03078768492602959
+  },
+  "B": {
+   "headline": "You Know That Recurring Dream Where You Get Eaten By Your Cell Phone?",
+   "clicks": 17,
+   "impressions": 2620,
+   "ctr": 0.0064885496183206106
+  },
+  "winner": "A"
+ },
+ "pair-099": {
+  "testId": "540f6311c1e56ffee7000003",
+  "eyecatcherId": "5408a1e3c994ef29a5000003",
+  "A": {
+   "headline": "This College Student Is Carrying A Mattress Around Everywhere And Doesn't Know When She Will Stop.",
+   "clicks": 33,
+   "impressions": 5196,
+   "ctr": 0.006351039260969977
+  },
+  "B": {
+   "headline": "She Can't Forget What Happened In Her Bed. So She's Making Sure That No One Else Will Either.",
+   "clicks": 191,
+   "impressions": 20785,
+   "ctr": 0.009189319220591774
+  },
+  "winner": "B"
+ },
+ "pair-100": {
+  "testId": "54f8a8f337373242887e0000",
+  "eyecatcherId": "54f8a819383136000c910000",
+  "A": {
+   "headline": "What does it really mean if someone says you \"throw like a girl\"",
+   "clicks": 10,
+   "impressions": 2490,
+   "ctr": 0.004016064257028112
+  },
+  "B": {
+   "headline": "\"You throw like a girl!\" MythBusters puts the classic insult to the test.",
+   "clicks": 22,
+   "impressions": 2551,
+   "ctr": 0.00862406899255194
+  },
+  "winner": "B"
+ }
+}

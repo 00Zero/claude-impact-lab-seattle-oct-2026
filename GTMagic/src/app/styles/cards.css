@@ -1,0 +1,112 @@
+/* A plate: Isotype's ruled statistics sheet. Not a card: no radius, no shadow. */
+.plate { border-top: 3px solid var(--ink); padding-top: 1.125rem; display: grid; gap: 1.25rem; }
+.plate h3 { font-size: var(--step2); font-weight: 500; line-height: 1.25; letter-spacing: -.01em; text-wrap: balance; }
+.plate h4 { font-size: var(--step0); font-weight: 500; }
+.plate .meta { font-size: .875rem; color: var(--ink-2); }
+.plate-foot { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: .875rem; color: var(--ink-2); }
+
+/* ---------- Research: customer groups ---------- */
+.groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem 2rem; }
+.group { display: grid; gap: .625rem; align-content: start; }
+.group-name { display: flex; align-items: center; gap: .5rem; font-weight: 500; }
+.group-name svg { width: .625rem; height: 1.3rem; }
+.group p { font-size: .9375rem; color: var(--ink-2); }
+.group .guess-tag { font-size: .8125rem; font-weight: 500; color: var(--ink); background: #f2d8a0; padding: 0 .375rem; }
+
+/* ---------- The crowd: one figure per customer ---------- */
+.crowd { display: grid; gap: .25rem; }
+.crow {
+  display: grid; grid-template-columns: 1.5rem minmax(0, 15rem) 1fr 2.5rem;
+  gap: .75rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid var(--rule);
+}
+.crow > b { font-size: var(--step1); font-weight: 500; }
+.crow .msg { font-size: .9375rem; line-height: 1.35; }
+.crow .msg em { font-style: normal; display: block; font-size: .8125rem; font-weight: 500; color: var(--ink-2); }
+.crow .count { font-size: var(--step1); font-weight: 500; text-align: right; }
+.crow.lead .msg { font-weight: 500; }
+.figs { display: flex; flex-wrap: wrap; gap: .1875rem; min-height: 2.125rem; align-items: end; }
+.fig {
+  width: 1rem; height: 2.125rem; padding: 0; border: 0; background: none; display: block;
+  transition: transform .25s var(--ease-out);
+}
+.fig svg { width: 100%; height: 100%; display: block; fill: currentColor; }
+.fig.none svg { fill: none; stroke: currentColor; stroke-width: 1.5; }
+.fig:hover, .fig[aria-pressed="true"] { transform: translateY(-3px); }
+.fig[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 2px; }
+.fig.drop { animation: drop .45s var(--ease-out) both; }
+@keyframes drop { from { transform: translateY(-.875rem); opacity: 0; } }
+.g1 { color: var(--g1); } .g2 { color: var(--g2); } .g3 { color: var(--g3); } .g4 { color: var(--g4); } .gn { color: var(--none); }
+
+.crowd-status { display: flex; align-items: baseline; gap: .75rem; font-size: .9375rem; color: var(--ink-2); }
+.crowd-status b { font-size: var(--step1); color: var(--ink); }
+
+/* Customer card opened from a figure. Inline, not a modal. */
+.person { display: grid; gap: .875rem; padding: 1rem 1.125rem; background: #fff; border: 1.5px solid var(--ink); animation: turn-in .35s var(--ease-out) both; }
+.person-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.person-head h4 { display: flex; align-items: center; gap: .5rem; }
+.person-head svg { width: .625rem; height: 1.3rem; }
+.attrs { display: flex; flex-wrap: wrap; gap: .375rem; font-size: .8125rem; }
+.attrs span { background: var(--tint); padding: .125rem .5rem; }
+
+/* ---------- Results ---------- */
+.answers { display: grid; gap: 0; }
+.answer { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+.answer dt { font-weight: 500; color: var(--ink-2); }
+.answer dd { font-size: var(--step1); line-height: 1.35; font-weight: 500; text-wrap: pretty; }
+.verdict { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: center; padding: 1rem 1.125rem; background: #fff; border: 1.5px solid var(--ink); }
+.verdict .figs { flex-wrap: nowrap; }
+.verdict strong { font-weight: 500; display: block; font-size: var(--step1); }
+
+table.board { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+.board th { text-align: left; font-weight: 500; color: var(--ink-2); font-size: .8125rem; padding: .375rem .5rem .375rem 0; border-bottom: 2px solid var(--ink); }
+.board td { padding: .625rem .5rem .625rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.board .num { text-align: right; white-space: nowrap; }
+.board tr.yours td:nth-child(2) { font-weight: 500; }
+.board .yours-tag { font-size: .8125rem; background: #f2d8a0; padding: 0 .375rem; margin-left: .375rem; white-space: nowrap; }
+
+.flags { display: grid; gap: .5rem; padding: 0; list-style: none; }
+.flags li { display: grid; grid-template-columns: auto 1fr; gap: .625rem; font-size: .9375rem; }
+.flags .ic { color: var(--warn); margin-top: .125rem; }
+
+/* ---------- Report ---------- */
+.tests { list-style: none; padding: 0; display: grid; gap: 0; counter-reset: t; }
+.tests li { counter-increment: t; display: grid; grid-template-columns: 2.25rem 1fr; gap: .75rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+.tests li::before { content: counter(t); font-size: var(--step2); font-weight: 500; line-height: 1.1; }
+.tests h4 { margin-bottom: .25rem; }
+.tests p { font-size: .9375rem; color: var(--ink-2); }
+.tests .facts { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .375rem; font-size: .8125rem; color: var(--ink); }
+
+.asset { display: grid; gap: .625rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+.asset-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.draft-tag { font-size: .8125rem; font-weight: 500; color: var(--warn); }
+.asset pre {
+  font: inherit; font-size: .9375rem; white-space: pre-wrap; overflow-wrap: anywhere;
+  background: #fff; border: 1px solid var(--rule); padding: .875rem 1rem;
+}
+
+@media (max-width: 52rem) {
+  .crow { grid-template-columns: 1.25rem 1fr 2rem; }
+  .crow .figs { grid-column: 2 / 4; grid-row: 2; }
+  .answer { grid-template-columns: 1fr; gap: .25rem; }
+  .board .hide-sm { display: none; }
+}
+
+/* Intro: the waiting crowd, one row of 12 per group. Each figure leaves as its customer answers. */
+.waiting { display: grid; gap: .375rem; margin-top: 1.75rem; padding-top: 1rem; border-top: 3px solid var(--ink); }
+.waiting .figs { gap: .3125rem; flex-wrap: nowrap; min-height: 0; }
+.waiting .fig { width: .9375rem; height: 2rem; transition: opacity .4s var(--ease-out); }
+.waiting .fig svg { fill: none; stroke: currentColor; stroke-width: 1.25; }
+.waiting .fig.gone { opacity: .12; }
+.waiting p { font-size: .9375rem; color: var(--ink-2); margin-top: .375rem; }
+
+/* Key beside the chart, Isotype-style. */
+.key { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .375rem 1.25rem; font-size: .875rem; }
+.key li { display: flex; align-items: center; gap: .375rem; }
+.key svg { width: .5625rem; height: 1.1875rem; display: block; }
+.none-key svg { fill: none; stroke: currentColor; stroke-width: 1.5; }
+.figs .block { display: inline-flex; gap: .1875rem; margin-right: .5rem; }
+
+/* Group figures outside the crowd rows take their group colour. */
+.g1 > svg, .g2 > svg, .g3 > svg, .g4 > svg { fill: currentColor; }
+.group .guess-tag { white-space: nowrap; }
+.group-name { flex-wrap: wrap; }

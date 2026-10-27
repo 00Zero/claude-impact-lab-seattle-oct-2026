@@ -1,0 +1,15 @@
+{
+  "name": "send-check",
+  "description": "Send Check: score AI-drafted outreach before you send it",
+  "owner": {
+    "name": "Send Check contributors"
+  },
+  "plugins": [
+    {
+      "name": "send-check",
+      "displayName": "Send Check",
+      "source": "./",
+      "description": "Scores AI-drafted outreach against the actual recipient and returns send, fix, or scrap with evidence and a fit-checked suggested fix. Never sends anything."
+    }
+  ]
+}

@@ -1,0 +1,578 @@
+/*
+  ALongTable brand tokens and component styles. Direction: Basil.
+  Read DESIGN.md first. Every value here has a reason written there.
+  Fonts: Figtree (Google Fonts, SIL OFL). Load it before this file, e.g.
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+  or install @fontsource-variable/figtree.
+  Icons: Phosphor (@phosphor-icons/react).
+*/
+
+:root {
+  /* Product palette */
+  --alt-basil: #1E7A53;         /* the one action per screen, links, focus, your seat */
+  --alt-basil-hover: #18664A;
+  --alt-ink: #15191A;           /* all text, taken seats */
+  --alt-ink-soft: #5A6360;      /* secondary text, open seats */
+  --alt-page: #F5F6F2;          /* page background */
+  --alt-surface: #FFFFFF;       /* cards, sheets, inputs */
+  --alt-sunken: #ECEEE8;        /* quiet fills inside cards */
+  --alt-divider: #E2E5DF;       /* hairlines between rows, never around cards */
+  --alt-field-border: #8D9592;  /* 3.1 against white */
+  --alt-mint: #E2F0E7;          /* booked, confirmed. Fill only */
+  --alt-apricot: #FBE3D6;       /* filling up. Fill only */
+  --alt-sky: #DCEAF3;           /* information. Fill only */
+  --alt-red: #B42318;           /* problems only */
+
+  /* Brand palette: marketing, covers, social. Never on controls */
+  --alt-basil-deep: #0E3B2A;
+  --alt-blush: #F4D3DA;
+
+  /* Semantic aliases: build with these */
+  --alt-bg-page: var(--alt-page);
+  --alt-bg-card: var(--alt-surface);
+  --alt-text: var(--alt-ink);
+  --alt-text-secondary: var(--alt-ink-soft);
+  --alt-action: var(--alt-basil);
+  --alt-action-hover: var(--alt-basil-hover);
+  --alt-on-action: #FFFFFF;
+  --alt-status-booked: var(--alt-mint);
+  --alt-status-filling: var(--alt-apricot);
+  --alt-status-info: var(--alt-sky);
+  --alt-status-problem: var(--alt-red);
+
+  /* Type: Figtree only, weights 400 / 600 / 800 */
+  --alt-font: "Figtree", "Figtree Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --alt-weight-regular: 400;
+  --alt-weight-semibold: 600;
+  --alt-weight-heavy: 800;
+
+  --alt-text-hero: 4rem;       /* 64 / 1.0 / 800 */
+  --alt-text-display: 2.75rem; /* 44 / 1.05 / 800 */
+  --alt-text-h2: 2rem;         /* 32 / 1.1 / 800 */
+  --alt-text-title: 1.5rem;    /* 24 / 1.2 / 600 */
+  --alt-text-lead: 1.125rem;   /* 18 / 1.5 / 400 */
+  --alt-text-body: 1rem;       /* 16 / 1.55 / 400 */
+  --alt-text-small: 0.875rem;  /* 14 / 1.4 / 600, labels only */
+  --alt-tracking-tight: -0.02em;
+  --alt-tracking-tighter: -0.03em;
+
+  /* Space: 4px base */
+  --alt-space-1: 0.25rem;
+  --alt-space-2: 0.5rem;
+  --alt-space-3: 0.75rem;
+  --alt-space-4: 1rem;
+  --alt-space-5: 1.25rem;
+  --alt-space-6: 1.5rem;
+  --alt-space-8: 2rem;
+  --alt-space-12: 3rem;
+  --alt-space-16: 4rem;
+
+  /* Shape: medium corners, no outlines */
+  --alt-radius-card: 16px;
+  --alt-radius-control: 10px;
+  --alt-radius-small: 8px;
+  --alt-radius-photo: 12px;
+  --alt-radius-seat: 50%;
+  --alt-target: 44px;
+  --alt-button-height: 48px;
+
+  /* Motion: calm, no overshoot */
+  --alt-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --alt-dur-press: 120ms;
+  --alt-dur-toast: 240ms;
+  --alt-dur-seat: 300ms;
+  --alt-dur-draw: 500ms;        /* the Live check mark drawing itself */
+  --alt-dur-shake: 360ms;       /* "pick at least one" nudge */
+  --alt-dur-pulse: 1s;          /* loading placeholders only */
+  --alt-stagger-seat: 60ms;     /* seats popping in one after another */
+  --alt-stagger-row: 90ms;      /* rows rising in one after another */
+
+  /* Focus ring: basil, visible on every surface */
+  --alt-focus: 0 0 0 2px var(--alt-surface), 0 0 0 4px var(--alt-basil);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --alt-dur-press: 0ms;
+    --alt-dur-toast: 0ms;
+    --alt-dur-seat: 0ms;
+    --alt-dur-draw: 0ms;
+    --alt-dur-shake: 0ms;
+    --alt-dur-pulse: 0ms;
+    --alt-stagger-seat: 0ms;
+    --alt-stagger-row: 0ms;
+  }
+}
+
+/* Base */
+.alt-root,
+body.alt-root {
+  margin: 0;
+  background: var(--alt-bg-page);
+  color: var(--alt-text);
+  font-family: var(--alt-font);
+  font-size: var(--alt-text-body);
+  line-height: 1.55;
+  font-weight: var(--alt-weight-regular);
+  -webkit-font-smoothing: antialiased;
+}
+
+.alt-hero, .alt-display, .alt-h2 {
+  font-weight: var(--alt-weight-heavy);
+  margin: 0;
+  text-wrap: balance;
+}
+.alt-hero { font-size: var(--alt-text-hero); line-height: 1; letter-spacing: var(--alt-tracking-tighter); }
+.alt-display { font-size: var(--alt-text-display); line-height: 1.05; letter-spacing: var(--alt-tracking-tighter); }
+.alt-h2 { font-size: var(--alt-text-h2); line-height: 1.1; letter-spacing: var(--alt-tracking-tight); }
+.alt-title {
+  font-size: var(--alt-text-title);
+  line-height: 1.2;
+  font-weight: var(--alt-weight-semibold);
+  letter-spacing: var(--alt-tracking-tight);
+  margin: 0;
+}
+.alt-lead { font-size: var(--alt-text-lead); line-height: 1.5; margin: 0; }
+.alt-body { font-size: var(--alt-text-body); line-height: 1.55; margin: 0; }
+.alt-secondary { color: var(--alt-text-secondary); }
+.alt-label-text {
+  font-size: var(--alt-text-small);
+  line-height: 1.4;
+  font-weight: var(--alt-weight-semibold);
+}
+.alt-num { font-variant-numeric: tabular-nums; }
+.alt-link { color: var(--alt-basil); font-weight: var(--alt-weight-semibold); text-underline-offset: 3px; }
+
+/* Answer-first number: the fact that leads a dashboard */
+.alt-answer {
+  font-size: var(--alt-text-display);
+  line-height: 1;
+  font-weight: var(--alt-weight-heavy);
+  letter-spacing: var(--alt-tracking-tighter);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --alt-text-hero: 2.75rem;
+    --alt-text-display: 2.25rem;
+    --alt-text-h2: 1.75rem;
+  }
+}
+
+/* Focus: same ring everywhere, keyboard only */
+.alt-button:focus-visible,
+.alt-input:focus-visible,
+.alt-checkbox:focus-visible,
+.alt-tab:focus-visible,
+.alt-link:focus-visible,
+.alt-switch:focus-visible {
+  outline: none;
+  box-shadow: var(--alt-focus);
+}
+
+/* Button (Base UI: Button) */
+.alt-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--alt-space-2);
+  min-height: var(--alt-button-height);
+  padding: 0 var(--alt-space-5);
+  border-radius: var(--alt-radius-control);
+  border: none;
+  background: var(--alt-sunken);
+  color: var(--alt-ink);
+  font: inherit;
+  font-size: var(--alt-text-body);
+  font-weight: var(--alt-weight-semibold);
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--alt-dur-press) var(--alt-ease);
+}
+.alt-button:hover { background: var(--alt-divider); }
+
+.alt-button--primary { background: var(--alt-action); color: var(--alt-on-action); }
+.alt-button--primary:hover,
+.alt-button--primary:active { background: var(--alt-action-hover); }
+
+.alt-button--quiet {
+  background: transparent;
+  color: var(--alt-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0 var(--alt-space-3);
+}
+.alt-button--quiet:hover { background: transparent; text-decoration-thickness: 2px; }
+
+.alt-button--danger { background: var(--alt-red); color: #FFFFFF; }
+.alt-button--danger:hover { background: #9A1D14; }
+
+.alt-button--block { width: 100%; }
+
+.alt-button[data-joined] {
+  background: var(--alt-mint);
+  color: var(--alt-ink);
+  cursor: default;
+}
+
+.alt-button[disabled],
+.alt-button[aria-disabled="true"],
+.alt-button[data-disabled] {
+  background: var(--alt-sunken);
+  color: var(--alt-ink-soft);
+  cursor: not-allowed;
+}
+
+/* Status chip: one meaning per color, soft fill, ink text, no outline */
+.alt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--alt-space-1);
+  min-height: 28px;
+  padding: 0 var(--alt-space-3);
+  border-radius: var(--alt-radius-small);
+  font-size: var(--alt-text-small);
+  font-weight: var(--alt-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  background: var(--alt-sunken);
+  color: var(--alt-ink);
+}
+.alt-chip--booked { background: var(--alt-status-booked); }
+.alt-chip--filling { background: var(--alt-status-filling); }
+.alt-chip--info { background: var(--alt-status-info); }
+.alt-chip--problem { background: var(--alt-surface); color: var(--alt-red); }
+.alt-chip--you { background: var(--alt-basil); color: #FFFFFF; }
+
+/* Notice: "here's what happens next" */
+.alt-notice {
+  display: flex;
+  gap: var(--alt-space-3);
+  align-items: flex-start;
+  padding: var(--alt-space-3) var(--alt-space-4);
+  border-radius: var(--alt-radius-control);
+  color: var(--alt-ink);
+  font-size: var(--alt-text-body);
+}
+.alt-notice--info { background: var(--alt-sky); }
+.alt-notice--success { background: var(--alt-mint); }
+.alt-notice--filling { background: var(--alt-status-filling); }
+.alt-notice--problem { background: var(--alt-page); color: var(--alt-red); font-weight: var(--alt-weight-semibold); }
+.alt-notice .alt-icon { flex: none; margin-top: 1px; }
+.alt-notice--problem .alt-icon { color: var(--alt-red); }
+
+/* Card: white, no border, no shadow */
+.alt-card {
+  background: var(--alt-bg-card);
+  border-radius: var(--alt-radius-card);
+  padding: var(--alt-space-6);
+  color: var(--alt-text);
+}
+
+/* List rows inside a card: dividers between, never boxes */
+.alt-list { margin: 0; padding: 0; list-style: none; }
+.alt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--alt-space-3);
+  padding: var(--alt-space-3) 0;
+}
+.alt-row + .alt-row { border-top: 1px solid var(--alt-divider); }
+.alt-row__main { display: grid; gap: 2px; min-width: 0; }
+.alt-row__title { font-weight: var(--alt-weight-semibold); font-variant-numeric: tabular-nums; }
+.alt-row__meta { color: var(--alt-ink-soft); font-size: 0.9375rem; }
+
+/* Seat row (filled by brand.js from data-alt-seats / data-alt-taken) */
+.alt-seats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.alt-seat {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--alt-radius-seat);
+  box-sizing: border-box;
+  border: 1.5px dashed var(--alt-ink-soft);
+  background: transparent;
+}
+.alt-seat[data-state="taken"] { border: none; background: var(--alt-ink); }
+.alt-seat[data-state="yours"] { border: none; background: var(--alt-basil); box-shadow: 0 0 0 2px var(--alt-surface), 0 0 0 3.5px var(--alt-basil); }
+.alt-seat[data-pop] { animation: alt-seat-in var(--alt-dur-seat) var(--alt-ease); }
+.alt-seats--lg .alt-seat { width: 26px; height: 26px; }
+.alt-seat-count {
+  margin: var(--alt-space-2) 0 0;
+  font-size: var(--alt-text-small);
+  font-weight: var(--alt-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--alt-ink);
+}
+.alt-seat-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--alt-sunken);
+  overflow: hidden;
+}
+.alt-seat-bar > span { display: block; height: 100%; background: var(--alt-ink); }
+
+@keyframes alt-seat-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Field (Base UI: Field.Root, Field.Label, Field.Control, Field.Description, Field.Error) */
+.alt-field { display: flex; flex-direction: column; gap: var(--alt-space-2); }
+.alt-label {
+  font-size: var(--alt-text-body);
+  font-weight: var(--alt-weight-semibold);
+  color: var(--alt-ink);
+}
+.alt-input {
+  appearance: none;
+  min-height: var(--alt-button-height);
+  padding: 0 var(--alt-space-4);
+  border-radius: var(--alt-radius-control);
+  border: 1px solid var(--alt-field-border);
+  background: var(--alt-surface);
+  color: var(--alt-ink);
+  font: inherit;
+  font-size: var(--alt-text-body);
+}
+.alt-input:hover { border-color: var(--alt-ink-soft); }
+.alt-input::placeholder { color: var(--alt-ink-soft); }
+textarea.alt-input { min-height: 112px; padding: var(--alt-space-3) var(--alt-space-4); resize: vertical; line-height: 1.55; }
+.alt-input[aria-invalid="true"],
+.alt-input[data-invalid] { border-color: var(--alt-red); box-shadow: inset 0 0 0 1px var(--alt-red); }
+.alt-help { font-size: var(--alt-text-body); color: var(--alt-ink-soft); margin: 0; }
+.alt-error { font-size: var(--alt-text-body); color: var(--alt-red); font-weight: var(--alt-weight-semibold); margin: 0; }
+
+/* Checkbox (Base UI: Checkbox.Root renders role="checkbox" aria-checked) */
+.alt-check-row { display: flex; align-items: center; gap: var(--alt-space-3); min-height: var(--alt-target); cursor: pointer; }
+.alt-checkbox {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--alt-field-border);
+  background: var(--alt-surface);
+  color: #FFFFFF;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.alt-checkbox[aria-checked="true"],
+.alt-checkbox[data-checked],
+.alt-checkbox:checked { background: var(--alt-basil); border-color: var(--alt-basil); }
+.alt-checkbox:checked::after { content: ""; width: 10px; height: 6px; border-left: 2px solid #FFFFFF; border-bottom: 2px solid #FFFFFF; transform: translateY(-1px) rotate(-45deg); }
+
+/* Switch (Base UI: Switch.Root renders role="switch" with data-checked / data-disabled; Switch.Thumb inside) */
+.alt-switch {
+  width: 52px;
+  height: 32px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--alt-field-border);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background var(--alt-dur-toast) var(--alt-ease);
+  flex: none;
+}
+.alt-switch[data-checked] { background: var(--alt-basil); }
+.alt-switch[data-disabled] { opacity: .5; cursor: not-allowed; }
+.alt-switch__thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--alt-surface);
+  transition: transform var(--alt-dur-toast) var(--alt-ease);
+}
+.alt-switch[data-checked] .alt-switch__thumb { transform: translateX(20px); }
+
+/* Tabs (Base UI: Tabs.List, Tabs.Tab renders role="tab" aria-selected) */
+.alt-tabs {
+  display: inline-flex;
+  gap: var(--alt-space-1);
+  padding: var(--alt-space-1);
+  border-radius: var(--alt-radius-control);
+  background: var(--alt-sunken);
+}
+.alt-tab {
+  appearance: none;
+  min-height: 40px;
+  padding: 0 var(--alt-space-4);
+  border: none;
+  border-radius: var(--alt-radius-small);
+  background: transparent;
+  color: var(--alt-ink-soft);
+  font: inherit;
+  font-weight: var(--alt-weight-semibold);
+  cursor: pointer;
+}
+.alt-tab[aria-selected="true"],
+.alt-tab[data-selected] { background: var(--alt-surface); color: var(--alt-ink); }
+
+/* Dialog (Base UI: Dialog.Backdrop, Dialog.Popup) */
+.alt-backdrop { position: fixed; inset: 0; background: rgb(21 25 26 / 0.4); }
+.alt-dialog {
+  background: var(--alt-surface);
+  color: var(--alt-ink);
+  border-radius: var(--alt-radius-card);
+  padding: var(--alt-space-6);
+  width: min(440px, calc(100vw - 32px));
+}
+
+/* Toast (Base UI: Toast.Root) */
+.alt-toast {
+  display: flex;
+  align-items: center;
+  gap: var(--alt-space-3);
+  min-height: var(--alt-button-height);
+  padding: var(--alt-space-3) var(--alt-space-4);
+  border-radius: var(--alt-radius-control);
+  background: var(--alt-ink);
+  color: #FFFFFF;
+  font-weight: var(--alt-weight-semibold);
+  animation: alt-toast-in var(--alt-dur-toast) var(--alt-ease);
+}
+.alt-toast .alt-chip { background: var(--alt-mint); color: var(--alt-ink); }
+@keyframes alt-toast-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Avatar stack */
+.alt-avatars { display: flex; }
+.alt-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--alt-radius-seat);
+  border: 2px solid var(--alt-surface);
+  margin-left: -8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--alt-text-small);
+  font-weight: var(--alt-weight-semibold);
+  background: var(--alt-sunken);
+  color: var(--alt-ink);
+  overflow: hidden;
+}
+.alt-avatar:first-child { margin-left: 0; }
+.alt-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Photos */
+.alt-photo { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--alt-radius-photo); background: var(--alt-sunken); }
+
+/* Polaroid (expressive only) */
+.alt-polaroid {
+  display: inline-block;
+  margin: 0;
+  background: var(--alt-surface);
+  padding: 10px 10px 36px;
+  transform: rotate(-1.5deg);
+}
+.alt-polaroid:nth-child(even) { transform: rotate(1.25deg); }
+.alt-polaroid img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; background: var(--alt-sunken); }
+.alt-polaroid figcaption {
+  margin-top: var(--alt-space-2);
+  font-size: var(--alt-text-small);
+  font-weight: var(--alt-weight-semibold);
+  color: var(--alt-ink);
+}
+.alt-collage { display: flex; flex-wrap: wrap; align-items: flex-start; padding: var(--alt-space-4) 0 0 var(--alt-space-6); }
+.alt-collage .alt-polaroid { width: 200px; max-width: 46%; margin: 0 0 var(--alt-space-4) calc(var(--alt-space-6) * -1); }
+.alt-collage .alt-polaroid:nth-child(3n) { transform: rotate(2deg) translateY(12px); }
+
+/* Icons: Phosphor. In React use @phosphor-icons/react; these classes style inline SVG or the component's className */
+.alt-icon { width: 24px; height: 24px; flex: none; color: var(--alt-ink); fill: currentColor; vertical-align: middle; }
+.alt-icon--sm { width: 20px; height: 20px; }
+.alt-icon--md { width: 32px; height: 32px; }
+.alt-icon--lg { width: 48px; height: 48px; }
+.alt-icon--action { color: var(--alt-basil); }
+/* Duotone fill layer: Phosphor's background path (opacity 0.2) takes the fill token */
+.alt-icon [opacity="0.2"] { opacity: 1; fill: var(--alt-icon-fill, var(--alt-mint)); }
+.alt-icon--fill-mint { --alt-icon-fill: var(--alt-mint); }
+.alt-icon--fill-apricot { --alt-icon-fill: var(--alt-apricot); }
+.alt-icon--fill-sky { --alt-icon-fill: var(--alt-sky); }
+.alt-icon--fill-blush { --alt-icon-fill: var(--alt-blush); }
+.alt-meta { display: inline-flex; align-items: center; gap: var(--alt-space-2); color: var(--alt-ink-soft); }
+.alt-meta .alt-icon { color: var(--alt-ink); }
+
+/* Brand band (expressive only) */
+.alt-band-deep { background: var(--alt-basil-deep); color: #FFFFFF; }
+.alt-band-deep .alt-secondary { color: var(--alt-mint); }
+
+/* Motion moments (DESIGN.md → Motion). Each only confirms something the person did,
+   except alt-pulse, which marks a loading placeholder while work is in progress. */
+
+/* An onboarding step card arriving. Add --back when the person goes back a step. */
+.alt-step-in { animation: alt-step-in var(--alt-dur-seat) var(--alt-ease) both; }
+.alt-step-in--back { animation-name: alt-step-in-back; }
+@keyframes alt-step-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes alt-step-in-back {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Seats popping in one after another: set style="animation-delay: calc(var(--alt-stagger-seat) * i)" per seat. */
+.alt-seats--pop .alt-seat { animation: alt-seat-in var(--alt-dur-seat) var(--alt-ease) both; }
+
+/* Loading placeholder */
+.alt-pulse { animation: alt-pulse var(--alt-dur-pulse) var(--alt-ease) infinite; }
+@keyframes alt-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .45; }
+}
+
+/* Rows rising in when they first appear: stagger with calc(var(--alt-stagger-row) * i). */
+.alt-rise { animation: alt-rise var(--alt-dur-seat) var(--alt-ease) both; }
+@keyframes alt-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* A check mark drawing itself. Put the class on the SVG path. */
+.alt-draw {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: alt-draw var(--alt-dur-draw) var(--alt-ease) 350ms forwards;
+}
+@keyframes alt-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* "Pick something first" nudge. Retrigger by changing the element's React key. */
+.alt-shake { animation: alt-shake var(--alt-dur-shake) var(--alt-ease); }
+@keyframes alt-shake {
+  0%, 100% { transform: none; }
+  33% { transform: translateX(-6px); }
+  66% { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alt-step-in,
+  .alt-seats--pop .alt-seat,
+  .alt-seat[data-pop],
+  .alt-pulse,
+  .alt-rise,
+  .alt-shake,
+  .alt-toast { animation: none; }
+  .alt-draw { animation: none; stroke-dashoffset: 0; }
+}

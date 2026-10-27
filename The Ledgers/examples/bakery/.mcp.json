@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "bakery": {
+      "command": "../../.venv/bin/python",
+      "args": ["server.py"],
+      "env": {"BAKERY_DB": "bakery.db"}
+    }
+  }
+}

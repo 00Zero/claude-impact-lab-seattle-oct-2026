@@ -1,0 +1,12 @@
+[
+  {
+    "vendor": "Zinc (sandbox)",
+    "item": "test product",
+    "qty": 1,
+    "unit_price": 15.00,
+    "shipping": 0,
+    "tax_rate": 0.0,
+    "delivery_date": "2026-10-28",
+    "past_orders": 0
+  }
+]

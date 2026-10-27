@@ -1,0 +1,40 @@
+{
+  "description": "Receipts: the guard checks payment tools before they run, every tool call is logged to a hash chain, and after a turn that paid bills the owner sees each verdict. Active only in folders with a receipts.json.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^(mcp__.*|Edit|Write|MultiEdit|NotebookEdit|Read|Grep|Bash)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/run.py\" guard",
+            "timeout": 30,
+            "onFailure": "block"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/run.py\" log"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/run.py\" stop",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

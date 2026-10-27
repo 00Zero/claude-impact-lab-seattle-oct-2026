@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --paper: #f5f1e8;
+  --paper-2: #ece6d8;
+  --surface: #ffffff;
+  --ink: #15140f;
+  --ink-soft: #57534a;
+  --line: #d9d1bf;
+  --night: #15140f;
+  --on-night: #f5f1e8;
+  --signal: #ff5a1f;
+  --signal-soft: #ffe2d4;
+  --sage: #2f6b4f;
+  --sage-soft: #dcebe1;
+  --amber: #b7791f;
+  --amber-soft: #f6e7c8;
+  --grain: rgb(21 20 15 / 0.06);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #12110f;
+  --paper-2: #1f1d19;
+  --surface: #1a1815;
+  --ink: #f1ece2;
+  --ink-soft: #a9a396;
+  --line: #322f29;
+  --night: #0a0908;
+  --on-night: #f1ece2;
+  --signal-soft: #3b2117;
+  --sage: #7cc39d;
+  --sage-soft: #1b2e23;
+  --amber: #e2a94f;
+  --amber-soft: #352a17;
+  --grain: rgb(241 236 226 / 0.045);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-surface: var(--surface);
+  --color-night: var(--night);
+  --color-on-night: var(--on-night);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument-serif);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--paper);
+}
+
+/* Faint paper grain */
+.grain {
+  background-image: radial-gradient(var(--grain) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Expanding "ring" behind an active call */
+@keyframes ring-out {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.ring-pulse {
+  position: relative;
+}
+
+.ring-pulse::before,
+.ring-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid var(--signal);
+  animation: ring-out 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+.ring-pulse::after {
+  animation-delay: 1.2s;
+}
+
+/* Hero radiating rings */
+@keyframes slow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: slow-spin 90s linear infinite;
+  transform-origin: center;
+}
+
+/* Staggered entrance */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Typing dots for "calling…" */
+@keyframes blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.dots span {
+  animation: blink 1.4s infinite both;
+}
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Role marquee */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-plus {
+  transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ring-pulse::before,
+  .ring-pulse::after,
+  .spin-slow,
+  .rise,
+  .dots span,
+  .marquee {
+    animation: none;
+  }
+}

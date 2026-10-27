@@ -1,0 +1,1586 @@
+{
+  "schemaVersion": 1,
+  "mode": "demo",
+  "business": {
+    "name": "KeepStrong (fictional)",
+    "description": "A strength-training and protein-tracking app for adults losing weight on GLP-1 medication, built to help them keep muscle while the scale drops.",
+    "websiteUrl": "https://example.com/keepstrong",
+    "stage": "launched",
+    "pricing": {
+      "amount": 14.99,
+      "currency": "USD",
+      "period": "month",
+      "purchasesPerYear": 9
+    },
+    "revenueGoal12mo": 180000,
+    "costToServeShare": 0.3,
+    "acquisitionShare": 0.4,
+    "unitEconomics": {
+      "annualRevenuePerCustomer": 134.91,
+      "maxCac": 53.96,
+      "breakEvenCac": 94.44,
+      "firstYearMarginShare": 0.3,
+      "firstYearMargin": 40.47,
+      "targetCpaUsed": 53.96,
+      "targetCpaSource": "derived"
+    },
+    "adoptionRate": 0.01
+  },
+  "baseline": {
+    "ownerFirstDescription": "A fitness app for people on GLP-1s.",
+    "promptVersion": "recorded-plain-claude-2026-10-25",
+    "icps": [
+      "Starter Sarah, 38: just started a GLP-1 medication and is new to the gym",
+      "Midlife Maria, 52: wants to stay strong as she loses weight",
+      "Maintenance Mike, 45: reached his goal weight and wants to keep it off"
+    ],
+    "taglines": [
+      "Lose the fat, keep the strength",
+      "Your medication's training partner",
+      "Smaller and stronger",
+      "The strength plan built for GLP-1",
+      "Don't just lose weight, build what lasts"
+    ],
+    "frozenAt": "2026-10-25T12:55:00-07:00"
+  },
+  "priorExperiments": [
+    {
+      "id": "px_1",
+      "channel": "meta",
+      "hypothesis": "Women 35-54 interested in weight loss will sign up for a muscle-focused message",
+      "audience": "US, women 35-54, interests: weight loss, strength training",
+      "message": {
+        "headline": "Lose weight without losing muscle"
+      },
+      "spend": 420,
+      "metrics": {
+        "impressions": 38000,
+        "clicks": 610,
+        "conversions": 14
+      },
+      "verdict": "worked",
+      "sourceFile": "meta-ads.csv",
+      "verdictReason": "cost per sign-up 30.00 within the 53.96 most you can spend, worked out from your numbers",
+      "conversionType": "paying",
+      "creativeIds": [
+        "cr_1"
+      ],
+      "source": "file"
+    },
+    {
+      "id": "px_2",
+      "channel": "meta",
+      "hypothesis": "Anyone on a GLP-1 medication wants a fitness app",
+      "audience": "US, adults 25-64, interests: fitness apps",
+      "message": {
+        "headline": "The fitness app for your GLP-1 journey"
+      },
+      "spend": 300,
+      "metrics": {
+        "impressions": 41000,
+        "clicks": 290,
+        "conversions": 3
+      },
+      "verdict": "inconclusive",
+      "sourceFile": "meta-ads.csv",
+      "verdictReason": "fewer than 10 sign-ups",
+      "conversionType": "paying",
+      "creativeIds": [
+        "cr_2"
+      ],
+      "source": "file"
+    }
+  ],
+  "creatives": [
+    {
+      "id": "cr_1",
+      "format": "image",
+      "channel": "meta",
+      "status": "past",
+      "headline": "Lose weight without losing muscle",
+      "cta": "Learn more",
+      "imageFile": "sources/muscle-ad.png",
+      "imageDescription": "Fictional demo image (no real file). A square feed ad: a woman in her late 40s in workout clothes lifts a kettlebell in a bright kitchen. Text across the top reads \"Lose weight without losing muscle\". A \"Learn more\" button sits under the image.",
+      "source": "owner-file",
+      "sourceFile": "meta-ads.csv",
+      "experimentIds": [
+        "px_1"
+      ],
+      "guardrailFlags": [],
+      "performance": {
+        "basis": "own",
+        "sharedWith": [],
+        "channels": [
+          "meta"
+        ],
+        "spend": 420,
+        "impressions": 38000,
+        "clicks": 610,
+        "conversions": 14,
+        "ctr": 0.0161,
+        "costPerSignup": 30.0,
+        "conversionType": "paying",
+        "verdict": "worked",
+        "verdictReason": "cost per sign-up 30.00 within the 53.96 most you can spend, worked out from your numbers"
+      }
+    },
+    {
+      "id": "cr_2",
+      "format": "text",
+      "channel": "meta",
+      "status": "past",
+      "headline": "The fitness app for your GLP-1 journey",
+      "source": "owner-file",
+      "sourceFile": "meta-ads.csv",
+      "experimentIds": [
+        "px_2"
+      ],
+      "guardrailFlags": [
+        "names a medication, drug class or treatment"
+      ],
+      "performance": {
+        "basis": "own",
+        "sharedWith": [],
+        "channels": [
+          "meta"
+        ],
+        "spend": 300,
+        "impressions": 41000,
+        "clicks": 290,
+        "conversions": 3,
+        "ctr": 0.0071,
+        "costPerSignup": 100.0,
+        "conversionType": "paying",
+        "verdict": "inconclusive",
+        "verdictReason": "fewer than 10 sign-ups"
+      }
+    },
+    {
+      "id": "cr_3",
+      "format": "text",
+      "channel": "website",
+      "status": "draft",
+      "headline": "Strength first, scale second",
+      "body": "20-minute strength workouts and a daily protein target, built for the months you're losing weight.",
+      "cta": "Start your first workout",
+      "source": "owner-text",
+      "experimentIds": [],
+      "guardrailFlags": [],
+      "performance": null
+    }
+  ],
+  "constraints": [
+    {
+      "dimension": "geography",
+      "bucket": "locked",
+      "rule": {
+        "op": "include",
+        "values": [
+          "US"
+        ]
+      },
+      "appliesTo": "all",
+      "source": "stated"
+    },
+    {
+      "dimension": "age",
+      "bucket": "locked",
+      "rule": {
+        "op": "range",
+        "min": 35,
+        "max": 64
+      },
+      "appliesTo": "targeting",
+      "source": "stated",
+      "pushback": {
+        "evidenceIds": [
+          "ev_21"
+        ],
+        "ownerKept": true
+      }
+    },
+    {
+      "dimension": "price",
+      "bucket": "locked",
+      "rule": {
+        "op": "include",
+        "values": [
+          "USD 14.99/month"
+        ]
+      },
+      "appliesTo": "all",
+      "source": "stated"
+    },
+    {
+      "dimension": "healthCondition",
+      "bucket": "locked",
+      "rule": {
+        "op": "exclude",
+        "values": [
+          "targeting by medication or diagnosis"
+        ]
+      },
+      "appliesTo": "targeting",
+      "source": "inferred"
+    },
+    {
+      "dimension": "regulatory",
+      "bucket": "locked",
+      "rule": {
+        "op": "exclude",
+        "values": [
+          "medical claims",
+          "drug brand names"
+        ]
+      },
+      "appliesTo": "messaging",
+      "source": "stated"
+    },
+    {
+      "dimension": "channel",
+      "bucket": "preference",
+      "rule": {
+        "op": "include",
+        "values": [
+          "meta",
+          "reddit"
+        ]
+      },
+      "appliesTo": "targeting",
+      "source": "stated"
+    },
+    {
+      "dimension": "sex",
+      "bucket": "unknown",
+      "rule": {
+        "op": "include"
+      },
+      "appliesTo": "research",
+      "source": "inferred"
+    },
+    {
+      "dimension": "interest",
+      "bucket": "hypothesis",
+      "rule": {
+        "op": "include",
+        "values": [
+          "strength training",
+          "weight loss"
+        ]
+      },
+      "appliesTo": "research",
+      "source": "stated"
+    }
+  ],
+  "interests": [
+    {
+      "id": "int_1",
+      "name": "Weight loss with medication",
+      "researchDefinition": "US adults currently taking a GLP-1 medication for weight loss",
+      "targetableProxies": [
+        "weight-loss communities (verify platform policy before use)",
+        "high-protein cooking communities (verify platform policy before use)"
+      ],
+      "demographics": [
+        {
+          "attribute": "age",
+          "distribution": [
+            {
+              "value": "25-39",
+              "share": 0.25
+            },
+            {
+              "value": "40-54",
+              "share": 0.4
+            },
+            {
+              "value": "55-64",
+              "share": 0.35
+            }
+          ],
+          "evidenceIds": [
+            "ev_21"
+          ],
+          "isEstimate": true,
+          "logic": "Shares copied from ev_21, which covers users aged 25-64 who have ever used a GLP-1 medication; applied to current users, so treat as an estimate."
+        }
+      ]
+    },
+    {
+      "id": "int_2",
+      "name": "Strength training",
+      "researchDefinition": "US adults who lift weights at least weekly",
+      "targetableProxies": [
+        "strength training communities (verify platform policy before use)",
+        "home gym communities (verify platform policy before use)"
+      ],
+      "demographics": [
+        {
+          "attribute": "age",
+          "distribution": [
+            {
+              "value": "25-39",
+              "share": 0.45
+            },
+            {
+              "value": "40-54",
+              "share": 0.35
+            },
+            {
+              "value": "55-64",
+              "share": 0.2
+            }
+          ],
+          "evidenceIds": [],
+          "isEstimate": true,
+          "logic": "Demo values; a live run cites activity surveys."
+        }
+      ]
+    }
+  ],
+  "overlaps": [
+    {
+      "groupIds": [
+        "int_1",
+        "int_2"
+      ],
+      "summary": "The overlap most likely concentrates in adults 40-54, though younger lifters (25-39) come close.",
+      "strongest": [
+        {
+          "attribute": "age",
+          "value": "40-54",
+          "shareLow": 0.35,
+          "shareHigh": 0.43
+        }
+      ],
+      "isEstimate": true,
+      "logic": "Share of the overlap aged 40-54. 40-54 is the largest cell for medication users (int_1: 0.40, ev_21) but not for weekly lifters (int_2: 0.35; their largest is 25-39 at 0.45). Low 0.35 = the smaller of the two groups' own 40-54 shares (no concentration effect). High 0.43 = product rule: 0.40x0.35 / (0.25x0.45 + 0.40x0.35 + 0.35x0.20) = 0.14/0.3225, assuming medication use and lifting are independent within each age band and bands are equal size. Weighting bands by width (15/15/10 years) gives 0.39, inside the range. Under the product rule 40-54 is the overlap's largest cell (0.43 vs 0.35 for 25-39). No source publishes the joint number; int_2's shares are uncited demo values.",
+      "evidenceIds": [
+        "ev_21"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hyp_1",
+      "kind": "primary",
+      "segment": "Adults 40-60 losing weight on medication who want to keep their strength",
+      "action": "switch",
+      "motivation": "they are afraid of losing muscle and regaining the weight",
+      "insteadOf": "a general calorie-tracking app",
+      "price": "USD 14.99/month",
+      "wrongIf": "Muscle or strength rarely appears in this group's concerns, or a muscle-focused ad costs more per sign-up than the most you can spend to win a customer, worked out from your numbers",
+      "confidence": 4,
+      "status": "supported",
+      "evidenceIds": [
+        "ev_1",
+        "ev_8",
+        "ev_16",
+        "ev_19"
+      ]
+    },
+    {
+      "id": "hyp_2",
+      "kind": "alternate",
+      "segment": "Adults new to fitness who just started GLP-1 medication",
+      "action": "buy",
+      "motivation": "they don't know where to start",
+      "insteadOf": "free online workout videos",
+      "price": "USD 14.99/month",
+      "wrongIf": "This group doesn't distrust generic apps, or beginners convert as well as the muscle-focused group",
+      "confidence": 2,
+      "status": "weakened",
+      "evidenceIds": [
+        "ev_11",
+        "ev_17",
+        "ev_18",
+        "ev_23"
+      ]
+    }
+  ],
+  "concerns": [
+    {
+      "id": "con_muscle",
+      "label": "Losing muscle",
+      "definition": "Worry that weight loss is taking muscle and strength with it"
+    },
+    {
+      "id": "con_appetite",
+      "label": "Low appetite",
+      "definition": "Hard to eat enough protein when never hungry"
+    },
+    {
+      "id": "con_energy",
+      "label": "Low energy",
+      "definition": "Too tired to work out"
+    },
+    {
+      "id": "con_rebound",
+      "label": "Regaining weight",
+      "definition": "Fear of regaining weight after stopping medication"
+    },
+    {
+      "id": "con_cost",
+      "label": "Cost",
+      "definition": "Another subscription on top of medication and gym costs"
+    },
+    {
+      "id": "con_intimidation",
+      "label": "Not knowing where to start",
+      "definition": "Gym anxiety; wants exact instructions"
+    },
+    {
+      "id": "con_trust",
+      "label": "Distrust of apps",
+      "definition": "Skeptical of apps that overpromise"
+    }
+  ],
+  "segments": [
+    {
+      "id": "seg_1",
+      "name": "Midlife strength protectors",
+      "description": "Adults 40-60 losing weight on medication who care more about staying strong than the number on the scale.",
+      "isOwnerGuess": false,
+      "ownerRank": 1,
+      "sampleShare": 0.7,
+      "attributes": [
+        {
+          "name": "role",
+          "values": [
+            {
+              "value": "Professional working full time",
+              "weight": 0.6
+            },
+            {
+              "value": "Recently retired or semi-retired",
+              "weight": 0.25
+            },
+            {
+              "value": "Caregiver or stay-at-home parent",
+              "weight": 0.15
+            }
+          ]
+        },
+        {
+          "name": "currentSolution",
+          "values": [
+            {
+              "value": "Calorie-tracking app",
+              "weight": 0.45
+            },
+            {
+              "value": "Nothing structured",
+              "weight": 0.35
+            },
+            {
+              "value": "Personal trainer, occasionally",
+              "weight": 0.2
+            }
+          ]
+        },
+        {
+          "name": "priceSensitivity",
+          "values": [
+            {
+              "value": "high",
+              "weight": 0.3
+            },
+            {
+              "value": "medium",
+              "weight": 0.5
+            },
+            {
+              "value": "low",
+              "weight": 0.2
+            }
+          ]
+        },
+        {
+          "name": "urgency",
+          "values": [
+            {
+              "value": "high: noticing strength loss now",
+              "weight": 0.5
+            },
+            {
+              "value": "medium",
+              "weight": 0.35
+            },
+            {
+              "value": "low",
+              "weight": 0.15
+            }
+          ]
+        },
+        {
+          "name": "skepticism",
+          "values": [
+            {
+              "value": "high",
+              "weight": 0.45
+            },
+            {
+              "value": "medium",
+              "weight": 0.4
+            },
+            {
+              "value": "low",
+              "weight": 0.15
+            }
+          ]
+        },
+        {
+          "name": "buyingStage",
+          "values": [
+            {
+              "value": "aware of the problem, not searching",
+              "weight": 0.4
+            },
+            {
+              "value": "actively comparing options",
+              "weight": 0.35
+            },
+            {
+              "value": "ready to try something",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "needs": [
+        "Keep muscle while losing weight",
+        "Hit protein targets with a low appetite",
+        "Workouts that fit low-energy days"
+      ],
+      "barriers": [
+        "Another monthly subscription",
+        "Distrust of apps that overpromise",
+        "Low energy"
+      ],
+      "decisionCriteria": [
+        "Built for people losing weight, not general fitness",
+        "Evidence people their age got stronger",
+        "Short sessions"
+      ],
+      "channels": [
+        "Weight-loss forums and subreddits",
+        "Facebook groups for midlife fitness",
+        "High-protein recipe communities"
+      ],
+      "concernBundles": [
+        {
+          "concernIds": [
+            "con_muscle"
+          ],
+          "observedCount": 4,
+          "weight": 0.3077,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_appetite"
+          ],
+          "observedCount": 3,
+          "weight": 0.2308,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_energy"
+          ],
+          "observedCount": 1,
+          "weight": 0.0769,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_rebound"
+          ],
+          "observedCount": 1,
+          "weight": 0.0769,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_cost"
+          ],
+          "observedCount": 1,
+          "weight": 0.0769,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_appetite",
+            "con_energy"
+          ],
+          "observedCount": 1,
+          "weight": 0.0769,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_muscle",
+            "con_rebound"
+          ],
+          "observedCount": 1,
+          "weight": 0.0769,
+          "confidence": "medium"
+        },
+        {
+          "concernIds": [
+            "con_trust"
+          ],
+          "observedCount": 1,
+          "weight": 0.0769,
+          "confidence": "medium"
+        }
+      ],
+      "serviceability": {
+        "incumbents": [
+          {
+            "name": "TrackAll (fictional calorie tracker)",
+            "rating": 4.7,
+            "reviewCount": 1200000,
+            "evidenceIds": [
+              "ev_14",
+              "ev_4"
+            ]
+          }
+        ],
+        "unresolvedConcernIds": [
+          "con_muscle",
+          "con_appetite"
+        ],
+        "switchingEvidenceIds": [
+          "ev_7",
+          "ev_19"
+        ],
+        "size": {
+          "population": 1810000,
+          "isEstimate": true,
+          "logic": "US adults 25-64: 170M (ev_20) x GLP-1 use 1/8 (ev_15) = 21.25M users. x share aged 40-60: 0.40 (40-54) + 0.35 x 6/10 (40-60's part of 55-64, assuming an even spread) = 0.61 (ev_21) -> 12.96M. x 14% who strength-train weekly at 40-60 (ev_22, assumed the same for medication users) = 1,814,750, rounded to 1.81M.",
+          "evidenceIds": [
+            "ev_20",
+            "ev_15",
+            "ev_21",
+            "ev_22"
+          ]
+        },
+        "sizeMath": {
+          "customersNeeded": 1335,
+          "adoptionRate": 0.01,
+          "minPopulation": 133500
+        },
+        "motivation": "Noticing strength loss now, and afraid of regaining weight when they stop the medication.",
+        "verdict": "serviceable",
+        "confidence": "medium",
+        "reasoning": "The leading tracker is well rated but its reviews show muscle retention going unaddressed; switching language is present, and the group is well above the minimum size."
+      }
+    },
+    {
+      "id": "seg_2",
+      "name": "New-to-fitness medication starters",
+      "description": "Adults who just started GLP-1 medication and have never followed a training plan.",
+      "isOwnerGuess": true,
+      "ownerRank": 2,
+      "sampleShare": 0.3,
+      "attributes": [
+        {
+          "name": "role",
+          "values": [
+            {
+              "value": "Professional working full time",
+              "weight": 0.55
+            },
+            {
+              "value": "Student or early career",
+              "weight": 0.2
+            },
+            {
+              "value": "Caregiver or stay-at-home parent",
+              "weight": 0.25
+            }
+          ]
+        },
+        {
+          "name": "currentSolution",
+          "values": [
+            {
+              "value": "Free online workout videos",
+              "weight": 0.5
+            },
+            {
+              "value": "Nothing structured",
+              "weight": 0.4
+            },
+            {
+              "value": "Calorie-tracking app",
+              "weight": 0.1
+            }
+          ]
+        },
+        {
+          "name": "priceSensitivity",
+          "values": [
+            {
+              "value": "high",
+              "weight": 0.5
+            },
+            {
+              "value": "medium",
+              "weight": 0.4
+            },
+            {
+              "value": "low",
+              "weight": 0.1
+            }
+          ]
+        },
+        {
+          "name": "urgency",
+          "values": [
+            {
+              "value": "high",
+              "weight": 0.25
+            },
+            {
+              "value": "medium",
+              "weight": 0.45
+            },
+            {
+              "value": "low",
+              "weight": 0.3
+            }
+          ]
+        },
+        {
+          "name": "skepticism",
+          "values": [
+            {
+              "value": "high",
+              "weight": 0.5
+            },
+            {
+              "value": "medium",
+              "weight": 0.35
+            },
+            {
+              "value": "low",
+              "weight": 0.15
+            }
+          ]
+        },
+        {
+          "name": "buyingStage",
+          "values": [
+            {
+              "value": "aware of the problem, not searching",
+              "weight": 0.5
+            },
+            {
+              "value": "actively comparing options",
+              "weight": 0.3
+            },
+            {
+              "value": "ready to try something",
+              "weight": 0.2
+            }
+          ]
+        }
+      ],
+      "needs": [
+        "Exact instructions on what to do",
+        "A gentle start"
+      ],
+      "barriers": [
+        "Gym anxiety",
+        "Has quit apps before",
+        "Cost"
+      ],
+      "decisionCriteria": [
+        "Very simple to start",
+        "Free trial"
+      ],
+      "channels": [
+        "Beginner fitness communities",
+        "Weight-loss forums and subreddits"
+      ],
+      "concernBundles": [
+        {
+          "concernIds": [
+            "con_intimidation"
+          ],
+          "observedCount": 3,
+          "weight": 0.5,
+          "confidence": "low"
+        },
+        {
+          "concernIds": [
+            "con_muscle"
+          ],
+          "observedCount": 1,
+          "weight": 0.1667,
+          "confidence": "low"
+        },
+        {
+          "concernIds": [
+            "con_cost"
+          ],
+          "observedCount": 1,
+          "weight": 0.1667,
+          "confidence": "low"
+        },
+        {
+          "concernIds": [
+            "con_trust"
+          ],
+          "observedCount": 1,
+          "weight": 0.1667,
+          "confidence": "low"
+        }
+      ],
+      "serviceability": {
+        "incumbents": [
+          {
+            "name": "TrackAll (fictional calorie tracker)",
+            "rating": 4.7,
+            "reviewCount": 1200000,
+            "evidenceIds": [
+              "ev_14"
+            ]
+          },
+          {
+            "name": "FreeFit (fictional free workout app)",
+            "rating": 4.6,
+            "reviewCount": 850000,
+            "evidenceIds": [
+              "ev_23"
+            ]
+          }
+        ],
+        "unresolvedConcernIds": [
+          "con_intimidation"
+        ],
+        "switchingEvidenceIds": [
+          "ev_18"
+        ],
+        "size": {
+          "population": 2360000,
+          "isEstimate": true,
+          "logic": "US adults 25-64: 170M (ev_20) x GLP-1 use 1/8 (ev_15) = 21.25M users. x share aged 35-64, the ad range: 0.25 x 5/15 (35-39's part of 25-39, even spread assumed) + 0.40 + 0.35 = 0.833 (ev_21) -> 17.71M. x 1/3 who started within the past year (ev_24) -> 5.90M. x 40% who never followed a workout plan (ev_22, a 40-60 figure applied to 35-64) = 2,361,111, rounded to 2.36M.",
+          "evidenceIds": [
+            "ev_20",
+            "ev_15",
+            "ev_21",
+            "ev_24",
+            "ev_22"
+          ]
+        },
+        "sizeMath": {
+          "customersNeeded": 1335,
+          "adoptionRate": 0.01,
+          "minPopulation": 133500
+        },
+        "motivation": "Just started medication and wants a plan, but has quit generic apps before.",
+        "verdict": "marginal",
+        "confidence": "low",
+        "reasoning": "Large group, but evidence is thin (few excerpts), the owner's broad 'GLP-1' ad was inconclusive, and free beginner options are already well rated (FreeFit, 850K ratings, ev_23)."
+      }
+    }
+  ],
+  "icp": {
+    "statement": "US adults 40-60 who are losing weight on medication and care more about staying strong than the number on the scale.",
+    "mustHaves": [
+      "Currently losing weight",
+      "Worried about losing strength or muscle",
+      "Willing to do short strength sessions"
+    ],
+    "disqualifiers": [
+      "Looking only for a calorie counter"
+    ],
+    "segmentId": "seg_1"
+  },
+  "roughMessaging": [
+    {
+      "angle": "Keep your strength",
+      "headline": "Keep your strength while the weight comes off",
+      "subheadline": "Short strength sessions and protein help, built to protect muscle as you lose weight.",
+      "segmentId": "seg_1",
+      "lexiconIds": [
+        "lex_5",
+        "lex_2"
+      ]
+    },
+    {
+      "angle": "Habits that last",
+      "headline": "Build habits that actually last",
+      "subheadline": "A strength routine you can keep long after the weight is gone.",
+      "segmentId": "seg_1",
+      "lexiconIds": [
+        "lex_3"
+      ]
+    },
+    {
+      "angle": "Strength over the scale",
+      "headline": "Muscle is the plan",
+      "subheadline": "For adults who care more about not losing too much muscle than the number on the scale.",
+      "segmentId": "seg_1",
+      "lexiconIds": [
+        "lex_4"
+      ]
+    },
+    {
+      "angle": "Low-appetite friendly",
+      "headline": "Protein help for the days you're not hungry",
+      "subheadline": "Simple targets and easy ideas when eating feels like a chore.",
+      "segmentId": "seg_1",
+      "lexiconIds": [
+        "lex_2",
+        "lex_6"
+      ]
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "lex_1",
+      "phrase": "definitely lost muscle mass",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "evidenceId": "ev_1",
+      "voice": "customer"
+    },
+    {
+      "id": "lex_2",
+      "phrase": "protein to work out/not lose muscle",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "evidenceId": "ev_2",
+      "voice": "customer"
+    },
+    {
+      "id": "lex_3",
+      "phrase": "keep all this weight off",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "evidenceId": "ev_5",
+      "voice": "customer"
+    },
+    {
+      "id": "lex_4",
+      "phrase": "not losing too much muscle",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "evidenceId": "ev_8",
+      "voice": "customer"
+    },
+    {
+      "id": "lex_5",
+      "phrase": "I want to feel stronger",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "evidenceId": "ev_19",
+      "voice": "customer"
+    },
+    {
+      "id": "lex_6",
+      "phrase": "days I just drink protein shakes",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "evidenceId": "ev_7",
+      "voice": "customer"
+    },
+    {
+      "id": "lex_7",
+      "phrase": "lack the confidence to use them",
+      "segmentIds": [
+        "seg_2"
+      ],
+      "evidenceId": "ev_11",
+      "voice": "customer"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_1",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5326000-mounjaro-and-exercise",
+      "excerpt": "I have definitely lost muscle mass though and feel quite frail.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_muscle"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Mounjaro and exercise (30 Apr 2025)"
+    },
+    {
+      "id": "ev_2",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5266826-mounjaro-and-working-out",
+      "excerpt": "I am wondering how I can possibly eat enough protein to work out/not lose muscle",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_appetite"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional; the poster had just started the medication and felt less hungry",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Mounjaro and working out (3 Feb 2025)"
+    },
+    {
+      "id": "ev_3",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5176288-mounjaro-exercise-and-movement",
+      "excerpt": "I've been very tired and so have been exercising a lot less, ironically.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_energy"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Mounjaro - Exercise and Movement (30 Sep 2024)"
+    },
+    {
+      "id": "ev_4",
+      "origin": "web",
+      "sourceType": "review",
+      "url": "https://example.com/demo/trackall/reviews/1",
+      "excerpt": "Great for counting calories, but nothing here helps me keep muscle while I lose weight on medication.",
+      "segmentIds": [
+        "seg_1",
+        "seg_2"
+      ],
+      "concernIds": [
+        "con_muscle"
+      ],
+      "confidence": "low",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_5",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://community.myfitnesspal.com/en/discussion/10949926/first-week-of-zepbound",
+      "excerpt": "I don't see how I can keep all this weight off forever (without glp help), but I'm trying not to stress about that right now.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_rebound"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "MyFitnessPal Community: First week of Zepbound (23 Oct 2025)"
+    },
+    {
+      "id": "ev_6",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight_loss_chat/5083729-i-need-help-from-someone-anyone-but-who",
+      "excerpt": "I can't really afford a full membership if I'm also haemorrhaging £150-200 a month on Mounjaro too.",
+      "segmentIds": [
+        "seg_1",
+        "seg_2"
+      ],
+      "concernIds": [
+        "con_cost"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional; the poster was about to start the medication",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: I need help from someone, anyone, but who? (27 May 2024)"
+    },
+    {
+      "id": "ev_7",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5311085-6-weeks-into-mounjaro-suddenly-cant-eat",
+      "excerpt": "On really bad days I just drink protein shakes.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_appetite"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: 6 weeks into mounjaro, suddenly can’t eat (9 Apr 2025)"
+    },
+    {
+      "id": "ev_8",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5378966-mounjaro-menopause-and-me",
+      "excerpt": "particularly aware of not losing too much muscle/bone density so I do weights at home",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_muscle"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Mounjaro, menopause and me. (23 Jul 2025)"
+    },
+    {
+      "id": "ev_9",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5352560-mounjaro-making-me-absolutely-exhausted-anyone-else",
+      "excerpt": "I can’t eat enough to give myself energy, plus I just feel exhausted the whole time.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_energy",
+        "con_appetite"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Mounjaro making me absolutely exhausted. Anyone else? (11 Jun 2025)"
+    },
+    {
+      "id": "ev_10",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5512840-weight-gain-after-mounjaro",
+      "excerpt": "the reduction in muscle mass is generally not regained so you're potentially worsening your overall body composition with each cycle of loss and gain.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_muscle",
+        "con_rebound"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional; the reply doesn't say whether the poster takes the medication",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Weight gain after Mounjaro (5 Apr 2026)"
+    },
+    {
+      "id": "ev_11",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5392594-fitness-advice",
+      "excerpt": "Yes, my gym has free weights. I just lack the confidence to use them to be honest with you.",
+      "segmentIds": [
+        "seg_2"
+      ],
+      "concernIds": [
+        "con_intimidation"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Fitness advice (15 Aug 2025)"
+    },
+    {
+      "id": "ev_12",
+      "origin": "web",
+      "sourceType": "review",
+      "url": "https://example.com/demo/trackall/reviews/2",
+      "excerpt": "Another app promising miracles. I'll believe it when I see real people my age getting stronger.",
+      "segmentIds": [
+        "seg_1",
+        "seg_2"
+      ],
+      "concernIds": [
+        "con_trust"
+      ],
+      "confidence": "low",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_13",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5381286-mounjaro-best-tips-from-regular-users",
+      "excerpt": "i struggle with enough protein and find chicken sausages helpful",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_appetite"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Mounjaro - Best tips from regular users (28 Jul 2025)"
+    },
+    {
+      "id": "ev_14",
+      "origin": "web",
+      "sourceType": "review-aggregate",
+      "url": "https://example.com/demo/trackall",
+      "excerpt": "TrackAll: 4.7 stars from 1.2M ratings.",
+      "sampleSize": 1200000,
+      "segmentIds": [
+        "seg_1",
+        "seg_2"
+      ],
+      "concernIds": [],
+      "confidence": "medium",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_15",
+      "origin": "web",
+      "sourceType": "survey",
+      "url": "https://example.com/demo/survey",
+      "excerpt": "About 1 in 8 US adults say they have used a GLP-1 medication.",
+      "sampleSize": 1500,
+      "segmentIds": [],
+      "concernIds": [],
+      "confidence": "high",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_16",
+      "origin": "owner-file",
+      "sourceType": "first-party",
+      "excerpt": "Meta test, 'Lose weight without losing muscle', women 35-54: 610 clicks, 14 sign-ups, USD 420 spend.",
+      "sampleSize": 610,
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_muscle"
+      ],
+      "confidence": "medium",
+      "limitations": "Fictional demo data; one campaign",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_17",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight-loss-injections/5520830-recommended-exercises-for-building-muscle-mass-whilst-on-wegovy-for-an-absolute-beginner",
+      "excerpt": "I have limited resources (mainly time) to devote to this so I’d like to make a plan for the best way to approach it.",
+      "segmentIds": [
+        "seg_2"
+      ],
+      "concernIds": [
+        "con_intimidation"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Recommended exercises for building muscle mass whilst on WeGovy - for an absolute beginner (23 Apr 2026)"
+    },
+    {
+      "id": "ev_18",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight_loss_chat/5402536-body-coach-app",
+      "excerpt": "To be honest I'm not going to restart, I don't think I'm fit enough time do all the mat work",
+      "segmentIds": [
+        "seg_2"
+      ],
+      "concernIds": [
+        "con_intimidation"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional; the poster let a fitness-app subscription lapse after starting the medication",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: Body coach app (1 Sep 2025)"
+    },
+    {
+      "id": "ev_19",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://www.mumsnet.com/talk/weight_loss_chat/5083729-i-need-help-from-someone-anyone-but-who",
+      "excerpt": "I don't want to just rely on injections and diet. I want to move more. I want to feel stronger.",
+      "segmentIds": [
+        "seg_1"
+      ],
+      "concernIds": [
+        "con_muscle"
+      ],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional; the poster was about to start the medication",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "Mumsnet: I need help from someone, anyone, but who? (27 May 2024)"
+    },
+    {
+      "id": "ev_20",
+      "origin": "web",
+      "sourceType": "official-stats",
+      "url": "https://example.com/demo/census",
+      "title": "Demo census table (fictional)",
+      "excerpt": "Demo census table: about 260 million US adults, of whom about 170 million are aged 25 to 64.",
+      "segmentIds": [],
+      "concernIds": [],
+      "confidence": "high",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_21",
+      "origin": "web",
+      "sourceType": "survey",
+      "url": "https://example.com/demo/survey/glp1-users",
+      "title": "Demo survey of 1,000 US adults who have used a GLP-1 medication (fictional)",
+      "excerpt": "Of US adults aged 25 to 64 who have used a GLP-1 medication, about 25% are 25-39, 40% are 40-54 and 35% are 55-64.",
+      "sampleSize": 1000,
+      "segmentIds": [],
+      "concernIds": [],
+      "confidence": "medium",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_22",
+      "origin": "web",
+      "sourceType": "survey",
+      "url": "https://example.com/demo/survey/activity",
+      "title": "Demo activity survey of 2,000 US adults aged 40 to 60 (fictional)",
+      "excerpt": "Among US adults aged 40 to 60, 14% strength-train at least weekly and 40% have never followed a workout plan.",
+      "sampleSize": 2000,
+      "segmentIds": [],
+      "concernIds": [],
+      "confidence": "medium",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_23",
+      "origin": "web",
+      "sourceType": "review-aggregate",
+      "url": "https://example.com/demo/freefit",
+      "title": "FreeFit app listing (fictional)",
+      "excerpt": "FreeFit: free beginner workouts, no subscription. 4.6 stars from 850K ratings.",
+      "sampleSize": 850000,
+      "segmentIds": [
+        "seg_2"
+      ],
+      "concernIds": [],
+      "confidence": "medium",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_24",
+      "origin": "web",
+      "sourceType": "survey",
+      "url": "https://example.com/demo/survey/glp1-users",
+      "title": "Demo survey of 1,000 US adults who have used a GLP-1 medication (fictional)",
+      "excerpt": "About 1 in 3 US adults who have used a GLP-1 medication started it within the past year.",
+      "sampleSize": 1000,
+      "segmentIds": [],
+      "concernIds": [],
+      "confidence": "medium",
+      "limitations": "Fictional demo data",
+      "retrievedAt": "2026-10-25T13:00:00-07:00"
+    },
+    {
+      "id": "ev_25",
+      "origin": "web",
+      "sourceType": "forum-post",
+      "url": "https://community.myfitnesspal.com/en/discussion/10888958/are-those-taking-wegovy-or-ozempic-also-doing-resistance-training-and-increasing-protein",
+      "excerpt": "Your discussion about protein and resistance training is completely foreign to my experience",
+      "segmentIds": [],
+      "concernIds": [],
+      "confidence": "low",
+      "limitations": "Real public forum post (short excerpt, username removed); the business in this demo is fictional",
+      "retrievedAt": "2026-10-25T17:00:00-07:00",
+      "title": "MyFitnessPal Community: Are those taking Wegovy or Ozempic also doing resistance training and increasing protein? (23 Apr 2023)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "fnd_1",
+      "claim": "Losing muscle is the most common concern among midlife strength protectors.",
+      "segmentId": "seg_1",
+      "kind": "observed",
+      "derivation": "Script count of concern tags across this group's excerpts (see concernBundles).",
+      "evidenceIds": [
+        "ev_1",
+        "ev_4",
+        "ev_8",
+        "ev_10",
+        "ev_19"
+      ],
+      "confidence": "medium",
+      "limitations": "Demo data; forum posters skew toward people having problems"
+    },
+    {
+      "id": "fnd_2",
+      "claim": "The muscle-focused Meta ad cost less per sign-up than the most you can spend to win a customer; the broad 'GLP-1 journey' ad was inconclusive.",
+      "kind": "observed",
+      "derivation": "Script-computed verdicts from meta-ads.csv, judged against the most you can spend to win a customer, worked out from your numbers (price, purchases per year, acquisition share).",
+      "evidenceIds": [
+        "ev_16"
+      ],
+      "confidence": "medium",
+      "limitations": "One small campaign each"
+    },
+    {
+      "id": "fnd_3",
+      "claim": "The leading calorie tracker is well rated but doesn't address keeping muscle during weight loss.",
+      "segmentId": "seg_1",
+      "kind": "inferred",
+      "derivation": "High aggregate rating plus reviews and posts asking for muscle help that the app lacks.",
+      "evidenceIds": [
+        "ev_14",
+        "ev_4",
+        "ev_19"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "fnd_4",
+      "claim": "Midlife strength protectors number about 1.8M US adults, well above the minimum this business needs.",
+      "segmentId": "seg_1",
+      "kind": "estimated",
+      "derivation": "170M US adults 25-64 (ev_20) x 1/8 GLP-1 use (ev_15) x 0.61 aged 40-60 (ev_21) x 14% weekly strength training (ev_22) = 1.81M; compared with the script's minPopulation.",
+      "evidenceIds": [
+        "ev_20",
+        "ev_15",
+        "ev_21",
+        "ev_22"
+      ],
+      "confidence": "low",
+      "limitations": "Fictional demo inputs; ev_15 counts anyone who has ever used the medication, and the exercise rate is for all adults 40-60, not medication users"
+    },
+    {
+      "id": "fnd_5",
+      "claim": "The owner's original broad group ('people on GLP-1s, new to fitness') is crowded with free options and its evidence is thin.",
+      "segmentId": "seg_2",
+      "kind": "inferred",
+      "derivation": "A free beginner app rated 4.6 from 850K ratings (ev_23), few excerpts for this group, an inconclusive broad ad, and switching-away language about generic apps.",
+      "evidenceIds": [
+        "ev_23",
+        "ev_11",
+        "ev_17",
+        "ev_18"
+      ],
+      "confidence": "low"
+    }
+  ],
+  "skeptic": [
+    {
+      "claim": "Incumbents leave muscle retention unaddressed",
+      "queries": [
+        "TrackAll strength training feature",
+        "app for keeping muscle during weight loss"
+      ],
+      "result": "nothing-found",
+      "evidenceIds": [
+        "ev_14"
+      ],
+      "kind": "incumbent-gap"
+    },
+    {
+      "claim": "Midlife strength protectors are big enough to support the business",
+      "queries": [
+        "GLP-1 users by age",
+        "adults who strength train by age"
+      ],
+      "result": "resolved",
+      "evidenceIds": [
+        "ev_15",
+        "ev_20",
+        "ev_21",
+        "ev_22"
+      ],
+      "kind": "size"
+    },
+    {
+      "claim": "People want to keep muscle, not just lose weight",
+      "queries": [
+        "GLP-1 just want to lose weight don't care about muscle",
+        "GLP-1 muscle loss worry overblown"
+      ],
+      "result": "resolved",
+      "evidenceIds": [
+        "ev_25",
+        "ev_16",
+        "ev_19"
+      ],
+      "kind": "motivation"
+    }
+  ],
+  "readiness": {
+    "status": "ready",
+    "checks": [
+      {
+        "check": "Owner confirmed the brief",
+        "pass": true,
+        "note": "Scripted demo owner"
+      },
+      {
+        "check": "[script] ICP has a statement, 3+ must-haves and 1+ disqualifier",
+        "pass": true
+      },
+      {
+        "check": "[script] Today's targeting dimensions all recorded (geography, age, price, channel, regulatory, interests)",
+        "pass": true
+      },
+      {
+        "check": "[script] Geography and price are set (not unknown)",
+        "pass": true
+      },
+      {
+        "check": "[script] One primary hypothesis with 'wrong if'",
+        "pass": true
+      },
+      {
+        "check": "[script] At least 2 customer groups, each with a verdict",
+        "pass": true
+      },
+      {
+        "check": "[script] Concern counts computed for every customer group",
+        "pass": true
+      },
+      {
+        "check": "[script] 3-5 messaging lines that pass the messaging check",
+        "pass": true
+      },
+      {
+        "check": "[script] Every finding is typed and cites evidence",
+        "pass": true
+      },
+      {
+        "check": "[script] Skeptic pass covers motivation, incumbent gap and size, each with queries and a result",
+        "pass": true
+      },
+      {
+        "check": "[script] No integrity errors",
+        "pass": true
+      },
+      {
+        "check": "[script] Owner confirmation recorded",
+        "pass": true
+      }
+    ]
+  },
+  "openQuestions": [
+    "DEMO FIXTURE: the business, owner, ads, reviews of the fictional competitor and numbers are fictional. Every forum-post quote is a real public post, linked.",
+    "Not asked yet: should ads target women, men or both? The one muscle ad that worked ran to women 35-54 only (ev_16), so men are untested."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+ "source": "Twin-2K-500-Mega-Study results.zip: results/infotainment/GPT5_2025-08-11",
+ "model": "gpt-5",
+ "temperature": 1,
+ "note": "Published twin predictions (persona from all 4 waves unless the folder says otherwise); reference row, not our run."
+}

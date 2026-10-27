@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "id": "exp_1",
+  "round": 1,
+  "scenario": {
+    "context": "You're looking at a landing page for a fitness app.",
+    "decision": "Which of these would make you most likely to sign up? You can pick none.",
+    "channel": "landing-page"
+  },
+  "stimuli": [
+    {
+      "label": "A",
+      "candidateId": "hyp_3",
+      "text": "Gain the confidence to use the free weights."
+    },
+    {
+      "label": "B",
+      "candidateId": "hyp_1",
+      "text": "Keep your strength while the weight comes off."
+    },
+    {
+      "label": "C",
+      "candidateId": "hyp_4",
+      "text": "Protein help for the days you're not hungry."
+    },
+    {
+      "label": "D",
+      "candidateId": "hyp_6",
+      "text": "The fitness app for everyone."
+    },
+    {
+      "label": "E",
+      "candidateId": "hyp_5",
+      "text": "Lose weight without losing muscle."
+    },
+    {
+      "label": "F",
+      "candidateId": "hyp_2",
+      "text": "Habits that keep the weight off."
+    }
+  ],
+  "orderings": [
+    [
+      "A",
+      "B",
+      "F",
+      "C",
+      "E",
+      "D"
+    ],
+    [
+      "B",
+      "C",
+      "A",
+      "D",
+      "F",
+      "E"
+    ],
+    [
+      "C",
+      "D",
+      "B",
+      "E",
+      "A",
+      "F"
+    ],
+    [
+      "D",
+      "E",
+      "C",
+      "F",
+      "B",
+      "A"
+    ],
+    [
+      "E",
+      "F",
+      "D",
+      "A",
+      "C",
+      "B"
+    ],
+    [
+      "F",
+      "A",
+      "E",
+      "B",
+      "D",
+      "C"
+    ]
+  ],
+  "repeatCustomerIds": [],
+  "protocol": {
+    "version": "protocol-v1",
+    "instructions": "You're shown several short messages for the same kind of product, labeled with letters. Answer as yourself, using only your own situation as described. Pick the one message that would make you most likely to act, or \"none\" if none would. Rate every message from 1 (not at all) to 5 (very) on each dimension. For any message you have a doubt about, give one short objection in your own words. Don't assume anything about the company beyond the message itself.",
+    "dimensionDefinitions": {
+      "relevance": "How much this speaks to your situation and what you care about right now.",
+      "credibility": "How believable it is, coming from a company you don't know yet.",
+      "differentiation": "How different it sounds from what you use or have seen before.",
+      "clarity": "How quickly you understand what's offered and who it's for.",
+      "actionIntent": "How likely you'd be to click or sign up after seeing it."
+    }
+  },
+  "fingerprint": "ee35906c2582"
+}

@@ -1,0 +1,10 @@
+{
+  "_comment": "Mock data standing in for what connectors return: accounting (budget) and a shop/inventory system. Replace with live data via MCP connectors.",
+  "sources": {"budget": "accounting system (mock)", "inventory": "shop system (mock)"},
+  "budget": {
+    "supplies": {"monthly": 1500.00, "spent": 1180.00}
+  },
+  "inventory": {
+    "bread flour 50lb": {"on_hand": 6, "weekly_usage": 8}
+  }
+}

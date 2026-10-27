@@ -1,0 +1,3 @@
+# Receipts itself (receipts/, hooks/) uses the Python standard library only.
+# This is for the example bakery's MCP server.
+mcp==1.30.0

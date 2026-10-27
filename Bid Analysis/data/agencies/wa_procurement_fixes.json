@@ -1,0 +1,79 @@
+{
+  "_about": "Patches to WA rows in data/sources.seed.json. 'updates' are merged into existing rows by id; 'new' are rows the spreadsheet lacks. URLs came from web search on 2026-10-25 and are not yet crawl-verified.",
+  "updates": [
+    {
+      "id": "wa-county-king",
+      "procurement_url": "https://kingcounty.gov/en/dept/executive-services/about-king-county/business-operations/finance-business-operations/procurement-payables/construction",
+      "platform": "custom",
+      "fetch_method": "html",
+      "status": "candidate",
+      "discovered_via": "web_search",
+      "notes": "Construction solicitations page; goods/services go through King County's supplier portal."
+    },
+    {
+      "id": "wa-county-pierce",
+      "procurement_url": "https://procurement.opengov.com/portal/piercecountywa",
+      "platform": "opengov",
+      "fetch_method": "browser",
+      "status": "candidate",
+      "discovered_via": "web_search",
+      "notes": "Pierce County posts bids on OpenGov Procurement (linked from https://www.piercecountywa.gov/265/Bid-Opportunities)."
+    },
+    {
+      "id": "wa-city-bellevue",
+      "procurement_url": "https://bellevuewa.gov/city-government/departments/finance/bid-opportunities-rfps-and-rfqs",
+      "platform": "custom",
+      "fetch_method": "html",
+      "status": "candidate",
+      "discovered_via": "web_search"
+    },
+    {
+      "id": "wa-county-chelan",
+      "homepage_url": "https://www.co.chelan.wa.us/",
+      "notes": "Spreadsheet homepage pointed to the City of Chelan; replaced with the county site (from memory, verify)."
+    },
+    {
+      "id": "wa-county-yakima",
+      "homepage_url": "https://www.yakimacounty.us/",
+      "notes": "Spreadsheet homepage pointed to the City of Yakima; replaced with the county site (from memory, verify)."
+    },
+    {
+      "id": "wa-county-snohomish",
+      "procurement_url": "https://www.snohomishcountywa.gov/2716/Purchasing-Division",
+      "platform": "civicplus",
+      "fetch_method": "html",
+      "status": "candidate",
+      "discovered_via": "web_search"
+    },
+    {
+      "id": "wa-city-everett",
+      "procurement_url": "https://procurement.opengov.com/portal/everettwa",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "county": "Snohomish"
+    }
+  ],
+  "new": [
+    {
+      "id": "wa-platform-omwbe",
+      "name": "WA Office of Minority & Women's Business Enterprises bid opportunities",
+      "state": "WA",
+      "agency_type": "platform",
+      "county": null,
+      "city": null,
+      "lat": null,
+      "lng": null,
+      "homepage_url": "https://omwbe.wa.gov/",
+      "procurement_url": "https://omwbe.wa.gov/bid-opportunities",
+      "platform": "omwbe",
+      "fetch_method": "html",
+      "status": "candidate",
+      "last_verified": null,
+      "discovered_via": "web_search",
+      "notes": "Aggregates bid notices from many WA agencies (Kent, Snohomish County, etc.). Good cheap coverage for small vendors.",
+      "raw": null
+    }
+  ]
+}

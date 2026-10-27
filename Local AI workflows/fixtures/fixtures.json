@@ -1,0 +1,202 @@
+{
+  "notice": "All transcripts in this folder are fictional and were written for this demo. They contain no real client or session content.",
+  "noteTypes": [
+    {
+      "id": "narrative",
+      "label": "Narrative therapy session",
+      "fixtures": {
+        "development": "narrative-a",
+        "simulation": "narrative-b",
+        "fresh": "narrative-c"
+      }
+    },
+    {
+      "id": "general",
+      "label": "General individual therapy session (CBT-informed)",
+      "fixtures": {
+        "development": "general-a",
+        "simulation": "general-b",
+        "fresh": "general-c"
+      }
+    },
+    {
+      "id": "couples",
+      "label": "Couples therapy session",
+      "fixtures": {
+        "development": "couples-a",
+        "simulation": "couples-b",
+        "fresh": "couples-c"
+      }
+    }
+  ],
+  "fixtures": {
+    "narrative-a": {
+      "version": 1,
+      "file": "narrative-a.txt",
+      "names": [
+        "Priya"
+      ],
+      "explicitNextActions": true
+    },
+    "narrative-b": {
+      "version": 1,
+      "file": "narrative-b.txt",
+      "names": [
+        "Tomas"
+      ],
+      "explicitNextActions": false
+    },
+    "narrative-c": {
+      "version": 1,
+      "file": "narrative-c.txt",
+      "names": [
+        "Ruth"
+      ],
+      "explicitNextActions": true
+    },
+    "general-a": {
+      "version": 1,
+      "file": "general-a.txt",
+      "names": [
+        "Jordan"
+      ],
+      "explicitNextActions": true
+    },
+    "general-b": {
+      "version": 1,
+      "file": "general-b.txt",
+      "names": [
+        "Sam"
+      ],
+      "explicitNextActions": false
+    },
+    "general-c": {
+      "version": 1,
+      "file": "general-c.txt",
+      "names": [
+        "Lena"
+      ],
+      "explicitNextActions": true
+    },
+    "couples-a": {
+      "version": 1,
+      "file": "couples-a.txt",
+      "names": [],
+      "explicitNextActions": true
+    },
+    "couples-b": {
+      "version": 1,
+      "file": "couples-b.txt",
+      "names": [],
+      "explicitNextActions": false
+    },
+    "couples-c": {
+      "version": 1,
+      "file": "couples-c.txt",
+      "names": [],
+      "explicitNextActions": true
+    },
+    "lib-brainspotting-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/brainspotting-session.txt",
+      "label": "Brainspotting (trauma) session",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-couples-sex-therapy-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/couples-sex-therapy-session.txt",
+      "label": "Couples sex therapy session",
+      "names": [
+        "Jordan",
+        "Morgan"
+      ],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-eft-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/eft-session.txt",
+      "label": "Emotionally Focused couples session (EFT)",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-executive-coaching-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/executive-coaching-session.txt",
+      "label": "Executive coaching session",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-gottman-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/gottman-session.txt",
+      "label": "Gottman couples session",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-ifs-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/ifs-session.txt",
+      "label": "Internal Family Systems (IFS) session",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-narrative-therapy-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/narrative-therapy-session.txt",
+      "label": "Narrative therapy session (longer)",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-pain-rehab-pt-telehealth-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/pain-rehab-pt-telehealth-session.txt",
+      "label": "Pain rehab physical therapy telehealth session",
+      "names": [
+        "Mike"
+      ],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-team-facilitation-session": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/team-facilitation-session.txt",
+      "label": "Team facilitation session",
+      "names": [
+        "Stephanie"
+      ],
+      "explicitNextActions": null,
+      "library": true
+    },
+    "lib-telehealth-two-clients": {
+      "version": 1,
+      "file": "../examples/sample-transcripts/telehealth-two-clients.txt",
+      "label": "Telehealth couples session (client lines only)",
+      "names": [],
+      "explicitNextActions": null,
+      "library": true
+    }
+  },
+  "library": {
+    "notice": "Fictional, AI-generated sample transcripts added by the team (examples/sample-transcripts/). Not clinician-validated and not held-out evidence.",
+    "sessions": [
+      "lib-brainspotting-session",
+      "lib-couples-sex-therapy-session",
+      "lib-eft-session",
+      "lib-executive-coaching-session",
+      "lib-gottman-session",
+      "lib-ifs-session",
+      "lib-narrative-therapy-session",
+      "lib-pain-rehab-pt-telehealth-session",
+      "lib-team-facilitation-session",
+      "lib-telehealth-two-clients"
+    ]
+  }
+}

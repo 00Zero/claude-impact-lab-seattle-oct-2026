@@ -1,0 +1,13 @@
+{
+  "key": "30bb99c42400617ee4f822887f3a164db33e01ce386aee243995187dd9032911",
+  "promptVersion": "cfo_voice@2",
+  "model": "claude-opus-5-5",
+  "source": "live",
+  "output": {
+    "headline": "Not yet: you are already $40,500 below your safety line without this payment, so first chase Evergreen Home to pay INV-1187 by Dec 12, which lifts your lowest point by $19,500.",
+    "why": "Without the payment, your cash drops to −$5,500 on Dec 25, $40,500 under your $35,000 safety line, so this payment is not the cause of the gap. Getting INV-1187 paid by Dec 12 lifts your lowest point by $19,500, to $14,000 on Jan 8, 2027, still below the safety line. If that doesn't work, ask Cascade Customs Brokerage for 10 more days on DUTIES-2291, which lifts it by $9,000 on its own.",
+    "nextStep": "Chase Evergreen Home to pay INV-1187 by Dec 12.",
+    "convictionNote": "Medium confidence: Evergreen Home has 8 payments on record, and I assumed Dec 31 for \"in December\".",
+    "whatWouldChange": "The $28,000 receipt from Evergreen Home on INV-1187, expected Dec 26, is the least certain piece; if it slips, the low point moves."
+  }
+}

@@ -1,0 +1,450 @@
+# Deploys the site to Cloudflare Workers.
+#
+#   push to main   -> production        https://ringaround.me
+#   open a PR      -> that PR's preview  https://ringaround-preview-pr-<number>.<subdomain>.workers.dev
+#   close/merge PR -> that preview is deleted
+#
+# Each preview deploy also posts its URL as a comment on the PR, edited in place
+# on later pushes and marked deleted when the PR closes.
+#
+# Previews are keyed to the pull request, not the branch, so two PRs in flight
+# never overwrite each other's preview and every preview has an owner that can
+# be closed. A branch with no PR gets no preview: open one to get a URL.
+#
+# Because previews run on `pull_request`, they build the PR's *merge* commit —
+# the site as it would look once merged, not just the branch tip.
+#
+# Both deploy jobs wait on `test`, which lints and runs the full OpenNext build
+# with no secrets, so a broken build fails fast and cheaply in front of anything
+# that touches Cloudflare.
+#
+# The app is a Next.js server, adapted for Workers by @opennextjs/cloudflare:
+# `opennextjs-cloudflare build` runs `next build` and writes .open-next/, then
+# `opennextjs-cloudflare deploy` uploads the prerendered pages to the R2
+# incremental cache (via rclone, using the R2 S3 keys) and runs `wrangler deploy`.
+# Worker and bucket names live in wrangler.jsonc.
+#
+# Credentials live on the `prod` GitHub Environment (Settings -> Environments -> prod),
+# NOT at repo level, so every job that touches Cloudflare must declare
+# `environment: prod` — without it they all resolve to empty strings:
+#   secret   CF_API_TOKEN             Cloudflare API token: Workers Scripts edit,
+#                                     Workers R2 Storage edit, D1 edit, and for the
+#                                     ringaround.me zone, Workers Routes + DNS edit
+#   variable CF_ACCOUNT_ID            Cloudflare account ID (also in wrangler.jsonc)
+#   variable CF_S3_ACCESS_KEY_ID      R2 S3 API key pair, for the cache upload
+#   secret   CF_S3_SECRET_ACCESS_KEY
+#   secret   CLAUDE_API_KEY           Anthropic API key, for starting agent sessions
+#   variable CLAUDE_AGENT_ID          Managed Agents agent, environment and vault the
+#   variable CLAUDE_ENVIRONMENT_ID    sessions run with. Production uploads all four
+#   variable CLAUDE_VAULT_ID          to the Worker, with ALLOWED_EMAILS, when all are set.
+#   variable ALLOWED_EMAILS           Accounts allowed to start calls (comma separated)
+#   secret   MCP_TOKEN                Bearer token the agent presents to /api/mcp to report
+#                                     calls; the same value lives in the agent's vault
+#   secret   AUTH_SECRET              Session encryption key (openssl rand -base64 32)
+#   variable GOOGLE_AUTH_ID           Google OAuth client ID
+#   secret   GOOGLE_AUTH_SECRET       Google OAuth client secret
+#                                     When all three are set, production uploads them
+#                                     to the Worker as AUTH_SECRET / AUTH_GOOGLE_ID /
+#                                     AUTH_GOOGLE_SECRET; otherwise sign-in shows
+#                                     "unavailable".
+#
+# Two consequences worth knowing:
+#   - Any protection rule on `prod` (required reviewers, branch limits) gates
+#     preview deploys too, since every job reads its credentials from it.
+#   - A PR from a *fork* gets no secrets from GitHub by design, so its preview
+#     job stops at the credential check. Push branches to this repo instead.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+  workflow_dispatch:
+
+# Never let two deploys of the same target race each other. A newer push
+# supersedes an in-flight one rather than fighting it.
+concurrency:
+  group: deploy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    # Not on `closed`: there is nothing to deploy, so there is nothing to gate.
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build for Workers
+        run: npx opennextjs-cloudflare build
+
+  production:
+    name: Production
+    needs: test
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://ringaround.me
+    env:
+      BUCKET: ringaround-opennext-cache
+    steps:
+      - uses: actions/checkout@v5
+
+      # Without this, a missing credential surfaces as a confusing wrangler or
+      # rclone error minutes into the run, after the whole build.
+      - name: Check CI credentials are configured
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+          CF_S3_ACCESS_KEY_ID: ${{ vars.CF_S3_ACCESS_KEY_ID }}
+          CF_S3_SECRET_ACCESS_KEY: ${{ secrets.CF_S3_SECRET_ACCESS_KEY }}
+        run: |
+          # Secret values are masked in logs, so report presence only.
+          missing=0
+          for name in CF_API_TOKEN CF_ACCOUNT_ID CF_S3_ACCESS_KEY_ID CF_S3_SECRET_ACCESS_KEY; do
+            if [ -n "${!name}" ]; then echo "$name: present"; else echo "$name: MISSING"; missing=1; fi
+          done
+          if [ "$missing" = 1 ]; then
+            echo "::error::A Cloudflare credential is not visible to this job. They live on the" \
+                 "\`prod\` environment, so check that this job still declares" \
+                 "\`environment: prod\` and that each one is still set there." \
+                 "See docs/deployment.md."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for Workers
+        run: npx opennextjs-cloudflare build
+
+      # The rclone cache upload writes into the bucket but cannot create it.
+      - name: Ensure the R2 cache bucket exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+        run: npx wrangler r2 bucket info "$BUCKET" > /dev/null 2>&1 || npx wrangler r2 bucket create "$BUCKET"
+
+      # Before the deploy, so new code never runs against an older schema.
+      # Migrations must therefore be additive: the Worker still serving during
+      # this step is the previous version.
+      - name: Apply database migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+        run: npx wrangler d1 migrations apply DB --remote
+
+      # The agent's skill (skills/ringaround/SKILL.md) ships with the code that
+      # writes its brief, so a failed upload stops the deploy. An unchanged file
+      # uploads nothing. Previews skip this: they share the production agent.
+      - name: Deploy the agent skill
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          CLAUDE_AGENT_ID: ${{ vars.CLAUDE_AGENT_ID }}
+        run: |
+          if [ -z "$CLAUDE_API_KEY" ] || [ -z "$CLAUDE_AGENT_ID" ]; then
+            echo "::warning::Agent skill not deployed: CLAUDE_API_KEY or CLAUDE_AGENT_ID is not set on the \`prod\` environment. See docs/deployment.md."
+            exit 0
+          fi
+          node scripts/deploy-skill.mjs --apply
+
+      # Points the agent at /api/mcp (report_call), keeps the vault's MCP_TOKEN
+      # matching the Worker's, and applies agent/system-prompt.md. Runs after
+      # the skill so both updates see the latest agent version. Unchanged
+      # settings leave the agent alone. A failure here shows as a warning but
+      # doesn't hold back the site: the agent keeps its previous settings.
+      - name: Connect the agent
+        continue-on-error: true
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          CLAUDE_AGENT_ID: ${{ vars.CLAUDE_AGENT_ID }}
+          CLAUDE_VAULT_ID: ${{ vars.CLAUDE_VAULT_ID }}
+          MCP_TOKEN: ${{ secrets.MCP_TOKEN }}
+        run: |
+          for name in CLAUDE_API_KEY CLAUDE_AGENT_ID CLAUDE_VAULT_ID MCP_TOKEN; do
+            if [ -z "${!name}" ]; then
+              echo "::warning::Agent not connected: $name is not set on the \`prod\` environment. See docs/deployment.md."
+              exit 0
+            fi
+          done
+          node scripts/connect-agent.mjs --apply
+
+      # Secrets are additive: a deploy never deletes one, so leaving these unset
+      # in GitHub keeps whatever was put on the Worker by hand. Each group is
+      # uploaded only when complete, so a half-configured feature stays off.
+      # The Claude IDs aren't secret, but as Worker secrets they survive deploys
+      # the same way the key does.
+      - name: Prepare Worker secrets
+        id: secrets
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_GOOGLE_ID: ${{ vars.GOOGLE_AUTH_ID }}
+          AUTH_GOOGLE_SECRET: ${{ secrets.GOOGLE_AUTH_SECRET }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          CLAUDE_AGENT_ID: ${{ vars.CLAUDE_AGENT_ID }}
+          CLAUDE_ENVIRONMENT_ID: ${{ vars.CLAUDE_ENVIRONMENT_ID }}
+          CLAUDE_VAULT_ID: ${{ vars.CLAUDE_VAULT_ID }}
+          ALLOWED_EMAILS: ${{ vars.ALLOWED_EMAILS }}
+          MCP_TOKEN: ${{ secrets.MCP_TOKEN }}
+        run: |
+          file="$RUNNER_TEMP/worker-secrets.json"
+          echo '{}' > "$file"
+          add_group() {
+            local label="$1"; shift
+            for name in "$@"; do
+              if [ -z "${!name}" ]; then
+                echo "::warning::$label is off: $name is not set on the \`prod\` environment, so none of $* were uploaded. See docs/deployment.md."
+                return
+              fi
+            done
+            for name in "$@"; do
+              jq --arg k "$name" '. + {($k): env[$k]}' "$file" > "$file.next" && mv "$file.next" "$file"
+            done
+            echo "$label: uploading $*"
+          }
+          add_group "Google sign-in" AUTH_SECRET AUTH_GOOGLE_ID AUTH_GOOGLE_SECRET
+          add_group "Agent calling" CLAUDE_API_KEY CLAUDE_AGENT_ID CLAUDE_ENVIRONMENT_ID CLAUDE_VAULT_ID ALLOWED_EMAILS
+          add_group "Call tracking" MCP_TOKEN
+          if [ "$(jq length "$file")" -gt 0 ]; then
+            echo "args=--secrets-file $file" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+          CF_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ vars.CF_S3_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.CF_S3_SECRET_ACCESS_KEY }}
+        # No --env: the top-level config is production. The only named
+        # environment is `preview`, and selecting it would publish the wrong Worker.
+        run: npx opennextjs-cloudflare deploy --rclone ${{ steps.secrets.outputs.args }}
+
+      - name: Summary
+        run: |
+          echo "### Deployed to production :rocket:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- https://ringaround.me" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Commit \`${GITHUB_SHA::7}\`" >> "$GITHUB_STEP_SUMMARY"
+
+  preview:
+    name: Preview
+    needs: test
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    # Job-level permissions replace the workflow's, so contents: read is restated.
+    # pull-requests: write is only for the preview-URL comment below.
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      WORKER: ringaround-preview-pr-${{ github.event.pull_request.number }}
+      BUCKET: ringaround-preview-opennext-cache
+    environment:
+      name: prod
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check CI credentials are configured
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+          CF_S3_ACCESS_KEY_ID: ${{ vars.CF_S3_ACCESS_KEY_ID }}
+          CF_S3_SECRET_ACCESS_KEY: ${{ secrets.CF_S3_SECRET_ACCESS_KEY }}
+        run: |
+          missing=0
+          for name in CF_API_TOKEN CF_ACCOUNT_ID CF_S3_ACCESS_KEY_ID CF_S3_SECRET_ACCESS_KEY; do
+            if [ -n "${!name}" ]; then echo "$name: present"; else echo "$name: MISSING"; missing=1; fi
+          done
+          if [ "$missing" = 1 ]; then
+            echo "::error::A Cloudflare credential is not visible to this job. They live on the" \
+                 "\`prod\` environment — and a PR from a fork never receives them." \
+                 "See docs/deployment.md."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for Workers
+        run: npx opennextjs-cloudflare build
+
+      # Previews share one bucket, separate from production's, so a PR can never
+      # write into the production cache. Entries are keyed by build ID.
+      - name: Ensure the R2 cache bucket exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+        run: npx wrangler r2 bucket info "$BUCKET" > /dev/null 2>&1 || npx wrangler r2 bucket create "$BUCKET"
+
+      # The preview database is shared by every PR and holds no real user data.
+      - name: Apply database migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+        run: npx wrangler d1 migrations apply DB --remote --env preview
+
+      # --name overrides the preview environment's Worker name so each PR
+      # publishes its own. Everything else still comes from `env.preview` in
+      # wrangler.jsonc — in particular "routes": [], which is what keeps a
+      # preview from claiming the production hostname. The workers.dev URL is
+      # read back from wrangler's output rather than hard-coding the subdomain.
+      - name: Deploy this PR's preview
+        id: deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+          CF_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ vars.CF_S3_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.CF_S3_SECRET_ACCESS_KEY }}
+        run: |
+          set -o pipefail
+          npx opennextjs-cloudflare deploy --env preview --rclone --name "$WORKER" 2>&1 | tee "$RUNNER_TEMP/deploy.log"
+          url=$(grep -oE "https://$WORKER\.[a-z0-9-]+\.workers\.dev" "$RUNNER_TEMP/deploy.log" | head -n 1)
+          if [ -z "$url" ]; then
+            echo "::error::Deployed, but could not find the workers.dev URL in wrangler's output."
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        # Branch names are attacker-controllable text, so they reach the shell
+        # through env rather than being spliced into the script.
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          echo "### Deployed preview for PR #$NUMBER :construction:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- $URL" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Merge commit of \`$HEAD_REF\` into \`$BASE_REF\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "This preview belongs to this PR alone, and is deleted when the PR closes." >> "$GITHUB_STEP_SUMMARY"
+          echo "Google sign-in is unavailable on previews: they have no OAuth credentials." >> "$GITHUB_STEP_SUMMARY"
+
+      # One comment per PR, found again by the hidden marker and edited in place on
+      # every push, so the thread does not grow a new comment per deploy. The
+      # cleanup job rewrites the same comment when the preview is deleted.
+      - name: Comment the preview URL on the PR
+        uses: actions/github-script@v8
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        with:
+          script: |
+            const marker = '<!-- ringaround-preview -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const body = [
+              marker,
+              '### Preview deployed :construction:',
+              '',
+              `**${process.env.URL}**`,
+              '',
+              `Built from \`${process.env.SHA.slice(0, 7)}\` merged into \`${context.payload.pull_request.base.ref}\`. ` +
+                'Updated on every push; deleted when this PR closes. Google sign-in is unavailable on previews.',
+            ].join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const mine = comments.find(c => c.user.type === 'Bot' && c.body.includes(marker));
+            if (mine) await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body });
+            else await github.rest.issues.createComment({ owner, repo, issue_number, body });
+
+  cleanup:
+    name: Delete PR preview
+    # Runs on merge and on plain close alike — either way the preview is spent.
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    environment:
+      name: prod
+    env:
+      WORKER: ringaround-preview-pr-${{ github.event.pull_request.number }}
+    steps:
+      - name: Check CI credentials are configured
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          if [ -z "$CF_API_TOKEN" ]; then
+            echo "::error::Secret CF_API_TOKEN is not visible to this job. See docs/deployment.md."
+            exit 1
+          fi
+
+      # Tolerated on purpose: a PR closed without its preview ever deploying (no
+      # commit pushed, credential check failed, fork PR) has no Worker, and
+      # wrangler treats a missing Worker as an error. A red run for that would
+      # train people to ignore this job.
+      #
+      # No checkout, so wrangler sees no wrangler.jsonc and deletes exactly the
+      # Worker named here, never the production one.
+      - name: Delete the preview Worker
+        id: delete
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 delete "$WORKER" --force
+
+      - name: Summary
+        env:
+          OUTCOME: ${{ steps.delete.outcome }}
+          NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "$OUTCOME" = "success" ]; then
+            echo "### Preview deleted :wastebasket:" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "- PR #$NUMBER closed, so its Worker \`$WORKER\` went with it." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Nothing to delete :shrug:" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "- PR #$NUMBER had no Worker \`$WORKER\` to remove." >> "$GITHUB_STEP_SUMMARY"
+            echo "- If you expected one, read the step log above — the delete genuinely failed." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # Mark the preview comment dead so nobody clicks a URL that now 404s. Only
+      # edits an existing comment; a PR that never deployed gets nothing new.
+      - name: Update the preview comment on the PR
+        if: steps.delete.outcome == 'success'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const marker = '<!-- ringaround-preview -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const mine = comments.find(c => c.user.type === 'Bot' && c.body.includes(marker));
+            if (!mine) return;
+            const body = [marker, '### Preview deleted :wastebasket:', '', 'This PR closed, so its preview Worker was removed.'].join('\n');
+            await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body });

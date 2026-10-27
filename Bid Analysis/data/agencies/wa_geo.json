@@ -1,0 +1,2979 @@
+{
+  "updates": [
+    {
+      "id": "wa-city-auburn",
+      "lat": 47.30732,
+      "lng": -122.22845
+    },
+    {
+      "id": "wa-city-bellevue",
+      "lat": 47.61038,
+      "lng": -122.20068
+    },
+    {
+      "id": "wa-city-bellingham",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-city-chehalis",
+      "lat": 46.66205,
+      "lng": -122.96402,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-city-edmonds",
+      "lat": 47.81065,
+      "lng": -122.37736
+    },
+    {
+      "id": "wa-city-everett",
+      "lat": 47.97898,
+      "lng": -122.20208
+    },
+    {
+      "id": "wa-city-federal-way",
+      "lat": 47.32232,
+      "lng": -122.31262
+    },
+    {
+      "id": "wa-city-kelso",
+      "lat": 46.14678,
+      "lng": -122.90844,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-city-kent",
+      "lat": 47.38093,
+      "lng": -122.23484
+    },
+    {
+      "id": "wa-city-kirkland",
+      "lat": 47.68149,
+      "lng": -122.20874
+    },
+    {
+      "id": "wa-city-lakewood",
+      "lat": 47.17176,
+      "lng": -122.51846
+    },
+    {
+      "id": "wa-city-lynnwood",
+      "lat": 47.82093,
+      "lng": -122.31513
+    },
+    {
+      "id": "wa-city-marysville",
+      "lat": 48.05176,
+      "lng": -122.17708
+    },
+    {
+      "id": "wa-city-mount-vernon",
+      "lat": 48.42122,
+      "lng": -122.33405,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-city-olympia",
+      "lat": 47.04491,
+      "lng": -122.90169,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-city-pasco",
+      "lat": 46.23958,
+      "lng": -119.10057,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-city-port-orchard",
+      "lat": 47.54037,
+      "lng": -122.63625,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-city-prosser",
+      "lat": 46.2068,
+      "lng": -119.76892,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-city-puyallup",
+      "lat": 47.18538,
+      "lng": -122.2929
+    },
+    {
+      "id": "wa-city-redmond",
+      "lat": 47.67399,
+      "lng": -122.12151
+    },
+    {
+      "id": "wa-city-renton",
+      "lat": 47.48288,
+      "lng": -122.21707
+    },
+    {
+      "id": "wa-city-seattle",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-city-seattle-consultant-contracting",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-city-shoreline",
+      "lat": 47.75565,
+      "lng": -122.34152
+    },
+    {
+      "id": "wa-city-sumner",
+      "lat": 47.20316,
+      "lng": -122.2404
+    },
+    {
+      "id": "wa-city-tacoma",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-city-tacoma-services",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-city-tacoma-supplies",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-city-vancouver",
+      "lat": 45.63873,
+      "lng": -122.66149,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-county-adams",
+      "lat": 46.99951,
+      "lng": -118.66415
+    },
+    {
+      "id": "wa-county-asotin",
+      "lat": 46.22893,
+      "lng": -117.19792
+    },
+    {
+      "id": "wa-county-benton",
+      "lat": 46.28176,
+      "lng": -119.40713
+    },
+    {
+      "id": "wa-county-chelan",
+      "lat": 47.90496,
+      "lng": -120.51802
+    },
+    {
+      "id": "wa-county-clallam",
+      "lat": 48.12874,
+      "lng": -123.82555
+    },
+    {
+      "id": "wa-county-clark",
+      "lat": 45.8037,
+      "lng": -122.52084
+    },
+    {
+      "id": "wa-county-columbia",
+      "lat": 46.31183,
+      "lng": -117.92296
+    },
+    {
+      "id": "wa-county-cowilitz",
+      "lat": 46.11897,
+      "lng": -122.72902
+    },
+    {
+      "id": "wa-county-douglas",
+      "lat": 47.68289,
+      "lng": -119.63505
+    },
+    {
+      "id": "wa-county-ferry",
+      "lat": 48.41567,
+      "lng": -118.48648
+    },
+    {
+      "id": "wa-county-franklin",
+      "lat": 46.4656,
+      "lng": -118.82746
+    },
+    {
+      "id": "wa-county-garfield",
+      "lat": 46.3492,
+      "lng": -117.54608
+    },
+    {
+      "id": "wa-county-grant",
+      "lat": 47.29502,
+      "lng": -119.50763
+    },
+    {
+      "id": "wa-county-grays",
+      "lat": 47.16273,
+      "lng": -123.75556
+    },
+    {
+      "id": "wa-county-island",
+      "lat": 48.15752,
+      "lng": -122.56033
+    },
+    {
+      "id": "wa-county-jefferson",
+      "lat": 47.83065,
+      "lng": -123.61019
+    },
+    {
+      "id": "wa-county-king",
+      "lat": 47.4329,
+      "lng": -121.79581
+    },
+    {
+      "id": "wa-county-king-construction",
+      "lat": 47.4329,
+      "lng": -121.79581
+    },
+    {
+      "id": "wa-county-kitsap",
+      "lat": 47.67215,
+      "lng": -122.74697
+    },
+    {
+      "id": "wa-county-kittitas",
+      "lat": 47.16702,
+      "lng": -120.69748
+    },
+    {
+      "id": "wa-county-klickitat",
+      "lat": 45.8256,
+      "lng": -120.73876
+    },
+    {
+      "id": "wa-county-lewis",
+      "lat": 46.58888,
+      "lng": -122.37009
+    },
+    {
+      "id": "wa-county-lincoln",
+      "lat": 47.60901,
+      "lng": -118.40033
+    },
+    {
+      "id": "wa-county-mason",
+      "lat": 47.34485,
+      "lng": -123.15435
+    },
+    {
+      "id": "wa-county-okanogan",
+      "lat": 48.47194,
+      "lng": -119.86118
+    },
+    {
+      "id": "wa-county-pacific",
+      "lat": 46.51672,
+      "lng": -123.72864
+    },
+    {
+      "id": "wa-county-pend",
+      "lat": 48.52305,
+      "lng": -117.33072
+    },
+    {
+      "id": "wa-county-pierce",
+      "lat": 47.06694,
+      "lng": -122.10807
+    },
+    {
+      "id": "wa-county-san-juan",
+      "lat": 48.60595,
+      "lng": -122.98925
+    },
+    {
+      "id": "wa-county-skagit",
+      "lat": 48.47666,
+      "lng": -121.71505
+    },
+    {
+      "id": "wa-county-skamania",
+      "lat": 45.96821,
+      "lng": -121.88374
+    },
+    {
+      "id": "wa-county-snohomish",
+      "lat": 48.03682,
+      "lng": -121.65762
+    },
+    {
+      "id": "wa-county-spokane",
+      "lat": 47.65368,
+      "lng": -117.43302
+    },
+    {
+      "id": "wa-county-stevens",
+      "lat": 48.39634,
+      "lng": -117.91578
+    },
+    {
+      "id": "wa-county-thurston",
+      "lat": 46.97588,
+      "lng": -122.7039
+    },
+    {
+      "id": "wa-county-wallawalla",
+      "lat": 46.30281,
+      "lng": -118.51699
+    },
+    {
+      "id": "wa-county-whatcom",
+      "lat": 48.82157,
+      "lng": -121.88374
+    },
+    {
+      "id": "wa-county-whitman",
+      "lat": 46.83886,
+      "lng": -117.64299
+    },
+    {
+      "id": "wa-county-whkiakum",
+      "lat": 46.26544,
+      "lng": -123.47021
+    },
+    {
+      "id": "wa-county-yakima",
+      "lat": 46.56482,
+      "lng": -120.69569
+    },
+    {
+      "id": "wa-emergency-comms-kitsap-911-public-authority",
+      "lat": 47.56732,
+      "lng": -122.63264,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-emergency-comms-rivercom-911",
+      "lat": 47.42346,
+      "lng": -120.31035,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-emergency-comms-south-sound-911-public-authority",
+      "lat": 47.25288,
+      "lng": -122.44429,
+      "county": "Pierce"
+    },
+    {
+      "id": "wa-emergency-comms-thurston-911-communications",
+      "lat": 47.04491,
+      "lng": -122.90169,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-fire-adams-county-fire-district-5-othello-fire",
+      "lat": 46.99951,
+      "lng": -118.66415,
+      "county": "Adams"
+    },
+    {
+      "id": "wa-fire-poulsbo-fire-department",
+      "lat": 47.73593,
+      "lng": -122.64654,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-fire-puget-sound-regional-fire-authority",
+      "lat": 47.38093,
+      "lng": -122.23484,
+      "county": "King"
+    },
+    {
+      "id": "wa-fire-south-king-fire",
+      "lat": 47.32232,
+      "lng": -122.31262,
+      "county": "King"
+    },
+    {
+      "id": "wa-fire-south-snohomish-county-fire-and-rescue-regional-fire-authority",
+      "lat": 48.03682,
+      "lng": -121.65762,
+      "county": "Snohomish"
+    },
+    {
+      "id": "wa-fire-west-thurston-regional-fire-authority",
+      "lat": 46.82177,
+      "lng": -123.09625,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-higher-ed-eastern-washington-university",
+      "lat": 47.48739,
+      "lng": -117.57576,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-higher-ed-western-washington-university",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-hospital-adams-county-phd-2",
+      "lat": 47.12755,
+      "lng": -118.37999
+    },
+    {
+      "id": "wa-hospital-adams-county-phd-3",
+      "lat": 46.82597,
+      "lng": -119.17529
+    },
+    {
+      "id": "wa-hospital-chelan-county-phd-1",
+      "lat": 47.59623,
+      "lng": -120.66148
+    },
+    {
+      "id": "wa-hospital-chelan-county-phd-2",
+      "lat": 47.84097,
+      "lng": -120.01646
+    },
+    {
+      "id": "wa-hospital-clallam-county-phd-1",
+      "lat": 47.95036,
+      "lng": -124.38549
+    },
+    {
+      "id": "wa-hospital-clallam-county-phd-2",
+      "lat": 48.11815,
+      "lng": -123.43074
+    },
+    {
+      "id": "wa-hospital-columbia-county-phd-1",
+      "lat": 46.32375,
+      "lng": -117.97244
+    },
+    {
+      "id": "wa-hospital-douglas-county-phd-2",
+      "lat": 47.64708,
+      "lng": -120.07118
+    },
+    {
+      "id": "wa-hospital-douglas-grant-lincoln-okanogan-counties-phd-6",
+      "lat": 48.47194,
+      "lng": -119.86118,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-hospital-ferry-county-phd-1",
+      "lat": 48.64822,
+      "lng": -118.73781
+    },
+    {
+      "id": "wa-hospital-franklin-county-phd-1",
+      "lat": 46.4656,
+      "lng": -118.82746
+    },
+    {
+      "id": "wa-hospital-garfield-county-phd-1",
+      "lat": 46.47487,
+      "lng": -117.60269
+    },
+    {
+      "id": "wa-hospital-grant-county-phd-1",
+      "lat": 47.13014,
+      "lng": -119.27808
+    },
+    {
+      "id": "wa-hospital-grant-county-phd-2",
+      "lat": 47.2343,
+      "lng": -119.85255
+    },
+    {
+      "id": "wa-hospital-grant-county-phd-3",
+      "lat": 47.31764,
+      "lng": -119.55365
+    },
+    {
+      "id": "wa-hospital-grant-county-phd-4",
+      "lat": 47.38931,
+      "lng": -119.49059
+    },
+    {
+      "id": "wa-hospital-grant-county-phd-5",
+      "lat": 46.73791,
+      "lng": -119.90282
+    },
+    {
+      "id": "wa-hospital-grant-county-phd-7",
+      "lat": 46.90097,
+      "lng": -119.63059
+    },
+    {
+      "id": "wa-hospital-grays-harbor-county-phd-1",
+      "lat": 47.00343,
+      "lng": -123.40877
+    },
+    {
+      "id": "wa-hospital-grays-harbor-county-phd-2",
+      "lat": 46.97537,
+      "lng": -123.81572
+    },
+    {
+      "id": "wa-hospital-jefferson-county-phd-2",
+      "lat": 48.11742,
+      "lng": -122.76071
+    },
+    {
+      "id": "wa-hospital-kennewick-phd-1",
+      "lat": 46.21125,
+      "lng": -119.13723,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-hospital-king-county-phd-1",
+      "lat": 47.48288,
+      "lng": -122.21707
+    },
+    {
+      "id": "wa-hospital-king-county-phd-2",
+      "lat": 47.68149,
+      "lng": -122.20874
+    },
+    {
+      "id": "wa-hospital-king-county-phd-4",
+      "lat": 47.52871,
+      "lng": -121.82539
+    },
+    {
+      "id": "wa-hospital-king-county-phd-5",
+      "lat": 47.44732,
+      "lng": -122.45985
+    },
+    {
+      "id": "wa-hospital-king-county-public-hospital-district-4",
+      "lat": 47.4329,
+      "lng": -121.79581,
+      "county": "King"
+    },
+    {
+      "id": "wa-hospital-kittitas-county-phd-1",
+      "lat": 46.99651,
+      "lng": -120.54785
+    },
+    {
+      "id": "wa-hospital-kittitas-county-phd-2",
+      "lat": 47.1954,
+      "lng": -120.93925
+    },
+    {
+      "id": "wa-hospital-klickitat-county-phd-1",
+      "lat": 45.82068,
+      "lng": -120.82173
+    },
+    {
+      "id": "wa-hospital-klickitat-county-phd-2",
+      "lat": 45.72762,
+      "lng": -121.48646
+    },
+    {
+      "id": "wa-hospital-lewis-county-phd-1",
+      "lat": 46.55844,
+      "lng": -122.2751
+    },
+    {
+      "id": "wa-hospital-lincoln-county-phd-1",
+      "lat": 47.60901,
+      "lng": -118.40033
+    },
+    {
+      "id": "wa-hospital-lincoln-county-phd-3",
+      "lat": 47.65405,
+      "lng": -118.14997
+    },
+    {
+      "id": "wa-hospital-mason-county-phd-1",
+      "lat": 47.21509,
+      "lng": -123.10071
+    },
+    {
+      "id": "wa-hospital-mason-county-phd-2",
+      "lat": 47.45065,
+      "lng": -122.82737
+    },
+    {
+      "id": "wa-hospital-okanogan-county-phd-3",
+      "lat": 48.41099,
+      "lng": -119.52755
+    },
+    {
+      "id": "wa-hospital-okanogan-county-phd-4",
+      "lat": 48.70515,
+      "lng": -119.4395
+    },
+    {
+      "id": "wa-hospital-okanogan-douglas-counties-phd-1",
+      "lat": 48.09598,
+      "lng": -119.78062,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-hospital-pacific-county-phd-2",
+      "lat": 46.66315,
+      "lng": -123.80461
+    },
+    {
+      "id": "wa-hospital-pacific-county-phd-3",
+      "lat": 46.51672,
+      "lng": -123.72864
+    },
+    {
+      "id": "wa-hospital-pend-oreille-county-phd-1",
+      "lat": 48.17963,
+      "lng": -117.04326
+    },
+    {
+      "id": "wa-hospital-point-roberts-phd",
+      "lat": 48.98538,
+      "lng": -123.07797,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-hospital-prosser-phd",
+      "lat": 46.2068,
+      "lng": -119.76892,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-hospital-san-juan-county-phd-1",
+      "lat": 48.53427,
+      "lng": -123.01712
+    },
+    {
+      "id": "wa-hospital-san-juan-county-phd-2",
+      "lat": 48.60595,
+      "lng": -122.98925
+    },
+    {
+      "id": "wa-hospital-san-juan-county-phd-3",
+      "lat": 48.60595,
+      "lng": -122.98925
+    },
+    {
+      "id": "wa-hospital-skagit-county-phd-1",
+      "lat": 48.42122,
+      "lng": -122.33405
+    },
+    {
+      "id": "wa-hospital-skagit-county-phd-2",
+      "lat": 48.5126,
+      "lng": -122.61267
+    },
+    {
+      "id": "wa-hospital-skagit-county-phd-304",
+      "lat": 48.50389,
+      "lng": -122.23611
+    },
+    {
+      "id": "wa-hospital-skamania-county-phd-1",
+      "lat": 45.69567,
+      "lng": -121.88452
+    },
+    {
+      "id": "wa-hospital-snohomish-county-phd-1",
+      "lat": 47.85538,
+      "lng": -121.97096
+    },
+    {
+      "id": "wa-hospital-snohomish-county-phd-2",
+      "lat": 47.82093,
+      "lng": -122.31513
+    },
+    {
+      "id": "wa-hospital-snohomish-county-phd-3",
+      "lat": 48.19871,
+      "lng": -122.12514
+    },
+    {
+      "id": "wa-hospital-spokane-regional-health-district",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-hospital-whidbey-island-phd",
+      "lat": 48.21982,
+      "lng": -122.68628,
+      "county": "Island"
+    },
+    {
+      "id": "wa-hospital-whitman-county-phd-1-a",
+      "lat": 46.73127,
+      "lng": -117.17962
+    },
+    {
+      "id": "wa-hospital-whitman-county-phd-3",
+      "lat": 46.88017,
+      "lng": -117.36435
+    },
+    {
+      "id": "wa-parks-bainbridge-island-metropolitan-park-recreation-district",
+      "lat": 47.62621,
+      "lng": -122.52124,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-parks-peninsula-metropolitan-park-district",
+      "lat": 47.32926,
+      "lng": -122.58013,
+      "county": "Pierce"
+    },
+    {
+      "id": "wa-port-chelan-douglas-regional-port-authority",
+      "lat": 47.42346,
+      "lng": -120.31035,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-port-northwest-seaport-alliance",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-port-port-of-bellingham",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-port-port-of-bremerton",
+      "lat": 47.56732,
+      "lng": -122.63264,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-port-port-of-camas-washougal",
+      "lat": 45.58706,
+      "lng": -122.39954,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-port-port-of-coupeville",
+      "lat": 48.21982,
+      "lng": -122.68628,
+      "county": "Island"
+    },
+    {
+      "id": "wa-port-port-of-everett",
+      "lat": 47.97898,
+      "lng": -122.20208,
+      "county": "Snohomish"
+    },
+    {
+      "id": "wa-port-port-of-grays-harbor",
+      "lat": 46.97537,
+      "lng": -123.81572,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-port-port-of-pasco",
+      "lat": 46.23958,
+      "lng": -119.10057,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-port-port-of-port-angeles",
+      "lat": 48.11815,
+      "lng": -123.43074,
+      "county": "Clallam"
+    },
+    {
+      "id": "wa-port-port-of-port-townsend",
+      "lat": 48.11742,
+      "lng": -122.76071,
+      "county": "Jefferson"
+    },
+    {
+      "id": "wa-port-port-of-skagit-county",
+      "lat": 48.47666,
+      "lng": -121.71505,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-port-port-of-sunnyside",
+      "lat": 46.32374,
+      "lng": -120.00865,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-port-port-of-tacoma",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-school-aberdeen-school-district-5",
+      "lat": 46.97537,
+      "lng": -123.81572,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-adna-school-district",
+      "lat": 46.629,
+      "lng": -123.0612
+    },
+    {
+      "id": "wa-school-almira-school-district",
+      "lat": 47.7632,
+      "lng": -118.9123
+    },
+    {
+      "id": "wa-school-anacortes-school-district",
+      "lat": 48.5126,
+      "lng": -122.61267,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-school-arlington-school-district",
+      "lat": 48.19871,
+      "lng": -122.12514
+    },
+    {
+      "id": "wa-school-asotin-anatone-school-district",
+      "lat": 46.33933,
+      "lng": -117.04821,
+      "county": "Asotin"
+    },
+    {
+      "id": "wa-school-auburn-school-district",
+      "lat": 47.30732,
+      "lng": -122.22845
+    },
+    {
+      "id": "wa-school-bainbridge-island-school-district",
+      "lat": 47.62621,
+      "lng": -122.52124,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-battle-ground-school-district",
+      "lat": 45.78095,
+      "lng": -122.53343,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-bellevue-school-district",
+      "lat": 47.61038,
+      "lng": -122.20068
+    },
+    {
+      "id": "wa-school-bellingham-school-district",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-benge-school-district",
+      "lat": 46.8591,
+      "lng": -118.1611
+    },
+    {
+      "id": "wa-school-bethel-school-district",
+      "lat": 47.10399,
+      "lng": -122.43457
+    },
+    {
+      "id": "wa-school-bickleton-school-district",
+      "lat": 45.9597,
+      "lng": -120.1042
+    },
+    {
+      "id": "wa-school-blaine-school-district",
+      "lat": 48.99372,
+      "lng": -122.74712,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-boistfort-school-district",
+      "lat": 46.4956,
+      "lng": -123.1468
+    },
+    {
+      "id": "wa-school-bremerton-school-district",
+      "lat": 47.56732,
+      "lng": -122.63264,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-brewster-school-district",
+      "lat": 48.09598,
+      "lng": -119.78062,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-bridgeport-school-district",
+      "lat": 48.0082,
+      "lng": -119.67116,
+      "county": "Douglas"
+    },
+    {
+      "id": "wa-school-brinnon-school-district",
+      "lat": 47.6776,
+      "lng": -122.9375
+    },
+    {
+      "id": "wa-school-burlington-edison-school-district",
+      "lat": 48.47566,
+      "lng": -122.32544,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-school-camas-school-district",
+      "lat": 45.58706,
+      "lng": -122.39954,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-cape-flattery-school-district",
+      "lat": 48.328,
+      "lng": -124.6151
+    },
+    {
+      "id": "wa-school-carbonado-school-district",
+      "lat": 47.06694,
+      "lng": -122.10807
+    },
+    {
+      "id": "wa-school-cascade-school-district",
+      "lat": 47.59623,
+      "lng": -120.66148,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-cashmere-school-district",
+      "lat": 47.52235,
+      "lng": -120.4698,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-castle-rock-school-district",
+      "lat": 46.27511,
+      "lng": -122.90761,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-catalyst-public-schools",
+      "lat": 47.56732,
+      "lng": -122.63264,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-centerville-school-district",
+      "lat": 45.7032,
+      "lng": -120.946
+    },
+    {
+      "id": "wa-school-central-kitsap-school-district",
+      "lat": 47.64454,
+      "lng": -122.69487,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-central-kitsap-school-district-401",
+      "lat": 47.64454,
+      "lng": -122.69487,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-central-valley-school-district",
+      "lat": 47.67591,
+      "lng": -117.11821,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-centralia-school-district",
+      "lat": 46.71621,
+      "lng": -122.9543,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-school-chehalis-school-district",
+      "lat": 46.66205,
+      "lng": -122.96402,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-school-cheney-school-district",
+      "lat": 47.48739,
+      "lng": -117.57576,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-chewelah-school-district",
+      "lat": 48.27629,
+      "lng": -117.71552,
+      "county": "Stevens"
+    },
+    {
+      "id": "wa-school-chief-leschi-tribal-compact",
+      "lat": 47.18538,
+      "lng": -122.2929
+    },
+    {
+      "id": "wa-school-chimacum-school-district",
+      "lat": 47.9861,
+      "lng": -122.7883
+    },
+    {
+      "id": "wa-school-clarkston-school-district",
+      "lat": 46.41629,
+      "lng": -117.04557,
+      "county": "Asotin"
+    },
+    {
+      "id": "wa-school-cle-elum-roslyn-school-district",
+      "lat": 47.1954,
+      "lng": -120.93925,
+      "county": "Kittitas"
+    },
+    {
+      "id": "wa-school-clover-park-school-district",
+      "lat": 47.17176,
+      "lng": -122.51846
+    },
+    {
+      "id": "wa-school-clover-park-school-district-400",
+      "lat": 47.17176,
+      "lng": -122.51846,
+      "county": "Pierce"
+    },
+    {
+      "id": "wa-school-colfax-school-district",
+      "lat": 46.88017,
+      "lng": -117.36435,
+      "county": "Whitman"
+    },
+    {
+      "id": "wa-school-college-place-school-district",
+      "lat": 46.0493,
+      "lng": -118.3883,
+      "county": "Walla Walla"
+    },
+    {
+      "id": "wa-school-colton-school-district",
+      "lat": 46.5901,
+      "lng": -117.1692
+    },
+    {
+      "id": "wa-school-columbia-stevens-school-district",
+      "lat": 48.1333,
+      "lng": -118.1525
+    },
+    {
+      "id": "wa-school-columbia-walla-walla-school-district",
+      "lat": 46.19986,
+      "lng": -119.01306,
+      "county": "Walla Walla"
+    },
+    {
+      "id": "wa-school-colville-school-district",
+      "lat": 48.54657,
+      "lng": -117.90554,
+      "county": "Stevens"
+    },
+    {
+      "id": "wa-school-concrete-school-district",
+      "lat": 48.531,
+      "lng": -121.6643
+    },
+    {
+      "id": "wa-school-conway-school-district",
+      "lat": 48.42122,
+      "lng": -122.33405,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-school-cosmopolis-school-district",
+      "lat": 46.95537,
+      "lng": -123.77378,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-coulee-hartline-school-district",
+      "lat": 47.5966,
+      "lng": -119.2758
+    },
+    {
+      "id": "wa-school-coupeville-school-district",
+      "lat": 48.21982,
+      "lng": -122.68628,
+      "county": "Island"
+    },
+    {
+      "id": "wa-school-crescent-school-district",
+      "lat": 48.1362,
+      "lng": -123.7354
+    },
+    {
+      "id": "wa-school-creston-school-district",
+      "lat": 47.7977,
+      "lng": -118.5307
+    },
+    {
+      "id": "wa-school-curlew-school-district",
+      "lat": 48.9108,
+      "lng": -118.6452
+    },
+    {
+      "id": "wa-school-cusick-school-district",
+      "lat": 48.3915,
+      "lng": -117.3295
+    },
+    {
+      "id": "wa-school-damman-school-district",
+      "lat": 46.99651,
+      "lng": -120.54785,
+      "county": "Kittitas"
+    },
+    {
+      "id": "wa-school-darrington-school-district",
+      "lat": 48.25539,
+      "lng": -121.60151
+    },
+    {
+      "id": "wa-school-davenport-school-district",
+      "lat": 47.65405,
+      "lng": -118.14997,
+      "county": "Lincoln"
+    },
+    {
+      "id": "wa-school-dayton-school-district",
+      "lat": 46.32375,
+      "lng": -117.97244,
+      "county": "Columbia"
+    },
+    {
+      "id": "wa-school-deer-park-school-district",
+      "lat": 47.95434,
+      "lng": -117.47689,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-dieringer-school-district",
+      "lat": 47.17705,
+      "lng": -122.18651,
+      "county": "Pierce"
+    },
+    {
+      "id": "wa-school-dixie-school-district",
+      "lat": 46.1408,
+      "lng": -118.1531
+    },
+    {
+      "id": "wa-school-east-valley-school-district-no-361",
+      "lat": 47.67323,
+      "lng": -117.23937,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-east-valley-school-district-spokane",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-east-valley-school-district-yakima",
+      "lat": 46.60207,
+      "lng": -120.5059,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-eastmont-school-district",
+      "lat": 47.41568,
+      "lng": -120.29313,
+      "county": "Douglas"
+    },
+    {
+      "id": "wa-school-easton-school-district",
+      "lat": 47.233,
+      "lng": -121.1772
+    },
+    {
+      "id": "wa-school-eatonville-school-district",
+      "lat": 46.86733,
+      "lng": -122.2665
+    },
+    {
+      "id": "wa-school-edmonds-school-district",
+      "lat": 47.82093,
+      "lng": -122.31513
+    },
+    {
+      "id": "wa-school-educational-service-district-123",
+      "lat": 46.23958,
+      "lng": -119.10057,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-school-ellensburg-school-district",
+      "lat": 46.99651,
+      "lng": -120.54785,
+      "county": "Kittitas"
+    },
+    {
+      "id": "wa-school-elma-school-district",
+      "lat": 47.00343,
+      "lng": -123.40877,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-endicott-school-district",
+      "lat": 46.9364,
+      "lng": -117.723
+    },
+    {
+      "id": "wa-school-entiat-school-district",
+      "lat": 47.67596,
+      "lng": -120.20841,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-enumclaw-school-district",
+      "lat": 47.20427,
+      "lng": -121.9915
+    },
+    {
+      "id": "wa-school-ephrata-school-district",
+      "lat": 47.31764,
+      "lng": -119.55365,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-evaline-school-district",
+      "lat": 46.49122,
+      "lng": -122.9379,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-school-everett-school-district",
+      "lat": 47.97898,
+      "lng": -122.20208
+    },
+    {
+      "id": "wa-school-evergreen-school-district-114",
+      "lat": 45.63873,
+      "lng": -122.66149,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-evergreen-school-district-clark",
+      "lat": 45.63873,
+      "lng": -122.66149,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-evergreen-school-district-stevens",
+      "lat": 48.2685,
+      "lng": -118.1136
+    },
+    {
+      "id": "wa-school-federal-way-school-district",
+      "lat": 47.32232,
+      "lng": -122.31262
+    },
+    {
+      "id": "wa-school-ferndale-school-district",
+      "lat": 48.8465,
+      "lng": -122.59101,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-fife-school-district",
+      "lat": 47.24816,
+      "lng": -122.3129
+    },
+    {
+      "id": "wa-school-finley-school-district",
+      "lat": 46.21125,
+      "lng": -119.13723,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-school-franklin-pierce-school-district",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-school-freeman-school-district",
+      "lat": 47.4528,
+      "lng": -117.1318
+    },
+    {
+      "id": "wa-school-garfield-school-district",
+      "lat": 46.9946,
+      "lng": -117.1523
+    },
+    {
+      "id": "wa-school-glenwood-school-district",
+      "lat": 46.0071,
+      "lng": -121.2885
+    },
+    {
+      "id": "wa-school-goldendale-school-district",
+      "lat": 45.82068,
+      "lng": -120.82173,
+      "county": "Klickitat"
+    },
+    {
+      "id": "wa-school-grand-coulee-dam-school-district",
+      "lat": 47.96543,
+      "lng": -118.97613,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-grandview-school-district",
+      "lat": 46.25097,
+      "lng": -119.9017,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-granger-school-district",
+      "lat": 46.34207,
+      "lng": -120.18727,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-granite-falls-school-district",
+      "lat": 48.08399,
+      "lng": -121.96874
+    },
+    {
+      "id": "wa-school-grapeview-school-district",
+      "lat": 47.3273,
+      "lng": -122.9163
+    },
+    {
+      "id": "wa-school-great-northern-school-district",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-green-mountain-school-district",
+      "lat": 45.90456,
+      "lng": -122.74399,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-griffin-school-district",
+      "lat": 47.04491,
+      "lng": -122.90169,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-harrington-school-district",
+      "lat": 47.4555,
+      "lng": -118.2778
+    },
+    {
+      "id": "wa-school-highland-school-district",
+      "lat": 46.6661,
+      "lng": -120.7149
+    },
+    {
+      "id": "wa-school-highline-school-district",
+      "lat": 47.47038,
+      "lng": -122.34679
+    },
+    {
+      "id": "wa-school-hockinson-school-district",
+      "lat": 45.73289,
+      "lng": -122.54649,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-hood-canal-school-district",
+      "lat": 47.21509,
+      "lng": -123.10071,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-school-hoquiam-school-district",
+      "lat": 46.98092,
+      "lng": -123.88933,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-impact-black-river-elementary",
+      "lat": 47.48288,
+      "lng": -122.21707
+    },
+    {
+      "id": "wa-school-impact-commencement-bay-elementary",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-school-impact-puget-sound-elementary",
+      "lat": 47.47399,
+      "lng": -122.26096
+    },
+    {
+      "id": "wa-school-impact-salish-sea-elementary",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-school-inchelium-school-district",
+      "lat": 48.2924,
+      "lng": -118.3552
+    },
+    {
+      "id": "wa-school-index-school-district",
+      "lat": 48.03682,
+      "lng": -121.65762
+    },
+    {
+      "id": "wa-school-innovation-spokane-charter-school-district",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-issaquah-school-district",
+      "lat": 47.5301,
+      "lng": -122.03262
+    },
+    {
+      "id": "wa-school-kahlotus-school-district",
+      "lat": 46.6779,
+      "lng": -118.5337
+    },
+    {
+      "id": "wa-school-kalama-school-district",
+      "lat": 46.00767,
+      "lng": -122.84436,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-keller-school-district",
+      "lat": 48.0236,
+      "lng": -118.6547
+    },
+    {
+      "id": "wa-school-kelso-school-district",
+      "lat": 46.14678,
+      "lng": -122.90844,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-kennewick-school-district",
+      "lat": 46.21125,
+      "lng": -119.13723,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-school-kent-school-district",
+      "lat": 47.38093,
+      "lng": -122.23484
+    },
+    {
+      "id": "wa-school-kettle-falls-school-district",
+      "lat": 48.61074,
+      "lng": -118.05582,
+      "county": "Stevens"
+    },
+    {
+      "id": "wa-school-kiona-benton-city-school-district",
+      "lat": 46.26319,
+      "lng": -119.4878,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-school-kittitas-school-district",
+      "lat": 46.98318,
+      "lng": -120.41701,
+      "county": "Kittitas"
+    },
+    {
+      "id": "wa-school-klickitat-school-district",
+      "lat": 45.8171,
+      "lng": -121.1526
+    },
+    {
+      "id": "wa-school-la-center-school-district",
+      "lat": 45.86234,
+      "lng": -122.67038,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-la-conner-school-district",
+      "lat": 48.4093,
+      "lng": -122.5313
+    },
+    {
+      "id": "wa-school-lacrosse-school-district",
+      "lat": 46.7717,
+      "lng": -117.7703
+    },
+    {
+      "id": "wa-school-lake-chelan-school-district",
+      "lat": 47.84097,
+      "lng": -120.01646,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-lake-quinault-school-district",
+      "lat": 47.4859,
+      "lng": -123.9206
+    },
+    {
+      "id": "wa-school-lake-stevens-school-district",
+      "lat": 48.0151,
+      "lng": -122.06374
+    },
+    {
+      "id": "wa-school-lake-washington-school-district",
+      "lat": 47.67399,
+      "lng": -122.12151
+    },
+    {
+      "id": "wa-school-lakewood-school-district",
+      "lat": 48.152,
+      "lng": -122.2074
+    },
+    {
+      "id": "wa-school-lamont-school-district",
+      "lat": 47.1887,
+      "lng": -117.8755
+    },
+    {
+      "id": "wa-school-liberty-school-district",
+      "lat": 47.4338,
+      "lng": -117.3827
+    },
+    {
+      "id": "wa-school-lind-school-district",
+      "lat": 46.956,
+      "lng": -118.7061
+    },
+    {
+      "id": "wa-school-longview-school-district",
+      "lat": 46.13817,
+      "lng": -122.93817,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-loon-lake-school-district",
+      "lat": 48.0784,
+      "lng": -117.6325
+    },
+    {
+      "id": "wa-school-lopez-island-school-district",
+      "lat": 48.4988,
+      "lng": -122.8743
+    },
+    {
+      "id": "wa-school-lumen-public-school",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-lummi-tribal-agency",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-lyle-school-district",
+      "lat": 45.745,
+      "lng": -121.2501
+    },
+    {
+      "id": "wa-school-lynden-school-district",
+      "lat": 48.9465,
+      "lng": -122.45211,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-mabton-school-district",
+      "lat": 46.21485,
+      "lng": -119.99671,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-mansfield-school-district",
+      "lat": 47.9021,
+      "lng": -119.4053
+    },
+    {
+      "id": "wa-school-manson-school-district",
+      "lat": 47.88486,
+      "lng": -120.15841,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-mary-m-knight-school-district",
+      "lat": 47.00343,
+      "lng": -123.40877,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-mary-walker-school-district",
+      "lat": 48.0022,
+      "lng": -117.829
+    },
+    {
+      "id": "wa-school-marysville-school-district",
+      "lat": 48.05176,
+      "lng": -122.17708
+    },
+    {
+      "id": "wa-school-mccleary-school-district",
+      "lat": 47.05315,
+      "lng": -123.26543,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-mead-school-district",
+      "lat": 47.76739,
+      "lng": -117.35494,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-medical-lake-school-district",
+      "lat": 47.57294,
+      "lng": -117.68216,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-mercer-island-school-district",
+      "lat": 47.57065,
+      "lng": -122.22207
+    },
+    {
+      "id": "wa-school-meridian-school-district",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-methow-valley-school-district",
+      "lat": 48.4756,
+      "lng": -120.1805
+    },
+    {
+      "id": "wa-school-monroe-school-district",
+      "lat": 47.85538,
+      "lng": -121.97096
+    },
+    {
+      "id": "wa-school-montesano-school-district",
+      "lat": 46.98121,
+      "lng": -123.60266,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-morton-school-district",
+      "lat": 46.55844,
+      "lng": -122.2751,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-school-moses-lake-school-district",
+      "lat": 47.13014,
+      "lng": -119.27808,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-mossyrock-school-district",
+      "lat": 46.5131,
+      "lng": -122.4789
+    },
+    {
+      "id": "wa-school-mount-adams-school-district",
+      "lat": 46.3716,
+      "lng": -120.7453
+    },
+    {
+      "id": "wa-school-mount-baker-school-district",
+      "lat": 48.8018,
+      "lng": -122.0918
+    },
+    {
+      "id": "wa-school-mount-pleasant-school-district",
+      "lat": 45.58262,
+      "lng": -122.35342,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-mount-vernon-school-district",
+      "lat": 48.42122,
+      "lng": -122.33405,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-school-muckleshoot-indian-tribe",
+      "lat": 47.30732,
+      "lng": -122.22845
+    },
+    {
+      "id": "wa-school-mukilteo-school-district",
+      "lat": 47.97898,
+      "lng": -122.20208
+    },
+    {
+      "id": "wa-school-mukilteo-school-district-no-6",
+      "lat": 47.94454,
+      "lng": -122.30458,
+      "county": "Snohomish"
+    },
+    {
+      "id": "wa-school-naches-valley-school-district",
+      "lat": 46.8058,
+      "lng": -120.9921
+    },
+    {
+      "id": "wa-school-napavine-school-district",
+      "lat": 46.57455,
+      "lng": -122.90818,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-school-naselle-grays-river-valley-school-district",
+      "lat": 46.3528,
+      "lng": -123.8044
+    },
+    {
+      "id": "wa-school-nespelem-school-district",
+      "lat": 48.1434,
+      "lng": -119.0094
+    },
+    {
+      "id": "wa-school-newport-school-district",
+      "lat": 47.57121,
+      "lng": -122.18068,
+      "county": "King"
+    },
+    {
+      "id": "wa-school-nine-mile-falls-school-district",
+      "lat": 47.8019,
+      "lng": -117.5894
+    },
+    {
+      "id": "wa-school-nooksack-valley-school-district",
+      "lat": 48.92012,
+      "lng": -122.34266,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-north-beach-school-district",
+      "lat": 46.9737,
+      "lng": -124.15629,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-north-franklin-school-district",
+      "lat": 46.66347,
+      "lng": -118.86111,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-school-north-kitsap-school-district",
+      "lat": 47.73593,
+      "lng": -122.64654,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-north-mason-school-district",
+      "lat": 47.45065,
+      "lng": -122.82737,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-school-north-river-school-district",
+      "lat": 46.95537,
+      "lng": -123.77378,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-north-thurston-public-schools",
+      "lat": 47.03426,
+      "lng": -122.82319,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-northport-school-district",
+      "lat": 48.9247,
+      "lng": -117.7931
+    },
+    {
+      "id": "wa-school-northshore-school-district",
+      "lat": 47.76232,
+      "lng": -122.2054
+    },
+    {
+      "id": "wa-school-oak-harbor-school-district",
+      "lat": 48.29316,
+      "lng": -122.64322,
+      "county": "Island"
+    },
+    {
+      "id": "wa-school-oakesdale-school-district",
+      "lat": 47.1282,
+      "lng": -117.2427
+    },
+    {
+      "id": "wa-school-oakville-school-district",
+      "lat": 46.8434,
+      "lng": -123.2493
+    },
+    {
+      "id": "wa-school-ocean-beach-school-district",
+      "lat": 46.35232,
+      "lng": -124.05432,
+      "county": "Pacific"
+    },
+    {
+      "id": "wa-school-ocosta-school-district",
+      "lat": 46.89009,
+      "lng": -124.10406,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-odessa-school-district",
+      "lat": 47.3395,
+      "lng": -118.6983
+    },
+    {
+      "id": "wa-school-okanogan-school-district",
+      "lat": 48.36126,
+      "lng": -119.58339,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-olympia-school-district",
+      "lat": 47.04491,
+      "lng": -122.90169,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-omak-school-district",
+      "lat": 48.41099,
+      "lng": -119.52755,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-onalaska-school-district",
+      "lat": 46.573,
+      "lng": -122.7075
+    },
+    {
+      "id": "wa-school-onion-creek-school-district",
+      "lat": 48.54657,
+      "lng": -117.90554,
+      "county": "Stevens"
+    },
+    {
+      "id": "wa-school-orcas-island-school-district",
+      "lat": 48.6968,
+      "lng": -122.9055
+    },
+    {
+      "id": "wa-school-orchard-prairie-school-district",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-orient-school-district",
+      "lat": 48.866,
+      "lng": -118.2028
+    },
+    {
+      "id": "wa-school-orondo-school-district",
+      "lat": 47.6969,
+      "lng": -120.1721
+    },
+    {
+      "id": "wa-school-oroville-school-district",
+      "lat": 48.93905,
+      "lng": -119.43562,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-orting-school-district",
+      "lat": 47.09788,
+      "lng": -122.20428
+    },
+    {
+      "id": "wa-school-othello-school-district",
+      "lat": 46.82597,
+      "lng": -119.17529,
+      "county": "Adams"
+    },
+    {
+      "id": "wa-school-palisades-school-district",
+      "lat": 47.419,
+      "lng": -119.9145
+    },
+    {
+      "id": "wa-school-palouse-school-district",
+      "lat": 46.91017,
+      "lng": -117.07573,
+      "county": "Whitman"
+    },
+    {
+      "id": "wa-school-paschal-sherman-indian-school",
+      "lat": 48.41099,
+      "lng": -119.52755,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-pasco-school-district",
+      "lat": 46.23958,
+      "lng": -119.10057,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-school-pateros-school-district",
+      "lat": 48.034,
+      "lng": -119.9785
+    },
+    {
+      "id": "wa-school-paterson-school-district",
+      "lat": 45.9911,
+      "lng": -119.7559
+    },
+    {
+      "id": "wa-school-pe-ell-school-district",
+      "lat": 46.5829,
+      "lng": -123.3147
+    },
+    {
+      "id": "wa-school-peninsula-school-district",
+      "lat": 47.32926,
+      "lng": -122.58013
+    },
+    {
+      "id": "wa-school-pinnacles-prep",
+      "lat": 47.42346,
+      "lng": -120.31035,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-pioneer-school-district",
+      "lat": 47.21509,
+      "lng": -123.10071,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-school-pomeroy-school-district",
+      "lat": 46.47487,
+      "lng": -117.60269,
+      "county": "Garfield"
+    },
+    {
+      "id": "wa-school-port-angeles-school-district",
+      "lat": 48.11815,
+      "lng": -123.43074,
+      "county": "Clallam"
+    },
+    {
+      "id": "wa-school-port-townsend-school-district",
+      "lat": 48.11742,
+      "lng": -122.76071,
+      "county": "Jefferson"
+    },
+    {
+      "id": "wa-school-prescott-school-district",
+      "lat": 46.3539,
+      "lng": -118.4097
+    },
+    {
+      "id": "wa-school-prosser-school-district",
+      "lat": 46.2068,
+      "lng": -119.76892,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-school-pullman-school-district",
+      "lat": 46.73127,
+      "lng": -117.17962,
+      "county": "Whitman"
+    },
+    {
+      "id": "wa-school-puyallup-school-district",
+      "lat": 47.18538,
+      "lng": -122.2929
+    },
+    {
+      "id": "wa-school-queets-clearwater-school-district",
+      "lat": 47.95036,
+      "lng": -124.38549,
+      "county": "Clallam"
+    },
+    {
+      "id": "wa-school-quilcene-school-district",
+      "lat": 47.8324,
+      "lng": -122.8583
+    },
+    {
+      "id": "wa-school-quileute-tribal-school-district",
+      "lat": 47.9052,
+      "lng": -124.6261
+    },
+    {
+      "id": "wa-school-quillayute-valley-school-district",
+      "lat": 47.95036,
+      "lng": -124.38549,
+      "county": "Clallam"
+    },
+    {
+      "id": "wa-school-quincy-school-district",
+      "lat": 47.2343,
+      "lng": -119.85255,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-rainier-prep-charter-school-district",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-school-rainier-school-district",
+      "lat": 46.88815,
+      "lng": -122.68846,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-rainier-valley-leadership-academy",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-school-raymond-school-district",
+      "lat": 46.68649,
+      "lng": -123.73294,
+      "county": "Pacific"
+    },
+    {
+      "id": "wa-school-reardan-edwall-school-district",
+      "lat": 47.7054,
+      "lng": -117.8663
+    },
+    {
+      "id": "wa-school-renton-school-district",
+      "lat": 47.48288,
+      "lng": -122.21707
+    },
+    {
+      "id": "wa-school-republic-school-district",
+      "lat": 48.64822,
+      "lng": -118.73781,
+      "county": "Ferry"
+    },
+    {
+      "id": "wa-school-richland-school-district",
+      "lat": 46.3043,
+      "lng": -119.36141,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-school-ridgefield-school-district",
+      "lat": 45.81511,
+      "lng": -122.7426,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-ritzville-school-district",
+      "lat": 47.12755,
+      "lng": -118.37999,
+      "county": "Adams"
+    },
+    {
+      "id": "wa-school-riverside-school-district",
+      "lat": 47.9192,
+      "lng": -117.2921
+    },
+    {
+      "id": "wa-school-riverview-school-district",
+      "lat": 47.74232,
+      "lng": -121.98568
+    },
+    {
+      "id": "wa-school-rochester-school-district",
+      "lat": 46.82177,
+      "lng": -123.09625,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-roosevelt-school-district",
+      "lat": 45.8514,
+      "lng": -120.3543
+    },
+    {
+      "id": "wa-school-rooted-school-vancouver",
+      "lat": 45.63873,
+      "lng": -122.66149,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-rosalia-school-district",
+      "lat": 47.2218,
+      "lng": -117.4147
+    },
+    {
+      "id": "wa-school-royal-school-district",
+      "lat": 46.90097,
+      "lng": -119.63059,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-san-juan-island-school-district",
+      "lat": 48.53427,
+      "lng": -123.01712,
+      "county": "San Juan"
+    },
+    {
+      "id": "wa-school-satsop-school-district",
+      "lat": 47.0022,
+      "lng": -123.4836
+    },
+    {
+      "id": "wa-school-seattle-public-schools",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-school-sedro-woolley-school-district",
+      "lat": 48.50389,
+      "lng": -122.23611,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-school-selah-school-district",
+      "lat": 46.65402,
+      "lng": -120.53007,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-selkirk-school-district",
+      "lat": 48.8597,
+      "lng": -117.3633
+    },
+    {
+      "id": "wa-school-sequim-school-district",
+      "lat": 48.07963,
+      "lng": -123.10234,
+      "county": "Clallam"
+    },
+    {
+      "id": "wa-school-shaw-island-school-district",
+      "lat": 48.5578,
+      "lng": -122.9837
+    },
+    {
+      "id": "wa-school-shelton-school-district",
+      "lat": 47.21509,
+      "lng": -123.10071,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-school-shoreline-school-district",
+      "lat": 47.75565,
+      "lng": -122.34152
+    },
+    {
+      "id": "wa-school-skamania-school-district",
+      "lat": 45.69567,
+      "lng": -121.88452,
+      "county": "Skamania"
+    },
+    {
+      "id": "wa-school-skykomish-school-district",
+      "lat": 47.4329,
+      "lng": -121.79581
+    },
+    {
+      "id": "wa-school-snohomish-school-district",
+      "lat": 47.91288,
+      "lng": -122.09818
+    },
+    {
+      "id": "wa-school-snoqualmie-valley-school-district",
+      "lat": 47.52871,
+      "lng": -121.82539
+    },
+    {
+      "id": "wa-school-soap-lake-school-district",
+      "lat": 47.38931,
+      "lng": -119.49059,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-south-bend-school-district",
+      "lat": 46.66315,
+      "lng": -123.80461,
+      "county": "Pacific"
+    },
+    {
+      "id": "wa-school-south-kitsap-school-district",
+      "lat": 47.54037,
+      "lng": -122.63625,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-south-whidbey-school-district",
+      "lat": 48.04009,
+      "lng": -122.40626,
+      "county": "Island"
+    },
+    {
+      "id": "wa-school-southside-school-district",
+      "lat": 47.21509,
+      "lng": -123.10071,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-school-spokane-international-academy",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-spokane-school-district",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-sprague-school-district",
+      "lat": 47.3247,
+      "lng": -117.9897
+    },
+    {
+      "id": "wa-school-st-john-school-district",
+      "lat": 47.0755,
+      "lng": -117.573
+    },
+    {
+      "id": "wa-school-stanwood-camano-school-district",
+      "lat": 48.24121,
+      "lng": -122.37071
+    },
+    {
+      "id": "wa-school-star-school-district-no-054",
+      "lat": 46.23958,
+      "lng": -119.10057,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-school-starbuck-school-district",
+      "lat": 46.5128,
+      "lng": -118.1024
+    },
+    {
+      "id": "wa-school-stehekin-school-district",
+      "lat": 48.3093,
+      "lng": -120.6565
+    },
+    {
+      "id": "wa-school-steilacoom-hist-school-district",
+      "lat": 47.16982,
+      "lng": -122.60263
+    },
+    {
+      "id": "wa-school-steptoe-school-district",
+      "lat": 47.006,
+      "lng": -117.356
+    },
+    {
+      "id": "wa-school-stevenson-carson-school-district",
+      "lat": 45.69567,
+      "lng": -121.88452,
+      "county": "Skamania"
+    },
+    {
+      "id": "wa-school-sultan-school-district",
+      "lat": 47.8626,
+      "lng": -121.81651
+    },
+    {
+      "id": "wa-school-summit-public-school-atlas",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-school-summit-public-school-olympus",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-school-summit-public-school-sierra",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-school-summit-valley-school-district",
+      "lat": 48.3364,
+      "lng": -117.9579
+    },
+    {
+      "id": "wa-school-sumner-bonney-lake-school-district",
+      "lat": 47.20316,
+      "lng": -122.2404
+    },
+    {
+      "id": "wa-school-sunnyside-school-district",
+      "lat": 46.32374,
+      "lng": -120.00865,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-suquamish-tribal-education-department",
+      "lat": 47.73593,
+      "lng": -122.64654,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-school-tacoma-school-district",
+      "lat": 47.25288,
+      "lng": -122.44429
+    },
+    {
+      "id": "wa-school-taholah-school-district",
+      "lat": 47.3407,
+      "lng": -124.2827
+    },
+    {
+      "id": "wa-school-tahoma-school-district",
+      "lat": 47.39272,
+      "lng": -122.04641
+    },
+    {
+      "id": "wa-school-tahoma-school-district-409",
+      "lat": 47.39272,
+      "lng": -122.04641,
+      "county": "King"
+    },
+    {
+      "id": "wa-school-tekoa-school-district",
+      "lat": 47.2271,
+      "lng": -117.0819
+    },
+    {
+      "id": "wa-school-tenino-school-district",
+      "lat": 46.85677,
+      "lng": -122.85291,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-thorp-school-district",
+      "lat": 47.0679,
+      "lng": -120.6712
+    },
+    {
+      "id": "wa-school-toledo-school-district",
+      "lat": 46.4396,
+      "lng": -122.8266
+    },
+    {
+      "id": "wa-school-tonasket-school-district",
+      "lat": 48.70515,
+      "lng": -119.4395,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-school-toppenish-school-district",
+      "lat": 46.37735,
+      "lng": -120.30867,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-touchet-school-district",
+      "lat": 46.0903,
+      "lng": -118.663
+    },
+    {
+      "id": "wa-school-toutle-lake-school-district",
+      "lat": 46.2956,
+      "lng": -122.6477
+    },
+    {
+      "id": "wa-school-trout-lake-school-district",
+      "lat": 45.9828,
+      "lng": -121.5163
+    },
+    {
+      "id": "wa-school-tukwila-school-district",
+      "lat": 47.47399,
+      "lng": -122.26096
+    },
+    {
+      "id": "wa-school-tumwater-school-district",
+      "lat": 47.00732,
+      "lng": -122.90931,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-union-gap-school-district",
+      "lat": 46.55735,
+      "lng": -120.47506,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-university-place-school-district",
+      "lat": 47.23565,
+      "lng": -122.5504
+    },
+    {
+      "id": "wa-school-valley-school-district",
+      "lat": 48.1351,
+      "lng": -117.761
+    },
+    {
+      "id": "wa-school-vancouver-school-district",
+      "lat": 45.63873,
+      "lng": -122.66149,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-vashon-island-school-district",
+      "lat": 47.44732,
+      "lng": -122.45985
+    },
+    {
+      "id": "wa-school-vashon-island-school-district-402",
+      "lat": 47.44732,
+      "lng": -122.45985,
+      "county": "King"
+    },
+    {
+      "id": "wa-school-wa-he-lut-indian-school-agency",
+      "lat": 47.04491,
+      "lng": -122.90169,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-wahkiakum-school-district",
+      "lat": 46.20317,
+      "lng": -123.38318,
+      "county": "Wahkiakum"
+    },
+    {
+      "id": "wa-school-wahluke-school-district",
+      "lat": 46.73791,
+      "lng": -119.90282,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-waitsburg-school-district",
+      "lat": 46.27042,
+      "lng": -118.15329,
+      "county": "Walla Walla"
+    },
+    {
+      "id": "wa-school-walla-walla-public-schools",
+      "lat": 46.06458,
+      "lng": -118.34302,
+      "county": "Walla Walla"
+    },
+    {
+      "id": "wa-school-wapato-school-district",
+      "lat": 46.44763,
+      "lng": -120.42034,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-warden-school-district",
+      "lat": 46.96764,
+      "lng": -119.03973,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-school-washougal-school-district",
+      "lat": 45.58262,
+      "lng": -122.35342,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-school-washtucna-school-district",
+      "lat": 46.8209,
+      "lng": -118.2862
+    },
+    {
+      "id": "wa-school-waterville-school-district",
+      "lat": 47.64708,
+      "lng": -120.07118,
+      "county": "Douglas"
+    },
+    {
+      "id": "wa-school-waterville-school-district-209",
+      "lat": 47.64708,
+      "lng": -120.07118,
+      "county": "Douglas"
+    },
+    {
+      "id": "wa-school-wellpinit-school-district",
+      "lat": 47.8697,
+      "lng": -117.9856
+    },
+    {
+      "id": "wa-school-wenatchee-school-district",
+      "lat": 47.42346,
+      "lng": -120.31035,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-school-west-valley-school-district-spokane",
+      "lat": 47.65966,
+      "lng": -117.42908,
+      "county": "Spokane"
+    },
+    {
+      "id": "wa-school-west-valley-school-district-yakima",
+      "lat": 46.60207,
+      "lng": -120.5059,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-whatcom-intergenerational-high-school",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-school-white-pass-school-district",
+      "lat": 46.5492,
+      "lng": -121.8555
+    },
+    {
+      "id": "wa-school-white-river-school-district",
+      "lat": 47.16316,
+      "lng": -122.02678
+    },
+    {
+      "id": "wa-school-white-salmon-valley-school-district",
+      "lat": 45.72762,
+      "lng": -121.48646,
+      "county": "Klickitat"
+    },
+    {
+      "id": "wa-school-why-not-you-academy-formerly-cascade-midway-charter",
+      "lat": 47.40177,
+      "lng": -122.32429
+    },
+    {
+      "id": "wa-school-wilbur-school-district",
+      "lat": 47.741,
+      "lng": -118.7063
+    },
+    {
+      "id": "wa-school-willapa-valley-school-district",
+      "lat": 46.6215,
+      "lng": -123.6471
+    },
+    {
+      "id": "wa-school-wilson-creek-school-district",
+      "lat": 47.4739,
+      "lng": -119.1847
+    },
+    {
+      "id": "wa-school-winlock-school-district",
+      "lat": 46.49122,
+      "lng": -122.9379,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-school-wishkah-valley-school-district",
+      "lat": 46.97537,
+      "lng": -123.81572,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-school-wishram-school-district",
+      "lat": 45.6573,
+      "lng": -120.9667
+    },
+    {
+      "id": "wa-school-woodland-school-district",
+      "lat": 45.90456,
+      "lng": -122.74399,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-woodland-school-district-404",
+      "lat": 45.90456,
+      "lng": -122.74399,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-school-yakama-nation-tribal-compact",
+      "lat": 46.37735,
+      "lng": -120.30867,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-yakima-school-district",
+      "lat": 46.60207,
+      "lng": -120.5059,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-school-yelm-school-district",
+      "lat": 46.94204,
+      "lng": -122.60596,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-school-zillah-school-district",
+      "lat": 46.40207,
+      "lng": -120.262,
+      "county": "Yakima"
+    },
+    {
+      "id": "wa-special-district-benton-county-mosquito-control-district-1",
+      "lat": 46.28176,
+      "lng": -119.40713,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-special-district-grant-county-port-district-no-1",
+      "lat": 47.29502,
+      "lng": -119.50763,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-special-district-housing-authority-of-snohomish-county",
+      "lat": 48.03682,
+      "lng": -121.65762,
+      "county": "Snohomish"
+    },
+    {
+      "id": "wa-special-district-jefferson-county-public-works",
+      "lat": 47.83065,
+      "lng": -123.61019,
+      "county": "Jefferson"
+    },
+    {
+      "id": "wa-special-district-jefferson-county-rural-library-district",
+      "lat": 47.83065,
+      "lng": -123.61019,
+      "county": "Jefferson"
+    },
+    {
+      "id": "wa-special-district-washington-state-convention-center-public-facilities-district",
+      "lat": 47.60621,
+      "lng": -122.33207,
+      "county": "King"
+    },
+    {
+      "id": "wa-transit-sound-transit",
+      "lat": 47.60621,
+      "lng": -122.33207
+    },
+    {
+      "id": "wa-transit-whatcom-transportation-authority",
+      "lat": 48.75955,
+      "lng": -122.48822,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-utility-asotin-county-pud",
+      "lat": 46.33933,
+      "lng": -117.04821,
+      "county": "Asotin"
+    },
+    {
+      "id": "wa-utility-benton-county-pud",
+      "lat": 46.28176,
+      "lng": -119.40713,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-utility-chelan-county-pud",
+      "lat": 47.84097,
+      "lng": -120.01646,
+      "county": "Chelan"
+    },
+    {
+      "id": "wa-utility-clallam-county-pud",
+      "lat": 48.12874,
+      "lng": -123.82555,
+      "county": "Clallam"
+    },
+    {
+      "id": "wa-utility-clark-public-utilities",
+      "lat": 45.63873,
+      "lng": -122.66149,
+      "county": "Clark"
+    },
+    {
+      "id": "wa-utility-cowlitz-county-pud",
+      "lat": 46.11897,
+      "lng": -122.72902,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-utility-douglas-county-pud",
+      "lat": 47.68289,
+      "lng": -119.63505,
+      "county": "Douglas"
+    },
+    {
+      "id": "wa-utility-energy-northwest",
+      "lat": 46.28569,
+      "lng": -119.28446,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-utility-ferry-county-pud",
+      "lat": 48.41567,
+      "lng": -118.48648,
+      "county": "Ferry"
+    },
+    {
+      "id": "wa-utility-franklin-county-pud",
+      "lat": 46.4656,
+      "lng": -118.82746,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-utility-grant-county-pud",
+      "lat": 47.29502,
+      "lng": -119.50763,
+      "county": "Grant"
+    },
+    {
+      "id": "wa-utility-grays-harbor-county-pud",
+      "lat": 47.16273,
+      "lng": -123.75556,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-utility-grays-harbor-pud-public-utility-district-no-1-of-grays-harbor-county",
+      "lat": 47.16273,
+      "lng": -123.75556,
+      "county": "Grays Harbor"
+    },
+    {
+      "id": "wa-utility-jefferson-county-pud",
+      "lat": 47.83065,
+      "lng": -123.61019,
+      "county": "Jefferson"
+    },
+    {
+      "id": "wa-utility-kitsap-county-pud",
+      "lat": 47.67215,
+      "lng": -122.74697,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-utility-kitsap-public-utility-district-1",
+      "lat": 47.73593,
+      "lng": -122.64654,
+      "county": "Kitsap"
+    },
+    {
+      "id": "wa-utility-kittitas-county-pud",
+      "lat": 46.98318,
+      "lng": -120.41701,
+      "county": "Kittitas"
+    },
+    {
+      "id": "wa-utility-klickitat-county-pud",
+      "lat": 45.8256,
+      "lng": -120.73876,
+      "county": "Klickitat"
+    },
+    {
+      "id": "wa-utility-lewis-county-pud",
+      "lat": 46.58888,
+      "lng": -122.37009,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-utility-mason-county-pud-no-1",
+      "lat": 47.34485,
+      "lng": -123.15435,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-utility-mason-county-pud-no-3",
+      "lat": 47.34485,
+      "lng": -123.15435,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-utility-mason-pud-3",
+      "lat": 47.21509,
+      "lng": -123.10071,
+      "county": "Mason"
+    },
+    {
+      "id": "wa-utility-okanogan-county-pud",
+      "lat": 48.36126,
+      "lng": -119.58339,
+      "county": "Okanogan"
+    },
+    {
+      "id": "wa-utility-pacific-county-pud",
+      "lat": 46.51672,
+      "lng": -123.72864,
+      "county": "Pacific"
+    },
+    {
+      "id": "wa-utility-pend-oreille-county-pud",
+      "lat": 48.52305,
+      "lng": -117.33072,
+      "county": "Pend Oreille"
+    },
+    {
+      "id": "wa-utility-public-utility-district-1-of-asotin-county",
+      "lat": 46.22893,
+      "lng": -117.19792,
+      "county": "Asotin"
+    },
+    {
+      "id": "wa-utility-public-utility-district-1-of-whatcom-county",
+      "lat": 48.82157,
+      "lng": -121.88374,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-utility-public-utility-district-no-1-of-cowlitz-county",
+      "lat": 46.11897,
+      "lng": -122.72902,
+      "county": "Cowlitz"
+    },
+    {
+      "id": "wa-utility-public-utility-district-no-1-of-douglas-county",
+      "lat": 47.68289,
+      "lng": -119.63505,
+      "county": "Douglas"
+    },
+    {
+      "id": "wa-utility-public-utility-district-no-1-of-franklin-county",
+      "lat": 46.4656,
+      "lng": -118.82746,
+      "county": "Franklin"
+    },
+    {
+      "id": "wa-utility-public-utility-district-no-1-of-lewis-county",
+      "lat": 46.58888,
+      "lng": -122.37009,
+      "county": "Lewis"
+    },
+    {
+      "id": "wa-utility-public-utility-district-no-1-of-pend-oreille-county",
+      "lat": 48.52305,
+      "lng": -117.33072,
+      "county": "Pend Oreille"
+    },
+    {
+      "id": "wa-utility-public-utility-district-no-2-of-pacific-county",
+      "lat": 46.51672,
+      "lng": -123.72864,
+      "county": "Pacific"
+    },
+    {
+      "id": "wa-utility-pud-1-of-skamania-county",
+      "lat": 45.96821,
+      "lng": -121.88374,
+      "county": "Skamania"
+    },
+    {
+      "id": "wa-utility-pud-no-1-of-klickitat-county",
+      "lat": 45.8256,
+      "lng": -120.73876,
+      "county": "Klickitat"
+    },
+    {
+      "id": "wa-utility-seattle-pud",
+      "lat": 47.60621,
+      "lng": -122.33207,
+      "county": "King"
+    },
+    {
+      "id": "wa-utility-skagit-county-pud",
+      "lat": 48.47666,
+      "lng": -121.71505,
+      "county": "Skagit"
+    },
+    {
+      "id": "wa-utility-skamania-county-pud",
+      "lat": 45.96821,
+      "lng": -121.88374,
+      "county": "Skamania"
+    },
+    {
+      "id": "wa-utility-stevens-county-pud",
+      "lat": 48.39634,
+      "lng": -117.91578,
+      "county": "Stevens"
+    },
+    {
+      "id": "wa-utility-thurston-county-pud",
+      "lat": 46.97588,
+      "lng": -122.7039,
+      "county": "Thurston"
+    },
+    {
+      "id": "wa-utility-wahkiakum-county-pud",
+      "lat": 46.26544,
+      "lng": -123.47021,
+      "county": "Wahkiakum"
+    },
+    {
+      "id": "wa-utility-whatcom-county-pud",
+      "lat": 48.82157,
+      "lng": -121.88374,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-water-birch-bay-water-sewer-district",
+      "lat": 48.91789,
+      "lng": -122.74462,
+      "county": "Whatcom"
+    },
+    {
+      "id": "wa-water-covington-water-district",
+      "lat": 47.35818,
+      "lng": -122.12216,
+      "county": "King"
+    },
+    {
+      "id": "wa-water-fall-city-water-district",
+      "lat": 47.56732,
+      "lng": -121.88873,
+      "county": "King"
+    },
+    {
+      "id": "wa-water-kennewick-irrigation-district",
+      "lat": 46.21125,
+      "lng": -119.13723,
+      "county": "Benton"
+    },
+    {
+      "id": "wa-water-sammamish-plateau-water-and-sewer-district",
+      "lat": 47.64177,
+      "lng": -122.0804,
+      "county": "King"
+    },
+    {
+      "id": "wa-water-south-columbia-basin-irrigation-district",
+      "lat": 46.23958,
+      "lng": -119.10057,
+      "county": "Franklin"
+    }
+  ]
+}

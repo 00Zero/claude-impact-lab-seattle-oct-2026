@@ -1,0 +1,533 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T20:09:50+00:00",
+  "title": "Design System: GTMagic",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Warm Ground",
+        "canonical": "oklch(98.7% 0.004 106)",
+        "tonalRamp": [
+          "#121211",
+          "#292928",
+          "#424242",
+          "#636362",
+          "#868685",
+          "#ababa9",
+          "#cececb",
+          "#efefec"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Rail Ink",
+        "canonical": "oklch(23.0% 0.004 107)",
+        "tonalRamp": [
+          "#121210",
+          "#292927",
+          "#424241",
+          "#636362",
+          "#868685",
+          "#ababaa",
+          "#cececd",
+          "#eeeeee"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Second Ink",
+        "canonical": "oklch(40.5% 0.007 95)",
+        "tonalRamp": [
+          "#12120f",
+          "#2a2926",
+          "#43423f",
+          "#64635f",
+          "#878683",
+          "#ababa8",
+          "#cececb",
+          "#efeeed"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Third Ink",
+        "canonical": "oklch(51.8% 0.008 89)",
+        "tonalRamp": [
+          "#12110f",
+          "#2a2926",
+          "#44423e",
+          "#65635e",
+          "#888681",
+          "#acaba7",
+          "#cfceca",
+          "#efeeeb"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Warm Hairline",
+        "canonical": "oklch(87.6% 0.010 94)",
+        "tonalRamp": [
+          "#121211",
+          "#292927",
+          "#434240",
+          "#646360",
+          "#878682",
+          "#acaba5",
+          "#d0cec7",
+          "#f0eee8"
+        ]
+      },
+      "tint": {
+        "role": "neutral",
+        "displayName": "Owner Tint",
+        "canonical": "oklch(94.8% 0.008 99)",
+        "tonalRamp": [
+          "#121211",
+          "#292928",
+          "#434241",
+          "#646361",
+          "#878683",
+          "#acaba7",
+          "#cfcec9",
+          "#f0efe9"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#121212",
+          "#292929",
+          "#424242",
+          "#636363",
+          "#868686",
+          "#ababab",
+          "#cecece",
+          "#eeeeee"
+        ]
+      },
+      "on-ink": {
+        "role": "neutral",
+        "displayName": "On-Ink",
+        "canonical": "oklch(96.4% 0.007 97)",
+        "tonalRamp": [
+          "#121211",
+          "#292928",
+          "#434241",
+          "#646361",
+          "#878683",
+          "#ababa7",
+          "#cfceca",
+          "#efeeea"
+        ]
+      },
+      "on-ink-2": {
+        "role": "neutral",
+        "displayName": "On-Ink Muted",
+        "canonical": "oklch(77.9% 0.011 95)",
+        "tonalRamp": [
+          "#121210",
+          "#292926",
+          "#43423f",
+          "#64635e",
+          "#888680",
+          "#adaba3",
+          "#d0cec6",
+          "#f0eee8"
+        ]
+      },
+      "group-red": {
+        "role": "secondary",
+        "displayName": "Isotype Red",
+        "canonical": "oklch(55.5% 0.184 29)",
+        "tonalRamp": [
+          "#320000",
+          "#570000",
+          "#7e0e08",
+          "#b02b20",
+          "#d95545",
+          "#f88575",
+          "#ffb0a0",
+          "#ffd7c9"
+        ]
+      },
+      "group-blue": {
+        "role": "secondary",
+        "displayName": "Isotype Blue",
+        "canonical": "oklch(47.3% 0.124 259)",
+        "tonalRamp": [
+          "#000e34",
+          "#052657",
+          "#19407c",
+          "#3662a7",
+          "#6087c3",
+          "#8aace0",
+          "#b3d0fb",
+          "#d9f0ff"
+        ]
+      },
+      "group-ochre": {
+        "role": "secondary",
+        "displayName": "Deep Ochre",
+        "canonical": "oklch(62.3% 0.130 74)",
+        "tonalRamp": [
+          "#210b00",
+          "#3e2100",
+          "#5f3900",
+          "#885800",
+          "#b47809",
+          "#d5a055",
+          "#f3c587",
+          "#ffe7b4"
+        ],
+        "note": "Contract specified #d99a1e; shipped darker for >=3:1 non-text contrast on #fbfbf8."
+      },
+      "group-green": {
+        "role": "secondary",
+        "displayName": "Isotype Green",
+        "canonical": "oklch(52.6% 0.093 152)",
+        "tonalRamp": [
+          "#001805",
+          "#083218",
+          "#1d4e2d",
+          "#377249",
+          "#5f956d",
+          "#8bb895",
+          "#b3d9bb",
+          "#d9f8df"
+        ]
+      },
+      "none-grey": {
+        "role": "secondary",
+        "displayName": "None-of-these Grey",
+        "canonical": "oklch(62.4% 0.011 88)",
+        "tonalRamp": [
+          "#12110f",
+          "#2a2925",
+          "#44423e",
+          "#65635d",
+          "#89867f",
+          "#adaba4",
+          "#d0cdc8",
+          "#f0eee9"
+        ]
+      },
+      "sim-bg": {
+        "role": "neutral",
+        "displayName": "Simulated Fill",
+        "canonical": "oklch(96.1% 0.007 97)",
+        "tonalRamp": [
+          "#121211",
+          "#292928",
+          "#434241",
+          "#646361",
+          "#878683",
+          "#ababa7",
+          "#cfceca",
+          "#efeeea"
+        ]
+      },
+      "highlight": {
+        "role": "tertiary",
+        "displayName": "Guess Highlight",
+        "canonical": "oklch(89.1% 0.078 86)",
+        "tonalRamp": [
+          "#14110c",
+          "#2d281d",
+          "#4a4130",
+          "#6e6248",
+          "#948462",
+          "#bda87d",
+          "#e3cb96",
+          "#ffecb8"
+        ]
+      },
+      "rail-ochre": {
+        "role": "tertiary",
+        "displayName": "Rail Ochre",
+        "canonical": "oklch(79.2% 0.133 82)",
+        "tonalRamp": [
+          "#191001",
+          "#352606",
+          "#543e11",
+          "#7c5e21",
+          "#a67f31",
+          "#d2a242",
+          "#f6c669",
+          "#ffe899"
+        ]
+      },
+      "rail-ochre-text": {
+        "role": "tertiary",
+        "displayName": "Rail Ochre Text",
+        "canonical": "oklch(84.3% 0.118 84)",
+        "tonalRamp": [
+          "#171105",
+          "#322711",
+          "#504020",
+          "#766032",
+          "#9f8245",
+          "#caa55a",
+          "#f2c76f",
+          "#ffe99d"
+        ]
+      },
+      "warn": {
+        "role": "neutral",
+        "displayName": "Warning",
+        "canonical": "oklch(50.8% 0.108 73)",
+        "tonalRamp": [
+          "#220a00",
+          "#3f2100",
+          "#5f3900",
+          "#875800",
+          "#a87d42",
+          "#c9a473",
+          "#e8c8a0",
+          "#ffeaca"
+        ]
+      },
+      "warn-bg": {
+        "role": "neutral",
+        "displayName": "Warning Fill",
+        "canonical": "oklch(96.0% 0.030 86)",
+        "tonalRamp": [
+          "#12110f",
+          "#2a2926",
+          "#44423d",
+          "#67635b",
+          "#8b867a",
+          "#b1aa9c",
+          "#d5cdbb",
+          "#f7eed9"
+        ]
+      },
+      "bad": {
+        "role": "neutral",
+        "displayName": "Failure",
+        "canonical": "oklch(47.4% 0.161 30)",
+        "tonalRamp": [
+          "#330000",
+          "#570000",
+          "#7d1109",
+          "#aa3428",
+          "#ca6355",
+          "#e89082",
+          "#ffb8ac",
+          "#ffded4"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Plate titles, turn ledes, wordmark, test indices."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "GTMagic turns at 400; answers, counts and verdicts at 500."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default text; real quotes at 500."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Crowd messages, group descriptions, tables, chips, simulated words."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Plate metadata, quote sources, keys."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Tags, simulated and draft labels, column heads."
+      }
+    },
+    "shadows": [
+      {
+        "name": "focus-ring-composer",
+        "value": "0 0 0 3px #f2d8a0",
+        "purpose": "Composer focus state only; the system has no elevation shadows."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "All transitions and entrances."
+      },
+      {
+        "name": "turn-in",
+        "value": "opacity .4 to 1, translateY .25rem, .25s",
+        "purpose": "New thread turns; customer card at .35s."
+      },
+      {
+        "name": "figure-drop",
+        "value": "translateY -.875rem and fade in, .45s",
+        "purpose": "A figure landing in its message row as a customer answers."
+      },
+      {
+        "name": "figure-lift",
+        "value": "translateY -3px, .25s",
+        "purpose": "Figure hover and pressed state."
+      },
+      {
+        "name": "waiting-fade",
+        "value": "opacity to .12, .4s",
+        "purpose": "Intro waiting figure leaving as its customer answers."
+      },
+      {
+        "name": "nod",
+        "value": "translateY -.25rem, 1.2s loop, .15s stagger",
+        "purpose": "Typing indicator of three figures."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "durations .01ms",
+        "purpose": "All motion collapses under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "52rem",
+        "purpose": "Rail becomes a top bar; crowd figures wrap under the message; answers stack."
+      }
+    ],
+    "layout": {
+      "rail-width": "17.5rem",
+      "measure": "46rem"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main action in a GTMagic turn, e.g. Try an example.",
+      "html": "<button class=\"ds-btn\">Try an example</button>",
+      "css": ".ds-btn { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding: .5rem 1.125rem; border: 2px solid var(--ink, #1d1d1b); border-radius: 0; background: var(--ink, #1d1d1b); color: var(--on-ink, #f4f3ee); font-size: 1.0625rem; font-weight: 500; cursor: pointer; transition: background .2s cubic-bezier(.16,1,.3,1); } .ds-btn:hover { background: #3a3936; border-color: #3a3936; } .ds-btn:focus-visible { outline: 2px solid var(--ink, #1d1d1b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Second action beside a primary, e.g. Describe my business.",
+      "html": "<button class=\"ds-btn-2\">Describe my business</button>",
+      "css": ".ds-btn-2 { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 1.125rem; border: 2px solid var(--ink, #1d1d1b); border-radius: 0; background: transparent; color: var(--ink, #1d1d1b); font-size: 1.0625rem; font-weight: 500; cursor: pointer; transition: background .2s cubic-bezier(.16,1,.3,1); } .ds-btn-2:hover { background: var(--tint, #efeee8); } .ds-btn-2:focus-visible { outline: 2px solid var(--ink, #1d1d1b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Reply Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Suggested reply under a GTMagic question.",
+      "html": "<button class=\"ds-chip\">Office managers at small tech companies</button>",
+      "css": ".ds-chip { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; min-height: 2.5rem; padding: .375rem .875rem; background: #fff; border: 1.5px solid var(--ink, #1d1d1b); border-radius: 0; color: var(--ink, #1d1d1b); font-size: .9375rem; text-align: left; cursor: pointer; transition: background .2s cubic-bezier(.16,1,.3,1); } .ds-chip:hover { background: var(--tint, #efeee8); } .ds-chip:focus-visible { outline: 2px solid var(--ink, #1d1d1b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Composer",
+      "kind": "input",
+      "refersTo": "composer-input",
+      "description": "Pinned message field with ink send square and privacy note.",
+      "html": "<form class=\"ds-composer\"><textarea rows=\"1\" placeholder=\"What do you sell, and to whom?\"></textarea><button type=\"button\" class=\"ds-send\" aria-label=\"Send\"><svg viewBox=\"0 0 20 20\" width=\"22\" height=\"22\"><path d=\"M3 10h13M11 5l5 5-5 5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button><p>Don't paste personal or confidential information.</p></form>",
+      "css": ".ds-composer { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; display: grid; grid-template-columns: 1fr auto; gap: .5rem; max-width: 34rem; } .ds-composer textarea { font: inherit; font-size: 1.0625rem; resize: none; min-height: 3.25rem; padding: .8125rem 1rem; border: 2px solid var(--ink, #1d1d1b); border-radius: 0; background: #fff; color: var(--ink, #1d1d1b); line-height: 1.45; caret-color: var(--g1, #c8372a); } .ds-composer textarea::placeholder { color: var(--ink-3, #6a6863); } .ds-composer textarea:focus-visible { outline: none; box-shadow: 0 0 0 3px #f2d8a0; } .ds-send { width: 3.25rem; height: 3.25rem; display: grid; place-items: center; background: var(--ink, #1d1d1b); color: var(--on-ink, #f4f3ee); border: 0; cursor: pointer; transition: transform .2s cubic-bezier(.16,1,.3,1); } .ds-send:hover { transform: translateX(2px); } .ds-send:focus-visible { outline: 2px solid var(--ink, #1d1d1b); outline-offset: 2px; } .ds-composer p { grid-column: 1 / -1; margin: 0; font-size: .8125rem; color: var(--ink-3, #6a6863); }"
+    },
+    {
+      "name": "Run Rail",
+      "kind": "nav",
+      "refersTo": "rail",
+      "description": "Ink rail: wordmark, numbered run steps, customer-group legend.",
+      "html": "<nav class=\"ds-rail\"><a class=\"ds-mark\" href=\"#\">GT<span>Magic</span></a><p class=\"ds-rail-h\">This run</p><ol class=\"ds-steps\"><li data-state=\"done\">Research your market</li><li data-state=\"running\">Build your audience</li><li>Write messages</li></ol><p class=\"ds-rail-h\">Customer groups</p><ul class=\"ds-legend\"><li><svg viewBox=\"0 0 16 34\" style=\"color:#c8372a\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg><span>Office managers<em>Your guess</em></span></li></ul></nav>",
+      "css": ".ds-rail { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; width: 17.5rem; background: var(--ink, #1d1d1b); color: var(--on-ink, #f4f3ee); padding: 1.5rem 1.375rem; display: grid; gap: .75rem; } .ds-mark { color: inherit; text-decoration: none; font-weight: 500; font-size: 1.5rem; letter-spacing: -.01em; } .ds-mark span { color: #e6b24a; } .ds-mark:focus-visible { outline: 2px solid var(--on-ink, #f4f3ee); outline-offset: 2px; } .ds-rail-h { margin: 1rem 0 0; font-size: .875rem; font-weight: 500; color: var(--on-ink-2, #b9b7af); } .ds-steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: .125rem; } .ds-steps li { counter-increment: s; display: grid; grid-template-columns: 1.75rem 1fr; align-items: center; padding: .3125rem 0; font-size: .9375rem; color: var(--on-ink-2, #b9b7af); } .ds-steps li::before { content: counter(s); width: 1.25rem; height: 1.25rem; display: grid; place-items: center; font-size: .75rem; border: 1.5px solid currentColor; border-radius: 50%; } .ds-steps li[data-state=running] { color: var(--on-ink, #f4f3ee); font-weight: 500; } .ds-steps li[data-state=running]::before { background: var(--on-ink, #f4f3ee); color: var(--ink, #1d1d1b); } .ds-steps li[data-state=done] { color: var(--on-ink, #f4f3ee); } .ds-legend { list-style: none; padding: 0; margin: 0; } .ds-legend li { display: grid; grid-template-columns: 1.125rem 1fr; gap: .625rem; font-size: .9375rem; line-height: 1.35; } .ds-legend svg { width: .75rem; height: 1.5rem; fill: currentColor; } .ds-legend em { display: block; font-style: normal; font-size: .8125rem; color: #f0c56c; }"
+    },
+    {
+      "name": "Crowd Row",
+      "kind": "custom",
+      "refersTo": "figure",
+      "description": "Signature picture statistic: one figure per simulated customer, counted beside the message.",
+      "html": "<div class=\"ds-crow\"><b>A</b><span class=\"ds-msg\">Breakfast that lands before the meeting starts</span><span class=\"ds-figs\"><button class=\"ds-fig g1\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g1\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g1\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g1\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g1\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g2\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g2\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g2\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig g2\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig gn\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button><button class=\"ds-fig gn\" aria-label=\"customer\"><svg viewBox=\"0 0 16 34\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg></button></span><b class=\"ds-count\">11</b></div>",
+      "css": ".ds-crow { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; display: grid; grid-template-columns: 1.5rem minmax(0,15rem) 1fr 2.5rem; gap: .75rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid var(--rule, #d8d6cf); color: var(--ink, #1d1d1b); font-variant-numeric: tabular-nums; } .ds-crow > b { font-size: 1.25rem; font-weight: 500; } .ds-msg { font-size: .9375rem; line-height: 1.35; font-weight: 500; } .ds-count { text-align: right; } .ds-figs { display: flex; flex-wrap: wrap; gap: .1875rem; align-items: end; } .ds-fig { width: 1rem; height: 2.125rem; padding: 0; border: 0; background: none; cursor: pointer; transition: transform .25s cubic-bezier(.16,1,.3,1); } .ds-fig svg { width: 100%; height: 100%; display: block; fill: currentColor; } .ds-fig:hover { transform: translateY(-3px); } .ds-fig:focus-visible { outline: 2px solid var(--ink, #1d1d1b); outline-offset: 2px; } .g1 { color: #c8372a; } .g2 { color: #2c5aa0; } .g3 { color: #b5790a; } .g4 { color: #3d7a4f; } .gn { color: #8a8780; } .gn svg { fill: none; stroke: currentColor; stroke-width: 1.5; }"
+    },
+    {
+      "name": "Ruled Plate",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Results block: 3px ink top rule, no box, no radius, no shadow.",
+      "html": "<section class=\"ds-plate\"><h3>Your three answers</h3><dl><div><dt>Who to target</dt><dd>Office managers at small companies (10 to 50 people).</dd></div><div><dt>What to say</dt><dd>Breakfast that lands before the meeting starts.</dd></div></dl></section>",
+      "css": ".ds-plate { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; border-top: 3px solid var(--ink, #1d1d1b); padding-top: 1.125rem; color: var(--ink, #1d1d1b); max-width: 40rem; } .ds-plate h3 { margin: 0 0 1.25rem; font-size: 1.5rem; font-weight: 500; line-height: 1.25; letter-spacing: -.01em; } .ds-plate dl { margin: 0; } .ds-plate dl div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule, #d8d6cf); } .ds-plate dt { font-weight: 500; color: var(--ink-2, #4a4945); } .ds-plate dd { margin: 0; font-size: 1.25rem; line-height: 1.35; font-weight: 500; }"
+    },
+    {
+      "name": "Real Quote and Simulated Words",
+      "kind": "custom",
+      "refersTo": "simulated-words",
+      "description": "Real wording with source vs the hue-free simulated register.",
+      "html": "<div class=\"ds-wrap\"><div class=\"ds-quote\"><q>the pastries showed up forty minutes after standup ended</q><a class=\"ds-src\" href=\"#\">review site</a></div><div class=\"ds-sim\"><span class=\"ds-sim-label\"><svg viewBox=\"0 0 16 34\"><circle cx=\"8\" cy=\"4.5\" r=\"4.5\"/><path d=\"M2.5 11h11a2.5 2.5 0 0 1 2.5 2.5V24h-3v10H9.5v-9h-3v9H3V24H0V13.5A2.5 2.5 0 0 1 2.5 11Z\"/></svg>Simulated answer, not a real quote</span><p>Picked Message A. On time is all I care about.</p></div></div>",
+      "css": ".ds-wrap { font-family: Jost, Futura, 'Century Gothic', system-ui, sans-serif; display: grid; gap: 1rem; max-width: 34rem; color: var(--ink, #1d1d1b); } .ds-quote { position: relative; display: grid; gap: .375rem; padding: .25rem 0 .25rem 1.75rem; } .ds-quote::before { content: '\\201C'; position: absolute; left: 0; top: -.375rem; font-size: 2.5rem; font-weight: 500; line-height: 1; } .ds-quote q { quotes: none; font-size: 1.0625rem; font-weight: 500; line-height: 1.45; } .ds-src { font-size: .875rem; color: var(--ink-2, #4a4945); text-underline-offset: .2em; text-decoration-thickness: 1px; } .ds-src:hover { color: var(--ink, #1d1d1b); } .ds-src:focus-visible { outline: 2px solid var(--ink, #1d1d1b); outline-offset: 2px; } .ds-sim { border: 1px dashed var(--ink-3, #6a6863); background: #f3f2ed; color: var(--ink-2, #4a4945); padding: .625rem .875rem; font-size: .9375rem; line-height: 1.45; } .ds-sim p { margin: 0; } .ds-sim-label { display: inline-flex; align-items: center; gap: .375rem; font-size: .8125rem; font-weight: 500; margin-bottom: .25rem; } .ds-sim-label svg { width: .4375rem; height: .9375rem; fill: none; stroke: currentColor; stroke-width: 1.5; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Isotype Count",
+    "overview": "One figure is one customer. GTMagic answers in picture statistics in the Isotype tradition: a flat, upright pictogram stands for one simulated customer, rows of them are counted by eye, and the count beside the row is the only number that matters. The interface around that count is a ruled statistics sheet, not a chat skin. A near-white ground, an ink rail on the left, and plates divided by a heavy ink rule carry everything; colour is reserved almost entirely for saying which customer group a figure belongs to.\n\nThe density is that of a working document. A single thread runs at a reading measure, turns arrive inside it, and results land as plates rather than cards. Flat colour, square corners, hairline row dividers and one weight of emphasis (Jost 500) do the structural work that shadows and rounded containers do in category-default products. The world refuses the grey-sidebar, blue-accent, neutral-card-with-progress-bar chat wrapper, and it refuses bar charts and bare percentages for the crowd.\n\nHonesty is drawn, not just written. Real customer words are set as quotes with a source link; simulated words sit in a hue-free, dashed-rule register that can never be mistaken for a real quote; drafts carry a warning-coloured label.",
+    "keyCharacteristics": [
+      "One pictogram per customer, flat-filled in its group colour; \"none of these\" as a grey outline figure.",
+      "Ink rail (#1d1d1b) left, warm near-white ground, thread centred at a 46rem measure.",
+      "Plates ruled by a 3px ink line on top; rows ruled by 1px warm-grey hairlines.",
+      "Square corners everywhere; circles only for step counters, pending dots and the spinner.",
+      "Jost in two weights (400, 500), tabular numerals throughout.",
+      "No elevation shadows, no decorative gradients."
+    ],
+    "rules": [
+      {
+        "name": "The Hue Is Group Rule",
+        "body": "The four group colours and the none-grey mean \"this customer group\" and nothing else. No group colour may be used for a button, link, status or decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Hue-Free Simulation Rule",
+        "body": "Simulated words are set in a deliberately colourless register: Simulated Fill background, 1px dashed Third Ink rule, Second Ink text, and an outline figure in the label. Because hue means customer group in this world, a tinted simulation box would read as belonging to a group.",
+        "section": "colors"
+      },
+      {
+        "name": "The Contrast Floor Rule",
+        "body": "Every figure colour holds at least 3:1 against the ground. When a historically correct Isotype hue fails (the contract's #d99a1e ochre), darken it rather than lighten the ground.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Weights Rule",
+        "body": "Only Jost 400 and 500 ship. Bold and strong map to 500. Hierarchy comes from size and ink level, never from a third weight.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Count Rule",
+        "body": "Numerals are tabular across the whole document so every count, n and rank aligns.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled Plate Rule",
+        "body": "A results block is a plate: a 3px ink top rule, no radius, no shadow, no surrounding box. If it needs a container to read as a unit, it is not yet a plate.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** draw every customer as one Isotype figure and show the count beside the row; counts and n, never bare percentages.",
+      "**Do** open results blocks with a 3px ink rule and keep them on the ground.",
+      "**Do** keep corners square (0) on every surface; reserve circles for run-status marks.",
+      "**Do** use Deep Ochre (#b5790a) for group 3 figures and check any new figure colour reaches 3:1 on the ground.",
+      "**Do** mark the owner's own claims (their guess, their headline) with the Guess Highlight tag.",
+      "**Do** set simulated words in the hue-free dashed register and label them \"simulated.\"",
+      "**Do** use a 2px ink outline with 2px offset for keyboard focus."
+    ],
+    "donts": [
+      "**Don't** use a group colour for anything except its customer group: no coloured buttons, links or status chips.",
+      "**Don't** add elevation shadows, rounded cards or decorative gradients; the composer's legibility fade is the only gradient.",
+      "**Don't** introduce a third weight of Jost or a second type family.",
+      "**Don't** tint simulated words with any hue, or style them like a real quote.",
+      "**Don't** replace the crowd with a bar chart, progress bars or a percentage.",
+      "**Don't** open the customer card as a modal; it opens inline under the crowd."
+    ]
+  }
+}

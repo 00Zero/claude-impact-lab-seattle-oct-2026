@@ -1,0 +1,163 @@
+{
+  "items": [
+    {
+      "item": {
+        "id": "item-1",
+        "name": "Bread Flour, Unbleached, 50 lb bag",
+        "searchQuery": "unbleached bread flour 50 lb",
+        "packSize": 50,
+        "unit": "lb",
+        "qtyPerOrder": 1,
+        "pricePaid": 72,
+        "shippingPaid": 3
+      },
+      "best": null,
+      "offers": [],
+      "currentUnitCost": 1.5,
+      "savingsPerOrder": null
+    },
+    {
+      "item": {
+        "id": "item-2",
+        "name": "Granulated Sugar, Extra Fine, 25 lb bag",
+        "searchQuery": "extra fine granulated sugar 25 lb",
+        "packSize": 25,
+        "unit": "lb",
+        "qtyPerOrder": 2,
+        "pricePaid": 24.5,
+        "shippingPaid": 3
+      },
+      "best": null,
+      "offers": [],
+      "currentUnitCost": 1.1,
+      "savingsPerOrder": null
+    },
+    {
+      "item": {
+        "id": "item-3",
+        "name": "12 oz Paper Hot Cups, White, 1000 ct case",
+        "searchQuery": "12 oz white paper hot cups 1000 count",
+        "packSize": 1000,
+        "unit": "each",
+        "qtyPerOrder": 1,
+        "pricePaid": 119,
+        "shippingPaid": 3
+      },
+      "best": {
+        "store": "Bakers Authority",
+        "title": "Paper White Hot Cups - 12 oz - 1000 Count",
+        "url": "https://www.bakersauthority.com/products/paper-white-hot-cups-12-oz-1000-count",
+        "price": 60.48,
+        "packSize": 1000,
+        "unit": "each",
+        "shipping": null,
+        "confidence": "medium",
+        "itemId": "item-3",
+        "checkedAt": "2026-10-25T20:49:22.965Z",
+        "unitCost": 0.06048,
+        "baseUnit": "each"
+      },
+      "offers": [
+        {
+          "store": "Bakers Authority",
+          "title": "Paper White Hot Cups - 12 oz - 1000 Count",
+          "url": "https://www.bakersauthority.com/products/paper-white-hot-cups-12-oz-1000-count",
+          "price": 60.48,
+          "packSize": 1000,
+          "unit": "each",
+          "shipping": null,
+          "confidence": "medium",
+          "itemId": "item-3",
+          "checkedAt": "2026-10-25T20:49:22.965Z",
+          "unitCost": 0.06048,
+          "baseUnit": "each"
+        },
+        {
+          "store": "LollicupStore",
+          "title": "[1,000 ct] 12 oz Paper Coffee Cups | White | 90 mm",
+          "url": "https://lollicupstore.com/products/12oz-paper-hot-cups-90mm-coffee-1-000-ct",
+          "price": 60.75,
+          "packSize": 1000,
+          "unit": "each",
+          "shipping": null,
+          "confidence": "high",
+          "itemId": "item-3",
+          "checkedAt": "2026-10-25T20:49:22.965Z",
+          "unitCost": 0.06075,
+          "baseUnit": "each"
+        }
+      ],
+      "currentUnitCost": 0.122,
+      "savingsPerOrder": 61.52
+    },
+    {
+      "item": {
+        "id": "item-4",
+        "name": "12 oz Hot Cup Lids, Black Sip-Thru, 1000 ct case",
+        "searchQuery": "12 oz black sip-thru hot cup lids 1000 count",
+        "packSize": 1000,
+        "unit": "each",
+        "qtyPerOrder": 1,
+        "pricePaid": 68,
+        "shippingPaid": 3
+      },
+      "best": {
+        "store": "Walmart",
+        "title": "Karat C-KDL516B Sipper Dome Lid for Paper Hot Cups, Black, Case of 1000",
+        "url": "https://www.walmart.com/c/kp/sip-lids?page=2&affinityOverride=store_led",
+        "price": 42.99,
+        "packSize": 1000,
+        "unit": "each",
+        "shipping": null,
+        "confidence": "medium",
+        "itemId": "item-4",
+        "checkedAt": "2026-10-25T20:49:22.279Z",
+        "unitCost": 0.04299,
+        "baseUnit": "each"
+      },
+      "offers": [
+        {
+          "store": "Walmart",
+          "title": "Karat C-KDL516B Sipper Dome Lid for Paper Hot Cups, Black, Case of 1000",
+          "url": "https://www.walmart.com/c/kp/sip-lids?page=2&affinityOverride=store_led",
+          "price": 42.99,
+          "packSize": 1000,
+          "unit": "each",
+          "shipping": null,
+          "confidence": "medium",
+          "itemId": "item-4",
+          "checkedAt": "2026-10-25T20:49:22.279Z",
+          "unitCost": 0.04299,
+          "baseUnit": "each"
+        }
+      ],
+      "currentUnitCost": 0.071,
+      "savingsPerOrder": 28.01
+    },
+    {
+      "item": {
+        "id": "item-5",
+        "name": "Dinner Napkins, 2-Ply White, 3000 ct case",
+        "searchQuery": "2-ply white dinner napkins 3000 count",
+        "packSize": 3000,
+        "unit": "each",
+        "qtyPerOrder": 1,
+        "pricePaid": 54,
+        "shippingPaid": 3
+      },
+      "best": null,
+      "offers": [],
+      "currentUnitCost": 0.019,
+      "savingsPerOrder": null
+    }
+  ],
+  "totalSavingsPerOrder": 89.53,
+  "totalSavingsPerMonth": 358.12,
+  "totalSavingsPerYear": 4297.44,
+  "ordersPerMonth": 4,
+  "suggestions": [
+    "Buy your 12 oz white paper hot cups at Bakers Authority and save $61.52 per order.",
+    "Buy your 12 oz black sip-thru hot cup lids at Walmart and save $28.01 per order."
+  ],
+  "generatedAt": "2026-10-25T20:49:23.754Z"
+}

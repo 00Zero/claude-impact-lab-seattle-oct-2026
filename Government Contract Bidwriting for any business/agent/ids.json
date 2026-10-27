@@ -1,0 +1,90 @@
+{
+  "environment": {
+    "id": "env_01LmUUZ1NQ11ACeSUnCmPgvT",
+    "name": "cadocary-bids"
+  },
+  "memory_stores": {
+    "rfp-library": {
+      "id": "memstore_01CWkzBJC2w4usssAdixLBxr",
+      "name": "RFP Library",
+      "readme_id": "mem_014wnkYKSadbr5wmS2n2oosA",
+      "fingerprint": "5ed43b574991190b05597b697adc22966c56db350ff66f941a055a30dfe8b04e"
+    },
+    "cadocary-facts": {
+      "id": "memstore_01UnB2xsoBPAq6Wh4CfBMNb4",
+      "name": "Cadocary Facts",
+      "readme_id": "mem_01N5Q6CWvHa9DXfEC1M8VLF5",
+      "fingerprint": "ed723f0448ea32915541998e548f48f2c41b2e6559efad466b78c2fb50983b57",
+      "private_id": "mem_01LhGYVPL75yKpeJ46qFBsph",
+      "private_fingerprint": "e24be51edc9ffcd889a5f7a4a473fdc4f87c39058337e0ec91d5c77a58610eef"
+    }
+  },
+  "skills": {
+    "rfp-qualifying": {
+      "id": "skill_01Xk737C2Sfe9p2CTe3W9LwR",
+      "version": "skver_011bVckRYo3NHcfzRGafdnkL",
+      "fingerprint": "709d313ca0f007a8f1d72f60a2d627ee680b708ad70ec1a079d977d1e6375811"
+    },
+    "rfp-research": {
+      "id": "skill_01LGSdbxsUEDPvrmwh8NTtmG",
+      "version": "skver_01E3EhHZftCnqRC1gTosm4rD",
+      "fingerprint": "399df51fa16904e8cb2997faf5695db9d64e8a1717d887562283b9a96207b359"
+    },
+    "proposal-drafting": {
+      "id": "skill_01TGKG2s5xnMWD3MPmV4VqkK",
+      "version": "skver_015QGVafSMs6PJAr6e2osaNb",
+      "fingerprint": "892d842008ee5b88284480bcd6d9b096d41358993638063b6a80962acecd7477"
+    },
+    "agent-delegation": {
+      "id": "skill_01E8L6koR3vMMXWFfZbzXqtr",
+      "version": "skver_01GiJrUs4ZhrZzMdby4QuW7A",
+      "fingerprint": "e125bb77a48a9e40f05a7390f01f4824f22e9b85f8d5de456abe5d2fdd469c55"
+    },
+    "rfp-reading": {
+      "id": "skill_01FF3hPdJ1nhsLuvYt5R6tyN",
+      "version": "skver_012opN1KJuYPqwNVXF3ExbrW",
+      "fingerprint": "99e2459c13e23682f2ae38f0b93b932b8e7c3d76957eed193e192ed6cf7a9f7f"
+    },
+    "company-facts": {
+      "id": "skill_01Gjc1Ggof1GiJ3hhY37ibfM",
+      "version": "skver_016SEJLygvqQfzUpSSXKopqN",
+      "fingerprint": "b4d3cefe39503778789068da1b44abcb7222f0533edaa08bd7e853138eaa60a8"
+    }
+  },
+  "agents": {
+    "qualifier": {
+      "id": "agent_01XzDnJSx9KLfEgC1ZraTLPd",
+      "name": "Cadocary Qualifier",
+      "version": 8,
+      "fingerprint": "c7a04bab2f2951984a2b846ed3b0faf54e0b36163584a59751b0e513c7ff8719"
+    },
+    "researcher": {
+      "id": "agent_01X5VQBCNP6zXWqS54n1tgLk",
+      "name": "Cadocary Researcher",
+      "version": 3,
+      "fingerprint": "ecbcf6715e26822feb49e11fe153024c298b89b5b060c07ba2576adffa62ac3e"
+    },
+    "drafter": {
+      "id": "agent_01EiFfsfSSps41gyUSG52L86",
+      "name": "Cadocary Drafter",
+      "version": 5,
+      "fingerprint": "00700510f4da019cc18b0ccbf060a10ba3074a02bf48d91d9fb9b42519d5fcf0"
+    },
+    "operator": {
+      "id": "agent_01T6ww8wetS3NJNicgfg48Pg",
+      "name": "Cadocary Operator",
+      "version": 14,
+      "fingerprint": "c76d703a62000399f24712a5c333bde8ecc970180f924d656b9adf51ca710c92"
+    },
+    "reader": {
+      "id": "agent_01EFdc4RsT6U5vncFsErAm3W",
+      "name": "Cadocary Reader",
+      "version": 4,
+      "fingerprint": "a6fe63515ec776ffe05ae63c589a3e3eaf78eb268aac83b0db5029d84b0c9d07"
+    }
+  },
+  "vault": {
+    "id": "vlt_011CgPbapGAjXK8CLwTsHJyK",
+    "sam_credential_id": "vcrd_01LRGzsqjMVnLySGgBvLaHZk"
+  }
+}

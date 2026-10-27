@@ -1,0 +1,59 @@
+# Publishes the owner demo page (web/) and the example maps to GitHub Pages.
+# The page loads ../examples/*/map.html and insights.md, so the site keeps the repo's layout:
+#   /            -> forwards to /web/
+#   /web/        -> the demo page (samples only; there is no pipeline server on Pages)
+#   /examples/   -> each sample's map.html and insights.md
+name: Deploy demo site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "examples/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}web/
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/examples
+          cp -r web _site/web
+          for dir in examples/*/; do
+            name=$(basename "$dir")
+            mkdir -p "_site/examples/$name"
+            cp "$dir"map.html "$dir"insights.md "_site/examples/$name/"
+          done
+          touch _site/.nojekyll  # serve files as they are, no Jekyll processing
+          cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>Map your business files</title>
+          <meta http-equiv="refresh" content="0; url=web/">
+          <link rel="canonical" href="web/">
+          <p><a href="web/">Open the datamap demo</a></p>
+          HTML
+          find _site -maxdepth 3 | sort
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

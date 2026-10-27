@@ -1,0 +1,36 @@
+# BuyOnce purchasing policy: the rules the agent follows for EVERY vendor.
+# Copy this file to policy/policy.toml and edit it in any text editor.
+# Everything here is optional; sensible defaults apply.
+
+[business]
+name = "Maple Street Bakery"
+currency = "USD"
+
+[spending]
+# Safe default: ask before every order. Set to true to let small orders through.
+allow_auto_approve = false
+auto_approve_under = 100.00   # only used when allow_auto_approve = true
+hard_cap = 2000.00            # the agent will never recommend an order above this
+card_buffer_pct = 5.0         # single-use card cap = approved total + this much (covers rounding)
+
+[vendors]
+approved = ["Harvest Wholesale", "Metro Restaurant Supply"]
+blocked  = ["ShadyDeals"]
+prefer_past_vendors = true    # vendors you have ordered from before score higher
+
+[quality]
+min_rating = 4.0              # skip vendors rated below this (out of 5)
+
+[delivery]
+max_days = 7                  # used when a request has no explicit deadline
+
+[sandbox]
+# Practice sites that take no real payment. On these (and only these) the agent may do the
+# final step itself after you approve. Everywhere else it stops at the payment boundary.
+hosts = ["www.saucedemo.com"]
+
+[scoring]
+# How to rank vendors that pass every rule above. Weights are relative.
+price = 0.55
+speed = 0.20
+reliability = 0.25

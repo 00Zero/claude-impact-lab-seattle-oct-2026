@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clark</title>
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#1F5C46">
+<link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/static/clark.css">
+<style>
+  [hidden] { display: none !important; }
+  .row { display: flex; gap: 10px; }
+  .row > * { flex: 1; }
+  .header { display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand b { font-size: 22px; color: var(--primary); }
+  .step { display: flex; align-items: center; gap: 14px; }
+  .num { width: 32px; height: 32px; flex: none; border-radius: 16px; font-weight: 700;
+         display: flex; align-items: center; justify-content: center; }
+  .spinner { text-align: center; color: var(--text-muted); padding: 24px 0; }
+  .error { color: #9A2B1F; background: #FBEBEB; border-radius: 12px; padding: 12px 14px; }
+  .actions { display: flex; flex-direction: column; gap: 10px; }
+  .divider { border-top: 1px solid var(--divider); margin: 4px 0; }
+  .center { text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- 0. Welcome -->
+<main class="screen" id="welcome">
+  <div class="brand"><img src="/static/logo.svg" width="38" height="40" alt=""><b>Clark</b></div>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+    <h1 style="font-size:34px;line-height:1.15">Keep your whole shop on the same page.</h1>
+    <p style="margin:0;font-size:20px;font-weight:500;color:var(--primary)">Just say it.</p>
+    <p class="muted" style="font-size:16px;margin:0">Change a price, your hours or a refund rule out loud. Clark catches clashes with what you decided before, tells you what to update, and writes the message for your staff.</p>
+  </div>
+  <div class="card step"><span class="num" style="background:var(--primary-ring);color:var(--primary)">1</span><span><b>Say the change.</b> "Drip coffee is $3.25 now."</span></div>
+  <div class="card step"><span class="num" style="background:var(--clash-bg);color:var(--clash-text)">2</span><span><b>Clark checks it</b> against what you decided before.</span></div>
+  <div class="card step"><span class="num" style="background:var(--success-bg);color:var(--success-text)">3</span><span><b>Everyone's updated:</b> menu, website, socials, register and staff.</span></div>
+  <div class="actions" style="margin-top:auto">
+    <button class="btn btn-primary btn-block" onclick="show('tell')">Try it with a sample café</button>
+    <p class="muted center" style="margin:0">Sample shop: Fernwood Coffee, with 17 past decisions.</p>
+  </div>
+</main>
+
+<!-- 1. Tell Clark -->
+<main class="screen" id="tell" hidden>
+  <div class="header">
+    <div>
+      <div class="brand"><img src="/static/logo.svg" width="30" height="32" alt=""><b>Clark</b></div>
+      <div class="muted" style="font-size:13px">Fernwood Coffee</div></div>
+    <button class="btn btn-secondary" onclick="openRules()">House rules</button>
+  </div>
+  <h1 class="center">Tell Clark what changed</h1>
+  <button class="mic" id="mic" aria-label="Tap to talk" onclick="toggleMic()">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+  </button>
+  <p class="muted center" id="micHint" style="margin:0">Tap to talk</p>
+  <div class="card">
+    <label class="label" for="note">You said</label>
+    <textarea id="note" rows="3" placeholder="Or type it: Let's do 20% off everything for the holidays."></textarea>
+    <button class="btn btn-primary" onclick="sendNote()">Send to Clark</button>
+  </div>
+  <p class="muted center" style="margin:0">Try: "Double punches on Tuesdays." or "Close at 2 on Mondays."</p>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <div class="header"><b>Recent changes</b><button class="btn btn-plain" onclick="resetDemo()">Reset sample</button></div>
+    <div class="list" id="recent"></div>
+  </div>
+</main>
+
+<!-- 2. Clark checks / 3. What changes -->
+<main class="screen" id="check" hidden>
+  <button class="btn btn-plain" style="align-self:flex-start;padding:0" onclick="show('tell')">← Back</button>
+  <div id="checkBody"></div>
+</main>
+
+<!-- 4. House rules -->
+<main class="screen" id="rules" hidden>
+  <div class="header">
+    <button class="btn btn-plain" style="padding:0" onclick="show('tell')">← Back</button>
+  </div>
+  <div><h1>House rules</h1><p class="muted" style="margin:4px 0 0">Fernwood Coffee · current rules</p></div>
+  <div id="rulesBody"></div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let current = [];
+
+function show(id) {
+  for (const s of ["welcome", "tell", "check", "rules"]) $(s).hidden = s !== id;
+  window.scrollTo(0, 0);
+  if (id === "tell") loadRecent();
+}
+
+async function api(path, body) {
+  const res = await fetch(path, body ? {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)} : {});
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || "Something went wrong. Try again.");
+  return data;
+}
+
+async function loadRecent() {
+  try {
+    const items = await api("/api/recent");
+    $("recent").innerHTML = items.map(i => `<div class="list-row"><div class="header"><span>${esc(i.decision)}</span><span class="muted">${esc(fmt(i.date))}</span></div></div>`).join("");
+  } catch (e) { $("recent").innerHTML = ""; }
+}
+
+function fmt(d) {
+  const t = new Date(d + "T12:00:00");
+  return isNaN(t) ? d : t.toLocaleDateString("en-US", {month: "short", day: "numeric"});
+}
+
+// ---- voice (browser speech recognition; the text box is the backup) ----
+let rec = null, listening = false;
+function toggleMic() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { $("micHint").textContent = "Voice isn't supported in this browser. Type it below."; $("note").focus(); return; }
+  if (listening) { rec.stop(); return; }
+  rec = new SR(); rec.lang = "en-US"; rec.interimResults = true; rec.continuous = false;
+  let finalText = $("note").value ? $("note").value + " " : "";
+  rec.onresult = (e) => {
+    let interim = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) finalText += e.results[i][0].transcript + " ";
+      else interim += e.results[i][0].transcript;
+    }
+    $("note").value = (finalText + interim).trim();
+  };
+  rec.onend = () => { listening = false; $("mic").classList.remove("listening"); $("micHint").textContent = "Check the words, then Send to Clark"; };
+  rec.onerror = () => { $("micHint").textContent = "Couldn't hear you. Try again or type it."; };
+  rec.start(); listening = true; $("mic").classList.add("listening"); $("micHint").textContent = "Listening… tap again to stop";
+}
+
+// ---- check ----
+async function sendNote() {
+  const text = $("note").value.trim();
+  if (!text) { $("note").focus(); return; }
+  if (listening) rec.abort();
+  show("check");
+  $("checkBody").innerHTML = `<div class="spinner">Clark is checking your past decisions…</div>`;
+  try {
+    const data = await api("/api/check", {text});
+    $("note").value = "";
+    $("micHint").textContent = "Tap to talk";
+    current = data.decisions || [];
+    renderCheck(text);
+  } catch (e) {
+    $("checkBody").innerHTML = `<div class="error">${esc(e.message)}</div>`;
+  }
+}
+
+function renderCheck(text) {
+  if (!current.length) { $("checkBody").innerHTML = `<div class="card">Clark didn't find a decision in "${esc(text)}". Try saying what's changing.</div>`; return; }
+  $("checkBody").innerHTML = current.map((d, i) => {
+    const c = d.conflict, r = d.related;
+    const labels = (d.labels || []).join(" · ");
+    let html = `<section class="card" id="dec${i}" style="margin-bottom:16px">
+      <span class="label">New decision${current.length > 1 ? ` ${i+1} of ${current.length}` : ""}</span>
+      <h2>${esc(d.decision)}</h2>
+      <span class="muted">${esc(labels)}${d.type ? " · " + esc(d.type) : ""}${d.why && d.why !== "not said" ? "" : " · Why: not said"}</span>`;
+    if (c) {
+      html += `<div class="card-clash">
+        <span class="title">⚠ Clark noticed a clash</span>
+        <span>On <b>${esc(fmt(c.date))}</b> you decided: ${esc(c.rule)}${c.why && c.why !== "not said" ? " because " + esc(c.why) : ""}.</span>
+        ${c.quote ? `<span class="quote">"${esc(c.quote)}"</span>` : ""}
+        ${c.explanation ? `<span>${esc(c.explanation)}</span>` : ""}
+      </div>
+      <b>Is this replacing that rule, or just this once?</b>
+      <div class="actions" id="act${i}">
+        <button class="btn btn-primary btn-block" onclick="applyDec(${i},'exception')">Just this once</button>
+        <button class="btn btn-secondary btn-block" onclick="applyDec(${i},'replace')">Replace the old rule</button>
+        <button class="btn btn-plain" onclick="neverMind(${i})">Never mind</button>
+      </div>`;
+    } else {
+      if (r) html += `<span class="muted">Related: ${esc(r.note)}</span>`;
+      html += `<div class="banner-success" style="font-weight:500">No clash with your past decisions.</div>
+      <div class="actions" id="act${i}">
+        <button class="btn btn-primary btn-block" onclick="applyDec(${i},'new')">Save it</button>
+        <button class="btn btn-plain" onclick="neverMind(${i})">Never mind</button>
+      </div>`;
+    }
+    return html + `<div id="res${i}"></div></section>`;
+  }).join("");
+}
+
+function neverMind(i) {
+  $("act" + i).innerHTML = `<span class="muted">Not saved.</span>`;
+}
+
+async function applyDec(i, action) {
+  const d = current[i];
+  $("act" + i).innerHTML = `<div class="spinner">Saving and working out what to update…</div>`;
+  try {
+    const r = await api("/api/apply", {decision: d, action, conflict_id: d.conflict ? d.conflict.id : null});
+    $("act" + i).innerHTML = "";
+    $("note").value = "";
+    $("micHint").textContent = "Tap to talk";
+    $("res" + i).innerHTML = `
+      <div class="banner-success">✓ Saved to your log (${esc(r.saved_id)})</div>
+      <div class="row" style="margin-top:12px">
+        <div class="card"><span class="label">What changes</span><span>${esc(r.what_changes)}</span></div>
+        ${r.stays_the_same ? `<div class="card"><span class="label">Stays the same</span><span>${esc(r.stays_the_same)}</span></div>` : ""}
+      </div>
+      <div class="card checklist" style="margin-top:12px"><b>Update these</b>
+        ${(r.checklist || []).map(c => `<label><input type="checkbox"> ${esc(c.place)}: ${esc(c.todo)}</label>`).join("") || `<span class="muted">Nothing else to update.</span>`}
+        <span class="muted">From your "Where rules live" list</span></div>
+      <div class="card" style="margin-top:12px"><b>Message for your staff</b>
+        <div class="message-box" id="msg${i}">${esc(r.staff_message)}</div>
+        <button class="btn btn-primary" onclick="copyMsg(${i}, this)">Copy message</button></div>`;
+  } catch (e) {
+    $("act" + i).innerHTML = `<div class="error">${esc(e.message)}</div>`;
+  }
+}
+
+function copyMsg(i, btn) {
+  navigator.clipboard.writeText($("msg" + i).textContent).then(() => { btn.textContent = "Copied ✓"; });
+}
+
+// ---- house rules ----
+async function openRules() {
+  show("rules");
+  $("rulesBody").innerHTML = `<div class="spinner">Loading…</div>`;
+  try {
+    const groups = await api("/api/rules");
+    $("rulesBody").innerHTML = Object.entries(groups).map(([label, items]) => `
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+        <span class="label" style="font-weight:700">${esc(label)}</span>
+        <div class="list">${items.map(it => `
+          <div class="list-row">
+            <span class="title">${esc(it.rule)}</span>
+            <span class="muted">Since ${esc(fmt(it.since))} · <a href="#" onclick="this.parentNode.nextElementSibling.hidden=!this.parentNode.nextElementSibling.hidden;return false">Why?</a></span>
+            <span class="muted" hidden>${esc(it.why)}${it.quote ? ` · "${esc(it.quote)}"` : ""}</span>
+            ${it.exceptions.map(x => `<span class="tag-exception">This once: ${esc(x)}</span>`).join("")}
+          </div>`).join("")}</div>
+      </div>`).join("");
+  } catch (e) { $("rulesBody").innerHTML = `<div class="error">${esc(e.message)}</div>`; }
+}
+
+async function resetDemo() {
+  await api("/api/reset", {});
+  loadRecent();
+}
+</script>
+</body>
+</html>

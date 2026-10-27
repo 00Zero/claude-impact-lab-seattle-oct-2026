@@ -1,0 +1,221 @@
+{
+  "_note": "FAKE: a hand-written stand-in for GPT Sol's replies on fixtures/demo/intake.json, in the reply schema (scripts/prompts.py). Four options break a check on purpose (quotation marks, a number the owner didn't give, a superlative, a copied customer quote), so call 1 keeps 5 and the mock exercises call 2. Replace with a recorded reply (creatives/raw/call-<n>.json) after the first live run.",
+  "replies": [
+    {
+      "options": [
+        {
+          "angle": "Strength over the scale",
+          "targetSegmentId": "seg_1",
+          "headline": "Lose the fat, not the muscle mass you worked for",
+          "subheadline": "Short strength sessions and protein help, built for people losing weight who want to stay strong.",
+          "callToAction": "Start your first session",
+          "lexiconIds": [
+            "lex_1"
+          ],
+          "principlesUsed": [
+            3,
+            12
+          ],
+          "valueProposition": "Keeps strength up while weight comes down.",
+          "differentiator": "Built around muscle, not calories.",
+          "whyItMightWork": "Names the fear in the reader's own terms, then turns it into a goal.",
+          "assumptions": [
+            "Offers short strength sessions",
+            "Offers protein help"
+          ]
+        },
+        {
+          "angle": "Low appetite",
+          "targetSegmentId": "seg_1",
+          "headline": "Enough protein to work out and not lose muscle",
+          "subheadline": "Easy protein ideas and simple daily targets for the days you're barely hungry.",
+          "callToAction": "See today's protein ideas",
+          "lexiconIds": [
+            "lex_2"
+          ],
+          "principlesUsed": [
+            1,
+            3
+          ],
+          "valueProposition": "Protein help that works with a small appetite.",
+          "differentiator": "Targets that adjust to how much you can eat.",
+          "whyItMightWork": "A concrete daily struggle, then a small, doable turn.",
+          "assumptions": [
+            "Offers protein ideas and daily targets"
+          ]
+        },
+        {
+          "angle": "Retirement plan",
+          "targetSegmentId": "seg_1",
+          "headline": "\"Not losing too much muscle\" can be your plan too",
+          "subheadline": "Strength training for adults who want to stay strong for the long run.",
+          "callToAction": "Make your plan",
+          "lexiconIds": [
+            "lex_4"
+          ],
+          "principlesUsed": [
+            5
+          ],
+          "valueProposition": "Long-term strength.",
+          "differentiator": "Planned for the decades ahead.",
+          "whyItMightWork": "A vivid first-person line.",
+          "assumptions": []
+        },
+        {
+          "angle": "Habits that last",
+          "targetSegmentId": "seg_1",
+          "headline": "Build habits that keep all this weight off",
+          "subheadline": "A strength routine you can keep on low-energy days, so the progress stays when the program ends.",
+          "callToAction": "Build your routine",
+          "lexiconIds": [
+            "lex_3"
+          ],
+          "principlesUsed": [
+            3
+          ],
+          "valueProposition": "A routine that survives the end of the diet.",
+          "differentiator": "Planned for after, not just during.",
+          "whyItMightWork": "Speaks to the fear of losing progress later.",
+          "assumptions": [
+            "Routines suit low-energy days"
+          ]
+        },
+        {
+          "angle": "Exact instructions",
+          "targetSegmentId": "seg_2",
+          "headline": "New to lifting? Gain the confidence to use the weights",
+          "subheadline": "Step-by-step strength sessions with pictures, built for people who have never followed a plan.",
+          "callToAction": "Get your first plan",
+          "lexiconIds": [
+            "lex_7"
+          ],
+          "principlesUsed": [
+            1,
+            12
+          ],
+          "valueProposition": "No guessing in the gym.",
+          "differentiator": "Every move shown, every session set.",
+          "whyItMightWork": "Answers the beginner's first worry directly.",
+          "assumptions": [
+            "Sessions show each move with pictures",
+            "Made for complete beginners"
+          ]
+        },
+        {
+          "angle": "Gentle start",
+          "targetSegmentId": "seg_2",
+          "headline": "Your first 10 minutes: the confidence to use them",
+          "subheadline": "A gentle first week for people starting from zero.",
+          "callToAction": "Start gently",
+          "lexiconIds": [
+            "lex_7"
+          ],
+          "principlesUsed": [
+            10
+          ],
+          "valueProposition": "An easy first week.",
+          "differentiator": "Starts smaller than other plans.",
+          "whyItMightWork": "A small, concrete first step.",
+          "assumptions": []
+        },
+        {
+          "angle": "Gym anxiety",
+          "targetSegmentId": "seg_2",
+          "headline": "Walk in with the confidence to use them",
+          "subheadline": "Clear, short sessions that show each move, so the gym stops feeling like a test you didn't study for.",
+          "callToAction": "See how it works",
+          "lexiconIds": [
+            "lex_7"
+          ],
+          "principlesUsed": [
+            1,
+            7
+          ],
+          "valueProposition": "Confidence in the gym.",
+          "differentiator": "Each move shown before you try it.",
+          "whyItMightWork": "A concrete scene the reader dreads, with the fear removed.",
+          "assumptions": [
+            "Sessions show each move before you try it"
+          ]
+        },
+        {
+          "angle": "Quit apps before",
+          "targetSegmentId": "seg_2",
+          "headline": "The best plan to gain confidence to use them",
+          "subheadline": "For people who have quit fitness apps before.",
+          "callToAction": "Try it",
+          "lexiconIds": [
+            "lex_7"
+          ],
+          "principlesUsed": [
+            11
+          ],
+          "valueProposition": "A plan you'll keep.",
+          "differentiator": "Simpler than the apps you quit.",
+          "whyItMightWork": "Speaks to past disappointment.",
+          "assumptions": []
+        }
+      ]
+    },
+    {
+      "options": [
+        {
+          "angle": "Strength you keep",
+          "targetSegmentId": "seg_1",
+          "headline": "I want to feel stronger, made simple",
+          "subheadline": "Short strength sessions and easy protein targets for adults who care more about staying strong than the scale.",
+          "callToAction": "Start your plan",
+          "lexiconIds": [
+            "lex_5"
+          ],
+          "principlesUsed": [
+            12
+          ],
+          "valueProposition": "Strength kept, weight lost.",
+          "differentiator": "Muscle first.",
+          "whyItMightWork": "Uses the reader's own goal word for word.",
+          "assumptions": []
+        },
+        {
+          "angle": "No guesswork",
+          "targetSegmentId": "seg_2",
+          "headline": "Strength training with the confidence to use the weights",
+          "subheadline": "A gentle plan for beginners that sets each session for you, so you never wonder what comes next.",
+          "callToAction": "Start the gentle plan",
+          "lexiconIds": [
+            "lex_7"
+          ],
+          "principlesUsed": [
+            3
+          ],
+          "valueProposition": "Every session planned for you.",
+          "differentiator": "Made for people who have never trained.",
+          "whyItMightWork": "Removes the beginner's biggest unknown.",
+          "assumptions": [
+            "Plans each session for the user"
+          ]
+        },
+        {
+          "angle": "Cost",
+          "targetSegmentId": "seg_2",
+          "headline": "The confidence to use free weights, at $14.99 monthly",
+          "subheadline": "Step-by-step strength sessions for beginners, without paying for a gym trainer.",
+          "callToAction": "See the plan",
+          "lexiconIds": [
+            "lex_7"
+          ],
+          "principlesUsed": [
+            12
+          ],
+          "valueProposition": "Guidance for less than a trainer.",
+          "differentiator": "A plan, not just a library of workouts.",
+          "whyItMightWork": "Puts the price next to the thing beginners need most.",
+          "assumptions": [
+            "Costs USD 14.99 a month",
+            "Offers step-by-step sessions for beginners"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+# gitleaks findings reviewed on 2026-10-27 and judged false positives; build.sh keeps these files.
+# One fingerprint (file:rule:line) per finding, so a new or moved match in the same file is still caught.
+# - Cash intelligence for small businesses: "key" is the SHA-256 of the cached request (demo-mode cache)
+# - Relationship Copilot: "key" fields are record UUIDs in the demo dataset
+# - Automate Everything: THRESHOLDS_KEY is a localStorage key name
+# - Home Dream Build: match is an ElevenLabs voice ID; every credential in .env.example is blank
+# - Lantern: Supabase publishable key, public by design (ships in the client bundle)
+# - RingAround: placeholder in Cloudflare's "don't do this" docs example
+Automate Everything/app/inventory/page.tsx:generic-api-key:10
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/0e265fa72cb4002f814b2d47ab51fa59a1e752dc537ea4417c84a9c0e6a6c465.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/29e36d34b498c7166dd9c0f7a7ad7f7602eda6b5f41ce9dd781601c8b134d44e.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/2b0040d333cbe0f1eda073767ddf95286f9f2bd2f98c02b795622cd41f70c4cf.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/30bb99c42400617ee4f822887f3a164db33e01ce386aee243995187dd9032911.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/31a8c9e2e6a9da43c03d1190097183d0eece65c79cd11ad7cc7b7e41351d118f.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/326f851e923502ccefd7ccfe817c25e8ce6a4564b8694b3665673ebfb0ab2078.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/334db760de54670dca9e63450ac19f0326b12eab33bbe88746f43ac5c324e8ee.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/360e676e1b3a86edc64edd88722098dbfd21fb0a1da1e6cee502bbc5a23bb2cf.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/3e557dfb593d08fc6bf8e597f992fbba659b82fe3b12c5d83f08ebeb6dbd99e7.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/85e5640ce39d7854fdb0888e37bf4f7fd04019635288878e4eccbb369850c40d.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/88e9f714902b8953727b3183dac198ebb033fc51e9e0a73cf9db3c312d4c4fb3.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/8e2f8e8fb859197350aaf859754f0e8af6693b1b5a44990151c4d15c53992da7.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/bea0f79ed426d3d1cdcef423833ee8a61a5254074c7c45f71c451c637be4d9d9.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/c3bdb555a0303b988c0e820b7f7540a5eee35fd69327901d69e3206095a55226.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/db9b5ec950356f6346a44c918ee519deb2319db00eaf8b174d3f96b225ba07a8.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/e6163ccd2ad4090f21936f1d73d18a7b24163666b3489cc21c65d2cc09363629.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/cache/f775a2d4baa7b481ccee4b28644c0780ee54509b276dcf13c26631e64087e7a5.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/013aab53433e0a3869af2afab7506e62454e1154aab0356e7a9d908130e079fd.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/3928f31729e6a8ef08bbd009862f3725411dba5e004a308c292ad3f4f7877519.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/4068e70945bd4cc46eb9c4c77c0d4954c9a88848c700ce795df63ef672a950a2.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/4ac63b1f0f6a6dc2362f9fe1f6d4f1542dfc23f6402fe7fe22f3776aa7a6a3e3.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/4c7f08a43fe8b75542639633a26207fff5b57bb50f48b32396a69c4539550176.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/4d847c4f3d29f7e7e5b1988941d11fdd7b06175cfe38b169f242f47544f4ecfb.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/54e874b826998f03b49343a9577dd9ca905faddb30dbeaaa3345a20c78843e1d.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/5bc4313d5dff08a01907fa143bbdbf4895fff7b59bfd33d2c03c326072beff8f.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/61bbed3aba454ff6fa0284d298aa18cbb100c8dc516e3c4fe911b609d112700f.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/64f53c43eaa59aee7801adc24fa14b4b6eee145e94bb1e7ad8c31b95f89a42e1.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/6acf5f87e243c0668bddc13b090930561ea5516baab37472ef709985ca838aa2.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/a39d43e8b53810d98e6316bb34b661bc5e6ee06fcd7a0f8915c81ebb0456f68a.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/befb7785715af2a49bfa438795fb8b0f2bc0b6dcdfa236fb1b5b4979f038cd15.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/c23769313953cd372bc8a4e28d84bd376c718d16c6767dae4c124e9908c34071.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/d88158fc3f251b1dbe8f4f73cd318b7619b6883a44fb169c5ad49816dc5571e4.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/e67324348ec968ad1dc0084afd4af04b614f7435569898da0c6056ea15adb3bd.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/ask/intent-cache/e95bc5581335fb2b937dcf7c4b1b2698f446f78ea5a54d1ba8ff9f0f658a5c01.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/brief/cache/2f20ee501a4ac209925cfb6e666957dd7b405e1222ae9c3147a5d658943187b3.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/brief/cache/5cd8b92b37f5eeebd6dddba184da6b4e26e20d6993f3d2385d0c181187c57ecb.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/brief/cache/61f88640196c6b521a4c605f268bf06380c39518110ab5d6d876ffe28c941c90.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/brief/cache/78b409c5e65ca9e245ef794dd93c584d21d45ad6749937f0dd7005a2b9a6ae42.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/brief/cache/9194ca10a5040d532a266bea458fdd09d7caf23a83541478b04c58a84d467527.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/brief/cache/a4cdbb3e312ad5b0c40585e3d6a111477e2825765ab0d34afd4a47726ce4bdc2.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/0c8b85691a08b9393c9e2699b8758bc60965731f2506e60904ced1135c963766.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/160c59abaeba05ad9b7acc0e1ffd45c1ccd702ad82a6f963eb6b8ac7795d4120.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/1982ba337e5578258839fc80b2fae0ea3cdd8c6d1619210e2c7be39f38b66b4f.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/238cbbb6344652abe0feae0002e6d6f768977b36c03ff607cbeb9e3d91cb1618.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/27ac2b8b898ecc267e873c8e784cc21fd675198668e3754797b8bf8ad53882ec.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/669f4da7b676246b87279cb700687d5ad32ca3af58eab4c5ae70bdbe7b1ac4d3.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/810ad86fb02f5616dc00ceea3d8eafd8d6776c37f4c492bdee0dfe962c85d5a6.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/811166d7fb6926ecf79757b2c533c13269f9021d13f99169b1f8a0c31e4d2ef0.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/9b7166071f70b29f817248f8ff8903618fe90c304903e3987789d79c0dbcecd8.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/9f36d8269176f742c9c2d6ae1c5ad09c4e4d13f19af4abe7ab2ee70ea16af41c.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/b5110765ae7b78347d864274045b16ff666bc1a45dc67eff3c7cbe93a2a45d97.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/bd7388f9a2eaf52d74fee535d0164346765715f771ea19e523149c80174c487b.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/c22df7244b6eb92b0b0dd97aa216c965ec72751470a034b179111f9a6875dc70.json:generic-api-key:2
+Cash intelligence for small businesses/fixtures/cascade_trade/intake/cache/dea638999e246b369c493992e9f9ee1999d0fb33013d73f33c81623d8c8c76c3.json:generic-api-key:2
+Home Dream Build/.env.example:generic-api-key:5
+Lantern/README.md:generic-api-key:45
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1005
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1020
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1035
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1050
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1065
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1080
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1096
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1113
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1128
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1143
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1158
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1173
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1188
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1203
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1218
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1233
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1248
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1263
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1278
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1293
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1308
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1323
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1338
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1353
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1368
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1383
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1398
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1413
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1428
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1443
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1458
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1473
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1488
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1503
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1518
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1533
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1548
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:1563
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:896
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:912
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:928
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:944
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:960
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:975
+Relationship Copilot/data/demo_snapshot.json:generic-api-key:990
+RingAround/.agents/skills/workers-best-practices/references/configuration.md:generic-api-key:82

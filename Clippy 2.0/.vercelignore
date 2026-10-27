@@ -1,0 +1,7 @@
+.env*
+test-results
+playwright-report
+e2e/screenshots
+.next
+node_modules
+buyonce

@@ -1,0 +1,16 @@
+FICTIONAL TRANSCRIPT — created for this demo. Not a real session. Fixture couples-b v1 (simulation; never used for refinement).
+
+Therapist: Where would you like to start today?
+Partner 2: The holiday plans. We have the same argument every year.
+Partner 1: My parents expect us for the whole week. Partner 2's family expects the whole week too.
+Therapist: What does the argument usually sound like?
+Partner 2: I say we always end up doing what your family wants. Then you say that's not true and list the years we didn't.
+Partner 1: Because it isn't true. But I get why it feels that way.
+Therapist: That's an interesting thing to say. What do you understand about why it feels that way?
+Partner 1: My mom calls first, and calls a lot. So by the time we talk, it already feels decided.
+Partner 2: Yes. That's exactly it. It's not the days, it's that I'm last to know.
+Therapist: So the hurt is less about the schedule and more about being included early.
+Partner 2: Right. I'd feel better even if we ended up with the same plan.
+Partner 1: I didn't realize that's what it was about.
+Therapist: That sounds like an important discovery for both of you.
+Partner 2: It is. I feel calmer already.

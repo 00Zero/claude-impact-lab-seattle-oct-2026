@@ -1,0 +1,21 @@
+.env
+dhruv/
+.env.*
+!.env.example
+__pycache__/
+node_modules/
+data/bids.pulled.json
+
+# Frontend (workstream A)
+.next/
+out/
+artifact/dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Backend (workstream B)
+.venv/
+*.pyc
+.cache/
+
+.DS_Store

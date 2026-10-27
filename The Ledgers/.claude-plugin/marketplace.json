@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "receipts",
+  "description": "Receipts: auditable AI payments for small businesses.",
+  "owner": {
+    "name": "Receipts",
+    "url": "https://github.com/ronaldon2023/receipts-claudesmb"
+  },
+  "plugins": [
+    {
+      "name": "receipts",
+      "source": "./",
+      "description": "Checks every payment an AI agent makes with plain code before it runs, and proves what happened.",
+      "license": "MIT",
+      "keywords": ["small-business", "payments", "audit", "guardrails"]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.env
+*.db
+logs/
+.claude/settings.local.json
+.DS_Store
+
+# The owner's onboarding answers (business name, suppliers, account last 4), written by
+# the onboarding skill. Never committed.
+receipts-onboarding.json

@@ -1,0 +1,70 @@
+# getmydrug directory: what the chat can offer, and where each answer comes from.
+# Swap any entry for a live service later; the page only reads this file and the criteria files.
+# Demo scope: one diagnosis, three drugs, two insurers.
+
+conditions:
+  - id: migraine
+    label: Migraine
+    status: available
+
+insurers:
+  - id: uhc
+    label: UnitedHealthcare
+    status: available
+    criteria_file: data/pa_criteria_uhc.yaml
+    rules_file: data/eligibility_rules_uhc.yaml
+    drug_ids: [ubrelvy, nurtec_odt, qulipta]
+  - id: cigna
+    label: Cigna
+    status: available
+    criteria_file: data/pa_criteria_cigna.yaml
+    rules_file: data/eligibility_rules_cigna.yaml
+    drug_ids: [nurtec_odt]
+  - id: none
+    label: No insurance / paying cash
+    status: cash_only
+
+# Drugs per condition. Cash price links go to each service's own page; live prices are a later feature.
+drugs:
+  migraine:
+    - id: ubrelvy
+      name: Ubrelvy
+      generic: ubrogepant
+      plain_use: Stops a migraine attack once it has started.
+      goodrx_url: https://www.goodrx.com/ubrelvy
+      costplus:
+        url: https://costplusdrugs.com
+        note: Brand-name gepants may not be stocked. Search the site for current availability.
+      support:
+        label: Manufacturer savings and support
+        url: https://www.ubrelvy.com
+        status: link_only
+    - id: nurtec_odt
+      name: Nurtec ODT
+      generic: rimegepant
+      plain_use: Stops a migraine attack, or is taken every other day to prevent migraines.
+      goodrx_url: https://www.goodrx.com/nurtec-odt
+      costplus:
+        url: https://costplusdrugs.com
+        note: Brand-name gepants may not be stocked. Search the site for current availability.
+      support:
+        label: Manufacturer savings and support
+        url: https://www.nurtec.com
+        status: link_only
+    - id: qulipta
+      name: Qulipta
+      generic: atogepant
+      plain_use: Taken daily to prevent migraines.
+      goodrx_url: https://www.goodrx.com/qulipta
+      costplus:
+        url: https://costplusdrugs.com
+        note: Brand-name gepants may not be stocked. Search the site for current availability.
+      support:
+        label: Manufacturer savings and support
+        url: https://www.qulipta.com
+        status: link_only
+
+# Plain labels for pathway keys used in the criteria files
+pathway_labels:
+  acute_treatment: To treat a migraine attack
+  preventive_treatment: To prevent migraines

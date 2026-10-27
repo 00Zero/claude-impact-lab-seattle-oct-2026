@@ -1,0 +1,128 @@
+{
+  "_note": "Demo drafts for the fictional KeepStrong business: what Claude writes in gtm-message-test step 1. Most start from intake.json roughMessaging; ordered so the kept four are balanced across both customer groups.",
+  "options": [
+    {
+      "angle": "Keep your strength",
+      "headline": "Keep your strength while the weight comes off",
+      "subheadline": "Short strength sessions and protein help, built to protect muscle as you lose weight.",
+      "targetSegmentIds": [
+        "seg_1"
+      ],
+      "lexiconIds": [
+        "lex_3"
+      ],
+      "evidenceIds": [
+        "ev_5"
+      ],
+      "valueProposition": "Protect muscle and strength during weight loss with short sessions and simple protein targets.",
+      "differentiator": "Built for strength during weight loss, not for eating less.",
+      "callToAction": "Start free",
+      "assumptions": [
+        "Fear of losing strength is what makes people act."
+      ]
+    },
+    {
+      "angle": "Habits that last",
+      "headline": "Habits that keep the weight off",
+      "subheadline": "A strength routine you can keep long after the weight is gone.",
+      "targetSegmentIds": [
+        "seg_1",
+        "seg_2"
+      ],
+      "lexiconIds": [
+        "lex_3"
+      ],
+      "evidenceIds": [
+        "ev_5"
+      ],
+      "valueProposition": "A routine that keeps working after the weight-loss phase ends.",
+      "differentiator": "Plans for maintenance, not just the first months.",
+      "callToAction": "Build my routine",
+      "assumptions": [
+        "People worry about regaining weight later."
+      ]
+    },
+    {
+      "angle": "Tell me what to do",
+      "headline": "Gain the confidence to use the free weights",
+      "subheadline": "Twenty-minute strength sessions laid out day by day, for people new to the weight room.",
+      "targetSegmentIds": [
+        "seg_2"
+      ],
+      "lexiconIds": [
+        "lex_7"
+      ],
+      "evidenceIds": [
+        "ev_11"
+      ],
+      "valueProposition": "Clear daily sessions for beginners.",
+      "differentiator": "No guesswork about what to lift.",
+      "callToAction": "Start day one",
+      "assumptions": [
+        "Beginners are put off by not knowing what to do."
+      ]
+    },
+    {
+      "angle": "Low-appetite friendly",
+      "headline": "Protein help for the days you're not hungry",
+      "subheadline": "Simple targets and easy ideas when eating feels like a chore.",
+      "targetSegmentIds": [
+        "seg_1"
+      ],
+      "lexiconIds": [
+        "lex_2",
+        "lex_6"
+      ],
+      "evidenceIds": [
+        "ev_2",
+        "ev_7"
+      ],
+      "valueProposition": "Hit protein targets even with little appetite.",
+      "differentiator": "Never tells you to eat less.",
+      "callToAction": "Get my targets",
+      "assumptions": [
+        "Low appetite makes protein the hardest part."
+      ]
+    },
+    {
+      "angle": "Strength over the scale",
+      "headline": "The plan for not losing too much muscle",
+      "subheadline": "For adults who care more about not losing too much muscle than the number on the scale.",
+      "targetSegmentIds": [
+        "seg_1"
+      ],
+      "lexiconIds": [
+        "lex_4"
+      ],
+      "evidenceIds": [
+        "ev_8"
+      ],
+      "valueProposition": "Make strength the goal and the scale secondary.",
+      "differentiator": "Tracks lifts alongside weight.",
+      "callToAction": "See the plan",
+      "assumptions": [
+        "Midlife users value strength over weight."
+      ]
+    },
+    {
+      "angle": "Fat, not muscle",
+      "headline": "Lose fat, not muscle",
+      "subheadline": "Strength sessions and protein targets that protect what you've built while the scale drops.",
+      "targetSegmentIds": [
+        "seg_1"
+      ],
+      "lexiconIds": [
+        "lex_1"
+      ],
+      "evidenceIds": [
+        "ev_1"
+      ],
+      "valueProposition": "Weight loss that keeps muscle.",
+      "differentiator": "Strength-first.",
+      "callToAction": "Start free",
+      "assumptions": [
+        "People notice muscle loss and want to stop it."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "kind": "drone",
+  "duration": 15,
+  "aspect": "9:16",
+  "info": {
+    "home_name": "",
+    "location": "",
+    "specs": "",
+    "builder": "",
+    "highlight": ""
+  },
+  "voice": {
+    "provider": "auto"
+  },
+  "music": null,
+  "shots": [
+    {
+      "source": "media/drone/01-bare-lot.mp4",
+      "duration": 3.0,
+      "layout": "center",
+      "title": "This was dirt.",
+      "narration": [
+        "This was dirt.",
+        "It started here."
+      ]
+    },
+    {
+      "source": "media/drone/02-foundation.mp4",
+      "duration": 2.0,
+      "kicker": "Foundation"
+    },
+    {
+      "source": "media/drone/03-framing.mp4",
+      "duration": 2.0,
+      "kicker": "Framing",
+      "narration": "Month by month,"
+    },
+    {
+      "source": "media/drone/04-dried-in.mp4",
+      "duration": 2.0,
+      "kicker": "Dried in",
+      "narration": "it took shape."
+    },
+    {
+      "source": "media/drone/05-finished.mp4",
+      "duration": 2.5,
+      "layout": "center",
+      "title": [
+        "{highlight}",
+        "This is the finish."
+      ],
+      "narration": "This is the finish."
+    },
+    {
+      "source": "media/drone/06-finished-orbit.mp4",
+      "duration": 4.5,
+      "kicker": "{slogan}",
+      "title": "{website}",
+      "layout": "center",
+      "narration": [
+        "{slogan}. Find us at {website_spoken}.",
+        "{slogan}."
+      ],
+      "subtitle": "{cta}"
+    }
+  ],
+  "captions": true
+}

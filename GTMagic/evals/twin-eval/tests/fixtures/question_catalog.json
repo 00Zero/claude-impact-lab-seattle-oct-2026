@@ -1,0 +1,1869 @@
+[
+ {
+  "QuestionID": "QID11",
+  "QuestionText": "Which part of the United States do you currently live in?",
+  "QuestionType": "MC",
+  "Options": [
+   "Northeast (PA, NY, NJ, RI, CT, MA, VT, NH, ME)",
+   "Midwest (ND, SD, NE, KS, MN, IA, MO, WI, IL, MI, IN, OH)",
+   "South (TX, OK, AR, LA, KY, TN, MS, AL, WV, DC, MD, DE, VA, NC, SC, GA, FL)",
+   "West (WA, OR, ID, MT, WY, CA, NV, UT, CO, AZ, NM)",
+   "Pacific (HI, AK)"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID11"
+  ]
+ },
+ {
+  "QuestionID": "QID12",
+  "QuestionText": "What is the sex that you were assigned at birth?",
+  "QuestionType": "MC",
+  "Options": [
+   "Male",
+   "Female"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID12"
+  ]
+ },
+ {
+  "QuestionID": "QID13",
+  "QuestionText": "How old are you?",
+  "QuestionType": "MC",
+  "Options": [
+   "18-29",
+   "30-49",
+   "50-64",
+   "65+"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID13"
+  ]
+ },
+ {
+  "QuestionID": "QID14",
+  "QuestionText": "What is the highest level of schooling or degree that you have completed?",
+  "QuestionType": "MC",
+  "Options": [
+   "Less than high school",
+   "High school graduate",
+   "Some college, no degree",
+   "Associate's degree",
+   "College graduate/some postgrad",
+   "Postgraduate"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID14"
+  ]
+ },
+ {
+  "QuestionID": "QID15",
+  "QuestionText": "What is your race or origin?",
+  "QuestionType": "MC",
+  "Options": [
+   "White",
+   "Black",
+   "Asian",
+   "Hispanic",
+   "Other"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID15"
+  ]
+ },
+ {
+  "QuestionID": "QID16",
+  "QuestionText": "Are you a citizen of the United States?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes",
+   "No"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID16"
+  ]
+ },
+ {
+  "QuestionID": "QID17",
+  "QuestionText": "Which of these best describes you?",
+  "QuestionType": "MC",
+  "Options": [
+   "Married",
+   "Living with a partner",
+   "Divorced",
+   "Separated",
+   "Widowed",
+   "Never been married"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID17"
+  ]
+ },
+ {
+  "QuestionID": "QID18",
+  "QuestionText": "What is your present religion, if any?",
+  "QuestionType": "MC",
+  "Options": [
+   "Protestant",
+   "Roman Catholic",
+   "Mormon",
+   "Orthodox",
+   "Jewish",
+   "Muslim",
+   "Buddhist",
+   "Hindu",
+   "Atheist",
+   "Agnostic",
+   "Other",
+   "Nothing in particular"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID18"
+  ]
+ },
+ {
+  "QuestionID": "QID19",
+  "QuestionText": "Aside from weddings and funerals, how often do you attend religious services?",
+  "QuestionType": "MC",
+  "Options": [
+   "More than once a week",
+   "Once a week",
+   "Once or twice a month",
+   "A few times a year",
+   "Seldom",
+   "Never"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID19"
+  ]
+ },
+ {
+  "QuestionID": "QID20",
+  "QuestionText": "In politics today, do you consider yourself a",
+  "QuestionType": "MC",
+  "Options": [
+   "Republican",
+   "Democrat",
+   "Independent",
+   "Something else"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID20"
+  ]
+ },
+ {
+  "QuestionID": "QID21",
+  "QuestionText": "Last year, what was your total family income from all sources, before taxes?",
+  "QuestionType": "MC",
+  "Options": [
+   "Less than $30,000",
+   "$30,000-$50,000",
+   "$50,000-$75,000",
+   "$75,000-$100,000",
+   "$100,000 or more"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID21"
+  ]
+ },
+ {
+  "QuestionID": "QID22",
+  "QuestionText": "In general, would you describe your political views as",
+  "QuestionType": "MC",
+  "Options": [
+   "Very conservative",
+   "Conservative",
+   "Moderate",
+   "Liberal",
+   "Very liberal"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID22"
+  ]
+ },
+ {
+  "QuestionID": "QID23",
+  "QuestionText": "Including yourself, how many people currently live in your household?",
+  "QuestionType": "MC",
+  "Options": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "More than 4"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID23"
+  ]
+ },
+ {
+  "QuestionID": "QID24",
+  "QuestionText": "What is your current employment status?",
+  "QuestionType": "MC",
+  "Options": [
+   "Full-time employment",
+   "Part-time employment",
+   "Unemployed",
+   "Self-employed",
+   "Home-maker",
+   "Student",
+   "Retired"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Demographics",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID24"
+  ]
+ },
+ {
+  "QuestionID": "QID270",
+  "QuestionText": "3. Please describe the type of person you actually are . That is, write about the traits and behaviors you actually possess. Please write at least 3 sentences.",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "ML",
+   "ForceResponse": "ON",
+   "ContentType": ""
+  },
+  "BlockName": "Personality ",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID270_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID31",
+  "QuestionText": "Which of the following best describes your spending habits?",
+  "QuestionType": "MC",
+  "Options": [
+   "Tightwad (difficulty spending money) 1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "About the same or neither 6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "Spendthrift (difficulty controlling spending) 11"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Personality ",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID31"
+  ]
+ },
+ {
+  "QuestionID": "QID32",
+  "QuestionText": "Some people have trouble limiting their spending: they often spend money - for example on clothes, meals, vacations - when they would do better not to. How well does the first description fit you? That is, do you have trouble limiting your spending?",
+  "QuestionType": "MC",
+  "Options": [
+   "Never",
+   "Rarely",
+   "Sometimes",
+   "Often",
+   "Always"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Personality ",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID32"
+  ]
+ },
+ {
+  "QuestionID": "QID33",
+  "QuestionText": "Other people have trouble spending money. Perhaps because spending money makes them anxious, they often don't spend money on things they should spend it on. How well does the second description fit you? That is, do you have trouble spending money?",
+  "QuestionType": "MC",
+  "Options": [
+   "Never",
+   "Rarely",
+   "Sometimes",
+   "Often",
+   "Always"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Personality ",
+  "source": "wave1_3_persona_json",
+  "csv_columns": [
+   "QID33"
+  ]
+ },
+ {
+  "QuestionID": "QID154",
+  "QuestionText": "A panel of psychologist have interviewed and administered personality tests to 30 engineers and 70 lawyers, all successful in their respective fields. On the basis of this information, thumbnail descriptions of the 30 engineers and 70 lawyers have been written. Below is one description, chosen at random from the 100 available descriptions. Jack is a 45-year-old man. He is married and has four children. He is generally conservative, careful, and ambitious. He shows no interest in political and social issues and spends most of his free time on his many hobbies which include home carpentry, sailing, and mathematical puzzles. The probability that Jack is one of the 30 engineers in the sample of 100 is ___%. Please indicate the probability on a scale from 0 to 100.",
+  "QuestionType": "Slider",
+  "Statements": [
+   ""
+  ],
+  "Range": {
+   "Min": 0,
+   "Max": 100,
+   "Ticks": 10
+  },
+  "Settings": {
+   "Selector": "HSLIDER",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Base-rate 30 engineers ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID154"
+  ]
+ },
+ {
+  "QuestionID": "QID158",
+  "QuestionText": "Imagine that the U.S. is preparing for the outbreak of an unusual disease, which is expected to kill 600 people. Two alternative programs to combat the disease have been proposed. Assume that the exact scientific estimate of the consequences of the programs are as follows: If Program A is adopted, 400 people will die. If Program B is adopted, there is 1/3 probability that nobody people will die, and 2/3 probability that 600 people be die. Which of the two programs would you favor?",
+  "QuestionType": "MC",
+  "Options": [
+   "I strongly favor program A",
+   "I favor program A",
+   "I slightly favor program A",
+   "I slightly favor program B",
+   "I favor program B",
+   "I strongly favor program B"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Disease-loss",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID158"
+  ]
+ },
+ {
+  "QuestionID": "QID161",
+  "QuestionText": "A 55-year-old man had a heart condition. He had to stop working because of chest pain. He enjoyed his work and did not want to stop. His pain also interfered with other things, such as travel and recreation. A type of bypass operation would relieve his pain and increase his life expectancy from age 65 to age 70. However, 8% of the people who have this operation die from the operation itself. His physician decided to go ahead with the operation. The operation succeeded. Evaluate the physician's decision to go ahead with the operation.",
+  "QuestionType": "MC",
+  "Options": [
+   "Incorrect, a very bad decision",
+   "Incorrect, all things considered",
+   "Incorrect, but not unreasonable",
+   "The decision and its opposite are equally good",
+   "Correct, but the opposite would be reasonable too",
+   "Correct, all things considered",
+   "Clearly correct, an excellent decision"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Outcome bias - success ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID161"
+  ]
+ },
+ {
+  "QuestionID": "QID165",
+  "QuestionText": "Do you think there are more or fewer than 65 African countries in the United Nations?",
+  "QuestionType": "MC",
+  "Options": [
+   "more",
+   "fewer"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Anchoring - African countries high",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID165"
+  ]
+ },
+ {
+  "QuestionID": "QID166",
+  "QuestionText": "How many African countries do you think are in the United Nations?",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "SL",
+   "ForceResponse": "ON",
+   "ContentType": "ValidNumber"
+  },
+  "BlockName": "Anchoring - African countries high",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID166_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID169",
+  "QuestionText": "Is the tallest redwood tree in the world more or less than 1000 feet tall?",
+  "QuestionType": "MC",
+  "Options": [
+   "more",
+   "less"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Anchoring - redwood high",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID169"
+  ]
+ },
+ {
+  "QuestionID": "QID170",
+  "QuestionText": "How tall do you think the tallest redwood tree in the world is? Enter a number of feet.",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "SL",
+   "ForceResponse": "ON",
+   "ContentType": "ValidNumber"
+  },
+  "BlockName": "Anchoring - redwood high",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID170_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID171",
+  "QuestionText": "Please rate your level of disagreement or agreement with the following statement: \"I would find a game that had a 7/36 chance of winning $9 and a 29/36 chance of winning nothing extremely attractive.\"",
+  "QuestionType": "MC",
+  "Options": [
+   "Disagree strongly",
+   "Disagree a little",
+   "Neither agree nor disagree",
+   "Agree a little",
+   "Agree strongly"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Less is More Gamble A ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID171"
+  ]
+ },
+ {
+  "QuestionID": "QID174",
+  "QuestionText": "Imagine that highway safety experts have determined that a substantial number of people are at risk of dying in a type of automobile fire. A requirement that every car have a built-in fire extinguisher (estimated cost, $300) would save the 150 people who would otherwise die every year in this type of automobile fire. Rate the following statement about yourself: I would be supportive of this requirement.",
+  "QuestionType": "MC",
+  "Options": [
+   "Disagree strongly",
+   "Disagree a little",
+   "Neither agree nor disagree",
+   "Agree a little",
+   "Agree strongly"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Proportion dominance 1A ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID174"
+  ]
+ },
+ {
+  "QuestionID": "QID177",
+  "QuestionText": "You have recently graduated from university, obtained a good job, and are buying a new car. A newly designed seatbelt has just become available that would save the lives of the 500 drivers a year who are involved in a type of head-on-collision. (Approximately half of these fatalities involve drivers who were not at fault.) The newly designed seatbelt is not yet standard on most car models. However, it is available as a $500 option for the car model that you are ordering. How likely is it that you would order your new car with this optional seatbelt?",
+  "QuestionType": "MC",
+  "Options": [
+   "very unlikely",
+   "unlikely",
+   "somewhat unlikely",
+   "somewhat likely",
+   "likely",
+   "very likely"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Proportion dominance 2A",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID177"
+  ]
+ },
+ {
+  "QuestionID": "QID181",
+  "QuestionText": "Imagine that Coffee Connection sells coffee for $1.50 per cup. Java Coffee, a competitor, sells coffee for just $2.00 per cup. Although the Coffee Connection store is ten minutes away by car, Java Coffee is only about 1/2 block from your apartment. Assuming that you only buy coffee from these two places and that you like the coffee sold in both places the same, how many of your next 20 coffee purchases would be from Java Coffee? Enter a number between 0 and 20.",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "SL",
+   "ForceResponse": "ON",
+   "ContentType": "ValidNumber"
+  },
+  "BlockName": "Sunk cost - no",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID181_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID184",
+  "QuestionText": "Imagine that you go to purchase a jacket for $250. The jacket salesperson informs you that the jacket you wish to buy is on sale for $240 at the other branch of the store which is ten minutes away by car. Would you drive to the other store?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes",
+   "No"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Absolute vs. relative - jacket",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID184"
+  ]
+ },
+ {
+  "QuestionID": "QID191",
+  "QuestionText": "Imagine that when you went to the movies last week, you were inadvertently exposed to a rare and fatal virus. The possibility of actually contracting the disease is 4 in 1,000, but once you have the illness there is no known cure. On the other hand, you can, readily and now, be given an injection that reduces the possibility of contracting the disease to 3 in 1,000. Unfortunately, these injections are only available in very small quantities and are sold to the highest bidder. What is the highest price you would be prepared to pay for such an injection?",
+  "QuestionType": "MC",
+  "Options": [
+   "$10",
+   "$100",
+   "$1,000",
+   "$10,000",
+   "$50,000",
+   "$100,000",
+   "$250,000",
+   "$500,000",
+   "$1,000,000",
+   "$5,000,000 or more"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "WTA/WTP Thaler - WTP noncertainty",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID191"
+  ]
+ },
+ {
+  "QuestionID": "QID192",
+  "QuestionText": "Choose between:",
+  "QuestionType": "MC",
+  "Options": [
+   "One million dollars for sure",
+   "89% probability of one million dollars 10% probablity of five miillion dollars 1% probability of nothing"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Allais Form 1",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID192"
+  ]
+ },
+ {
+  "QuestionID": "QID195",
+  "QuestionText": "According to a comprehensive study by the U.S. Department of Transportation, a particular German car is 8 times more likely than a typical family car to kill occupants of another car in a crash. The U.S. Department of Transportation is considering recommending a ban on the sale of this German car. Do you think that the U.S. should ban the sale of the German car?",
+  "QuestionType": "MC",
+  "Options": [
+   "definitely no",
+   "no",
+   "probably no",
+   "probably yes",
+   "yes",
+   "definitely yes"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Myside German",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID195"
+  ]
+ },
+ {
+  "QuestionID": "QID9_1",
+  "QuestionText": "Please consider the following product category: Dairy Products. Suppose you are in a grocery store, and you see the following product in that category: Land O Lakes Salted Stick Butter, 16 oz, 4 Sticks. The product is priced at: $7.39. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_1"
+  ]
+ },
+ {
+  "QuestionID": "QID9_2",
+  "QuestionText": "Please consider the following product category: Pain Remedies - Headache. Suppose you are in a grocery store, and you see the following product in that category: Tylenol Extra Strength Caplets with 500 mg Acetaminophen, 100 Ct. The product is priced at: $2.19. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_2"
+  ]
+ },
+ {
+  "QuestionID": "QID9_3",
+  "QuestionText": "Please consider the following product category: Cat Food - Wet Type. Suppose you are in a grocery store, and you see the following product in that category: Purina Fancy Feast Chicken Feast Classic Grain Free Wet Cat Food Pate - 3 oz. Can. The product is priced at: $1.58. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_3"
+  ]
+ },
+ {
+  "QuestionID": "QID9_4",
+  "QuestionText": "Please consider the following product category: Frozen Italian Entrees. Suppose you are in a grocery store, and you see the following product in that category: Smart Ones Three Cheese Ziti Marinara Frozen Meal, 9 Oz Box. The product is priced at: $2.26. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_4"
+  ]
+ },
+ {
+  "QuestionID": "QID9_5",
+  "QuestionText": "Please consider the following product category: Refrigerated Deli Meats. Suppose you are in a grocery store, and you see the following product in that category: Goya Cooked Ham 16 oz. The product is priced at: $53.98. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_5"
+  ]
+ },
+ {
+  "QuestionID": "QID9_6",
+  "QuestionText": "Please consider the following product category: Snacks - Potato Chips. Suppose you are in a grocery store, and you see the following product in that category: Lay's Classic Potato Snack Chips, Party Size, 13 oz Bag. The product is priced at: $7.62. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_6"
+  ]
+ },
+ {
+  "QuestionID": "QID9_7",
+  "QuestionText": "Please consider the following product category: Bottled Water. Suppose you are in a grocery store, and you see the following product in that category: OZARKA Brand 100% Natural Spring Water, 16.9-ounce plastic bottles (Pack of 35). The product is priced at: $11.98. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_7"
+  ]
+ },
+ {
+  "QuestionID": "QID9_8",
+  "QuestionText": "Please consider the following product category: Pet Supplies - Dog Food. Suppose you are in a grocery store, and you see the following product in that category: Purina Dog Chow Complete, Dry Dog Food for Adult Dogs High Protein, Real Chicken, 44 lb Bag. The product is priced at: $11.67. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_8"
+  ]
+ },
+ {
+  "QuestionID": "QID9_9",
+  "QuestionText": "Please consider the following product category: Fresh Fruit. Suppose you are in a grocery store, and you see the following product in that category: Fresh Raspberries, 12 oz Container. The product is priced at: $0.95. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_9"
+  ]
+ },
+ {
+  "QuestionID": "QID9_10",
+  "QuestionText": "Please consider the following product category: Lunchmeat - Sliced - Refrigerated. Suppose you are in a grocery store, and you see the following product in that category: Oscar Mayer Chopped Ham & Water product Deli Lunch Meat, 16 Oz Package. The product is priced at: $0.87. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_10"
+  ]
+ },
+ {
+  "QuestionID": "QID9_11",
+  "QuestionText": "Please consider the following product category: Refrigerated Entrees. Suppose you are in a grocery store, and you see the following product in that category: John Soules Foods Chicken Breast Fajita Strips, Refrigerated, 16oz, 18g Protein per 3oz Serving Size. The product is priced at: $7.18. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_11"
+  ]
+ },
+ {
+  "QuestionID": "QID9_12",
+  "QuestionText": "Please consider the following product category: Beer. Suppose you are in a grocery store, and you see the following product in that category: Stella Artois Lager, 12 Pack, 11.2 fl oz Glass Bottles, 5% ABV, Domestic Beer. The product is priced at: $15.73. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_12"
+  ]
+ },
+ {
+  "QuestionID": "QID9_13",
+  "QuestionText": "Please consider the following product category: Cereal - Ready to Eat. Suppose you are in a grocery store, and you see the following product in that category: Cinnamon Toast Crunch Breakfast Cereal, Crispy Cinnamon Cereal, Family Size, 18.8 oz. The product is priced at: $9.86. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_13"
+  ]
+ },
+ {
+  "QuestionID": "QID9_14",
+  "QuestionText": "Please consider the following product category: Cleaning Supplies. Suppose you are in a grocery store, and you see the following product in that category: ARM & HAMMER Pure Baking Soda, For Baking, Cleaning & Deodorizing, 1 lb Box. The product is priced at: $1.85. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_14"
+  ]
+ },
+ {
+  "QuestionID": "QID9_15",
+  "QuestionText": "Please consider the following product category: Frozen Novelties. Suppose you are in a grocery store, and you see the following product in that category: Pop-Ice Assorted Fruit Freezer Ice Pops, Gluten-Free Snack, 1.5 oz, 80 Count Fruit Pops. The product is priced at: $7.40. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_15"
+  ]
+ },
+ {
+  "QuestionID": "QID9_16",
+  "QuestionText": "Please consider the following product category: Soft Drinks - Carbonated. Suppose you are in a grocery store, and you see the following product in that category: Coca-Cola Soda Pop, 12 fl oz, 12 Pack Cans. The product is priced at: $11.56. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_16"
+  ]
+ },
+ {
+  "QuestionID": "QID9_17",
+  "QuestionText": "Please consider the following product category: Toilet Tissue. Suppose you are in a grocery store, and you see the following product in that category: Angel Soft Toilet Paper, 9 Mega Rolls, Soft and Strong Toilet Tissue. The product is priced at: $0.00. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_17"
+  ]
+ },
+ {
+  "QuestionID": "QID9_18",
+  "QuestionText": "Please consider the following product category: Baby Milk and Milk Flavoring. Suppose you are in a grocery store, and you see the following product in that category: Horizon Organic Shelf-Stable Whole Milk Boxes, 8 oz., 12 Pack. The product is priced at: $19.57. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_18"
+  ]
+ },
+ {
+  "QuestionID": "QID9_19",
+  "QuestionText": "Please consider the following product category: Ground and Whole Bean Coffee. Suppose you are in a grocery store, and you see the following product in that category: Folgers Classic Roast Ground Coffee, Medium Roast, 40.3-Ounce Canister. The product is priced at: $15.89. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_19"
+  ]
+ },
+ {
+  "QuestionID": "QID9_20",
+  "QuestionText": "Please consider the following product category: Frozen Foods. Suppose you are in a grocery store, and you see the following product in that category: Great Value All Natural Chicken Wing Sections, 4 lb (Frozen). The product is priced at: $5.19. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_20"
+  ]
+ },
+ {
+  "QuestionID": "QID9_21",
+  "QuestionText": "Please consider the following product category: Yogurt - Refrigerated. Suppose you are in a grocery store, and you see the following product in that category: Chobani Non-Fat Greek Yogurt, Vanilla Blended 32 oz, Plastic. The product is priced at: $0.00. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_21"
+  ]
+ },
+ {
+  "QuestionID": "QID9_22",
+  "QuestionText": "Please consider the following product category: Dairy - Milk - Refrigerated. Suppose you are in a grocery store, and you see the following product in that category: Great Value Milk Whole Vitamin D Gallon. The product is priced at: $5.49. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_22"
+  ]
+ },
+ {
+  "QuestionID": "QID9_23",
+  "QuestionText": "Please consider the following product category: Soft Drinks - Low Calorie. Suppose you are in a grocery store, and you see the following product in that category: Coca-Cola Zero Sugar Soda Pop, 16.9 fl oz, 6 Pack Cans. The product is priced at: $9.32. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_23"
+  ]
+ },
+ {
+  "QuestionID": "QID9_24",
+  "QuestionText": "Please consider the following product category: Paper Towels. Suppose you are in a grocery store, and you see the following product in that category: Bounty Select-a-Size Paper Towels, 12 Double Rolls, White. The product is priced at: $8.87. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_24"
+  ]
+ },
+ {
+  "QuestionID": "QID9_25",
+  "QuestionText": "Please consider the following product category: Candy - Non-Chocolate. Suppose you are in a grocery store, and you see the following product in that category: HARIBO Goldbears Original Gummy Bears, 28.8oz Stand Up Bag. The product is priced at: $12.96. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_25"
+  ]
+ },
+ {
+  "QuestionID": "QID9_26",
+  "QuestionText": "Please consider the following product category: Bakery - Fresh Cakes. Suppose you are in a grocery store, and you see the following product in that category: Little Debbie Zebra Cakes, 13 oz. The product is priced at: $5.36. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_26"
+  ]
+ },
+ {
+  "QuestionID": "QID9_27",
+  "QuestionText": "Please consider the following product category: Fruit Drinks. Suppose you are in a grocery store, and you see the following product in that category: Kool Aid Jammers Variety Pack with Tropical Punch, Grape & Cherry Kids Drink 0% Juice Box Pouches, 30 Ct Box, 6 fl oz Pouches. The product is priced at: $8.72. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_27"
+  ]
+ },
+ {
+  "QuestionID": "QID9_28",
+  "QuestionText": "Please consider the following product category: Snacks - Tortilla Chips. Suppose you are in a grocery store, and you see the following product in that category: Doritos Nacho Cheese Tortilla Snack Chips, Party Size, 14.5 oz Bag. The product is priced at: $11.88. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_28"
+  ]
+ },
+ {
+  "QuestionID": "QID9_29",
+  "QuestionText": "Please consider the following product category: Refrigerated Bacon. Suppose you are in a grocery store, and you see the following product in that category: Oscar Mayer Fully Cooked Original Bacon, 2.52 oz Box. The product is priced at: $4.27. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_29"
+  ]
+ },
+ {
+  "QuestionID": "QID9_30",
+  "QuestionText": "Please consider the following product category: Soup. Suppose you are in a grocery store, and you see the following product in that category: Maruchan Ramen Noodle Chicken Flavor Soup, 3 Oz, 12 Count Shelf Stable Package. The product is priced at: $17.95. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_30"
+  ]
+ },
+ {
+  "QuestionID": "QID9_31",
+  "QuestionText": "Please consider the following product category: Light Beer (Low Calorie/Alcohol). Suppose you are in a grocery store, and you see the following product in that category: Bud Light Beer, 24 Pack, 12 fl oz Aluminum Cans, 4.2% ABV, Domestic Lager. The product is priced at: $16.78. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_31"
+  ]
+ },
+ {
+  "QuestionID": "QID9_32",
+  "QuestionText": "Please consider the following product category: Candy - Chocolate. Suppose you are in a grocery store, and you see the following product in that category: Hershey's Milk Chocolate Candy, Bars 1.55 oz, 6 Count. The product is priced at: $11.66. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_32"
+  ]
+ },
+ {
+  "QuestionID": "QID9_33",
+  "QuestionText": "Please consider the following product category: Batteries. Suppose you are in a grocery store, and you see the following product in that category: Duracell Coppertop AA Battery, Long Lasting Double A Batteries, 16 Pack. The product is priced at: $25.55. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_33"
+  ]
+ },
+ {
+  "QuestionID": "QID9_34",
+  "QuestionText": "Please consider the following product category: Fresh Eggs. Suppose you are in a grocery store, and you see the following product in that category: Eggland's Best Classic Extra Large White Eggs, 12 count. The product is priced at: $3.82. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_34"
+  ]
+ },
+ {
+  "QuestionID": "QID9_35",
+  "QuestionText": "Please consider the following product category: Fruit Juice. Suppose you are in a grocery store, and you see the following product in that category: Capri Sun Variety Pack with Fruit Punch, Strawberry Kiwi & Pacific Cooler Juice Box Pouches, 30 ct Box, 6 fl oz Pouches. The product is priced at: $11.32. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_35"
+  ]
+ },
+ {
+  "QuestionID": "QID9_36",
+  "QuestionText": "Please consider the following product category: Cold Remedies - Adult. Suppose you are in a grocery store, and you see the following product in that category: Equate Value Size Honey Lemon Cough Drops with Menthol, 160 Count. The product is priced at: $7.49. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_36"
+  ]
+ },
+ {
+  "QuestionID": "QID9_37",
+  "QuestionText": "Please consider the following product category: Cookies. Suppose you are in a grocery store, and you see the following product in that category: Little Debbie Oatmeal Creme Pies, 12 ct, 16.2 oz. The product is priced at: $3.75. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_37"
+  ]
+ },
+ {
+  "QuestionID": "QID9_38",
+  "QuestionText": "Please consider the following product category: Frankfurters - Refrigerated. Suppose you are in a grocery store, and you see the following product in that category: Oscar Mayer Classic Uncured Beef Franks Hot Dogs, 10 ct Pack. The product is priced at: $5.52. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_38"
+  ]
+ },
+ {
+  "QuestionID": "QID9_39",
+  "QuestionText": "Please consider the following product category: Ice Cream. Suppose you are in a grocery store, and you see the following product in that category: Haagen Dazs Coffee Ice Cream, Gluten Free, Kosher, 14.0 oz. The product is priced at: $3.34. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_39"
+  ]
+ },
+ {
+  "QuestionID": "QID9_40",
+  "QuestionText": "Please consider the following product category: Detergents - Heavy Duty - Liquid. Suppose you are in a grocery store, and you see the following product in that category: Purex Liquid Laundry Detergent Plus OXI, Stain Defense Technology, 128 Fluid Ounces, 85 Wash Loads. The product is priced at: $5.98. Would you or would you not purchase this product?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes, I would purchase the product",
+   "No, I would not purchase the product"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Product Preferences - Pricing",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID9_40"
+  ]
+ },
+ {
+  "QuestionID": "QID162",
+  "QuestionText": "A 55-year-old man had a heart condition. He had to stop working because of chest pain. He enjoyed his work and did not want to stop. His pain also interfered with other things, such as travel and recreation. A type of bypass operation would relieve his pain and increase his life expectancy from age 65 to age 75. However, 2% of the people who have this operation die from the operation itself. His physician decided to go ahead with the operation. The operation did not succeed and the patient died. Evaluate the physician's decision to go ahead with the operation.",
+  "QuestionType": "MC",
+  "Options": [
+   "Incorrect, a very bad decision",
+   "Incorrect, all things considered",
+   "Incorrect, but not unreasonable",
+   "The decision and its opposite are equally good",
+   "Correct, but the opposite would be reasonable too",
+   "Correct, all things considered",
+   "Clearly correct, an excellent decision"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Outcome bias - failure",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID162"
+  ]
+ },
+ {
+  "QuestionID": "QID163",
+  "QuestionText": "Do you think there are more or fewer than 12 African countries in the United Nations?",
+  "QuestionType": "MC",
+  "Options": [
+   "more",
+   "fewer"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Anchoring - African countries low ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID163"
+  ]
+ },
+ {
+  "QuestionID": "QID164",
+  "QuestionText": "How many African countries do you think are in the United Nations?",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "SL",
+   "ForceResponse": "ON",
+   "ContentType": "ValidNumber"
+  },
+  "BlockName": "Anchoring - African countries low ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID164_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID167",
+  "QuestionText": "Is the tallest redwood tree in the world more or less than 85 feet tall?",
+  "QuestionType": "MC",
+  "Options": [
+   "more",
+   "less"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Anchoring - redwood low",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID167"
+  ]
+ },
+ {
+  "QuestionID": "QID168",
+  "QuestionText": "How tall do you think the tallest redwood tree in the world is? Enter a number of feet.",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "SL",
+   "ForceResponse": "ON",
+   "ContentType": "ValidNumber"
+  },
+  "BlockName": "Anchoring - redwood low",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID168_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID182",
+  "QuestionText": "Imagine that you just paid $50 for a Coffee Connection discount card that allows you to buy coffee for 50% off the regular price of $3.00 (i.e., you pay $1.50). Soon after you purchased the Coffee Connection discount card, Java Coffee, a competitor, opened a new store that sells coffee for just $2.00 per cup. Although the Coffee Connection store is ten minutes away by car, Java Coffee is only about 1/2 block from your apartment. Assuming that you only buy coffee from these two places and that you like the coffee sold in both places the same, how many of your next 20 coffee purchases would be from Java Coffee? Enter a number between 0 and 20.",
+  "QuestionType": "TE",
+  "Settings": {
+   "Selector": "SL",
+   "ForceResponse": "ON",
+   "ContentType": "ValidNumber"
+  },
+  "BlockName": "Sunk cost - yes",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID182_TEXT"
+  ]
+ },
+ {
+  "QuestionID": "QID190",
+  "QuestionText": "Imagine that a group of research scientists in the School of Medicine are running a laboratory experiment on a vaccine for a rare and fatal virus. The possibility of actually contracting the disease from the vaccine is 1 in 1,000, but once you have the disease there is no known cure. The scientists are seeking volunteers to test the vaccine on. What is the lowest amount that you would have to be paid before you would take part in this experiment?",
+  "QuestionType": "MC",
+  "Options": [
+   "$10",
+   "$100",
+   "$1,000",
+   "$10,000",
+   "$50,000",
+   "$100,000",
+   "$250,000",
+   "$500,000",
+   "$1,000,000",
+   "$5,000,000 or more"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "WTA/WTP Thaler problem - WTA certainty",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID190"
+  ]
+ },
+ {
+  "QuestionID": "QID194",
+  "QuestionText": "According to a comprehensive study by the U.S. Department of Transportation, Ford Explorers are 8 times more likely than a typical family car to kill occupants of another car in a crash. The Department of Transportation in Germany is considering recommending a ban on the sale of the Ford Explorer in Germany. Do you think that Germany should ban the sale of the Ford Explorer?",
+  "QuestionType": "MC",
+  "Options": [
+   "definitely no",
+   "no",
+   "probably no",
+   "probably yes",
+   "yes",
+   "definitely yes"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Myside Ford",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID194"
+  ]
+ },
+ {
+  "QuestionID": "QID156",
+  "QuestionText": "A panel of psychologist have interviewed and administered personality tests to 70 engineers and 30 lawyers, all successful in their respective fields. On the basis of this information, thumbnail descriptions of the 70 engineers and 30 lawyers have been written. Below is one description, chosen at random from the 100 available descriptions. Jack is a 45-year-old man. He is married and has four children. He is generally conservative, careful, and ambitious. He shows no interest in political and social issues and spends most of his free time on his many hobbies which include home carpentry, sailing, and mathematical puzzles. The probability that Jack is one of the 70 engineers in the sample of 100 is ___%. Please indicate the probability on a scale from 0 to 100.",
+  "QuestionType": "Slider",
+  "Statements": [
+   ""
+  ],
+  "Range": {
+   "Min": 0,
+   "Max": 100,
+   "Ticks": 10
+  },
+  "Settings": {
+   "Selector": "HSLIDER",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Base-rate 70 engineers",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID156"
+  ]
+ },
+ {
+  "QuestionID": "QID157",
+  "QuestionText": "Imagine that the U.S. is preparing for the outbreak of an unusual disease, which is expected to kill 600 people. Two alternative programs to combat the disease have been proposed. Assume that the exact scientific estimate of the consequences of the programs are as follows: If Program A is adopted, 200 people will be saved. If Program B is adopted, there is 1/3 probability that 600 people will be saved, and 2/3 probability that no people will be saved. Which of the two programs would you favor?",
+  "QuestionType": "MC",
+  "Options": [
+   "I strongly favor program A",
+   "I favor program A",
+   "I slightly favor program A",
+   "I slightly favor program B",
+   "I favor program B",
+   "I strongly favor program B"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Disease - gain ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID157"
+  ]
+ },
+ {
+  "QuestionID": "QID172",
+  "QuestionText": "Please rate your level of disagreement or agreement with the following statement: \"I would find a game that had a 7/36 chance of winning $9 and a 29/36 chance of losing $0.05 extremely attractive.\"",
+  "QuestionType": "MC",
+  "Options": [
+   "Disagree strongly",
+   "Disagree a little",
+   "Neither agree nor disagree",
+   "Agree a little",
+   "Agree strongly"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Less is More Gamble B ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID172"
+  ]
+ },
+ {
+  "QuestionID": "QID175",
+  "QuestionText": "Imagine that highway safety experts have determined that a substantial number of people are at risk of dying in a type of automobile fire. A requirement that every car have a built-in fire extinguisher (estimated cost, $300) would save 98% of the 150 people who would otherwise die every year in this type of automobile fire. Rate the following statement about yourself: I would be supportive of this requirement.",
+  "QuestionType": "MC",
+  "Options": [
+   "Disagree strongly",
+   "Disagree a little",
+   "Neither agree nor disagree",
+   "Agree a little",
+   "Agree strongly"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Proportion dominance 1B",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID175"
+  ]
+ },
+ {
+  "QuestionID": "QID178",
+  "QuestionText": "You have recently graduated from university, obtained a good job, and are buying a new car. A newly designed seatbelt has just become available that would save the lives of 98% of the 500 drivers a year who are involved in a type of head-on-collision. (Approximately half of these fatalities involve drivers who were not at fault.) The newly designed seatbelt is not yet standard on most car models. However, it is available as a $500 option for the car model that you are ordering. How likely is it that you would order your new car with this optional seatbelt?",
+  "QuestionType": "MC",
+  "Options": [
+   "very unlikely",
+   "unlikely",
+   "somewhat unlikely",
+   "somewhat likely",
+   "likely",
+   "very likely"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Proportion dominance 2B ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID178"
+  ]
+ },
+ {
+  "QuestionID": "QID183",
+  "QuestionText": "Imagine that you go to purchase a calculator for $30. The calculator salesperson informs you that the calculator you wish to buy is on sale for $20 at the other branch of the store which is ten minutes away by car. Would you drive to the other store?",
+  "QuestionType": "MC",
+  "Options": [
+   "Yes",
+   "No"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Absolute vs. relative - calculator",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID183"
+  ]
+ },
+ {
+  "QuestionID": "QID193",
+  "QuestionText": "Choose between:",
+  "QuestionType": "MC",
+  "Options": [
+   "11% probability of one million dollars 89% probability of nothing",
+   "10% probablity of five miillion dollars 90% probability of nothing"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Allais Form 2",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID193"
+  ]
+ },
+ {
+  "QuestionID": "QID173",
+  "QuestionText": "Please rate your level of disagreement or agreement with the following statement: \"I would find a game that had a 7/36 chance of winning $9 and a 29/36 chance of losing $0.25 extremely attractive.\"",
+  "QuestionType": "MC",
+  "Options": [
+   "Disagree strongly",
+   "Disagree a little",
+   "Neither agree nor disagree",
+   "Agree a little",
+   "Agree strongly"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Less is More Gamble C ",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID173"
+  ]
+ },
+ {
+  "QuestionID": "QID176",
+  "QuestionText": "Imagine that highway safety experts have determined that a substantial number of people are at risk of dying in a type of automobile fire. A requirement that every car have a built-in fire extinguisher (estimated cost, $300) would save 95% of the 150 people who would otherwise die every year in this type of automobile fire. Rate the following statement about yourself: I would be supportive of this requirement.",
+  "QuestionType": "MC",
+  "Options": [
+   "Disagree strongly",
+   "Disagree a little",
+   "Neither agree nor disagree",
+   "Agree a little",
+   "Agree strongly"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Proportion dominance 1C",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID176"
+  ]
+ },
+ {
+  "QuestionID": "QID179",
+  "QuestionText": "You have recently graduated from university, obtained a good job, and are buying a new car. A newly designed seatbelt has just become available that would save the lives of 95% of the 500 drivers a year who are involved in a type of head-on-collision. (Approximately half of these fatalities involve drivers who were not at fault.) The newly designed seatbelt is not yet standard on most car models. However, it is available as a $500 option for the car model that you are ordering. How likely is it that you would order your new car with this optional seatbelt?",
+  "QuestionType": "MC",
+  "Options": [
+   "very unlikely",
+   "unlikely",
+   "somewhat unlikely",
+   "somewhat likely",
+   "likely",
+   "very likely"
+  ],
+  "Settings": {
+   "Selector": "SAHR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "Proportion dominance 2C",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID179"
+  ]
+ },
+ {
+  "QuestionID": "QID189",
+  "QuestionText": "Imagine that when you went to the movies last week, you were inadvertently exposed to a rare and fatal virus. The possibility of actually contracting the disease is 1 in 1,000, but once you have the illness there is no known cure. On the other hand, you can, readily and now, be given an injection that stops the development of the illness. Unfortunately, these injections are only available in very small quantities and are sold to the highest bidder. What is the highest price you would be prepared to pay for such an injection? [You can get a long-term, low-interest loan if needed.]:",
+  "QuestionType": "MC",
+  "Options": [
+   "$10",
+   "$100",
+   "$1,000",
+   "$10,000",
+   "$50,000",
+   "$100,000",
+   "$250,000",
+   "$500,000",
+   "$1,000,000",
+   "$5,000,000 or more"
+  ],
+  "Settings": {
+   "Selector": "SAVR",
+   "SubSelector": "TX",
+   "ForceResponse": "ON"
+  },
+  "BlockName": "WTA/WTP Thaler problem - WTP certainty",
+  "source": "wave4_Q_wave1_3_A",
+  "csv_columns": [
+   "QID189"
+  ]
+ }
+]

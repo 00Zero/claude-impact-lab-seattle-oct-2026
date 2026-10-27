@@ -1,0 +1,865 @@
+ ▐▛███▛█   Claude Code v2.1.310
+▝▜██████▀  Opus 5.5 · Claude Pro
+ ▝▝   ▝▝   ~/AgenticLantern
+
+
+❯ read all the docs and tell me about this project                              
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+⏺ The only doc is docs/spec.md. The repo has no code and no commits yet. That
+  one file is the Milestone 1 spec for a hackathon project.
+
+  AgenticLantern
+
+  What it does: It helps a family after someone dies. A case gets started, and
+  an AI agent recommends funeral homes that fit the family's needs.
+
+  Two ways in, one shared pipeline
+
+  1. Hospital flow: Hospital staff log into a portal and fill in an intake form
+     for the patient who died. They enter a family contact's email or phone. The
+     system creates a Case and a one-time InviteToken, then sends the family a
+     link at /invite/{token}. The family signs up through that link and sees the
+     hospital's details already filled in. They confirm or correct them, and
+     they don't have to re-type anything.
+  2. Self-serve flow: The family signs up directly with no token and fills in
+     the same intake form themselves.
+
+  Both paths create the same Case record and lead to the same recommendation
+  step.
+
+  Main data records
+
+  - Case: details about the person who died, burial or cremation, any prepaid
+    funeral plan, religious or cultural needs (Hindu, Muslim, Jewish, Christian,
+    secular, other), location (zip or county), budget, family contact, source
+    (hospital/self_serve) and status (awaiting_family → active →
+    recommendations_ready).
+  - HospitalAccount and FamilyUser: one family user per case, a simplification
+    for the hackathon.
+  - InviteToken: decides which case a new family user is linked to. It is not
+    used for login itself.
+  - FuneralHome: a seed list of 10–20 Washington-state funeral homes stored as
+    JSON or CSV. It covers what each home can do, cultural tags, prices from
+    their published price lists, and ratings.
+  - Recommendation: a ranked shortlist with a one-line reason for each home,
+    e.g. "handles Hindu cremation, 12 min away, from $X".
+
+  How the AI agent works
+
+  It filters the funeral homes by location, burial or cremation capability, and
+  religious tags in code. Then it makes one Claude call that takes the case
+  details and the filtered homes and returns a ranked list with a reason for
+  each. There is no multi-agent setup in this milestone.
+
+  Suggested tech stack
+
+  Next.js for the frontend and API routes, Supabase (Postgres plus Auth with a
+  hospital | family role), and Claude for ranking.
+
+  What "done" looks like (demo)
+
+  1. The hospital creates a case.
+  2. The invite link is generated. Showing it on screen is fine.
+  3. The family signs up through the link and confirms the pre-filled details.
+  4. The family sees 3–5 ranked funeral homes.
+  5. The self-serve path is demoed separately.
+
+  Out of scope for now
+
+  - Real hospital integration or single sign-on
+  - Live scraping of funeral home price lists or calling funeral homes
+  - Multi-agent features (vetting, negotiation, post-funeral checklists)
+  - Multiple family members per case
+  - Payments or document generation
+  - General reading of uploaded PDFs (OCR)
+
+  The spec says this repo is a cut-down version of a bigger system called
+  "Ntrust," which has those voice and price-scraping agents.
+
+  Open questions in the spec
+
+  - Cause of death: whether to collect it at all. It's sensitive, and the spec
+    leans toward leaving it out.
+  - Sending invites: really sending email or SMS (e.g. Resend or Twilio), or
+    just showing the link on screen.
+  - Family login: a password, or magic-link only.
+
+  ---
+
+  You're on master with no commits, and the repo's main branch is set to main,
+  so you may want to sort that out before you start. I can scaffold the Next.js
+  + Supabase project, or start with the seed dataset and the recommendation
+  agent.
+
+✻ Baked for 24s · done 11:53 AM
+
+※ recap: You asked what AgenticLantern is. I read its only doc, a hackathon spec for an app that recommends funeral homes to families, starting from a hospital or from the family directly. Next, decide whether I should scaffold the Next.js + Supabase app or build the recommendation agent first. (disable recaps in /config)
+
+❯ read the updated spec again, provide me feedback on it. See if we can         
+  strengthn the specs and fill out any gaps, and make it concrete               
+
+  Read 1 file (ctrl+o to expand)
+
+⏺ I re-read docs/spec.md. It's tightened up a lot since the last version (PDF
+  parsing with confidence scores, magic-link auth, resolved questions section) —
+  good progress. Here's where it still has real gaps or outright
+  inconsistencies.
+
+  Bugs / inconsistencies (fix regardless of product direction)
+
+  1. awaiting_family is a dead status. The Case.status enum is awaiting_family |
+     pending_review | active | recommendations_ready, but the hospital flow now
+     sets status to pending_review right after upload — nothing ever sets
+     awaiting_family. It's a leftover from the pre-PDF version of the spec. Drop
+     it from the enum.
+  2. The "Resolved questions" section contradicts itself on email. It says email
+     is a required field "everywhere a family contact is captured (hospital
+     upload form and self-serve signup)," then two lines earlier describes a
+     fallback for "a hospital that truly only has a phone number" — but if email
+     is required on the form, that hospital can't even submit the case. Pick
+     one: either (a) email stays required and you drop the phone-only fallback
+     as a real scenario, or (b) phone becomes an alternate required-one-of field
+     and the invite flow has an SMS-or-manual path for phone-only cases. (b) is
+     more realistic for how hospitals actually work, but (a) is far less to
+     build. I'd keep (a) for Milestone 1 and just delete the contradictory
+     fallback sentence.
+  3. Wizard question count mismatch. Section 3 lists 5 wizard questions
+     (location, disposition, religious/cultural, budget, email). The demo script
+     (step 6) calls it "the 4-question wizard." Pick the real number and make
+     both match.
+
+  Gaps that need a concrete decision
+
+  4. Invite token identity isn't verified. Anyone who gets the /invite/{token}
+     URL — forwarded in a group text, read off a shared screen — can sign in
+     with any email and get permanently attached to that Case; nothing checks
+     the signer against the family contact email the hospital entered. Given the
+     Case contains decedent info, this is worth closing even for a hackathon:
+     lock the magic-link email field to the hospital-entered contact email
+     (prefilled, non-editable) so the token only ever attaches the intended
+     person.
+  5. No fallback when the recommendation filter returns zero funeral homes. The
+     agent step is a hard filter (location + disposition + religious tags) then
+     an LLM ranks the survivors. With only 10–20 seeded homes, it's easy for a
+     demo county + religion combo to filter to empty — which means the
+     recommendation screen can go blank live in front of judges. Define a
+     fallback ladder up front: drop religious filter → widen location → drop
+     disposition filter → always show something, with the rationale saying
+     plainly "closest matches; exact requirements not fully available in our
+     area."
+  6. Free-text religious/cultural answers never reach the filter. The pre-filter
+     matches on structured tags only. If someone picks "other" and types
+     "Sikh," that information only reaches the LLM at the ranking step — after
+     the candidate set has already been narrowed by tags that don't account for
+     it. Concretely: when the requirement is "other" + free text, skip the
+     religious tag filter entirely (location + disposition only) and let the
+     ranking LLM call do the semantic matching and write the rationale.
+  7. No PDF failure path. What happens on a corrupted file, a scanned/non-text
+     PDF (explicitly out of scope for parsing, but someone will upload one), a
+     PDF unrelated to a death, or a parse that returns nothing usable? Right now
+     "low-confidence fields are left blank" covers partial failure but not
+     total failure. Add: client-side validation (must be application/pdf, size
+     cap, e.g. 10MB) plus a defined "parse produced nothing" case state that
+     still creates the Case/InviteToken with blank fields and flags it to
+     hospital staff, rather than failing silently or crashing the upload.
+  8. "A few GPL price points" is too vague to build from. You need a fixed,
+     consistent set across every seeded funeral home or the rationale text
+     ("cremation from $X") won't mean the same thing home to home. Pin it to 2–3
+     concrete FTC-style categories — e.g. direct cremation, immediate burial,
+     traditional full-service package — and require every seed row to have all
+     of them.
+  9. Budget range has no defined input shape. Free numeric range vs. fixed
+     buckets changes both the UI and the matching logic. Recommend fixed buckets
+     (e.g. <$3k, $3–6k, $6–10k, $10k+, "not sure") — faster to build, maps
+     cleanly onto the GPL price points above, and is a gentler UI for someone
+     doing this right after a death.
+  10. Invite token lifetime is still unresolved. It says "one-time (or
+      short-expiry)" — that's not a decision, that's the open question restated.
+      Pick: one-time use + fixed expiry (e.g. 7 days), and add a "resend
+      invite" action on the hospital dashboard (mints a new token, invalidates
+      the old). A grieving family member not clicking a link within a day or two
+      is the realistic case, not the exception, and there's currently no
+      recovery path at all if it expires or gets lost.
+
+  Smaller things worth one line each
+
+  - Hospital dashboard is implied, not specified. "Hospital logs in, selects
+    'New case'" implies a list view of existing cases, but there's no entity or
+    flow for it — what statuses/fields the hospital can see per case (parsed
+    data? confidence? whether family signed up yet?) isn't written down
+    anywhere, so it'll get improvised during the build. Worth a short paragraph.
+  - No access-control statement. Given the Case contains decedent + family PII,
+    one sentence on who can read a Case (assigned hospital account + linked
+    FamilyUser only; PDFs in a private, non-public storage bucket) is cheap
+    insurance, especially if this gets shown to anyone outside your team.
+  - No demo-day LLM robustness note. Two separate live Claude calls (PDF parse,
+    ranking) with no stated timeout/retry behavior. A single slow/failed call
+    during the actual demo is a real risk — worth a one-time retry and/or a
+    canned fallback result tied to the sample PDF specifically for the live
+    demo.
+  - Duplicate-Case edge case isn't addressed. Same family email could self-serve
+    a Case, then later get hospital-invited for the same death into a second,
+    disconnected Case. Not worth solving for M1, but should be an explicit
+    bullet under "Explicitly out of scope" rather than just unmentioned.
+
+  ---
+
+  Want me to fold the decisions above directly into docs/spec.md (I'd treat
+  items 4–10 as adopting my recommendation unless you want to steer any of them
+  differently first)?
+
+✻ Churned for 1m 50s · done 12:04 PM
+
+❯ 1. lets fix this.                                                             
+  2. email is required. lets work with emails end to end                        
+  3. Lets update the questions. No need of the budget.                          
+  4. Lets fix this gap                                                          
+  5. Its ok if there is no fall back today.                                     
+  6. lets remove religios/cultural context from everywhere in the project.      
+  7. I think its ok to have this failure path.                                  
+  8. I have list of funeral homs, with their pricing, location info. we can use 
+  that. It contains all funeral homes in WA state.                              
+  9. lets remove budget from questionnaire                                      
+  10. it should expire in 24 hours.                                             
+
+⏺ Good, all concrete decisions. Updating the spec now — this touches almost
+  every section since removing religious/cultural and budget ripples through the
+  Case schema, wizard, dataset, and rationale text.
+
+⏺ Write(docs/spec.md)
+  ⎿  Added 93 lines, removed 51 lines
+       7  
+       8  ## Actors
+       9  - **Hospital user** — logs into a hospital portal, uploads a PD
+          F document for a patient
+      10 -  who has passed away, and the contact info (phone or email) fo
+         -r the family member to notify.                                 
+      10 +  who has passed away, and the family contact's email for the f
+         +amily member to notify.                                        
+      11  - **Family member** — either (a) receives a magic link/invite f
+          rom a hospital-initiated
+      12    case, or (b) signs up directly without any hospital involveme
+          nt and answers a short,
+      13    minimal-question wizard themselves.
+     ...
+      20  ```
+      21  Hospital flow:
+      22    Hospital login -> upload PDF -> system parses PDF into struct
+          ured Case fields
+      23 -    -> creates Case + invite token -> notifies family contact (
+         -email/SMS) with link                                           
+      23 +    -> creates Case + invite token -> notifies family contact (
+         +email) with link                                               
+      24      -> family opens link -> signs up/logs in -> reviews/confirm
+          s parsed context
+      25      -> agent recommends funeral homes
+      26  
+     ...
+      40  - **Case** — one deceased person + intake context, regardless o
+          f which path produced it.
+      41    Fields:
+      42    - Decedent: name, date of birth, date/place of death, hospita
+          l/facility name
+      43 -    (cause of death intentionally excluded — see Open questions
+         -, resolved below)                                              
+      43 +    (cause of death intentionally excluded — see Resolved quest
+         +ions)                                                          
+      44    - Disposition preference: burial or cremation, or unsure
+      45 -  - Religious/cultural requirements (a few common presets — Hin
+         -du, Muslim, Jewish,                                            
+      46 -    Christian, none/secular, other — plus free text)           
+      47 -  - Family contact: name, email (required — used for the invite
+         -/magic link),                                                  
+      48 -    phone (optional, informational only for Milestone 1)       
+      49 -  - Budget range (optional)                                    
+      45 +  - Family contact: name, email (required — this is the only co
+         +ntact channel; it's used                                       
+      46 +    for the invite/magic link and for auth)                    
+      47    - Location (zip/county) — drives which funeral homes are elig
+          ible
+      48    - `source`: `hospital` | `self_serve`
+      52 -  - `status`: `awaiting_family` | `pending_review` | `active` |
+         - `recommendations_ready`                                       
+      49 +  - `status`: `pending_review` | `active` | `recommendations_re
+         +ady`                                                           
+      50  - **IntakeDocument** — the raw PDF the hospital uploaded (store
+          d as-is) plus the
+      51    structured fields an LLM parse extracted from it, each field 
+          tagged with a confidence
+      55 -  level. Only exists for `source=hospital` cases.              
+      56 -- **InviteToken** — one-time (or short-expiry) token tied to a 
+         -Case, created only on the                                      
+      57 -  hospital flow. Used to gate signup/login for that specific fa
+         -mily member and pre-attach                                     
+      58 -  them to the Case.                                            
+      52 +  level. Only exists for `source=hospital` cases. If the parse 
+         +produces no usable fields                                      
+      53 +  at all (corrupted file, non-text/scanned PDF, a document unre
+         +lated to a death), the                                         
+      54 +  Case is still created with every field blank rather than fail
+         +ing the upload — see                                           
+      55 +  Flow 1.                                                      
+      56 +- **InviteToken** — one-time use, expires 24 hours after creati
+         +on, tied to a Case,                                            
+      57 +  created only on the hospital flow. Besides gating signup/logi
+         +n for that specific Case,                                      
+      58 +  it pins the signup to the contact email the hospital entered 
+         +— a family member cannot                                       
+      59 +  complete signup through the link with a different email addre
+         +ss. If it expires before                                       
+      60 +  use, hospital staff resend it, which mints a fresh token (new
+         + 24-hour window) and                                           
+      61 +  invalidates the old one.                                     
+      62  - **FamilyUser** — login for the family member. Created at sign
+          up, linked 1:1 to a Case
+      63    (hackathon simplification — real product would allow multiple
+           family members per case).
+      61 -- **FuneralHome** — seeded reference dataset for the demo (hack
+         -athon stand-in for the full                                    
+      62 -  Ntrust price-discovery pipeline): name, address/county, phone
+         -, cremation/burial                                             
+      63 -  capability, religious/cultural capability tags, a few GPL pri
+         -ce points, rating.                                             
+      64 +- **FuneralHome** — an existing, pre-compiled dataset covering 
+         +all licensed funeral homes                                     
+      65 +  in Washington State: name, address/county, phone, cremation/b
+         +urial capability, pricing,                                     
+      66 +  and rating. No religious/cultural capability tags are tracked
+         + (see Resolved questions).                                     
+      67  - **Recommendation** — ranked list of FuneralHome records for a
+           Case, with a short
+      65 -  rationale per match ("handles Hindu cremation services, 12 mi
+         -n away, cremation from $X").                                   
+      68 +  rationale per match ("12 min away, cremation from $X, highly 
+         +rated").                                                       
+      69  
+      70  ## Flows in detail
+      71  
+     ...
+       73  - Hospital logs in, selects "New case."
+       74  - Uploads a PDF (the actual document a hospital would produce 
+           when a death occurs — e.g.
+       75    a discharge/death paperwork packet). Hackathon: a handful of
+            realistic sample PDFs,
+       73 -  hand-authored or lightly redacted, checked into the repo as 
+          -test fixtures.                                                
+       74 -- Hospital enters the family contact's email (required) and op
+          -tionally a phone number.                                      
+       76 +  hand-authored or lightly redacted, checked into the repo as 
+          +test fixtures. Upload is                                      
+       77 +  validated client-side — must be `application/pdf`, capped at
+          + 10MB — and anything else                                     
+       78 +  is rejected with an inline error before it reaches the parse
+          +r.                                                            
+       79 +- Hospital enters the family contact's email (required).      
+       80  - System runs one LLM parse call over the PDF text to extract 
+           the Case fields above, each
+       76 -  tagged with a confidence score; low-confidence fields are le
+          -ft blank rather than guessed.                                 
+       77 -- System creates the Case (`source=hospital`, `status=pending_
+          -review`) + an InviteToken,                                    
+       78 -  and sends the contact a link: `/invite/{token}`.            
+       81 +  tagged with a confidence score; low-confidence fields are le
+          +ft blank rather than                                          
+       82 +  guessed. If the parse returns no usable fields at all, the C
+          +ase is still created with                                     
+       83 +  everything blank — the family's confirmation screen in Flow 
+          +2 becomes the place those                                     
+       84 +  fields get filled in from scratch, rather than the upload fa
+          +iling outright.                                               
+       85 +- System creates the Case (`source=hospital`, `status=pending_
+          +review`) + an InviteToken                                     
+       86 +  (one-time use, expires in 24 hours), and sends the contact a
+          + link: `/invite/{token}`.                                     
+       87  
+       88  ### 2. Family via invite link
+       89  - Family member opens `/invite/{token}`.
+       82 -- If the token is valid and unused: show a magic-link email si
+          -gn-in (enter email, click                                     
+       83 -  the link sent to that inbox — no password to create or remem
+          -ber).                                                         
+       90 +- If the token is valid, unused, and not expired: show a magic
+          +-link email sign-in, with                                     
+       91 +  the email field pre-filled to the contact email the hospital
+          + entered and locked (not                                      
+       92 +  editable) — this is what ties the signup to the intended fam
+          +ily member rather than                                        
+       93 +  whoever has the link. They click the link sent to that inbox
+          + — no password to create or                                   
+       94 +  remember.                                                   
+       95 +- If the token has expired or was already used: show a message
+          + directing them to contact                                    
+       96 +  the hospital for a new invite.                              
+       97  - On success: FamilyUser is created/linked, Case is attached t
+           o this FamilyUser.
+       98  - Family sees the parsed context from the hospital's PDF as an
+            editable confirmation
+       99    screen ("Here's what we have — anything to add or correct?")
+           , since PDF parsing can
+       87 -  miss or misread fields. Confirming moves `status -> active`.
+      100 +  miss or misread fields (and, per Flow 1, may be entirely bla
+          +nk if parsing failed).                                        
+      101 +  Confirming moves `status -> active`.                        
+      102  
+      103  ### 3. Family self-serve (no hospital)
+      104  - Family signs up directly from the homepage (no token, no PDF
+           ).
+       91 -- They answer a short, minimal-question wizard instead of a lo
+          -ng form — aim for the                                         
+       92 -  smallest set that still lets the agent produce a useful shor
+          -tlist:                                                        
+      105 +- They answer a short, three-question wizard instead of a long
+          + form:                                                        
+      106    1. Location (zip code)
+      107    2. Burial, cremation, or not sure
+       95 -  3. Any religious/cultural requirements? (preset list + "othe
+          -r"/none)                                                      
+       96 -  4. Budget range (optional, can skip)                        
+       97 -  5. Email (required — this is also how they sign in, via magi
+          -c link; no password)                                          
+      108 +  3. Email (required — this is also how they sign in, via magi
+          +c link; no password)                                          
+      109  - Case is created with `source=self_serve`, `status=active` im
+           mediately (no review step,
+      110    since there's no parsed document to double-check).
+      111  
+      112  ### 4. AI agent recommendation
+      113  - Triggered once a Case reaches `status=active` (post-confirma
+           tion for hospital path,
+      114    immediately for self-serve path).
+      104 -- Agent filters the seeded FuneralHome dataset by location, di
+          -sposition capability, and                                     
+      105 -  religious/cultural tags, then asks an LLM to rank and write 
+          -a one-line rationale per                                      
+      106 -  match.                                                      
+      115 +- Agent filters the FuneralHome dataset by location and dispos
+          +ition capability, then asks                                   
+      116 +  an LLM to rank and write a one-line rationale per match. Sin
+          +ce the dataset covers every                                   
+      117 +  licensed funeral home in WA state rather than a small hand-p
+          +icked list, the location                                      
+      118 +  filter narrows to the same/nearby county before ranking, so 
+          +the LLM is never asked to                                     
+      119 +  rank more than a manageable candidate set (e.g., capped at ~
+          +15–20).                                                       
+      120 +- If the filter returns zero funeral homes for a given locatio
+          +n/disposition combination,                                    
+      121 +  Milestone 1 has no fallback — the recommendation screen may 
+          +come back empty. Accepted                                     
+      122 +  as a known limitation for now (see Explicitly out of scope).
+      123  - Case `status -> recommendations_ready`; family sees a ranked
+            shortlist with name,
+      108 -  distance, price range, and rationale.                       
+      124 +  distance, price, and rationale.                             
+      125  
+      126  ## Tech stack (suggestion — flexible for hackathon speed)
+      127  - **Frontend:** Next.js (React): hospital login/dashboard + PD
+           F upload, invite landing
+     ...
+      131  - **DB:** Postgres (Supabase is a fast hackathon option — buil
+           t-in auth can cover both
+      132    login types with a `role` field, plus file storage for the u
+           ploaded PDFs).
+      133  - **Auth:** Supabase Auth (or simple JWT) with a `role: hospit
+           al | family` claim; the
+      118 -  invite token is a separate short-lived record, not an auth m
+          -echanism itself — it just                                     
+      119 -  gates which Case a new FamilyUser gets attached to.         
+      134 +  invite token is a separate short-lived (24-hour) record, not
+          + an auth mechanism itself —                                   
+      135 +  it gates which Case a new FamilyUser gets attached to and pi
+          +ns the signup to the                                          
+      136 +  contact email already on file.                              
+      137  - **PDF parsing:** one LLM call per upload (Claude's PDF input
+            support) prompted to return
+      138    the structured Case JSON with per-field confidence — no sepa
+           rate OCR pipeline needed for
+      139    text-based PDFs.
+      140  - **AI agent (recommendation):** a second, separate LLM call p
+           er Case: input = confirmed
+      124 -  Case JSON + filtered FuneralHome candidates; output = ranked
+          - list + rationale strings.                                    
+      125 -  No multi-agent orchestration needed at Milestone 1.         
+      126 -- **Funeral home data:** a small seed dataset (10–20 WA funera
+          -l homes, hand-curated or                                      
+      127 -  pulled from public listings) checked into the repo as JSON/C
+          -SV — not live GPL scraping.                                   
+      141 +  Case JSON + filtered (location + disposition, capped to a ma
+          +nageable candidate count)                                     
+      142 +  FuneralHome candidates; output = ranked list + rationale str
+          +ings. No multi-agent                                          
+      143 +  orchestration needed at Milestone 1.                        
+      144 +- **Funeral home data:** an existing, pre-compiled dataset cov
+          +ering all licensed funeral                                    
+      145 +  homes in Washington State — name, address/county, phone, cre
+          +mation/burial capability,                                     
+      146 +  pricing, and rating — checked into the repo as JSON/CSV. Not
+          + hand-curated for the demo                                    
+      147 +  and not live GPL scraping.                                  
+      148  
+      149  ## Milestone 1 — demo script (what "done" looks like)
+      150  1. Hospital logs in, uploads a sample PDF for a demo patient, 
+           enters a family email.
+     ...
+      152     proof point for judges that it's really reading the PDF, no
+           t hardcoded).
+      153  3. Invite link is generated (can just be shown on screen for t
+           he demo instead of actually
+      154     sending).
+      135 -4. Open the invite link in a new session, sign up as the famil
+          -y member, see the                                             
+      136 -   hospital-provided context pre-filled on a confirmation scre
+          -en, confirm it.                                               
+      155 +4. Open the invite link in a new session, sign up as the famil
+          +y member with the email                                       
+      156 +   locked to what the hospital entered, see the hospital-provi
+          +ded context pre-filled on a                                   
+      157 +   confirmation screen, confirm it.                           
+      158  5. See a ranked list of 3–5 recommended funeral homes with rat
+           ionale.
+      138 -6. Separately, demo the self-serve path: sign up with no invit
+          -e, answer the 4-question                                      
+      159 +6. Separately, demo the self-serve path: sign up with no invit
+          +e, answer the 3-question                                      
+      160     wizard, get the same kind of recommendation list.
+      161  
+      162  ## Explicitly out of scope for Milestone 1
+      163  - Real hospital system integration/SSO.
+      164  - Live GPL scraping / calling funeral homes (Ntrust's price-di
+           scovery agent) — this repo
+      144 -  uses a static seed dataset instead.                         
+      165 +  uses the existing WA-state dataset instead.                 
+      166  - Multi-agent orchestration (vetting, negotiation, post-funera
+           l checklist agents from
+      167    Ntrust) — only the recommendation step exists here.
+      168  - Multiple family members per case, permissions/roles among fa
+           mily members.
+      169  - Payment, e-signature, or document generation (death certific
+           ates, permits).
+      170  - General-purpose document pipeline (scanned/handwritten PDFs,
+            multi-page OCR edge cases)
+      171    — Milestone 1 targets clean, text-based sample PDFs.
+      172 +- Religious/cultural matching — not collected or matched on in
+          + Milestone 1 (see Resolved                                    
+      173 +  questions).                                                 
+      174 +- Budget-based matching — not collected or matched on in Miles
+          +tone 1 (see Resolved                                          
+      175 +  questions).                                                 
+      176 +- Graceful handling when the location + disposition filter ret
+          +urns zero funeral homes —                                     
+      177 +  the recommendation screen may come back empty in that case; 
+          +no fallback/widening logic                                    
+      178 +  for Milestone 1.                                            
+      179  
+      180  ## Resolved questions
+      181  - **Cause of death:** excluded from the Case schema — not need
+           ed for funeral home
+      182    matching, and sensitive. If present in a hospital PDF, the p
+           arser should ignore it
+      183    rather than extract it.
+      156 -- **Invite delivery:** real email, sent via Resend or Supabase
+          -'s built-in email — not SMS.                                  
+      157 -  SMS requires A2P 10DLC carrier registration (days of approva
+          -l lead time) that isn't                                       
+      158 -  worth it for Milestone 1, so phone is stored on the Case as 
+          -informational only, not a                                     
+      159 -  delivery channel. A real email landing is also a better demo
+          - beat than an on-screen                                       
+      160 -  link. Fallback for a hospital that truly only has a phone nu
+          -mber: staff copies the                                        
+      161 -  on-screen invite link and texts it manually — no engineering
+          - needed for that edge case.                                   
+      184 +- **Invite delivery:** real email, sent via Resend or Supabase
+          +'s built-in email — not SMS                                   
+      185 +  or phone at all. Phone numbers aren't collected anywhere in 
+          +Milestone 1; email is the                                     
+      186 +  single contact channel end-to-end, for both notification and
+          + auth.                                                        
+      187 +- **Invite token identity:** the magic-link email on the invit
+          +e landing page is pre-filled                                  
+      188 +  with the contact email the hospital entered and is not edita
+          +ble — a family member can't                                   
+      189 +  complete signup with a different address, even if the link i
+          +tself gets forwarded or                                       
+      190 +  shared beyond the intended recipient.                       
+      191 +- **Invite token expiry:** 24 hours from creation, one-time us
+          +e. If it lapses before the                                    
+      192 +  family acts, hospital staff resend it, which mints a fresh t
+          +oken (new 24-hour window)                                     
+      193 +  and invalidates the old one.                                
+      194  - **Family auth:** email magic link, no password — both faster
+            to build (Supabase Auth
+      195    supports this natively, no password-reset flow needed) and t
+           he right UX for someone
+      196    signing in once, under stress, shortly after a death. Email 
+           is therefore a **required**
+      197    field everywhere a family contact is captured (hospital uplo
+           ad form and self-serve
+      166 -  signup), since it doubles as the auth mechanism.            
+      198 +  signup) — it's the only contact channel and doubles as the a
+          +uth mechanism.                                                
+      199 +- **Religious/cultural requirements:** removed entirely from M
+          +ilestone 1 — not in the Case                                  
+      200 +  schema, the self-serve wizard, the PDF parse target fields, 
+          +the FuneralHome dataset's                                     
+      201 +  capability tags, or the ranking rationale. Funeral homes are
+          + matched on location,                                         
+      202 +  disposition, and price/rating only.                         
+      203 +- **Budget range:** removed from the Case schema and the self-
+          +serve wizard. Milestone 1                                     
+      204 +  doesn't collect or filter on budget; price appears in the re
+          +commendation as information                                   
+      205 +  only.                                                       
+      206 +- **Funeral home dataset:** sourced from an existing, pre-comp
+          +iled list covering all                                        
+      207 +  licensed funeral homes in Washington State, including pricin
+          +g and location data — not                                     
+      208 +  hand-curated for the demo and not scraped live.             
+
+⏺ Updated docs/spec.md. Summary of what changed:
+
+  1. Dead awaiting_family status removed — enum is now pending_review | active |
+     recommendations_ready, matching what the flows actually set.
+  2. Email end-to-end — phone is gone entirely (not collected, not a fallback
+     channel). Email is the sole contact/auth channel everywhere.
+  3. Wizard trimmed to 3 questions — location, disposition, email. Demo script
+     count fixed to match (was mismatched at "4-question" before).
+  4. Invite-token identity gap fixed — the magic-link email field on
+     /invite/{token} is now pre-filled and locked to the hospital-entered
+     contact email, so a forwarded link can't be claimed by someone else.
+  5. Zero-match fallback — explicitly called out as a known, accepted gap under
+     "Explicitly out of scope" rather than left unaddressed.
+  6. Religious/cultural removed everywhere — Case schema, wizard, confirmation
+     screen, PDF parse targets, FuneralHome tags, and the rationale example.
+     Matching is now location + disposition + price/rating only, and there's a
+     Resolved-questions entry documenting the removal.
+  7. PDF failure path kept as designed — client-side validation (type/size)
+     plus: a parse that returns nothing still creates the Case with blank fields
+     rather than failing, and the family's confirmation screen is where those
+     get filled in.
+  8. Funeral home dataset — swapped the "10–20 hand-curated" seed language for
+     your real, full-WA-state list with pricing/location. Added one consequence
+     of that: since it's now hundreds of homes instead of 20, the recommendation
+     step filters to same/nearby county and caps the candidate set (~15–20)
+     before the ranking LLM call, so prompt size stays sane. Flag this if you
+     don't want that cap mentioned yet — it's a reasonable inference, not
+     something you explicitly asked for.
+  9. Budget removed everywhere — Case schema, wizard, demo script, out-of-scope
+     list, resolved questions.
+  10. Invite expiry set to 24 hours — one-time use. I also added a minimal
+      "hospital resends → new token, old one invalidated" recovery path, since a
+      24-hour window with no recovery would be a dead end for a family that
+      doesn't check email same-day. Also not something you explicitly asked for
+      — say so if you'd rather leave that unbuilt for M1 and just let an expired
+      invite be a dead end.
+
+  Two call-outs flagged inline above (#8 candidate-cap, #10 resend) are my
+  additions beyond your literal asks — happy to strip either if you don't want
+  that scope.
+
+✻ Crunched for 2m 40s · done 12:12 PM
+
+※ recap: We've been tightening the AgenticLantern hackathon spec (docs/spec.md) with your decisions on email auth, dropped religion/budget, and 24h invites. Next: confirm whether to keep the added candidate-cap and resend-invite scope, then start building. (disable recaps in /config)
+
+❯ now lets talk about infra - We have Azure account, with some free credits     
+
+⏺ Let me think through what Azure actually changes here, since the current
+  spec's tech-stack section leans on Supabase for three things at once (Postgres
+  + Auth + Storage) — Azure doesn't have a single bundled equivalent, so the
+  honest tradeoff is build speed vs. using the credits.
+
+  What maps cleanly to Azure:
+  - Hosting the Next.js app → Azure App Service (Linux/Node) or Azure Container
+    Apps. Straightforward either way.
+  - Postgres → Azure Database for PostgreSQL – Flexible Server. Direct swap for
+    Supabase's DB, no issue.
+  - PDF storage → Azure Blob Storage, private container + SAS tokens for scoped
+    read access. Direct swap for Supabase Storage.
+
+  What doesn't map cleanly:
+  - Magic-link auth — this is the one place Supabase was doing real work for us
+    ("Resolved questions" leaned on it specifically because it's native, no
+    password-reset flow to build). Azure has no equivalent batteries-included
+    auth service for this pattern. Azure AD B2C exists but is enterprise
+    SSO-shaped and overkill/slow to configure for a one-time family magic link.
+    The realistic Azure-native path is Auth.js (NextAuth) with its Email 
+    provider, backed by a sessions table in the same Postgres DB — it does give
+    you magic links, but it's now something we build and wire up ourselves
+    instead of getting for free.
+  - Sending the actual email — Azure Communication Services has an Email
+    offering, but it requires domain verification setup similar to Resend's.
+    Doesn't save time either way; pick whichever account you already have.
+  - The LLM calls stay unchanged — Azure doesn't host Claude (that's
+    Bedrock/Vertex), so both the PDF-parse and ranking calls still go straight
+    to the Anthropic API regardless of where the app runs. Azure just adds Key
+    Vault or App Service settings as somewhere to put the Anthropic API key.
+
+  This is a real fork for how fast you move this week, not something I should
+  just pick, so:
+
+⏺ User answered Claude's questions:
+  ⎿  · How much of the stack should actually move to Azure for Milestone 1? → 
+     Can we build a react app for front-end. Also about supabase - is supabase 
+     free ?
+
+⏺ React instead of Next.js — yes, and it fits well. A plain React app (Vite +
+  React, not Next.js) separates cleanly into:
+  - Frontend: a static React build — hosted on Azure Static Web Apps, which has
+    a generous free tier and pairs natively with Azure's managed Functions for
+    an API, without needing a Node server running 24/7.
+  - Backend: you actually need very little custom backend. Supabase's JS client
+    can call Auth (send/verify the magic link) and do DB reads/writes directly
+    from the React app with Row-Level Security — no custom auth or CRUD backend
+    required. The only things that must run server-side are the two Claude calls
+    (PDF parse, ranking), since the Anthropic API key can't live in client
+    code. Those become two small Azure Functions endpoints.
+
+  So with React, the natural Azure-native shape becomes: Azure Static Web Apps 
+  (frontend) + Azure Functions (the two LLM endpoints) + Supabase (Postgres + 
+  Auth + PDF storage). That's a smaller build than either of my original options
+  — real Azure usage for hosting/compute, Supabase doing the auth/DB/storage
+  work it's already good at, and almost no custom backend to write.
+
+  Is Supabase free? Yes, for this scale. The free tier covers a single hackathon
+  demo easily — generous DB storage, 1GB file storage, Auth with no practical
+  user-count issue at this scale, two free projects. The one gotcha worth
+  knowing: a free-tier project auto-pauses after about a week of no activity and
+  needs a manual "restore" click in the dashboard before it's usable again — so
+  if there's a multi-day gap between finishing the build and the actual demo,
+  go poke it awake beforehand rather than finding out live.
+
+  Does the shape above — React (Vite) + Azure Static Web Apps + Azure Functions 
+  for the LLM calls + Supabase for DB/Auth/PDF storage — match what you want, or
+  do you want Postgres/Storage on Azure too (Azure Database for PostgreSQL +
+  Blob Storage) instead of Supabase?
+
+✻ Cooked for 1m 32s · done 12:51 PM
+
+❯ sounds great                                                                  
+
+⏺ Locking that in. Updating the spec's Tech stack section to match.
+
+⏺ Update(docs/spec.md)
+  ⎿  Added 27 lines, removed 20 lines
+      123  - Case `status -> recommendations_ready`; family sees a ranked
+            shortlist with name,
+      124    distance, price, and rationale.
+      125  
+      126 -## Tech stack (suggestion — flexible for hackathon speed)     
+      127 -- **Frontend:** Next.js (React): hospital login/dashboard + PD
+          -F upload, invite landing                                      
+      128 -  page, family login/signup, confirmation screen (hospital pat
+          -h), question wizard                                           
+      129 -  (self-serve path), recommendations view.                    
+      130 -- **Backend:** Next.js API routes or a small Node/Express serv
+          -ice.                                                          
+      131 -- **DB:** Postgres (Supabase is a fast hackathon option — buil
+          -t-in auth can cover both                                      
+      132 -  login types with a `role` field, plus file storage for the u
+          -ploaded PDFs).                                                
+      133 -- **Auth:** Supabase Auth (or simple JWT) with a `role: hospit
+          -al | family` claim; the                                       
+      134 -  invite token is a separate short-lived (24-hour) record, not
+          - an auth mechanism itself —                                   
+      135 -  it gates which Case a new FamilyUser gets attached to and pi
+          -ns the signup to the                                          
+      136 -  contact email already on file.                              
+      137 -- **PDF parsing:** one LLM call per upload (Claude's PDF input
+          - support) prompted to return                                  
+      138 -  the structured Case JSON with per-field confidence — no sepa
+          -rate OCR pipeline needed for                                  
+      139 -  text-based PDFs.                                            
+      140 -- **AI agent (recommendation):** a second, separate LLM call p
+          -er Case: input = confirmed                                    
+      141 -  Case JSON + filtered (location + disposition, capped to a ma
+          -nageable candidate count)                                     
+      142 -  FuneralHome candidates; output = ranked list + rationale str
+          -ings. No multi-agent                                          
+      143 -  orchestration needed at Milestone 1.                        
+      126 +## Tech stack                                                 
+      127 +- **Frontend:** React (Vite), a static SPA — hospital login/da
+          +shboard + PDF upload,                                         
+      128 +  invite landing page, family login/signup, confirmation scree
+          +n (hospital path), question                                   
+      129 +  wizard (self-serve path), recommendations view. Hosted on **
+          +Azure Static Web Apps**.                                      
+      130 +- **Backend:** no general-purpose API server. Auth and all Cas
+          +e/FuneralHome DB reads and                                    
+      131 +  writes go straight from the React app to Supabase via its cl
+          +ient SDK and Row-Level                                        
+      132 +  Security — nothing custom to build there. The only server-si
+          +de code is two small                                          
+      133 +  **Azure Functions** endpoints, for the two steps that need t
+          +he Anthropic API key kept                                     
+      134 +  off the client: PDF parsing and recommendation ranking.     
+      135 +- **DB:** Supabase (Postgres) — free tier. One `role: hospital
+          + | family` claim covers                                       
+      136 +  both login types.                                           
+      137 +- **Storage:** Supabase Storage, for the uploaded PDFs.       
+      138 +- **Auth:** Supabase Auth, called directly from the React app 
+          +(magic-link email, no                                         
+      139 +  custom backend). The invite token is a separate short-lived 
+          +(24-hour) record stored in                                    
+      140 +  Postgres, not an auth mechanism itself — it gates which Case
+          + a new FamilyUser gets                                        
+      141 +  attached to and pins the signup to the contact email already
+          + on file.                                                     
+      142 +- **PDF parsing:** one LLM call per upload (Claude's PDF input
+          + support), run inside an                                      
+      143 +  Azure Function, prompted to return the structured Case JSON 
+          +with per-field confidence —                                   
+      144 +  no separate OCR pipeline needed for text-based PDFs.        
+      145 +- **AI agent (recommendation):** a second Azure Function, one 
+          +LLM call per Case: input =                                    
+      146 +  confirmed Case JSON + filtered (location + disposition, capp
+          +ed to a manageable                                            
+      147 +  candidate count) FuneralHome candidates; output = ranked lis
+          +t + rationale strings. No                                     
+      148 +  multi-agent orchestration needed at Milestone 1.            
+      149  - **Funeral home data:** an existing, pre-compiled dataset cov
+           ering all licensed funeral
+      150    homes in Washington State — name, address/county, phone, cre
+           mation/burial capability,
+      146 -  pricing, and rating — checked into the repo as JSON/CSV. Not
+          - hand-curated for the demo                                    
+      147 -  and not live GPL scraping.                                  
+      151 +  pricing, and rating — checked into the repo as JSON/CSV, loa
+          +ded into Supabase. Not                                        
+      152 +  hand-curated for the demo and not live GPL scraping.        
+      153 +- **Secrets:** the Anthropic API key lives only in Azure Funct
+          +ion app settings, never in                                    
+      154 +  client code or the Supabase client config.                  
+      155  
+      156  ## Milestone 1 — demo script (what "done" looks like)
+      157  1. Hospital logs in, uploads a sample PDF for a demo patient, 
+           enters a family email.
+
+⏺ Spec's Tech stack section now reflects it:
+
+  - Frontend: React (Vite) SPA on Azure Static Web Apps.
+  - Backend: no general API server — auth and DB/storage go straight from React
+    to Supabase via its client SDK + RLS. Only two Azure Functions exist, for
+    the PDF-parse and ranking Claude calls, keeping the Anthropic key off the
+    client.
+  - DB/Auth/Storage: Supabase, free tier.
+  - Secrets: Anthropic key lives only in Azure Function app settings.
+
+  This keeps the build surface small (no custom auth/CRUD backend to write)
+  while still putting real Azure usage behind the hosting + the two LLM-calling
+  functions.
+
+  One thing worth flagging now rather than mid-build: Supabase's free-tier
+  Row-Level Security means each table (Case, InviteToken, FuneralHome) needs its
+  RLS policies written deliberately — e.g. a FamilyUser can only select/update
+  the Case they're attached to, hospital accounts can only see their own cases,
+  FuneralHome is public-read. That's normal Supabase setup work, not a gap in
+  the plan, but it's worth doing early since a missing policy either leaks data
+  or silently blocks the app (RLS defaults to deny-all once enabled).
+
+  Anything else on infra, or ready to move to scaffolding the repo?
+
+✻ Crunched for 26s · done 12:53 PM
+
+※ recap: You're building AgenticLantern, a funeral-home recommendation app with a Supabase + Azure (Static Web Apps + Functions) stack now locked in. Next step is writing Supabase RLS policies, then scaffolding the repo. (disable recaps in /config)

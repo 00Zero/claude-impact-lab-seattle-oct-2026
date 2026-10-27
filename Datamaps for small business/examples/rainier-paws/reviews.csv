@@ -1,0 +1,242 @@
+review_id,date,rating,source,review_text
+p001,2025-11-01,5,Google,"Two days a week of daycare and our husky is a different dog. Happy, tired, no more howling at the neighbors."
+p002,2025-11-01,2,Google,I asked for long layers and curtain bangs and my stylist took four inches off. The blowout was nice but the color toner turned my blonde brassy. Booked for a balayage correction but I'm nervous.
+p003,2025-11-02,5,Yelp,Our border collie is a menace at home. After a day at Rainier Paws daycare she's a puddle. Worth every penny.
+p004,2025-11-02,5,Facebook,Did the holiday photos with Santa paws event. Super fun and the money went to the Humane Society.
+p005,2025-11-04,2,Google,Front desk person was on her phone and barely looked up when I came in. Not a great first impression.
+p006,2025-11-05,5,Google,nail grinding walk ins are a game changer. my dog won't let me near his paws
+p007,2025-11-06,3,Yelp,"Great groomers, terrible parking. Six spots and the laundromat people take all of them for an hour."
+p008,2025-11-11,1,Google,they nicked my dogs paw pad trimming the fur between his toes and he was limping. no one said anything. found blood on the car seat
+p009,2025-11-11,5,Google,Is your website ranking on page 1 of Google? Our SEO agency guarantees top 3 results for 'dog grooming Tacoma' in 30 days or your money back. Reply with your email for a free audit!!
+p010,2025-11-12,3,Yelp,The tow-away signs for laundromat customers only made me nervous every time I park for daycare dropoff. Is it shared or not?
+p011,2025-11-17,3,Yelp,"Brooke is still learning I think. Kind, but her scissor work around the face needs practice. Clipper work is fine."
+p012,2025-11-21,2,Nextdoor,Anyone else's dog come back from Rainier Paws with skin irritation? Our schnauzer had little red welts on his back after the clipper cut. Wondering if it's the blade or the shampoo.
+p013,2025-11-21,3,Google,"Love the results, hate waiting. Pickup has been at least an hour late the last 3 visits."
+p014,2025-11-23,4,Nextdoor,People are hard on Brooke but she's gotten a lot better over the last few months. Our corgi's last groom with her was really clean.
+p015,2025-11-27,3,Google,"Kenji is great, I just wish there were two of him. Got bumped to someone else when he was out sick and it wasn't the same."
+p016,2025-11-27,5,Facebook,"Buy 5-star reviews for your business! Real accounts, 100% safe, permanent. 50 reviews for only $49. Message us on WhatsApp."
+p017,2025-11-29,5,Email,"Hi, I wanted to say thank you for how you handled Buster, our anxious pit mix. You let me stay for the first part, used the quiet room away from the dryers, and stopped when he got overwhelmed. He'd never had a calm groom before."
+p018,2025-11-30,1,Email,"Hi, I was told my dog would be done by 1pm so I scheduled a meeting at 2. I wasn't called until 3:45. I had to leave work early to come back. Can you call when you're actually running behind?"
+p019,2025-11-30,4,Facebook,Cute little shop by the front desk with local treats and chew toys. Nice to support local makers.
+p020,2025-12-02,5,Google,"Brooke was awesome with our rescue greyhound Juno, super patient. Don't know why people complain about her."
+p021,2025-12-02,5,Google,The daycare webcam is my favorite part of the workday. Watching Bruno chase the big ball around the yard at lunch is better than any meeting.
+p022,2025-12-03,5,Google,the peanut butter pumpkin cookies they sell are made by a bakery in Puyallup and my dog goes crazy for them
+p023,2025-12-07,5,Yelp,We drive from Gig Harbor just for Kenji. That should tell you everything. Maple's coat has never looked this good and he's honest about what's realistic with her texture instead of promising the moon.
+p024,2025-12-07,4,Nextdoor,Does anyone know if they're open on the 4th of July? Our dog is terrified of fireworks and I'm wondering if daycare does a quiet day.
+p025,2025-12-09,5,Google,Our cockapoo Toby has had Kenji since he was a puppy and he trained him to love the dryer. Puppy intro grooms with Kenji are the best thing we did.
+p026,2025-12-09,4,Nextdoor,Tip: they do walk-in nail clipping weekday mornings. Cheap and fast. My vet charges double.
+p027,2025-12-11,2,Facebook,"If they say noon, plan for 2pm. Every time."
+p028,2025-12-11,1,Google,camera down AGAIN. how hard is it to keep a webcam online
+p029,2025-12-11,3,Google,"Dogs only, no felines. Fair enough, but my ragdoll is matted and I'm desperate."
+p030,2025-12-13,4,Google,Had Brooke for the first time and honestly she did a nice job on our lab's bath and deshed. Not much to mess up with a lab though lol
+p031,2025-12-15,5,Nextdoor,"They found our neighbor's lost dog wandering by the shop, scanned the microchip, and called the owner. Above and beyond."
+p032,2025-12-16,4,Yelp,Hours are a bit limited. Closing at 6 makes it tough for commuters coming back from Seattle.
+p033,2025-12-20,2,Google,parking is a nightmare. had to park on the street two blocks away and walk my senior dog. please do curbside drop off or something
+p034,2025-12-22,2,Email,"Hi, I wanted to give feedback on our appointment with Brooke on Saturday. Coco's face was cut much shorter than the photo I showed, and the top of her head is uneven. Brooke was apologetic when I picked up, but I'd like to know if a touch-up is possible, and I'd prefer Kenji going forward."
+p035,2025-12-28,2,Google,"Someone dinged my car door in that tiny lot while I was loading my dog. Laundromat customer, didn't leave a note."
+p036,2025-12-29,2,Yelp,"The lobby is way too small. When three people are checking in with dogs it gets tense, especially with reactive dogs."
+p037,2025-12-30,4,Nextdoor,"They sell the deshedding shampoo their groomers use, right by the register. It cut the fur tumbleweeds in our house in half."
+p038,2025-12-31,3,Facebook,"Love the shop, but the lot they share with the laundromat is always full. Plan to park on the side street."
+p039,2025-12-31,5,Yelp,Love that the retail shelf stocks the leave-in conditioner spray they use. Bought two bottles at the register.
+p040,2026-01-01,4,Yelp,Booking app is simple and the reminder texts are helpful. Wish it showed which groomer you'd get.
+p041,2026-01-01,2,Google,Said 'about 2 hours.' It was 5. Poor Oscar was so stressed being there all day.
+p042,2026-01-01,3,Google,Daycare tires him out great but he usually comes home a bit dirty and once with a small scratch. Normal rough play I guess.
+p043,2026-01-07,4,Google,"Nails were trimmed short and even, no quicking. Walk in, walk out. Would be 5 stars if they took tap to pay at the walk-in counter."
+p044,2026-01-09,5,Yelp,Asked Kenji for a 'shorter but not naked' summer cut for our Havanese and he nailed it on the first try. He even explained how to brush the longer bits between visits.
+p045,2026-01-10,4,Google,"Bath and brush only, came out soft and smelling good. Quick turnaround."
+p046,2026-01-10,1,Yelp,Rude on the phone when I asked a simple question about prices. Hung up on me.
+p047,2026-01-13,5,Facebook,Kenji gave Moose a little bandana and a pup-cup after his groom and I nearly cried. 10/10 human.
+p048,2026-01-13,4,Google,Appreciate the new vaccine rule. I'd rather show paperwork than have my dog catch kennel cough again.
+p049,2026-01-17,1,Google,My dog was there 7 hours for a bath and nail trim. Seven. Hours.
+p050,2026-01-20,2,Yelp,Second price increase in under a year. I understand inflation but this is getting out of reach for us.
+p051,2026-01-21,4,Nextdoor,Good place for nervous dogs. They schedule anxious pups at quiet times of day so there's less barking. Our shy greyhound did okay for the first time ever.
+p052,2026-01-21,5,Google,Our whole family loves this place. My daughter insists on handing Waffles' leash over at dropoff and it's the highlight of her week.
+p053,2026-01-23,5,Google,Senior dog friendly!! They have a padded mat and a lift table so our old shepherd didn't have to jump. Small things but they matter.
+p054,2026-01-26,5,Google,Love that you can book grooming and daycare from the app now. So much easier than calling.
+p055,2026-01-29,5,Google,"Daycare tires Remy out like nothing else. He comes home, drinks his whole bowl, and sleeps until morning. Our evenings are peaceful now."
+p056,2026-02-01,5,Google,Picked up a bully stick and a tub of paw balm at checkout. Both great. Paw balm saved my dog's cracked pads this winter.
+p057,2026-02-01,3,Nextdoor,"Heard good things, finally tried it. Decent. Not life changing."
+p058,2026-02-02,3,Yelp,"Webcam is frozen on the same frame from 8am most days. Love the place, the camera is just broken a lot."
+p059,2026-02-03,2,Google,"Poodle topknot was way too short and the ears were shaved. I asked for a puppy cut, not a show cut."
+p060,2026-02-06,4,Google,"They handled the kennel cough situation well in my opinion. Emailed everyone, closed for two days to sanitize, and now require proof of the Bordetella vaccine within 6 months. Good policy."
+p061,2026-02-06,3,Nextdoor,"To be fair, kennel cough spreads at every daycare and dog park. Rainier Paws did start requiring updated Bordetella shots after the outbreak, which is more than some places."
+p062,2026-02-06,2,Yelp,Prices went up again in January. Full groom for a medium dog is now $105. That's a lot for Tacoma.
+p063,2026-02-07,2,Google,"Dog got kennel cough, no one called. We found out on Nextdoor that other dogs were sick too."
+p064,2026-02-07,2,Nextdoor,"If you have a doodle be really specific at Rainier Paws. We asked for teddy bear, they shaved the body to a quarter inch. Show them pictures and say the blade length."
+p065,2026-02-07,3,Google,Please consider cat grooming! Cat lion cuts and sanitary trims are hard to find around here.
+p066,2026-02-07,3,Facebook,"Nail trim walk-ins are great when they're doing them. They stopped on weekends, which is the only time I can come."
+p067,2026-02-09,5,Facebook,Shoutout to Kenji at Rainier Paws. Third groom with him and Rosie's schnauzer beard is finally the right shape. He sent me a before/after pic too.
+p068,2026-02-09,2,Yelp,Kennel cough going through the daycare right now. Bear was hacking for a week. They're supposedly requiring Bordetella but clearly something slipped through.
+p069,2026-02-09,1,Yelp,We lost a whole week of work nursing our 12 year old through kennel cough she caught at daycare. At her age it was scary. I don't think they take vaccine checks seriously.
+p070,2026-02-10,2,Google,Walked in for a nail trim like the sign says and they said no walk-ins today. Sign still says walk-ins welcome.
+p071,2026-02-12,1,Email,"Hello, my dog Sasha was diagnosed with kennel cough on Tuesday after attending daycare last week. Our vet bill was $210. I'd like to know what steps you're taking to verify vaccines and whether other owners were notified."
+p072,2026-02-13,5,Google,"Clean, bright, and doesn't smell like wet dog. Impressive."
+p073,2026-02-14,5,Nextdoor,"Highly recommend the daycare here for high energy breeds. Our lab mix comes home happy, tired, and not destroying our shoes anymore."
+p074,2026-02-14,5,Nextdoor,"Recommending for anyone with an elderly or anxious dog. Gentle, unhurried, and they call you if your dog is getting stressed instead of pushing through."
+p075,2026-02-20,2,Google,"Small cut on Bella's ear flap after her trim. They did tell me at pickup and put styptic on it, so I appreciate the honesty, but it's the second time."
+p076,2026-02-22,4,Yelp,"Daycare staff are clearly dog people. Report cards at pickup are cute ('played tag with Duke, napped in the sun'). Ranger is wiped out every time."
+p077,2026-02-23,2,Email,"Hi, the daycare camera link hasn't loaded since Monday. Is it down for maintenance? I check it every day so I'd love an update."
+p078,2026-02-23,5,Google,The salmon jerky treats on the retail shelf are the only thing my picky eater will take. We buy a bag every visit.
+p079,2026-02-24,5,Google,"KENJI!!! best groomer in tacoma, I will follow him anywhere"
+p080,2026-02-24,2,Facebook,"Coughing, honking, the whole thing. Kennel cough from daycare. Vet says it's common but I'd like to know you're doing something about it."
+p081,2026-02-25,3,Google,"Minor nick on Frankie's lip, healed in a couple of days. Groom otherwise looked good. Just be more careful around the mouth."
+p082,2026-02-27,1,Google,Our dog picked up kennel cough after two days of daycare. The vet said there's an outbreak going around Tacoma daycares. Would've appreciated an email from Rainier Paws before we dropped him off.
+p083,2026-03-06,5,Yelp,"My rescue is terrified of strangers and has bitten at past groomers. Here they did a short 'happy visit' first just to meet him, no grooming, just treats. Then a muzzle-free bath the next week. Patience like that is rare."
+p084,2026-03-06,3,Google,The teddy bear cut was a little shorter than I wanted but it'll grow. They admitted they took too much off the legs.
+p085,2026-03-11,3,Facebook,Glad they finally closed the daycare for a deep clean after the kennel cough cases. Should have been sooner though.
+p086,2026-03-12,4,Facebook,Gave Brooke a second chance and she did a really nice puppy trim on Mochi. Improving!
+p087,2026-03-12,3,Facebook,The music in the lobby was so loud I couldn't hear the front desk. Minor thing.
+p088,2026-03-16,2,Yelp,Asked for a 'kennel cut but leave the face fluffy.' Got a shaved face. Ugh.
+p089,2026-03-18,2,Google,How are you checking vaccination records? Our dog caught kennel cough there and the staff admitted they don't verify the Bordetella date on every dog.
+p090,2026-03-18,2,Google,"website says pet grooming, they meant dog grooming. no cats. update your site"
+p091,2026-03-19,5,Nextdoor,Highly recommend the walk-in nail trim. My older dog's nails were clicking on the floor and they fixed it fast with the grinder.
+p092,2026-03-20,1,Yelp,"Bleeding nick on my dog's leg, staff put a bandaid-looking wrap on it and said 'it happens.' It does not happen at our old groomer."
+p093,2026-03-20,5,Facebook,My coworkers and I watch the Rainier Paws yard cam together. Shoutout to the husky who always steals the frisbee.
+p094,2026-03-21,2,Nextdoor,PSA: there's kennel cough at Rainier Paws daycare. Our pup and two others from our street got it the same week.
+p095,2026-03-23,2,Facebook,Groom looked good but we waited 45 minutes past pickup time in the lobby. No one gave an update.
+p096,2026-03-23,3,Yelp,"Prices are higher than they used to be. Quality is still high, so I'm staying, but grumbling."
+p097,2026-03-25,4,Facebook,"Treats at the counter are good quality, no weird fillers. I wish there were bigger bags."
+p098,2026-03-28,4,Facebook,Good daycare. Staff knows every dog's name. Riley sleeps like a rock after.
+p099,2026-04-01,3,Yelp,"New vaccine policy is strict, you need Bordetella, rabies, DHPP AND the canine flu shot uploaded before daycare. Annoying but after the kennel cough mess I understand."
+p100,2026-04-02,4,Facebook,Love checking in on the live cam! Caught Hazel napping in a kiddie pool lol
+p101,2026-04-05,2,Facebook,our bernedoodle came home with a poodle face and a shaved muzzle. we asked for a round teddy face. not what we asked for at all
+p102,2026-04-11,1,Google,TEDDY BEAR CUT. Not shaved. how is this hard
+p103,2026-04-11,2,Facebook,Booked a groom for my cat through the app (it let me pick 'cat' as the pet type!) and they called to cancel because they don't groom cats. Then why is cat in the app?
+p104,2026-04-12,3,Google,Called to ask if they groom cats. They don't. Please add cats! My Maine Coon needs a lion cut and there's nobody in Tacoma.
+p105,2026-04-14,3,Yelp,"The retail shelf could use more variety. Only two shampoos, no puppy formula, and the dental chews are always sold out."
+p106,2026-04-16,1,Email,"Hello, I'm writing about my dog Sadie's groom this past Thursday. She came home with two small cuts near her tail and what looks like a burn from the clippers on her inner thigh. I've attached photos. I'd like someone to call me back about the vet bill."
+p107,2026-04-19,2,Google,Price on the website says $75. Price at the counter was $98 after 'coat condition' charges. Please be upfront.
+p108,2026-04-19,1,Yelp,"I said 'fluffy teddy bear face, one inch all over.' They shaved my doodle down to the skin. When I asked why, they said he was matted. He was brushed two days before."
+p109,2026-04-23,5,Nextdoor,Kenji has groomed our Shih Tzu Lulu for a year now. She runs to the door when we pull up. That's the review.
+p110,2026-04-23,2,Nextdoor,"Heads up neighbors, if you book through their app take a screenshot of your confirmation. Mine got wiped out after their April update and they couldn't see it on their end."
+p111,2026-04-26,3,Nextdoor,"Good groomers but the prices keep creeping up and there are a lot of add-on fees now: matting, handling, teeth brushing, blueberry facial. Bill always ends up higher than the quote."
+p112,2026-04-30,3,Nextdoor,"Daycare is great but the live stream is spotty. Some days it works all day, some days it just shows a black screen or a spinning wheel."
+p113,2026-05-03,5,Facebook,Kenji really cares. You can tell he's not just pushing dogs through.
+p114,2026-05-06,4,Google,Kenji's cuts are fantastic. Only knock is he's so popular you basically have to book your next one at checkout or you're out of luck.
+p115,2026-05-08,2,Google,Told me Luna would be ready at 2. Got the 'ready' text at 4:15. I sat in my car for two hours. Please give realistic pickup times.
+p116,2026-05-08,5,Email,"Hi team, just wanted to say thank you. Our pup Archie went from chewing through drywall to being a calm, happy dog since we started three days a week at daycare. The staff texts me little updates and it makes my day."
+p117,2026-05-08,3,Google,Fine. Nothing special.
+p118,2026-05-10,2,Facebook,"Second time the app showed a slot as open, let me book it, and then the shop called to say it was actually taken. Why is it showing open slots that don't exist?"
+p119,2026-05-10,2,Google,Daycare packages got more expensive and the 10-pack discount got smaller. Feels sneaky.
+p120,2026-05-11,5,Google,After a bad experience at a big chain groomer our yorkie was traumatized. Rainier Paws took it so slow. Two short visits and now she trots in.
+p121,2026-05-11,2,Facebook,"Surprise dematting charge AGAIN. My dog gets brushed every day, she was not that matted."
+p122,2026-05-11,1,Facebook,They shaved our aussiedoodle's face off. He looks like a different dog. Our kids cried.
+p123,2026-05-14,5,Yelp,"Only letting Kenji touch my dog from now on. He remembered that Pepper hates having her ears handled and did them last, slowly, with treats. Who does that?"
+p124,2026-05-14,1,Google,The booking app double booked our slot with someone else's dog. Drove 25 minutes to be told there's no room. Second time since the update.
+p125,2026-05-14,3,Yelp,They're clearly overbooked. Pickup times keep slipping and the front desk looks frazzled. Hire another groomer?
+p126,2026-05-14,3,Google,Tight lot shared with a coin laundry. Come off-peak if you can.
+p127,2026-05-14,3,Yelp,It's ok. My dog was fine. Kind of loud inside with all the barking from the daycare side.
+p128,2026-05-15,1,Email,"Hello, I was charged a $40 matting fee and a $15 'handling fee' on my last visit without any phone call. The front desk said it's policy. I'd like those policies posted somewhere so customers aren't surprised."
+p129,2026-05-15,1,Facebook,The booking app double booked our slot with someone else's dog. Drove 25 minutes to be told there's no room!! Second time since the update.
+p130,2026-05-18,1,Google,"Bandit is a matted mess, fine, I get it, shave him. But he came back with clipper burn so bad the skin was weeping. Vet said blades were probably too hot. Never again."
+p131,2026-05-18,3,Email,"Hello, do you offer any services for cats, even just nail trims? My cat Pickles won't let me near his claws. Thanks."
+p132,2026-05-19,5,Email,"Hello, quick note to say Kenji went above and beyond for Daisy before our wedding. He did a fresh trim, tied a little flower collar on, and fit us in the day before even though he was fully booked. She was the star of the photos."
+p133,2026-05-19,5,Google,The cam feed makes me feel so much better leaving our new rescue there. I could see the staff sitting on the ground with him the first morning.
+p134,2026-05-19,4,Yelp,So nice to peek at the camera feed and see Gus playing instead of sitting in a kennel. Wish it was higher resolution.
+p135,2026-05-21,4,Facebook,Wish they had a loyalty punch card for groomings like they do for daycare.
+p136,2026-05-22,2,Google,The new app looks nicer but it double-books. Pretty is not the point.
+p137,2026-05-23,3,Nextdoor,"Nice people, nice cut, but they're always running behind. Budget an extra hour or two for pickup."
+p138,2026-05-28,5,Yelp,"Turn $200 into $5,000 with our AI crypto trading bot. Withdraw anytime. Join thousands of members at the link in my profile, use code PAWS50 for bonus coins."
+p139,2026-05-29,5,Google,kenji did my aussie's sanitary trim and feet without me even asking twice. perfectionist in the best way
+p140,2026-05-29,4,Yelp,"They don't do cats, but they did sell me the cat-safe shampoo and gave me tips for bathing a cat at home. Kind of them."
+p141,2026-06-02,5,Yelp,Puppy socialization at the daycare has been amazing for Nova. She used to be scared of other dogs and now she plays nicely with the whole pack.
+p142,2026-06-02,5,Yelp,Came in for a walk-in nail trim on my lunch break. They dremeled Rocky's nails smooth and he didn't even fuss.
+p143,2026-06-03,1,Google,Picked up my bichon and found a nick on her armpit that was bleeding through her fur. Nobody mentioned it at pickup. I found it at home when she wouldn't stop licking.
+p144,2026-06-03,5,Yelp,Grabbed a bottle of the oatmeal shampoo off the retail shelf at checkout. Cleared up my dog's itchy skin in two washes. Buying a second bottle next visit.
+p145,2026-06-05,4,Facebook,Love them for my dog but wish they'd take cats. Would bring my long-haired cat Mittens in a heartbeat.
+p146,2026-06-06,5,Google,Kenji is a wizard. Our goldendoodle Biscuit looks like a stuffed animal every single time and he actually listens when I explain what I want.
+p147,2026-06-06,3,Google,"They were gentle with my old dog which I appreciate, but it took forever because they kept stopping. Fine, that's the tradeoff."
+p148,2026-06-07,2,Yelp,The groomers are great but the booking system is a disaster lately. Appointment moved to a different day without asking me. App update broke something for sure.
+p149,2026-06-09,4,Facebook,"Quick nail trim walk-in, no wait on a Tuesday. Saturday there was a line though."
+p150,2026-06-10,4,Google,Daycare is great. Kona comes home exhausted and happy. A little smelly sometimes but that's dogs.
+p151,2026-06-14,5,Google,Kenji knows breed standards like nobody else. Our wheaten Finn finally looks like a wheaten instead of a mop.
+p152,2026-06-16,5,Nextdoor,"If you're looking for a groomer in the Proctor area ask for Kenji. Very calm guy, my poodle mix is usually a nightmare and he came out wagging."
+p153,2026-06-19,5,Yelp,"Our 16 year old poodle passed last month. Her last groom was here and they treated her like royalty, slow and soft. Thank you for giving her that dignity."
+p154,2026-06-23,2,Email,"Hi, the app has double booked my dog Murphy twice now, once for grooming and once for a daycare day. Both times I got a confirmation. Can you look into this or let me book by phone instead?"
+p155,2026-06-23,5,Google,Halloween costume photo day was the cutest thing. Our basset hound dressed as a hot dog. Thank you for the free pictures!
+p156,2026-06-24,5,Yelp,"Young golden retriever + rainy Tacoma winter = disaster at home. Daycare has an indoor play area for wet days and he comes home tired, happy, and asleep by 7."
+p157,2026-06-26,2,Google,Third groom here and second time with irritated red skin on the belly afterwards. Something in the process isn't right.
+p158,2026-06-26,2,Yelp,Booking used to be painless. Since around April the app has been double booking and randomly cancelling. Feels like it was rushed out.
+p159,2026-06-27,3,Google,Retail shelf is small and often out of the good treats. Restock the freeze dried chicken please!
+p160,2026-06-30,1,Yelp,"Clipper burn all over Teddy's belly after his groom. Red, bumpy, and he scratched it raw overnight. Had to get a cone and cortisone from the vet. They offered a free bath which, no thanks."
+p161,2026-06-30,1,Yelp,App deleted my recurring every-6-weeks booking with Kenji. Now he's booked out a month. Thanks app.
+p162,2026-06-30,1,Google,"Got a 'your appointment is cancelled' push notification at 7am. Called. They said it was a bug and my appointment was fine. Showed up. It was not fine, someone else had the slot."
+p163,2026-07-01,5,Google,Flea bath was thorough and they gave me info on prevention without being pushy.
+p164,2026-07-02,2,Facebook,Got a parking ticket on the street because the lot was full. Dropping off a dog should not cost me $40.
+p165,2026-07-04,5,Google,Teeth brushing add-on actually made a difference in my dog's breath. Recommend.
+p166,2026-07-05,5,Google,my dog shakes at the vet and at every groomer. here she came out with her tail up. they're doing something right with fearful dogs
+p167,2026-07-06,2,Facebook,Brooke seemed rushed. She had our pup done in like 45 min which sounds great until you see the feet. Choppy.
+p168,2026-07-06,5,Google,best doggy daycare in tacoma. my heeler is finally TIRED
+p169,2026-07-11,1,Facebook,My dog came home with razor burn on his sanitary area and was scooting for two days. Please use a longer blade on sensitive spots.
+p170,2026-07-11,1,Google,"booked nail trim on app, showed up, slot given to someone else. app has been garbage since the new version came out"
+p171,2026-07-14,5,Google,"Walk-in nail trims for $15, in and out in 10 minutes. No appointment needed. This is the best thing about this place."
+p172,2026-07-15,2,Google,"Every doodle groom here comes out looking like a poodle. Not every doodle owner wants the poodle look, please listen to the request."
+p173,2026-07-21,1,Google,"App cancels, app double books, app loses my dog's profile. Pick one problem please"
+p174,2026-07-21,5,Google,"Our 14 year old beagle is arthritic and half blind. They let her lie down for her whole groom, took breaks, and went super slow. She came home relaxed instead of shaking."
+p175,2026-07-22,2,Google,pay extra for daycare partly bc of the camera and the camera is offline half the time
+p176,2026-07-26,4,Facebook,"Very patient with Gizmo who is 13 and grumpy about his feet. They didn't force it, did what he'd allow, and told me honestly what they skipped."
+p177,2026-07-28,5,Yelp,Owner (I think her name is Dana?) came out to say hi and asked how our first visit went. Nice touch for a small business.
+p178,2026-07-30,2,Yelp,The webcam has been down for like two weeks. It's a big part of why we chose this daycare. Please fix it.
+p179,2026-07-31,5,Google,Fantastic
+p180,2026-08-03,4,Email,"Hello, do you offer gift cards? I'd like to get one for my sister's new puppy."
+p181,2026-08-04,2,Google,App said my daycare reservation was confirmed. Front desk had no record of it. Had to take the day off work.
+p182,2026-08-05,5,Nextdoor,Rainier Paws donated a free groom to our rescue's auction and it went for $300. Thank you!!
+p183,2026-08-06,2,Facebook,Our pom got a little cut on her eyelid area. Eyelid!!! It's healed but I was horrified.
+p184,2026-08-07,1,Yelp,Ever since the app update this spring my appointments keep getting cancelled by themselves. I get a cancellation email I never asked for. Then no slots for two weeks.
+p185,2026-08-10,2,Google,The parking lot is tiny and shared with the laundromat next door. Circled three times with a wet dog in the back. Dropoff is chaos at 8am.
+p186,2026-08-11,2,Google,pickup time is a suggestion apparently. 90 min late
+p187,2026-08-11,4,Google,They do a 'birthday pup' discount which is adorable. Got 10% off on Murphy's 5th birthday.
+p188,2026-08-13,1,Yelp,Dropped off at 9am for a 'three hour' groom. Picked up at 3:30. My dog was in a crate most of the day waiting his turn. That's not a three hour groom.
+p189,2026-08-13,1,Google,Dropped off at 9am for a 'three hour' groom. Picked up at 3:30. My dog was in a crate most of the day waiting his turn. That's not a three hour groom.
+p190,2026-08-18,5,Yelp,$15 walk-in nail trim and they even did a little paw pad fur trim for free. Love it.
+p191,2026-08-19,2,Email,"Hello, just letting you know the app is charging the no-show fee for appointments it cancelled itself. I was charged $25 for a groom that the app cancelled on me. Please refund."
+p192,2026-08-20,4,Google,Kenji does great work but he's booked out three weeks. Worth the wait honestly.
+p193,2026-08-20,1,Google,"Quoted $85 for a full groom, charged $140 at pickup because of a 'de-matting fee' nobody mentioned. Call me before you add $55 to my bill."
+p194,2026-08-20,2,Google,daycare went from $38 to $45 a day this year. still love it but ouch
+p195,2026-08-25,3,Google,brooke is nice. the cut was ok. not kenji level but ok
+p196,2026-08-26,2,Google,We got Brooke this time instead of Kenji. She was friendly but Charlie came back with one ear noticeably longer than the other. Asked for the other groomer next time.
+p197,2026-08-26,1,Email,"Hi, I picked up my goldendoodle Winnie on Friday and she was completely shaved, including her face and tail, when I specifically asked for a teddy bear cut. I wasn't called before they shaved her. I'm really upset, she's shivering in this weather. Please call me."
+p198,2026-08-26,2,Google,Morning daycare dropoff + laundromat crowd = gridlock in a 6 car lot. Leash your dog in the car before you open the door because it's tight.
+p199,2026-09-01,2,Yelp,"Specifically requested Kenji, got Brooke without anyone telling me. She didn't follow the notes in my profile about leaving the tail long. Not her fault entirely but someone should've said something."
+p200,2026-09-01,1,Google,"Asked for a teddy bear cut, showed a photo, got a shaved dog. My goldendoodle looks like a skinny greyhound now. It will take months to grow back."
+p201,2026-09-02,2,Nextdoor,That parking lot by the laundromat on 6th Ave is the worst. Trying to get a big dog out of the car while someone backs into you with a laundry basket.
+p202,2026-09-05,5,Facebook,dog is DEAD asleep on the couch after daycare lol. thank you rainier paws
+p203,2026-09-10,5,Facebook,Ellie comes back from daycare smiling. Like actually smiling. Then sleeps 14 hours.
+p204,2026-09-11,2,Nextdoor,Anyone else always waiting way past the pickup time at the groomer on 6th? Love them but I've lost so many afternoons.
+p205,2026-09-15,3,Yelp,"Brooke is sweet and Lola loves her, but her cuts are hit or miss. Sometimes great, sometimes I'm fixing it with my own scissors at home."
+p206,2026-09-15,5,Yelp,We have a deaf senior Jack Russell and they used touch signals instead of startling him. I teared up a little when they told me.
+p207,2026-09-16,1,Google,Cancelled my appointment three times in May without me touching it. I'm done with the app. Going to call from now on.
+p208,2026-09-16,5,Email,"Hi, I'm a vet tech at a clinic nearby and wanted to say we've started referring clients to you. Thanks for always sending dogs home with notes about anything you noticed."
+p209,2026-09-17,4,Yelp,Kenji = top tier. Front desk could be a bit more organized but the groom itself is always perfect.
+p210,2026-09-18,4,Nextdoor,Everything about Rainier Paws is great except the parking situation. Shared lot with the laundromat is cramped. Small price to pay.
+p211,2026-09-21,3,Google,"Brooke did fine on Benny but she talks on her phone while working, I could see through the window. Kinda unprofessional."
+p212,2026-09-21,3,Google,"The groom was great but I was surprised by the de-matting fee. They did show me the mats they cut out, so I believe it was needed. Just call first."
+p213,2026-09-22,5,Google,"The playgroups are well matched by size, so our tiny chihuahua isn't getting trampled by the big guys. She comes home tired and so proud of herself."
+p214,2026-09-22,1,Google,Never called me back. Left two voicemails about booking.
+p215,2026-09-23,1,Google,They added a de-matting fee and a 'difficult dog' fee for my 8 lb maltese. She is not difficult. Robbery.
+p216,2026-09-24,1,Facebook,"Rainier Paws please fix your booking app!!! It cancelled Ziggy's groom the morning of and won't let me rebook, just spins."
+p217,2026-09-25,3,Nextdoor,"Front desk was very apologetic about the app glitch that cancelled our daycare reservation, and squeezed Penny in anyway. Fix the app though."
+p218,2026-09-29,3,Google,The app is fine when it works. Since the spring update it logs me out constantly and lost my saved vaccination records so I had to reupload everything.
+p219,2026-09-30,4,Google,"Doodle cut was finally right after I brought in a printed photo and wrote '1 inch, teddy bear face, leave the tail' on it. Communication is key here."
+p220,2026-10-02,5,Nextdoor,Our dog has separation anxiety and daycare has helped so much. He's happy all day with his friends and comes home sleepy and chill.
+p221,2026-10-02,5,Facebook,Rainier Paws sponsored our school's fun run and brought a water station for dogs. Love seeing local businesses show up for the neighborhood.
+p222,2026-10-03,5,Facebook,Thank you for being so gentle with our old girl Maggie. She's 15 and we weren't sure she'd tolerate a groom anymore. You made it peaceful.
+p223,2026-10-05,2,Google,Live cam has been 'temporarily unavailable' for a month. Starting to think it's permanent.
+p224,2026-10-07,2,Nextdoor,Anyone know a groomer that doesn't add a matting fee to everything? Rainier Paws charged us extra twice now.
+p225,2026-10-09,4,Google,"Their Instagram is very cute, that's how I found them. Service lived up to it."
+p226,2026-10-10,2,Yelp,No cat grooming. Disappointed since the website just says 'pet grooming.' Drove there with my persian in a carrier for nothing.
+p227,2026-10-10,5,Google,"Brought my super squirmy terrier for a walk-in nail trim. Two staff, five minutes, done, treats given. Painless."
+p228,2026-10-11,4,Yelp,"Good experience overall, would come back."
+p229,2026-10-12,1,Facebook,$160 for a doodle groom with 'matting surcharge.' I could buy my own clippers at that price.
+p230,2026-10-12,2,Facebook,Water bowl in the lobby was empty and kind of gross. Small thing but noticed.
+p231,2026-10-13,5,Email,"Hi there, I just wanted to pass along a thank you to Kenji. Our Westie, Angus, came home looking sharp and Kenji took the time to show me a hot spot on his hip I hadn't noticed. We got it checked and it was the start of an infection. Really grateful he caught it."
+p232,2026-10-13,5,Google,"Moose drags me to the door every morning on daycare days. He knows the route. He's so excited, and then he sleeps the whole evening."
+p233,2026-10-13,5,Email,"Hi, do you ship orders from your shop? We moved to Olympia and miss buying the lavender shampoo and the salmon treats off your shelf."
+p234,2026-10-14,2,Yelp,"Labradoodle came back with a totally different look than the reference photo. Square face instead of round, body way too short."
+p235,2026-10-14,3,Nextdoor,"Does anyone know a cat groomer? Rainier Paws is dogs only, which they were nice about, they gave me a referral."
+p236,2026-10-17,2,Yelp,"Love the daycare, but grooming gave Winston a clipper rash on his neck and chest. The groomer said his skin is 'just sensitive' which might be true but then go slower?"
+p237,2026-10-17,2,Yelp,The wait to pick up is ridiculous. I arrived at the time they gave me and then stood at the counter for 40 minutes while they finished drying.
+p238,2026-10-17,5,Google,"Fear-free trained staff, and it shows. Our reactive cattle dog got lots of breaks and a lick mat. Zero stress."
+p239,2026-10-17,3,Google,Was told they'd text a photo at pickup but never got one. Groom was fine.
+p240,2026-10-20,5,Google,"Kenji is meticulous. Ollie's face is perfectly even, the feet are rounded, no stray tufts. I've been to four groomers in this city and he is the only one I trust with scissors near my dog's eyes."
+p241,2026-10-20,3,Google,Cam only covers half the yard so your dog is out of frame most of the time. Better than nothing.

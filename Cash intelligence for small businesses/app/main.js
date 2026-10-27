@@ -1,0 +1,2151 @@
+import { api, SANDBOXES, suggestBusinessName, authLive, demoAllowed } from "./api.js";
+import { consumeEmailLink, currentSession } from "./ui/auth.js";
+import { CATEGORIES, CONNECTORS } from "./catalog/connectors.js";
+import { ASK_HINTS } from "./catalog/ask-hints.js";
+import { cashChart } from "./ui/chart.js";
+import { isQuestion } from "./ui/question.js";
+import { icon, logo, logoLarge } from "./ui/icons.js";
+import { speak, listen, canSpeak, canListen, speakable, spokenMoney } from "./ui/speech.js";
+import { addDays, dayDate, esc, greeting, humanizeId, money, moneyShort, parseDate, shortDate, weekLabel } from "./ui/format.js";
+
+const $ = (sel, root = document) => root.querySelector(sel);
+
+const app = {
+  account: api.account(),
+  bizId: null,
+  signup: { step: "email", email: "", name: "", error: "", personal: false },
+  setup: { kind: "trading", picked: new Set(), reserve: "", connecting: false },
+  ctx: null,
+  brief: null,
+  review: [],
+  reviewDocs: { proposals: [], storeRevision: null },
+  decisions: [],
+  decidingProposal: false,
+  notes: [],
+  scenario: "base",
+  stressRun: null,
+  whatIf: null,
+  askLog: [],
+  attach: [], // files the owner added in the Ask bar, waiting to be sent
+  mask: false,
+  fresh: new Set(),
+  noteFilter: "all",
+  stopSpeak: null,
+  speakingIndex: -1,
+  stopListen: null,
+  drive: false,
+  interest: new Set(),
+  connections: [],
+  syncing: null,
+};
+
+try {
+  app.mask = localStorage.getItem("neri.mask") === "1";
+  const theme = localStorage.getItem("neri.theme");
+  if (theme) document.documentElement.dataset.theme = theme;
+} catch {}
+
+// ---------------------------------------------------------------- data
+async function load() {
+  app.account = api.account();
+  if (!app.account) {
+    app.ctx = null;
+    if (!["welcome", "setup"].includes(rawRoute())) history.replaceState(null, "", "#/welcome");
+    return render();
+  }
+  app.bizId = app.account.businessId ?? (demoAllowed ? app.account.sandbox ?? SANDBOXES[0].id : null);
+  await api.open(app.bizId);
+  app.ctx = await api.context();
+  if (!demoAllowed && app.ctx.business.synthetic) {
+    app.ctx = null;
+    app.brief = null;
+    throw new Error("Sample data is not available on this server. Sign in to your business.");
+  }
+  if (app.account.reserve && !app.account.reserveApplied) {
+    await api.setSafetyLine(app.account.reserve);
+    app.account = { ...app.account, reserveApplied: true };
+    try { localStorage.setItem("neri.account", JSON.stringify(app.account)); } catch {}
+  }
+  await refresh();
+}
+
+async function refresh() {
+  const prevThree = new Set((app.brief?.three ?? []).map((i) => i.id + i.cashEffect));
+  // Context too, so names for commitments added by Review, notes or plans (live partyByCommitment) stay current.
+  [app.brief, app.review, app.notes, app.ctx] = await Promise.all([api.brief(), api.review(), api.notes(), api.context()]);
+  app.rfqs = api.mode === "live" && api.salesActions ? await api.salesActions().catch((e) => Object.assign([], { reason: e.message })) : [];
+  [app.connections, app.reviewDocs] = await Promise.all([
+    api.mode === "live" && api.connections ? api.connections().catch(() => []) : [],
+    api.mode === "live" && api.reviewProposals ? api.reviewProposals() : { proposals: [], storeRevision: null },
+  ]);
+  app.decisions = api.mode === "live" && api.overrides ? await api.overrides().then((r) => (r.overrides ?? []).filter((o) => /^owner-(done|open)-/.test(o.id)), () => []) : [];
+  app.ctx.safetyLine = app.brief.run.safetyLine;
+  if (app.scenario === "stress") app.stressRun = await api.forecast("stress");
+  if (prevThree.size) {
+    app.fresh = new Set(app.brief.three.filter((i) => !prevThree.has(i.id + i.cashEffect)).map((i) => i.id));
+  }
+  render();
+}
+
+// ---------------------------------------------------------------- masking (stage mode)
+function aliasMap() {
+  const map = new Map();
+  const counters = { customer: 0, supplier: 0, agency: 0 };
+  const labels = { customer: "Customer", supplier: "Supplier", agency: "Vendor" };
+  for (const p of app.ctx.parties) {
+    if (!(p.kind in counters)) continue;
+    map.set(p.name, `${labels[p.kind]} ${String.fromCharCode(65 + counters[p.kind]++)}`);
+  }
+  // first words too ("Evergreen" in a suggestion), when they belong to exactly one party
+  for (const [name, alias] of [...map]) {
+    const first = name.split(" ")[0];
+    if (first.length > 3 && app.ctx.parties.filter((p) => p.name.startsWith(first + " ") || p.name === first).length === 1) map.set(first, alias);
+  }
+  return map;
+}
+function masked(html) {
+  if (!app.mask || !app.ctx) return html;
+  let out = html;
+  for (const [name, alias] of aliasMap()) out = out.split(name).join(alias).split(esc(name)).join(alias);
+  return out;
+}
+
+// ---------------------------------------------------------------- summary sentences (screen + voice share one source)
+function forecastReview(run = app.brief.run) {
+  // Older/preview runs without the structured checks cannot establish an all-clear either.
+  if (run.review?.needed === false) return null;
+  const reasons = run.review?.reasons ?? [];
+  const preview = !run.review && api.mode === "preview";
+  return {
+    title: run.review ? "Your forecast needs a check." : preview ? "This preview doesn't include forecast checks." : "Your forecast checks aren't available yet.",
+    message: run.review ? "Check the flagged items before relying on these dates and amounts." : preview
+      ? "Forecast checks require the live Neri server. Verify your source records before acting on these dates and amounts."
+      : "This server hasn't provided forecast checks. Verify your source records before acting on these dates and amounts.",
+    reasons,
+    messages: reasons.some((r) => r.code === "unconfirmed_signal"),
+    sources: !preview && (!reasons.length || reasons.some((r) => r.code !== "unconfirmed_signal")),
+  };
+}
+
+// Overdue items the owner can settle in one tap. "Paid / done" takes the item out of the forecast and the flags;
+// "Still open" keeps it in as expected now and stops flagging it. Both are saved owner choices and can be undone.
+const OVERDUE_CODES = ["overdue_payment", "overdue_receipt"];
+function overdueTarget(run, reason) {
+  const ev = (run.events ?? []).find((e) => e.id === reason.refs[0]);
+  return ev?.commitmentId ? { commitmentId: ev.commitmentId, legIndex: ev.legIndex } : null;
+}
+function overdueButton(t, decision, label, cls = "") {
+  const leg = t.legIndex !== undefined ? ` data-leg="${t.legIndex}"` : "";
+  return `<button class="btn small ${cls}" data-action="overdue" data-decision="${decision}" data-cid="${esc(t.commitmentId)}"${leg}>${label}</button>`;
+}
+function overdueExtras(run) {
+  if (api.mode !== "live") return "";
+  const assumed = run.assumedPaid ?? [];
+  const label = (a) => `${esc(refLabel(a.commitmentId))} ${money(a.amountBase)}, due ${shortDate(a.date)}`;
+  const line = assumed.length
+    ? `<details class="assumed-paid"><summary>${assumed.length} older item${assumed.length === 1 ? "" : "s"} assumed paid. Review</summary><ul>${assumed.map((a) => `<li>${label(a)} <span class="muted">${esc(a.basis.split("; ").pop())}</span> <span class="overdue-actions">${overdueButton({ commitmentId: a.commitmentId, legIndex: a.legIndex }, "open", "Still open")}</span></li>`).join("")}</ul></details>`
+    : "";
+  const mine = (app.decisions ?? []).map((o) => {
+    const t = { commitmentId: o.target.commitmentId, legIndex: o.target.legIndex };
+    const leg = t.legIndex !== undefined ? ` data-leg="${t.legIndex}"` : "";
+    const name = refLabel(t.commitmentId) === "Source" ? humanizeId(t.commitmentId) : refLabel(t.commitmentId);
+    return `<li>${esc(name)}: marked ${o.change.exclude === true ? "paid / done" : "still open"}. <button class="linklike" data-action="overdue" data-decision="clear" data-cid="${esc(t.commitmentId)}"${leg}>Undo</button></li>`;
+  });
+  const choices = mine.length ? `<details class="assumed-paid"><summary>${mine.length} overdue choice${mine.length === 1 ? "" : "s"} you made</summary><ul>${mine.join("")}</ul></details>` : "";
+  return line + choices;
+}
+
+function forecastReviewPanel(run = app.brief.run) {
+  const review = forecastReview(run);
+  const extras = overdueExtras(run);
+  if (!review) return extras ? `<section class="panel forecast-review quiet" aria-label="Overdue items">${extras}</section>` : "";
+  const item = (r) => {
+    const t = api.mode === "live" && OVERDUE_CODES.includes(r.code) ? overdueTarget(run, r) : null;
+    return `<li>${esc(r.message)}${t ? ` <span class="overdue-actions">${overdueButton(t, "done", "Paid / done")}${overdueButton(t, "open", "Still open", "quiet")}</span>` : ""}</li>`;
+  };
+  return `<section class="panel forecast-review" aria-label="Forecast checks">
+    <h2>${esc(review.title)}</h2><p>${esc(review.message)}</p>
+    ${review.reasons.length ? `<ul>${review.reasons.map(item).join("")}</ul>` : ""}
+    ${extras}
+    <div class="forecast-review-actions">${review.messages ? `<a class="btn small" href="#/review">Review messages</a>` : ""}${review.sources ? `<a class="btn small" href="#/sources">Check your sources</a>` : ""}</div>
+  </section>`;
+}
+
+// Home keeps the checks out of the way: one quiet line under today's things that opens the full list.
+function forecastChecksCompact(run = app.brief.run) {
+  const review = forecastReview(run);
+  if (!review) return "";
+  const n = review.reasons.length;
+  return `<details class="checks">
+    <summary><span class="sunmark" aria-hidden="true"></span><span>${n ? `${n} ${n === 1 ? "item needs" : "items need"} a check` : esc(review.title.replace(/\.$/, ""))}</span><span class="checks-more">Show</span></summary>
+    <div class="checks-body">
+      <p>${esc(review.message)}</p>
+      ${n ? `<ul>${review.reasons.map((r) => `<li>${esc(r.message)}</li>`).join("")}</ul>` : ""}
+      <div class="forecast-review-actions">${review.messages ? `<a class="btn small" href="#/review">Review messages</a>` : ""}${review.sources ? `<a class="btn small" href="#/sources">Check your sources</a>` : ""}<a class="btn small quiet" href="#/details">See the numbers</a></div>
+    </div>
+  </details>`;
+}
+
+function forecastEmpty(run = app.brief.run) {
+  return api.mode === "live" && !app.ctx?.business.synthetic && (run.review?.reasons ?? []).some((r) => ["no_opening_balance", "no_data"].includes(r.code));
+}
+
+function bankBalanceForm() {
+  const missing = (app.brief.run.review?.reasons ?? []).some((r) => r.code === "no_opening_balance");
+  const accounts = app.ctx.balanceAccounts ?? [];
+  if (!missing && !accounts.length) return ""; // Older servers cannot safely identify the account to correct.
+  const currency = app.ctx.profile.baseCurrency ?? "USD";
+  const editable = accounts.filter((a) => a.currency === currency);
+  if (accounts.length && !editable.length) return `<section class="panel" style="max-width:760px;margin-block:24px"><h2>Update your bank balance</h2><p>Upload a new statement to update your foreign-currency bank accounts.</p></section>`;
+  return `<form class="panel bank-balance" data-submit="bank-balance" style="max-width:760px;margin-block:24px">
+    <h2>${accounts.length ? "Update your bank balance" : "Add your current bank balance"}</h2>
+    ${editable.length ? `<label for="bank-account">Bank account</label><select id="bank-account" name="account" required>${editable.length > 1 ? `<option value="">Choose the account to update</option>` : ""}${editable.map((a) => `<option value="${esc(a.account)}">${esc(a.account)} (${esc(a.currency)})</option>`).join("")}</select>` : `<input type="hidden" name="account" value="main" />`}
+    <label for="bank-amount">Current bank balance (${esc(currency)})</label>
+    <input id="bank-amount" name="amount" inputmode="decimal" placeholder="Enter your actual balance" required />
+    <label for="bank-date">Balance date</label>
+    <input id="bank-date" name="asOf" type="date" value="${esc(app.ctx.business.asOf)}" max="${esc(app.ctx.business.asOf)}" required />
+    <button class="btn primary" type="submit">Save bank balance</button>
+    <p class="fineprint">Saved as a user-entered bank balance. Use the balance shown by your bank for this date; a negative balance is allowed.</p>
+  </form>`;
+}
+
+function parseBalance(value) {
+  const text = String(value).trim();
+  if (!/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/.test(text)) throw new Error("Enter the bank balance as an amount, with up to two decimal places.");
+  const [whole, cents = ""] = text.replace(/^-/, "").replaceAll(",", "").split(".");
+  const amount = (Number(whole) * 100 + Number(cents.padEnd(2, "0"))) * (text.startsWith("-") ? -1 : 1);
+  if (!Number.isSafeInteger(amount)) throw new Error("That balance is too large. Check the amount and try again.");
+  return amount;
+}
+
+function sampleBanner() {
+  if (!app.ctx?.business?.sampleLoaded) return "";
+  return `<section class="panel" style="max-width:760px;margin-bottom:16px"><p><b>You're looking at sample data</b> — a fictional trading business. <button class="btn small" data-action="sample-clear">Clear sample data</button></p></section>`;
+}
+
+function viewEmptyForecast(title = "Add your business data") {
+  return `<div class="page-head"><div><h1>${esc(title)}</h1><p>Your forecast starts with your bank balance, open invoices and bills.</p></div></div>
+    <section class="panel" style="max-width:760px"><h2>No forecast yet</h2>
+      <p>Upload your bank statement and books export, paste a message, or sync an available source. Review anything that needs your OK.</p>
+      <a class="btn primary" href="#/sources">Add your first source</a>
+      ${api.mode === "live" ? `<p><button class="btn primary" data-action="sample-load">Load sample data</button></p><p class="fineprint">Try Neri with a fictional trading business. You can clear it any time.</p>` : ""}
+      ${waitingCount() ? `<a class="btn" href="#/review">Review imported items</a>` : ""}
+    </section>${bankBalanceForm()}`;
+}
+
+function summary() {
+  const b = app.brief;
+  if (forecastEmpty()) return { headline: "Add your business data to build a forecast.", sub: "Start with your bank balance, open invoices and bills.", take: "No forecast is ready yet. Add a source to continue.", tone: "review" };
+  const run = b.run;
+  const review = forecastReview(run);
+  const safety = run.safetyLine;
+  const low = run.lowPoint;
+  const name = (pid) => app.ctx.parties.find((p) => p.id === pid)?.name;
+  if (run.firstBelowSafety) {
+    const short = safety - low.amount;
+    const holdsUntil = addDays(run.firstBelowSafety, -1);
+    // what causes the dip: the biggest outflows in the week up to the low point
+    const window = run.events.filter((e) => e.direction === "out" && e.date <= low.date && e.date > addDays(low.date, -8));
+    // Name each cause the way the owner knows it. Payments with no supplier name (from a note or a message)
+    // are grouped by where they came from, never shown as internal ids.
+    const named = [];
+    const unnamed = new Map();
+    for (const e of window.sort((a, b2) => b2.amountBase - a.amountBase).slice(0, 2)) {
+      const rec = e.sourceRef?.record ?? "";
+      const label = name(commitmentParty(e.commitmentId)) ?? app.ctx.profile?.recurring?.find((r) => r.id === rec)?.name?.toLowerCase();
+      if (label) { named.push(`${label} (${money(e.amountBase)})`); continue; }
+      const sys = e.sourceRef?.system ?? "";
+      const from = sys === "owner" ? "from your notes" : ["email", "whatsapp", "crm"].includes(sys) ? "from your messages" : "you added";
+      unnamed.set(from, [...(unnamed.get(from) ?? []), money(e.amountBase)]);
+    }
+    const causes = [...named, ...[...unnamed].map(([from, amts]) => amts.length === 1 ? `a payment ${from} (${amts[0]})` : `${amts.length === 2 ? "two" : amts.length} payments ${from} (${amts.join(" and ")})`)];
+    return {
+      headline: holdsUntil <= run.asOf
+        ? `Cash is ${money(short)} below your line right now.`
+        : `Cash holds until ${shortDate(holdsUntil)}, then drops ${money(short)} below your line.`,
+      sub: `Lowest point ${money(low.amount)} on ${dayDate(low.date)}${causes.length ? `, when ${causes.join(" and ")} go out` : ""}.`,
+      take: cfoTake(), // the check count lives once, in the fold-out under today's things
+      tone: "short",
+    };
+  }
+  if (review) return {
+    headline: review.title,
+    sub: `The current forecast shows a low point of ${money(low.amount)} on ${dayDate(low.date)}.`,
+    take: null, // the headline already says it; the fold-out lists the items
+    tone: "review",
+  };
+  const idle = b.watch.find((w) => w.warning === "idle_balance_over");
+  return {
+    headline: `You're above your line for all ${run.weeks.length} weeks.`,
+    sub: `Lowest point ${money(low.amount)} on ${dayDate(low.date)}.`,
+    take: idle ? `You're in good shape. The real question is the idle cash: ${idle.title.charAt(0).toLowerCase()}${idle.title.slice(1)}, and that money should be working.` : "You're in good shape. Nothing needs a decision this week.",
+    tone: "ok",
+  };
+}
+
+// Neri's read, the way a CFO would say it: the diagnosis, then what closes it, then what's left to decide.
+// Every figure comes from the forecast run and the ranked items; nothing here is estimated.
+function cfoTake() {
+  const b = app.brief;
+  const run = b.run;
+  const end = run.weeks[run.weeks.length - 1].closing;
+  const timing = end >= run.safetyLine;
+  const open = b.three.filter((i) => i.state === "open" && i.lever);
+  const diag = timing ? "This is a timing problem, not a profit problem." : `This isn't only timing: you finish the 13 weeks at ${money(end)}, still under your line.`;
+  if (!open.length) return `${diag} ${timing ? "Hold spending until the late money lands." : "The fix is margin or spend, not chasing."}`;
+  const after = b.combined?.lowPoint.amount ?? run.lowPoint.amount + open[0].cashEffect;
+  const fixes = open.length === 1 ? "Today's one move" : `Today's ${["", "", "two", "three"][open.length]} moves`;
+  if (after >= run.safetyLine) return `${diag} ${fixes} keep you above your line.`;
+  const rest = run.safetyLine - after;
+  return `${diag} ${fixes} lift the low point to ${money(after)}. The last ${money(rest)} needs a decision from you before ${shortDate(run.firstBelowSafety)}.`;
+}
+function ownerName() {
+  return app.account?.owner || app.ctx?.business.owner || "";
+}
+function commitmentParty(cid) {
+  return app.ctx.partyOf?.(cid);
+}
+
+function spokenBrief() {
+  const s = summary();
+  const b = app.brief;
+  const open = forecastEmpty() ? [] : b.three.filter((i) => i.state !== "done");
+  const parts = [`${greeting(new Date().getHours())}, ${ownerName()}. ${speakable(s.headline)} ${speakable(s.take ?? s.sub)}`];
+  if (open.length) {
+    parts.push(open.length === 1 ? "One thing today." : `${["", "One", "Two", "Three"][open.length]} things today.`);
+    open.forEach((i, n) => parts.push(`${open.length > 1 ? ["First", "Second", "Third"][n] + ". " : ""}${speakable(i.title)}.`));
+  } else {
+    parts.push(forecastReview() ? (b.run.review ? "Check the forecast items when you're parked." : "Verify the forecast with your source records before acting.") : "Nothing needs you today.");
+  }
+  const waiting = waitingCount() + app.notes.filter((n) => n.state === "new").length;
+  if (waiting) parts.push(`${waiting === 1 ? "One item is" : `${waiting} items are`} waiting for your OK when you're parked.`);
+  return parts;
+}
+
+// ---------------------------------------------------------------- routing + shell
+const ROUTES = ["today", "details", "notes", "review", "sources", "settings", "welcome", "setup"];
+const ALIASES = { forecast: "details", ask: "today", home: "today", signup: "welcome" };
+function rawRoute() {
+  return location.hash.replace(/^#\/?/, "") || "today";
+}
+function route() {
+  let r = ALIASES[rawRoute()] ?? rawRoute();
+  if (!app.account) return r === "setup" && app.signup.step === "done" ? "setup" : "welcome";
+  if (r === "welcome") return "today";
+  return ROUTES.includes(r) ? r : "today";
+}
+window.addEventListener("hashchange", () => {
+  closeSheet();
+  render();
+  window.scrollTo(0, 0);
+});
+
+function waitingCount() {
+  const priced = new Set(app.review.map((i) => i.signal.id));
+  const unpriced = (app.reviewDocs.signals ?? []).filter((i) => !priced.has(i.signal.id)).length;
+  return app.review.length + app.reviewDocs.proposals.filter(needsOwner).length + unpriced;
+}
+function notesWaiting() {
+  return app.notes.filter((n) => n.state === "new").length;
+}
+
+function renderShell() {
+  const r = route();
+  const portal = r === "welcome" || r === "setup";
+  document.body.classList.toggle("portal", portal);
+  if (portal) {
+    $("#top").innerHTML = `<div class="top-inner"><span class="brand">${logo}<b>Neri <span>Cash</span></b></span></div>`;
+    $("#bottom").innerHTML = "";
+    $("#preview-note").innerHTML = "";
+    $("#talk").hidden = true;
+    return;
+  }
+  const tab = (id, label, count) =>
+    `<a class="tab" href="#/${id}" ${r === id ? 'aria-current="page"' : ""}>${label}${count ? `<span class="count" aria-label="${count} waiting">${count}</span>` : ""}</a>`;
+  $("#top").innerHTML = `
+    <div class="top-inner">
+      <a class="brand" href="#/today" aria-label="Neri Cash home">${logo}<b>Neri <span>Cash</span></b></a>
+      <nav class="tabs" aria-label="Main">
+        ${tab("today", "Home")}${tab("details", "Details")}${tab("notes", "Notes", notesWaiting())}${tab("review", "Review", waitingCount())}${tab("sources", "Sources")}
+      </nav>
+      <div class="top-right">
+        ${statusDots()}
+        <a class="icon-btn" href="#/settings" title="Settings">${icon.gear}<span class="sr">Settings</span></a>
+      </div>
+    </div>`;
+  const nav = (id, label, ic, count) =>
+    `<a href="#/${id}" ${r === id ? 'aria-current="page"' : ""}>${ic}${label}${count ? `<span class="count">${count}</span>` : ""}</a>`;
+  $("#bottom").innerHTML =
+    nav("today", "Home", icon.ask) + nav("details", "Details", icon.chart) +
+    `<span class="nav-slot" aria-hidden="true"></span>` +
+    nav("notes", "Notes", icon.note, notesWaiting() + waitingCount()) + nav("sources", "Sources", icon.plug);
+  $("#talk").hidden = false;
+  $("#preview-note").innerHTML = app.ctx.business.synthetic
+    ? app.account?.sample
+      ? `Sample business with fictional data<span class="wide-only">. Today is set to ${dayDate(app.ctx.business.asOf)}</span>.`
+      : `Preview: your connections are simulated, so Neri shows a sample ${esc(app.ctx.profile.displayName.toLowerCase())} business<span class="wide-only">. Today is set to ${dayDate(app.ctx.business.asOf)}</span>.`
+    : "";
+}
+
+// Connection health as dots: green connected, yellow waiting (file or setup), red needs attention.
+function connections() {
+  if (app.account?.connections?.length) return app.account.connections;
+  return app.ctx.business.sources.map((src) => ({ id: src.id, name: src.label, state: src.state === "ok" ? "ok" : src.state === "error" ? "error" : "waiting", syncedAt: src.syncedAt }));
+}
+function statusDots() {
+  const list = connections();
+  const label = list.map((c) => `${c.name}: ${c.state === "ok" ? "connected" : c.state === "error" ? "needs attention" : "waiting for a file"}`).join(", ");
+  return `<a class="dots" href="#/sources" title="${esc(label)}" aria-label="Connections. ${esc(label)}">${list.slice(0, 8).map((c) => `<i class="d ${c.state === "ok" ? "" : c.state === "error" ? "red" : "amber"}"></i>`).join("")}${list.length > 8 ? `<small>+${list.length - 8}</small>` : ""}</a>`;
+}
+
+function render() {
+  const r = route();
+  if (!app.ctx && r !== "welcome" && r !== "setup") return;
+  renderShell();
+  const views = { today: () => sampleBanner() + viewToday(), details: viewDetails, notes: viewNotes, review: viewReview, sources: viewSources, settings: viewSettings, welcome: viewWelcome, setup: viewSetup };
+  const prevDeck = document.getElementById("deck");
+  const keepLeft = prevDeck ? prevDeck.scrollLeft : 0;
+  const keepFocus = document.activeElement?.closest?.("#deck") ? document.activeElement.dataset.action + ":" + document.activeElement.dataset.id : null;
+  $("#view").innerHTML = masked(views[r]());
+  const deck = document.getElementById("deck");
+  if (deck && keepLeft) deck.scrollLeft = keepLeft;
+  if (deck && keepFocus) {
+    const [act, fid] = keepFocus.split(":");
+    [...deck.querySelectorAll(`[data-action="${act}"]`)].find((b) => b.dataset.id === fid)?.focus({ preventScroll: true });
+  }
+  requestAnimationFrame(syncDeck);
+  document.title = `${{ today: "Home", details: "Details", notes: "Notes", review: "Review", sources: "Sources", settings: "Settings", welcome: "Sign up", setup: "Set up" }[r]} · Neri Cash`;
+  if (app.drive) renderDrive();
+}
+
+// ---------------------------------------------------------------- Today
+function viewToday() {
+  if (forecastEmpty()) return viewEmptyForecast();
+  const b = app.brief;
+  const s = summary();
+  const sales = forecastEmpty() ? [] : salesActions(3 - b.three.length);
+  const rfqs = (app.rfqs ?? []).slice(0, Math.max(0, 3 - b.three.length - sales.length));
+  const n = b.three.length + sales.length + rfqs.length;
+  const waitingRev = waitingCount();
+  const waitingNotes = notesWaiting();
+  const waiting = [waitingRev ? `${waitingRev} ${waitingRev === 1 ? "message" : "messages"}` : "", waitingNotes ? `${waitingNotes} ${waitingNotes === 1 ? "note" : "notes"}` : ""].filter(Boolean).join(" and ");
+  return `
+  <div class="home">
+    <section class="home-top">
+      <h1 class="headline">${esc(s.headline)}</h1>
+      <p class="subhead">${esc(s.sub)}</p>
+      ${s.take ? `<p class="take"><span class="sunmark" aria-hidden="true"></span>${esc(s.take)}</p>` : ""}
+      <div class="home-links">
+        ${canSpeak ? `<button class="listen" data-action="listen" aria-pressed="${app.stopSpeak ? "true" : "false"}"><span class="disc">${app.stopSpeak ? icon.stop : icon.play}</span>${app.stopSpeak ? "Stop" : "Play brief"} <small>${spokenLength()} sec</small></button>` : ""}
+        <button class="btn quiet" data-action="drive">${icon.car}Drive mode</button>
+        <a class="btn quiet" href="#/details">See the numbers</a>
+      </div>
+    </section>
+
+    <section class="today-list" aria-labelledby="today-h">
+      <div class="deck-head">
+        <h2 class="section-title" id="today-h">${n ? (n === 1 ? "One thing today" : `${["", "One", "Two", "Three"][n]} things today`) : "Today"}</h2>
+        ${n > 1 ? `<div class="deck-nav"><button class="deck-arrow" data-action="deck" data-dir="-1" aria-label="Previous">${arrow("left")}</button><button class="deck-arrow" data-action="deck" data-dir="1" aria-label="Next">${arrow("right")}</button></div>` : ""}
+      </div>
+      ${n ? `<ol class="deck ${n === 1 ? "single" : ""}" id="deck" aria-label="Today's things" tabindex="0">${b.three.map((i, k) => homeCard(i, k, n)).join("")}${sales.map((x, k) => salesCard(x, b.three.length + k, n)).join("")}${rfqs.map((x, k) => rfqCard(x, b.three.length + sales.length + k, n)).join("")}</ol>
+        ${n > 1 ? `<div class="deck-dots" aria-hidden="true">${Array.from({ length: n }, (_, k) => `<i class="${k === 0 ? "on" : ""}"></i>`).join("")}</div>` : ""}` : `<p class="calm">${forecastReview() ? (b.run.review ? "No cash actions are ranked yet. Check the flagged items below first." : "No cash actions are ranked yet. Forecast checks are unavailable.") : "Nothing needs you today. Neri will speak up if a payment moves."}</p>`}
+      ${waiting ? `<a class="waiting" href="#/${waitingRev ? "review" : "notes"}"><span class="sunmark"></span>${waiting} waiting for your OK</a>` : ""}
+      ${api.mode === "live" && b.three.length < 3 && !(app.rfqs ?? []).length && app.rfqs?.reason ? `<p class="fineprint" style="margin-top:10px">Sales follow-ups: ${esc(app.rfqs.reason)}</p>` : ""}
+      ${forecastChecksCompact()}
+    </section>
+
+    <section class="convo" aria-label="Conversation with Neri">${app.askLog.map(turnHtml).join("")}</section>
+    <div class="dock stick">
+      ${app.askLog.length ? "" : `<div class="dock-hints" role="group" aria-label="Try asking">${askHints().map((h) => `<button class="hint" data-action="hint" data-q="${esc(h)}">${esc(h)}</button>`).join("")}</div>`}
+      ${askBar("Ask Neri, or park a thought", [], true)}
+    </div>
+  </div>`;
+}
+
+// Fixed text, shared with the demo intent cache, so every hint gets a real answer with no API key.
+function askHints() {
+  return ASK_HINTS;
+}
+
+// One card per thing, side by side. The focused card fills the column; the next one peeks in as a lead-in.
+function homeCard(i, k, n) {
+  const done = i.state === "done";
+  const ref = i.evidenceRefs?.[0];
+  const draft = i.actions.some((a) => a.kind === "draft_email");
+  return `
+  <li class="card ${done ? "done" : ""} ${app.fresh.has(i.id) ? "fresh" : ""}" aria-label="Thing ${k + 1} of ${n}">
+    <p class="card-effect"><b>${money(i.cashEffect, { signed: true })}</b><span>${i.warning === "early_pay_discount" ? "saved" : "to your low point"}</span></p>
+    <h3 class="card-title">${esc(i.title)}</h3>
+    <p class="card-why">${esc(i.why)}</p>
+    <div class="card-actions">
+      ${done ? "" : `<span class="card-by">Act by <b>${shortDate(i.neededBy)}</b></span>`}
+      ${draft && !done ? `<button class="btn small primary" data-action="draft" data-id="${esc(i.id)}">${icon.mail}Draft email</button>` : ""}
+      <button class="btn small ${done ? "" : "quiet"}" data-action="done" data-id="${esc(i.id)}" aria-pressed="${done}">${icon.check}${done ? "Done" : "Mark done"}</button>
+      ${ref ? `<button class="src" data-action="record" data-id="${esc(ref)}" title="Where this number comes from">${esc(refLabel(ref))}</button>` : ""}
+    </div>
+  </li>`;
+}
+// Sales moves for the days the cash list is short: open deals and quoted RFQs from the CRM (the forecast's
+// "possible" money, never in the main line). Cash actions always come first; these only fill empty slots.
+// Every figure is the forecast event's own amount and date; nothing is estimated here.
+function salesActions(limit) {
+  if (limit <= 0) return [];
+  const run = app.brief.run;
+  const byDeal = new Map();
+  for (const e of run.events ?? []) {
+    if (e.status !== "possible" || e.direction !== "in" || !e.commitmentId || e.date < run.asOf) continue;
+    if (!byDeal.has(e.commitmentId)) byDeal.set(e.commitmentId, e);
+  }
+  const partyName = (cid) => app.ctx.parties.find((p) => p.id === app.ctx.partyOf?.(cid))?.name;
+  return [...byDeal.values()]
+    .sort((a, b2) => a.date.localeCompare(b2.date) || b2.amountBase - a.amountBase)
+    .slice(0, limit)
+    .map((e) => {
+      const who = partyName(e.commitmentId);
+      const deal = (e.sourceRef?.record ?? "").replace(/\s*\(.*\)\s*$/, "") || "this deal";
+      return { id: `sales-${e.commitmentId}`, ref: e.commitmentId, who, deal, amount: e.amountBase, date: e.date, basis: e.basis };
+    });
+}
+function salesCard(s, k, n) {
+  return `
+  <li class="card sales" aria-label="Thing ${k + 1} of ${n}">
+    <p class="card-effect"><b>${money(s.amount)}</b><span>if it closes</span><em class="card-tag">Sales</em></p>
+    <h3 class="card-title">Follow up ${s.who ? `with ${esc(s.who)} ` : ""}on ${esc(s.deal)}</h3>
+    <p class="card-why">${esc(s.basis.charAt(0).toUpperCase() + s.basis.slice(1))}. Possible money: it stays off your main forecast until the deal is won.</p>
+    <div class="card-actions">
+      <span class="card-by">Expected <b>${shortDate(s.date)}</b></span>
+      <button class="src" data-action="record" data-id="${esc(s.ref)}" title="Open the deal">${esc(s.deal)}</button>
+    </div>
+  </li>`;
+}
+
+// An RFQ in play from the CRM: who, which stage and for how long, and the next step the team wrote down.
+function rfqCard(r, k, n) {
+  const overdue = r.nextActionDate && r.nextActionDate < app.ctx.business.asOf;
+  return `
+  <li class="card sales" aria-label="Thing ${k + 1} of ${n}">
+    <p class="card-effect"><b>${esc(r.stage)}</b>${r.daysInStage != null ? `<span>for ${r.daysInStage} day${r.daysInStage === 1 ? "" : "s"}</span>` : ""}<em class="card-tag">Sales</em></p>
+    <h3 class="card-title">Move ${esc(r.title)} forward${r.customer ? ` with ${esc(r.customer)}` : ""}</h3>
+    <p class="card-why">${r.nextAction ? `Next step: ${esc(r.nextAction)}` : "No next step is written down in the CRM."}${r.quoteSent ? ` Quote sent ${shortDate(r.quoteSent)}.` : ""}${r.quoteValidUntil ? ` Quote valid until ${shortDate(r.quoteValidUntil)}.` : ""} The CRM has no quote value on this RFQ yet, so it adds nothing to your forecast.</p>
+    <div class="card-actions">
+      ${r.nextActionDate ? `<span class="card-by">${overdue ? "Was due" : "Next step by"} <b>${shortDate(r.nextActionDate)}</b></span>` : ""}
+    </div>
+  </li>`;
+}
+
+function arrow(dir) {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${dir === "left" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"}"/></svg>`;
+}
+function deckIndex(deck) {
+  const cards = [...deck.children];
+  const left = deck.getBoundingClientRect().left;
+  let best = 0;
+  cards.forEach((c, k) => {
+    if (Math.abs(c.getBoundingClientRect().left - left) < Math.abs(cards[best].getBoundingClientRect().left - left)) best = k;
+  });
+  return best;
+}
+function syncDeck() {
+  const deck = document.getElementById("deck");
+  if (!deck) return;
+  const k = deckIndex(deck);
+  document.querySelectorAll(".deck-dots i").forEach((d, n) => d.classList.toggle("on", n === k));
+  [...deck.children].forEach((c, n) => c.classList.toggle("focus", n === k));
+  const [prev, next] = document.querySelectorAll(".deck-arrow");
+  if (prev) prev.disabled = k === 0;
+  if (next) next.disabled = k === deck.children.length - 1;
+}
+function moveDeck(dir) {
+  const deck = document.getElementById("deck");
+  if (!deck) return;
+  const k = Math.max(0, Math.min(deck.children.length - 1, deckIndex(deck) + dir));
+  deck.scrollTo({ left: deck.children[k].offsetLeft - deck.children[0].offsetLeft, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+document.addEventListener("scroll", (e) => {
+  if (e.target?.id === "deck") syncDeck();
+}, true);
+document.addEventListener("keydown", (e) => {
+  if (e.target?.id !== "deck") return;
+  if (e.key === "ArrowRight") moveDeck(1);
+  if (e.key === "ArrowLeft") moveDeck(-1);
+});
+
+function thingRow(i) {
+  const done = i.state === "done";
+  const ref = i.evidenceRefs?.[0];
+  const actions = i.actions.map((a) => (a.kind === "draft_email" ? `<button class="btn small" data-action="draft" data-id="${esc(i.id)}">${icon.mail}Draft email</button>` : "")).join("");
+  return `
+  <li class="thing ${done ? "done" : ""}">
+    <button class="check" data-action="done" data-id="${esc(i.id)}" aria-pressed="${done}" aria-label="${done ? "Done" : "Mark done"}: ${esc(i.title)}">${icon.check}</button>
+    <div><h3>${esc(i.title)}</h3><p>${esc(i.why)}</p></div>
+    <div class="effect"><b>${money(i.cashEffect, { signed: true })}</b><span>${i.warning === "early_pay_discount" ? "saved" : "to your low point"}</span></div>
+    <div class="thing-actions"><span class="by">Act by <b>${shortDate(i.neededBy)}</b></span>${actions}${ref ? `<button class="src" data-action="record" data-id="${esc(ref)}">${esc(refLabel(ref))}</button>` : ""}</div>
+  </li>`;
+}
+
+function refLabel(id) {
+  const m = id.replace(/^(inv|po|bill|deal|rfq|rec|plan)-/, "").match(/^(INV|PO|BILL|SO|RFQ|DUT|PF|B)-[\w-]+/);
+  return m ? m[0].replace(/-(dep|bal)$/, "") : "Source";
+}
+
+function sampleCard(pa) {
+  if (!pa || (api.mode === "live" && !demoAllowed)) return "";
+  return `<div class="sample-card"><span class="tag">Sample</span><div>${esc(pa.label)}<small>${esc(pa.disclosure)}</small></div></div>`;
+}
+
+function inboxPanel() {
+  const rev = app.review;
+  const notes = app.notes.filter((n) => n.state === "new");
+  if (!rev.length && !notes.length) return "";
+  return `<section class="panel"><h2>Waiting for your OK</h2>
+    ${rev.map((r) => `<a class="inbox-item" href="#/review" style="text-decoration:none;color:inherit"><span class="ico">${icon.mail}</span><span><b>${esc(r.party?.name ?? "A message")} wrote about ${esc(r.commitment.sourceRef.record)}</b><span>Could move your low point ${money(r.signal.effect.lowPointDelta, { signed: true })}</span></span></a>`).join("")}
+    ${notes.length ? `<a class="inbox-item" href="#/notes" style="text-decoration:none;color:inherit"><span class="ico">${icon.note}</span><span><b>${notes.length} parked ${notes.length === 1 ? "thought" : "thoughts"}</b><span>Neri has a reading for each. Add them to the forecast or keep them as notes.</span></span></a>` : ""}
+  </section>`;
+}
+
+// Times show in the business's own timezone (set at onboarding), not the viewer's.
+function tz() {
+  return app.ctx?.business?.timezone ?? undefined;
+}
+function clock(iso) {
+  return new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: tz() });
+}
+function dayOf(iso) {
+  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: tz() });
+}
+function syncTime(iso) {
+  const day = new Date(iso).toLocaleDateString("en-CA", { timeZone: tz() });
+  return day === app.ctx.business.asOf ? clock(iso) : `${dayOf(iso)}, ${clock(iso)}`;
+}
+
+function spokenLength() {
+  const words = spokenBrief().join(" ").split(/\s+/).length;
+  return Math.max(10, Math.round(words / 2.6));
+}
+
+function askBar(placeholder, hints = [], branded = false) {
+  const files = branded && app.attach.length
+    ? `<ul class="attach-list" aria-label="Files to send">${app.attach.map((f, k) => `<li class="attach-chip"><span>${esc(f.name)}</span><button type="button" data-action="unattach" data-k="${k}" aria-label="Remove ${esc(f.name)}">×</button></li>`).join("")}</ul>`
+    : "";
+  return `${files}
+  <form class="askbar ${branded ? "branded" : ""}" data-submit="ask">
+    ${branded ? `<label class="attach-btn" title="Add photos or files"><span class="sr">Add photos or files</span>${icon.plus}<input type="file" multiple accept="image/*,.pdf,.csv,.xlsx,.xls,.doc,.docx,.eml,.txt" data-change="attach" hidden /></label>` : ""}
+    <label class="sr" for="askq">Ask Neri</label>
+    <input id="askq" name="q" placeholder="${esc(placeholder)}" autocomplete="off" />
+    ${canListen ? `<button type="button" class="mic" data-action="mic-ask" aria-pressed="${app.stopListen ? "true" : "false"}" title="Speak">${icon.mic}<span class="sr">Speak</span></button>` : ""}
+    <button class="send" type="submit" title="Ask">${icon.send}<span class="sr">Ask</span></button>
+  </form>
+  ${hints.length ? `<div class="ask-hints">${hints.map((h) => `<button class="hint" data-action="hint" data-q="${esc(h)}">${esc(h)}</button>`).join("")}</div>` : ""}`;
+}
+
+// ---------------------------------------------------------------- Forecast
+function chartWidth() {
+  const main = $("#view");
+  const w = (main?.clientWidth ?? 900) - 50;
+  return Math.max(300, Math.min(1130, w));
+}
+
+function viewDetails() {
+  if (forecastEmpty()) return viewEmptyForecast("Your forecast needs source data");
+  const b = app.brief;
+  const run = b.run;
+  const figures = `
+  <div class="kpis">
+    <div class="fig"><small>Cash today</small><b>${money(run.openingBalance)}</b><span>Bank, ${shortDate(addDays(run.asOf, -1))}</span></div>
+    <div class="fig"><small>Lowest point</small><b class="${run.lowPoint.amount < 0 ? "below" : ""}">${money(run.lowPoint.amount)}</b><span>${dayDate(run.lowPoint.date)}</span></div>
+    <div class="fig"><small>Your line</small><b>${money(run.safetyLine)}</b><a class="link" href="#/settings">Change</a></div>
+    <div class="fig"><small>Weeks under your line</small><b>${run.weeksBelowSafety.length}</b><span>of ${run.weeks.length}</span></div>
+  </div>`;
+  const together = b.combined && b.three.filter((i) => i.state === "open").length > 1
+    ? `<p class="together">Do all of today's things and your low point goes from <b>${money(run.lowPoint.amount)}</b> to <b>${money(b.combined.lowPoint.amount)}</b>.</p>` : "";
+  const shortfall = b.shortfall ? `<div class="shortfall"><h4>${esc(b.shortfall.title)}</h4><p>${esc(b.shortfall.why)}</p>${sampleCard(b.shortfall.partnerAction)}</div>` : "";
+  const rest = b.rest.length ? `<h2 class="section-title" style="margin-top:40px">More you could do</h2><ol class="things">${b.rest.map(thingRow).join("")}</ol>` : "";
+  const watch = b.watch.length
+    ? `<h2 class="section-title" style="margin-top:40px">Keep an eye on</h2><p class="section-note">Nothing to do yet. Neri tells you if these turn into actions.</p>
+       ${b.watch.map((w) => `<div class="watch-item"><h4>${esc(w.title)}</h4>${w.warning === "ar_concentration_risk" ? `<button class="btn small quiet" data-action="draft" data-id="${esc(w.id)}">${icon.mail}Draft a terms note</button>` : ""}<p>${esc(w.why)}</p>${w.partnerAction ? `<div style="grid-column:1/-1;margin-top:8px">${sampleCard(w.partnerAction)}</div>` : ""}</div>`).join("")}` : "";
+  return `
+  <div class="page-head"><div><h1>Details</h1><p>The numbers behind today's brief. Tap any week or source to see where a number comes from.</p></div></div>
+  ${forecastReviewPanel(app.scenario === "stress" && app.stressRun ? app.stressRun : run)}
+  ${figures}
+  ${forecastBody()}
+  <div class="details-grid">
+    <div>${together}${shortfall}${rest}${watch}</div>
+    <aside class="side">${inboxPanel()}
+      <section class="panel"><h2>Reading from</h2>
+        ${app.ctx.business.sources.map((src) => `<div class="source-row"><span class="dot ${src.state === "ok" ? "" : "warn"}"></span>${esc(src.label)}<time>${syncTime(src.syncedAt)}</time></div>`).join("")}
+        <div class="more"><span></span><a href="#/sources">Add a source</a></div></section>
+    </aside>
+  </div>`;
+}
+
+function forecastBody() {
+  const run = app.scenario === "stress" && app.stressRun ? app.stressRun : app.brief.run;
+  const base = app.brief.run;
+  const narrow = window.innerWidth < 760;
+  const chart = cashChart(run, {
+    width: chartWidth(),
+    height: narrow ? 240 : 320,
+    ghost: app.scenario === "stress" ? base : null,
+    whatIf: app.whatIf?.run ?? null,
+    selectedWeek: app.selectedWeek,
+  });
+  const lowWeek = run.lowPoint.week;
+  return `
+  <div class="page-head sub">
+    <div><h2 class="section-title" style="font-size:18px">Next 13 weeks</h2></div>
+    <div class="seg" role="group" aria-label="Scenario">
+      <button data-action="scenario" data-s="base" aria-pressed="${app.scenario === "base"}">Expected</button>
+      <button data-action="scenario" data-s="stress" aria-pressed="${app.scenario === "stress"}">If customers pay a week late</button>
+    </div>
+  </div>
+  ${app.whatIf ? `<div class="together" style="margin:0 0 14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span>Showing what-if: <b>${esc(app.whatIf.label)}</b>. Low point ${money(app.whatIf.run.lowPoint.amount)} on ${shortDate(app.whatIf.run.lowPoint.date)}.</span><button class="btn small" data-action="clear-whatif">Clear what-if</button></div>` : ""}
+  <section class="panel chart-panel">
+    <div data-chart="main">${chart}</div>
+    <div class="legend">
+      <span><i></i>${app.scenario === "stress" ? "Customers a week late" : "Expected cash"}</span>
+      ${app.scenario === "stress" ? `<span><i class="ghost"></i>Expected</span>` : `<span><i class="ghost"></i>With quoted ${esc(app.ctx.profile.vocabulary?.quote ?? "deal")}s (weighted by chance)</span>`}
+      ${app.whatIf ? `<span><i class="whatif"></i>What-if</span>` : ""}
+      <span><i class="safety"></i>Your line, ${money(run.safetyLine)}</span>
+      <span><i class="dip"></i>Under your line</span>
+    </div>
+  </section>
+  <table class="weeks">
+    <thead><tr><th>Week</th><th>Money in</th><th>Money out</th><th class="hide-sm">Lowest day</th><th>End of week</th></tr></thead>
+    <tbody>
+      ${run.weeks.map((w) => `<tr class="row ${w.start === lowWeek ? "low" : ""}" data-action="week" data-week="${esc(w.start)}" tabindex="0">
+        <td>${w.start === lowWeek ? '<span class="mark" aria-hidden="true"></span>' : ""}${weekLabel(w.start)}</td>
+        <td class="in">${w.inflow ? money(w.inflow) : "—"}</td>
+        <td>${w.outflow ? money(-w.outflow) : "—"}</td>
+        <td class="hide-sm ${w.minClosing < 0 ? "below" : ""}">${money(w.minClosing)}</td>
+        <td class="${w.closing < 0 ? "below" : ""}"><b>${money(w.closing)}</b></td>
+      </tr>`).join("")}
+    </tbody>
+  </table>`;
+}
+
+// ---------------------------------------------------------------- Notes (parked thoughts)
+const KIND_LABEL = { spend: "Spend", collection: "Collection", new_business: "New business", investment: "Investment", note: "Note" };
+
+function viewNotes() {
+  const list = app.notes.filter((n) => app.noteFilter === "all" || n.reading.kind === app.noteFilter);
+  const counts = Object.fromEntries(Object.keys(KIND_LABEL).map((k) => [k, app.notes.filter((n) => n.reading.kind === k).length]));
+  return `
+  <div class="page-head"><div><h1>Notes</h1><p>Park a thought the moment you have it. Neri works out what it means for cash and waits for your OK.</p></div></div>
+  <div class="notes">
+    <div>
+      <form class="capture" data-submit="park">
+        <label class="sr" for="thought">New thought</label>
+        <textarea id="thought" name="text" placeholder="A spend coming up, money someone promised, a deal that might land, an investment you're weighing…"></textarea>
+        <div class="capture-row">
+          ${canListen ? `<button type="button" class="mic" data-action="mic-note" aria-pressed="${app.stopListen ? "true" : "false"}" title="Say it">${icon.mic}<span class="sr">Say it</span></button>` : ""}
+          <span class="grow" style="font-size:13px;color:var(--ink-faint)" id="capture-status">${canListen ? "Type or tap the mic." : ""}</span>
+          <button class="btn primary" type="submit">Park it</button>
+        </div>
+      </form>
+      <div class="kinds" role="group" aria-label="Filter notes">
+        <button class="kind-filter" data-action="note-filter" data-k="all" aria-pressed="${app.noteFilter === "all"}">All ${app.notes.length}</button>
+        ${Object.entries(KIND_LABEL).filter(([k]) => counts[k]).map(([k, l]) => `<button class="kind-filter" data-action="note-filter" data-k="${k}" aria-pressed="${app.noteFilter === k}">${l} ${counts[k]}</button>`).join("")}
+      </div>
+      ${list.length ? list.map(noteRow).join("") : `<p style="color:var(--ink-soft);padding:20px 0">No notes here yet.</p>`}
+    </div>
+    <aside class="side">
+      <section class="panel">
+        <h2>How Neri reads a note</h2>
+        <p style="margin:0 0 10px;font-size:14px">It looks for money in or out, the amount, the date, who it's with, and how sure you sound.</p>
+        <p style="margin:0 0 10px;font-size:14px">A spend or investment becomes a planned payment. Money a customer promised moves that invoice. A possible deal counts only on the dotted pipeline line, weighted by its chance.</p>
+        <p style="margin:0;font-size:14px;color:var(--ink-soft)">Nothing reaches your forecast until you add it. Notes you keep stay here, searchable, for when they matter.</p>
+      </section>
+    </aside>
+  </div>`;
+}
+
+function noteRow(n) {
+  const r = n.reading;
+  const meta = `<div class="meta"><span class="kind-chip ${esc(r.kind)}">${KIND_LABEL[r.kind]}</span><span>${n.via === "voice" ? "Said" : "Typed"} ${dayOf(n.createdAt)}, ${clock(n.createdAt)}</span>${n.state === "added" ? `<span class="settled-tag">Added to forecast</span>` : n.state === "kept" ? `<span class="settled-tag" style="color:var(--ink-faint)">Kept as a note</span>` : ""}</div>`;
+  if (n.state !== "new") return `<article class="note settled"><blockquote>${esc(n.text)}</blockquote>${meta}</article>`;
+
+  const party = r.partyId ? app.ctx.parties.find((p) => p.id === r.partyId)?.name : null;
+  // The owner can flip a misread direction ("a loan coming in" read as money out) before adding it. Not for
+  // a promised invoice payment (priced as that invoice's timing) or a possible deal (always pipeline income).
+  const canSwitch = !r.invoiceId && r.status !== "possible";
+  const dirButton = (to, label) => canSwitch
+    ? `<button class="linklike dir-switch" data-action="note-direction" data-to="${to}" data-id="${esc(n.id)}">${label}</button>` : "";
+  const dir = r.direction === "in" ? `Money in${dirButton("out", "Switch to money out")}`
+    : r.direction === "out" ? `Money out${dirButton("in", "Switch to money in")}`
+      : canSwitch ? `${dirButton("in", "Money in")}${dirButton("out", "Money out")}` : "—";
+  const field = (k, label, v, input) => `<div><dt>${label}</dt><dd>${v != null ? v : input}</dd></div>`;
+  const amountInput = `<input inputmode="decimal" placeholder="$ amount" data-note-field="amount" data-id="${esc(n.id)}" aria-label="Amount" />`;
+  const dateInput = `<input type="date" data-note-field="date" data-id="${esc(n.id)}" aria-label="Date" />`;
+  const reading = r.kind === "note"
+    ? `<div class="reading"><h5>Neri's reading</h5><p class="impact" style="margin:0">No amount or date, so this stays a note. Neri will bring it up if it becomes relevant.</p>
+        <div class="actions"><button class="btn small" data-action="note-decide" data-d="keep" data-id="${esc(n.id)}">Keep as a note</button><button class="btn small quiet" data-action="note-decide" data-d="remove" data-id="${esc(n.id)}">Remove</button></div></div>`
+    : `<div class="reading"><h5>Neri's reading</h5>
+        <dl>
+          ${field("dir", "Direction", dir)}
+          ${field("amount", "Amount", r.amount != null ? money(r.amount) : null, amountInput)}
+          ${field("date", "When", r.date ? shortDate(r.date) : null, dateInput)}
+          ${party ? field("party", "With", esc(party)) : ""}
+          ${r.status === "possible" ? field("p", "Chance", `${Math.round((r.probability ?? 0.4) * 100)}%`) : field("p", "Certainty", r.invoiceId ? "Promised" : r.received ? "Received" : "Planned")}
+        </dl>
+        <p class="impact">${noteImpact(n)}</p>
+        <div class="actions">
+          <button class="btn small primary" data-action="note-decide" data-d="add" data-id="${esc(n.id)}" ${r.missing.length || n.effect?.outside ? "disabled" : ""}>Add to forecast</button>
+          <button class="btn small" data-action="note-decide" data-d="keep" data-id="${esc(n.id)}">Keep as a note</button>
+          <button class="btn small quiet" data-action="note-decide" data-d="remove" data-id="${esc(n.id)}">Remove</button>
+        </div></div>`;
+  return `<article class="note"><blockquote>${esc(n.text)}</blockquote>${meta}${reading}</article>`;
+}
+
+function noteImpact(n) {
+  if (forecastEmpty()) return "Add your bank balance and source records to see the cash effect.";
+  const r = n.reading;
+  const e = n.effect;
+  if (r.missing.length) return `Add the ${r.missing.join(" and ")} to see what it does to your cash.`;
+  if (!e) return "";
+  if (e.outside) return `That's after this 13-week view. Neri keeps it and brings it in when it's in range.`;
+  if (e.pipeline != null) return `Possible income. It adds ${money(e.pipeline)} to the dotted pipeline line (${Math.round((r.probability ?? 0.4) * 100)}% of ${money(r.amount)}), never to the main forecast.`;
+  if (r.invoiceId) {
+    return e.lowPointDelta > 0
+      ? `If that payment lands ${shortDate(r.date)}, your low point rises ${money(e.lowPointDelta)} to ${money(e.lowPoint.amount)}.`
+      : `That doesn't change your low point (${money(e.lowPoint.amount)} on ${shortDate(e.lowPoint.date)}).`;
+  }
+  if (e.lowPointDelta < 0) return `Your low point drops ${money(-e.lowPointDelta)}, to ${money(e.lowPoint.amount)} on ${shortDate(e.lowPoint.date)}.`;
+  if (e.lowPointDelta > 0) return `Your low point rises ${money(e.lowPointDelta)}, to ${money(e.lowPoint.amount)}.`;
+  return `Your low point stays ${money(e.lowPoint.amount)} on ${shortDate(e.lowPoint.date)}. This lands after your tightest week.`;
+}
+
+// ---------------------------------------------------------------- Review
+// How the owner recognises an imported message: what it was about and who sent it, never its message id.
+function messageLabel(item) {
+  // Only the message itself carries the subject and sender; an attachment's evidence does not, and the store does
+  // not promise the message comes first.
+  const named = item.evidence?.find((e) => e.sourceRef?.subject || e.sourceRef?.from);
+  const ev = named ?? item.evidence?.[0];
+  const sr = named?.sourceRef ?? {};
+  const when = ev?.receivedAt ? dayOf(ev.receivedAt) : "";
+  const byline = [sr.from ? `From ${sr.from}` : "", when].filter(Boolean).join(", ");
+  return { subject: sr.subject, from: sr.from, when, byline, title: sr.subject ?? (sr.from ? `Message from ${sr.from}` : `${{ email: "Email", whatsapp: "WhatsApp message" }[ev?.sourceRef?.system] ?? "Imported file"}${when ? ` from ${when}` : ""}`) };
+}
+
+// An imported item the owner can act on has a resolved change to confirm. Two sources that disagree, or a document
+// with an amount or reference Neri could not match, also need the owner and keep their card (and the Review count).
+// Only items with nothing cash-related in them, or nothing readable, wait in the collapsed list.
+function canApply(item) {
+  const p = item.proposal;
+  return ["create", "link", "update"].includes(p.action) && !!p.ops?.length && !p.conflicts?.length;
+}
+function needsOwner(item) {
+  const p = item.proposal;
+  if (canApply(item) || p.action === "conflict" || p.conflicts?.length) return true;
+  const c = item.candidate;
+  const f = c?.fields ?? {};
+  const cashy = !!c && c.kind !== "none" && c.kind !== "conversational_update";
+  return cashy && (f.amount?.state === "found" || f.reference?.state === "found");
+}
+const isQuiet = (item) => !needsOwner(item);
+
+// One plain sentence: drop one trailing mark, then add ours.
+const sentence = (t) => `${String(t).trim().replace(/[.!?]+$/, "")}.`;
+
+function quietReason(item) {
+  const c = item.candidate;
+  const note = (item.notes ?? [])[0];
+  if (c && c.extraction === "ok" && (c.kind === "none" || c.kind === "conversational_update")) return note ?? "No invoice, bill, PO or payment in it.";
+  if (c && c.extraction !== "ok" && c.extraction !== "partial") return "Neri could not read this file. Upload a text version if it matters.";
+  return `${sentence(item.proposal.reasons?.[0] ?? note ?? "Not enough to go on")} This needs more information before it can change your forecast.`;
+}
+
+function quietPanel(list) {
+  return `<details class="panel" style="margin-bottom:20px"><summary><b>${list.length} imported item${list.length === 1 ? "" : "s"} can't change your forecast yet</b></summary>
+    <ul style="list-style:none;padding:0;margin:12px 0 0">${list.map((item) => {
+      const l = messageLabel(item);
+      return `<li style="padding:10px 0;border-top:1px solid rgba(128,128,128,.25)"><b>${esc(l.title)}</b>${l.byline ? `<br><small>${esc(l.byline)}</small>` : ""}<br><span>${esc(quietReason(item))}</span><br><button class="btn" data-action="proposal" data-id="${esc(item.proposal.id)}" data-d="dismiss" ${app.decidingProposal ? "disabled" : ""}>Dismiss</button></li>`;
+    }).join("")}</ul></details>`;
+}
+
+function proposalCard(item) {
+  const p = item.proposal;
+  const fields = item.candidate?.fields ?? {};
+  const found = (field) => fields[field]?.state === "found" ? fields[field].value : null;
+  const labels = { create: "Add record", link: "Link source", update: "Update record" };
+  const canConfirm = Boolean(labels[p.action] && p.ops?.length && !p.conflicts?.length);
+  const label = messageLabel(item);
+  const reference = found("reference") ?? item.target?.reference ?? label.title;
+  const amount = found("amount");
+  const due = found("dueDate");
+  return `<article class="panel" style="margin-bottom:20px">
+    <h2>${esc(reference)}</h2>
+    ${label.byline ? `<p class="fineprint" style="margin-top:-6px">${esc(label.byline)}</p>` : ""}
+    ${amount != null ? `<p>${money(amount, { currency: found("currency") ?? app.ctx.profile.baseCurrency })}${due ? `, due ${dayDate(due)}` : ""}</p>` : ""}
+    ${found("sellerName") ?? found("buyerName") ? `<p>${esc(found("sellerName") ?? found("buyerName"))}</p>` : ""}
+    <ul>${[...p.reasons, ...(item.notes ?? [])].map((text) => `<li>${esc(text)}</li>`).join("")}</ul>
+    ${canConfirm ? `<button class="btn primary" data-action="proposal" data-id="${esc(p.id)}" data-d="confirm" ${app.decidingProposal ? "disabled" : ""}>${labels[p.action]}</button>` : `<p>${esc(sentence(p.conflicts?.length || p.action === "conflict" ? (p.reasons?.[0] ?? "Your sources disagree") : (p.reasons?.[0] ?? (item.notes ?? [])[0] ?? "Neri could not match this to a record")))} ${p.action === "conflict" || p.conflicts?.length ? "Nothing changes until you resolve it." : "Nothing changes until it is matched."}</p>`}
+    <button class="btn" data-action="proposal" data-id="${esc(p.id)}" data-d="dismiss" ${app.decidingProposal ? "disabled" : ""}>Dismiss</button>
+  </article>`;
+}
+
+function viewReview() {
+  const items = app.review;
+  const documents = app.reviewDocs.proposals;
+  const pricedIds = new Set(items.map((i) => i.signal.id));
+  const unresolvedSignals = (app.reviewDocs.signals ?? []).filter((i) => !pricedIds.has(i.signal.id));
+  return `
+  <div class="page-head"><div><h1>Review</h1><p>Messages and uploads that could change your forecast. Nothing changes until you apply it.</p></div></div>
+  <div style="max-width:760px">
+  ${documents.filter((d) => !isQuiet(d)).map(proposalCard).join("")}
+  ${documents.some(isQuiet) ? quietPanel(documents.filter(isQuiet)) : ""}
+  ${unresolvedSignals.map(({ signal, notes }) => `<article class="panel" style="margin-bottom:20px"><h2>Imported message needs a match</h2><p>${esc(signal.sourceRef?.excerpt?.text ?? "This message could affect a record, but Neri couldn't match it safely.")}</p>${(notes ?? []).map((n) => `<p>${esc(n)}</p>`).join("")}<p>Ask your team to match the message to the right invoice before applying it.</p><button class="btn" data-action="signal" data-d="dismiss" data-id="${esc(signal.id)}">Dismiss</button></article>`).join("")}
+  ${items.length ? items.map(reviewCard).join("") : documents.length || unresolvedSignals.length ? "" : `<section class="panel"><p style="margin:0">Nothing to review. When an email, WhatsApp message or upload could move your cash, it waits here for your OK.</p></section>`}
+  </div>`;
+}
+
+function reviewCard(rv) {
+  const s = rv.signal;
+  const m = rv.message;
+  const body = m ? esc(m.body).replace(esc(m.excerpt), `<mark>${esc(m.excerpt)}</mark>`) : "";
+  return `
+  <article class="review-card">
+    <header><span class="ico">${s.channel === "whatsapp" ? icon.chat : icon.mail}</span><div><b>${esc(rv.party?.name ?? "Unknown sender")} about ${esc(rv.commitment.sourceRef.record)}</b><span>${esc(sourceName(s.channel))}${m?.from ? ` from ${esc(m.from)}` : ""}, ${dayOf(s.receivedAt)} at ${clock(s.receivedAt)}</span></div></header>
+    ${m ? `<div class="message">${body}</div>` : ""}
+    <div class="change">
+      <div><small>${esc(rv.commitment.sourceRef.record)}, ${money(rv.commitment.amount, { currency: rv.commitment.currency })}, expected</small><b>${shortDate(rv.from)}</b><span class="arrow">→</span><b>${shortDate(rv.to)}</b></div>
+      ${forecastEmpty() ? `<div><small>Cash effect</small><p>Add your bank balance before Neri can price this change.</p></div>` : `<div><small>Your low point</small><b class="${rv.before.amount < 0 ? "below" : ""}">${money(rv.before.amount)}</b><span class="arrow">→</span><b class="${rv.after.amount < 0 ? "below" : ""}">${money(rv.after.amount)}</b></div>`}
+    </div>
+    <footer>
+      <button class="btn primary" data-action="signal" data-d="apply" data-id="${esc(s.id)}">Apply change</button>
+      <button class="btn" data-action="signal" data-d="dismiss" data-id="${esc(s.id)}">Dismiss</button>
+      <button class="btn quiet small" data-action="record" data-id="${esc(rv.commitment.id)}">See invoice</button>
+      <span class="conf">Neri is ${Math.round(s.confidence * 100)}% sure of this reading</span>
+    </footer>
+  </article>`;
+}
+
+// ---------------------------------------------------------------- Sources
+const LOGO_COLORS = ["#4a5fd9", "#2f7d5b", "#b25a1f", "#7a4fd0", "#1f7a99", "#a8366e", "#5a6b2a", "#3d4a6b"];
+function logoTile(c) {
+  let h = 0;
+  for (const ch of c.id) h = (h * 31 + ch.charCodeAt(0)) | 0;
+  const words = c.name.replace(/[^A-Za-z ]/g, " ").split(" ").filter((w) => w && !/^(and|the|of)$/i.test(w));
+  const initials = (c.mark ?? (words.length > 1 ? words[0][0] + words[1][0] : words[0].slice(0, 2))).toUpperCase();
+  return `<span class="logo" style="background:${LOGO_COLORS[Math.abs(h) % LOGO_COLORS.length]}" aria-hidden="true">${initials}</span>`;
+}
+
+const connectorId = (id) => id === "m365" ? "outlook" : id;
+
+function viewSources() {
+  const imported = new Map(app.ctx.business.sources.map((src) => [src.id, src]));
+  const capabilities = new Map(app.connections.map((c) => [c.id, c]));
+  return `
+  <div class="page-head"><div><h1>Sources</h1><p>Add the records your business already has. Neri only reads; it never writes back, sends or pays.</p></div></div>
+  <div class="upload-band">
+    <p><b>Start with a file.</b> Upload a bank statement, invoices, bills or a books export.</p>
+    <label class="btn">${icon.upload}Upload a file<input type="file" accept=".csv,.xlsx,.pdf,.eml,.txt,.zip" data-change="upload" hidden /></label>
+  </div>
+  ${app.ctx.business.sources.length ? `<section class="panel" style="max-width:760px;margin-block:24px"><h2>Your source records</h2>${app.ctx.business.sources.map((src) => `<p><b>${esc(src.id === "owner" ? "Owner-entered records" : src.label)}</b> — ${esc(src.state === "ok" ? src.detail || "Records imported" : "Waiting for data")}</p>`).join("")}</section>` : ""}
+  ${api.mode === "live" ? bankBalanceForm() : ""}
+  <form class="panel source-paste" data-submit="source-paste" style="max-width:760px;margin-block:24px">
+    <label for="source-text">Paste an invoice, email or WhatsApp message</label>
+    <textarea id="source-text" name="text" rows="4" maxlength="100000" required placeholder="Paste the source text here"></textarea>
+    <button class="btn primary" type="submit">Read pasted text</button>
+    <p class="fineprint">Proposed changes wait for your review. Pasting a payment promise never marks an invoice paid.</p>
+  </form>
+  ${CATEGORIES.map((cat) => {
+    const list = CONNECTORS.filter((c) => c.category === cat.id);
+    return `<section class="cat"><h2>${cat.label}</h2><p>${cat.why}</p><div class="conn-grid">
+      ${list.map((c) => {
+        const source = imported.get(c.id) ?? imported.get(connectorId(c.id));
+        const connection = capabilities.get(connectorId(c.id));
+        const hasRecords = source?.state === "ok";
+        const needsAttention = connection?.state === "error" || source?.state === "error";
+        const syncing = app.syncing === connection?.id;
+        const canSync = connection?.available === true;
+        const canImport = c.import === "file";
+        const unavailable = !canSync && !canImport;
+        const availability = c.availability === "live" ? "Sync not configured" : c.availability === "next" ? "Coming next" : "Planned";
+        return `<div class="conn ${unavailable ? "is-unavailable" : ""}" data-connector="${esc(c.id)}">${logoTile(c)}<b>${esc(c.name)}</b>
+          <div class="state ${hasRecords ? "on" : ""}">${needsAttention ? `<span class="conn-status"><i class="dot bad"></i>Needs attention</span>` : hasRecords ? `<span class="conn-status"><i class="dot"></i>Records imported</span>` : `<span>${source ? "Waiting for data" : unavailable ? availability : "No data yet"}</span>`}</div>
+          <p class="reads">${esc(connection?.state === "error" ? connection.message : source?.detail || connection?.message || c.reads)}</p>
+          ${canSync ? `<button class="btn" data-action="connection-sync" data-id="${esc(connection.id)}" ${app.syncing ? "disabled" : ""}>${syncing ? "Syncing…" : "Sync now"}</button>` : canImport ? `<button class="btn" data-action="connect" data-id="${esc(c.id)}">Upload an export</button>` : `<button class="btn" disabled>${c.availability === "live" ? "Sync unavailable" : "Not available yet"}</button><p class="conn-fallback">Upload an export or paste text above.</p>`}
+        </div>`;
+      }).join("")}
+    </div></section>`;
+  }).join("")}
+  <p class="fineprint" style="margin-top:28px">Sync is available only for sources configured for your business on this server. Other sources use file upload or pasted text.</p>`;
+}
+
+// ---------------------------------------------------------------- Ask
+// Source chips: readable labels ("INV-1187", "Payroll Dec 24"), at most four, then a count.
+// A cite may be an event id ("evt-inv-INV-1187-0", "evt-rec-payroll-3", "evt-daily-sales-2027-01-15"): label what it points at.
+function citeLabel(cid) {
+  const d = cid.match(/(\d{4}-\d{2}-\d{2})$/);
+  const base = cid.startsWith("evt-") ? (d ? cid.slice(4, -11) : cid.slice(4).replace(/-\d+$/, "")) : cid;
+  const ref = refLabel(base);
+  if (ref !== "Source") return ref;
+  const name = app.ctx.profile?.recurring?.find((r) => r.id === base)?.name
+    ?? (base === "daily-sales" ? "Daily sales" : null)
+    ?? app.ctx.parties.find((p) => p.id === app.ctx.partyOf?.(base))?.name ?? "Record";
+  return d ? `${name} ${shortDate(d[1])}` : name;
+}
+function citeChips(cites) {
+  if (!cites?.length) return "";
+  const uniq = [...new Set(cites)];
+  const shown = uniq.slice(0, 4);
+  return `<div class="cites">${shown.map((c) => `<button class="src" data-action="record" data-id="${esc(c)}">${esc(citeLabel(c))}</button>`).join("")}${uniq.length > 4 ? `<span class="by">+${uniq.length - 4} more</span>` : ""}</div>`;
+}
+
+function turnHtml(t, idx) {
+  if (t.pending) return `<div class="turn"><div class="q">${esc(t.q)}</div><div class="a missing">${t.parking ? "Parking it…" : "Thinking…"}</div></div>`;
+  if (t.note) {
+    const n = app.notes.find((x) => x.id === t.note);
+    if (!n) return `<div class="turn"><div class="q">${esc(t.q)}</div><div class="a missing">Removed.</div></div>`;
+    return `<div class="turn"><div class="q">${esc(t.q)}</div><div class="a">${n.state === "new" ? "Parked in your notes. Here's how I read it." : n.state === "added" ? "Added to your forecast." : "Kept as a note."}</div>${n.state === "new" ? noteRow(n).replace('<article class="note">', '<article class="note inline">') : ""}</div>`;
+  }
+  const a = t.a;
+  return `<div class="turn">
+    <div class="q">${esc(t.q)}</div>
+    <div class="a ${a.missingData ? "missing" : ""}">${esc(a.text)}</div>
+    ${citeChips(a.citations)}
+    ${a.scenario ? `<div class="scenario"><header><span>What-if: ${esc(a.scenario.label)}</span><span style="display:flex;gap:6px"><button class="btn small" data-action="show-whatif" data-i="${idx}">Show in details</button>${a.proposal && !t.added ? `<button class="btn small primary" data-action="add-plan" data-i="${idx}">Add to forecast</button>` : t.added ? `<span class="settled-tag">Added</span>` : ""}</span></header>
+      <div data-chart="ask-${idx}">${cashChart(app.brief.run, { width: Math.min(620, chartWidth()), height: 130, mini: true, whatIf: a.scenario.run })}</div></div>` : ""}
+  </div>`;
+}
+
+// ---------------------------------------------------------------- Settings
+function viewSettings() {
+  const theme = document.documentElement.dataset.theme || "auto";
+  return `
+  <div class="page-head"><div><h1>Settings</h1><p>${esc(app.ctx.business.name)}, set up as ${esc(app.ctx.profile.displayName.toLowerCase())}.</p></div></div>
+  <div class="settings">
+    <div class="setting"><h3>Your line</h3><p>The least cash you want to keep. Neri warns you before you go under it.</p>
+      <form class="control" data-submit="safety" style="display:flex;gap:8px"><label class="money-input"><span>$</span><input name="amt" inputmode="numeric" value="${Math.round(app.brief.run.safetyLine / 100)}" aria-label="Your line in dollars" /></label><button class="btn small" type="submit">Save</button></form></div>
+    <div class="setting"><h3>Account</h3><p>${app.account?.sample ? "You're looking at a sample business." : `${esc(app.account?.email ?? "")}${app.account?.businessName ? `, ${esc(app.account.businessName)}` : ""}`}</p>
+      <div class="control" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">${app.account?.sample ? `<button class="btn small primary" data-action="signout">Create your account</button>` : `<button class="btn small" data-action="signout">Sign out</button>`}</div></div>
+    <h2 class="section-title" style="margin-top:28px">Security</h2>
+    <p class="section-note">How your business's data is protected.</p>
+    <div class="setting"><h3>Sign-in</h3><p>${authLive ? "Use your email and password. No email verification is needed." : "Preview sign-up stays in this browser. Real accounts use email and password on your Neri server."}</p>
+      ${authLive && !app.account?.sample ? `<button class="btn small control" data-action="signout-all">Sign out everywhere</button>` : ""}</div>
+    <div class="setting"><h3>Who can see your numbers</h3><p>Only members of ${esc(app.account?.businessName || "your business")}. You're the owner from sign-up; inviting teammates is coming.</p></div>
+    <div class="setting"><h3>Your sources</h3><p>Read-only. Neri never writes back, sends or pays.</p></div>
+    <div class="setting"><h3>Screen lock</h3><p>${LOCK_MS ? `Numbers hide after ${Math.round(LOCK_MS / 60000)} minutes away.` : "Off."}</p></div>
+    ${demoAllowed ? `<div class="setting"><h3>Sample data</h3><p>Switch between fictional businesses in this demo.</p>
+      <select class="biz control" data-change="biz" aria-label="Sample business">${SANDBOXES.map((x) => `<option value="${x.id}" ${x.id === app.bizId ? "selected" : ""}>${esc(x.label)}</option>`).join("")}</select></div>` : ""}
+    <div class="setting"><h3>Hide names</h3><p>Show customers and suppliers as Customer A, Supplier B. For demos and screen sharing.</p>
+      <button class="switch control" role="switch" aria-checked="${app.mask}" data-action="mask" aria-label="Hide names"></button></div>
+    <div class="setting"><h3>Appearance</h3><p>Light, dark, or follow your device.</p>
+      <div class="seg control" role="group" aria-label="Appearance">${["auto", "light", "dark"].map((t) => `<button data-action="theme" data-t="${t}" aria-pressed="${theme === t}">${t[0].toUpperCase() + t.slice(1)}</button>`).join("")}</div></div>
+    <h2 class="section-title" style="margin-top:32px">Rules from your notes</h2>
+    <p class="section-note">Things you told Neri about how people pay and get paid. They shape every forecast.</p>
+    ${app.ctx.rules.filter((r) => r.state !== "dismissed").length ? app.ctx.rules.filter((r) => r.state !== "dismissed").map((r) => `<div class="rule-item"><q>${esc(r.fromNote)}</q><div>${esc(app.ctx.parties.find((p) => p.id === r.scope.partyId)?.name ?? "Everyone")}: ${r.kind === "flexibility" ? `can move payments up to ${r.params.extraDays} days` : r.kind === "lag_offset" ? `pays about ${r.params.offsetDays} days late` : esc(r.kind)}${r.state === "confirmed" ? "" : " (waiting for your OK)"}</div>${r.state === "proposed" ? `<div class="rule-actions"><button class="btn small primary" data-a="rule" data-id="${esc(r.id)}" data-d="confirm">Use this rule</button> <button class="btn small quiet" data-a="rule" data-id="${esc(r.id)}" data-d="dismiss">Dismiss</button></div>` : ""}</div>`).join("") : `<p>No rules yet.</p>`}
+  </div>`;
+}
+
+// ---------------------------------------------------------------- Sign up (password accounts; browser-only preview)
+function viewWelcome() {
+  if (api.mode === "live" && !authLive) return `<div class="portal-wrap"><h1 class="portal-title">Sign-in isn't configured</h1><p class="portal-sub">This server needs its sign-in settings before you can open your business. Contact the Neri team and reload once it's ready.</p></div>`;
+  const su = app.signup;
+  const err = su.error ? `<p class="form-error" role="alert">${esc(su.error)}</p>` : "";
+  if (su.step === "name") {
+    return `<div class="portal-wrap"><div class="portal-mark">${logoLarge}</div>
+      <h1 class="portal-title">You're signed in</h1><p class="portal-sub">Set up your business for <b>${esc(su.email)}</b>.</p>
+      <form class="portal-form" data-submit="setup-name" novalidate>
+        <label for="bizname">Business name</label><input id="bizname" name="biz" value="${esc(su.name)}" placeholder="Your business" autocomplete="organization" maxlength="120" required />
+        ${err}<button class="btn primary big" type="submit">Continue</button>
+      </form></div>`;
+  }
+  if (authLive) {
+    const signingIn = su.mode === "signin";
+    return `<div class="portal-wrap">
+      <div class="portal-mark">${logoLarge}</div>
+      <h1 class="portal-title">${signingIn ? "Welcome back" : "Your CFO, in your pocket."}</h1>
+      <p class="portal-sub">${signingIn ? "Sign in to open your business." : "Create your account, then set up your business. No email verification needed."}</p>
+      <form class="portal-form" data-submit="${signingIn ? "password-signin" : "signup"}" novalidate>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@yourbusiness.com" value="${esc(su.email)}" required ${su.busy ? "disabled" : ""} />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="${signingIn ? "current-password" : "new-password"}" ${signingIn ? "" : 'minlength="8"'} placeholder="${signingIn ? "Your password" : "At least 8 characters"}" required ${su.busy ? "disabled" : ""} />
+        ${err}
+        <button class="btn primary big" type="submit" ${su.busy ? "disabled" : ""}>${su.busy ? (signingIn ? "Signing in…" : "Creating account…") : (signingIn ? "Sign in" : "Create account")}</button>
+      </form>
+      ${su.retry ? `<p class="portal-fine"><button class="btn" data-action="retry-signin" ${su.busy ? "disabled" : ""}>Try loading your business again</button></p>` : ""}
+      <p class="portal-fine"><button class="linklike" data-action="auth-mode" data-mode="${signingIn ? "signup" : "signin"}" ${su.busy ? "disabled" : ""}>${signingIn ? "New to Neri? Create an account" : "Already have an account? Sign in"}</button></p>
+      ${signingIn ? `<p class="portal-fine">Previously used an email link and haven't set a password? Ask the Neri team for help accessing your existing account.</p>` : ""}
+      ${demoAllowed ? `<p class="portal-fine"><button class="linklike" data-action="sample" ${su.busy ? "disabled" : ""}>Look around with a sample business first</button></p>` : ""}
+    </div>`;
+  }
+  if (su.step === "code") {
+    return `
+    <div class="portal-wrap">
+      <div class="portal-mark">${logoLarge}</div>
+      <h1 class="portal-title">Check your email</h1>
+      <p class="portal-sub">${authLive ? "Open the sign-in link we emailed to" : "Enter a preview code for"} <b>${esc(su.email)}</b>.</p>
+      ${authLive ? `<p class="portal-fine">Open the link in this browser, on this device. If your email app opens another browser, copy the link and paste it here.</p>` : ""}
+      ${err}
+      ${authLive ? `<details><summary>My email contains a six-digit code</summary>` : ""}
+      <form class="portal-form" data-submit="verify" novalidate>
+        <label for="code">${authLive ? "If your email contains a 6-digit code, enter it here" : "Code"}</label>
+        <input id="code" name="code" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" required />
+        <label for="bizname">Business name</label>
+        <input id="bizname" name="biz" value="${esc(su.name)}" placeholder="Your business" autocomplete="organization" required />
+        <button class="btn primary big" type="submit">${authLive ? "Continue with code" : "Create account"}</button>
+      </form>
+      ${authLive ? `</details>` : ""}
+      <p class="portal-fine">${authLive ? "The link or code works once and expires soon. You can also explore a sample business without signing in." : "Preview: any 6 digits work."}</p>
+      <p class="portal-fine"><button class="linklike" data-action="resend" ${resendWait() ? "disabled" : ""}>${resendWait() ? `Send a new email in ${resendWait()}s` : "Send a new email"}</button> <span aria-hidden="true">&nbsp;</span> <button class="linklike" data-action="signup-back">Use a different email</button></p>
+      ${demoAllowed ? `<p class="portal-fine"><button class="linklike" data-action="sample">Explore a sample business</button></p>` : ""}
+    </div>`;
+  }
+  return `
+  <div class="portal-wrap">
+    <div class="portal-mark">${logoLarge}</div>
+    <h1 class="portal-title">Your CFO, in your pocket.</h1>
+    <p class="portal-sub">Neri reads your books, bank and messages, and every morning tells you where cash is headed and what to do about it.</p>
+    <form class="portal-form" data-submit="signup" novalidate>
+      <label for="email">Work email</label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder="you@yourbusiness.com" value="${esc(su.email)}" required />
+      ${err}
+      <button class="btn primary big" type="submit">Continue</button>
+    </form>
+    <p class="portal-fine">${authLive ? "No password to remember or leak: we email you a one-time sign-in link or code." : "No password to remember or leak: preview sign-up uses any 6-digit code."}</p>
+    ${demoAllowed ? `<p class="portal-fine"><button class="linklike" data-action="sample">Look around with a sample business first</button></p>` : ""}
+  </div>`;
+}
+
+function resendWait() {
+  const left = Math.ceil(((app.signup.sentAt ?? 0) + 60000 - Date.now()) / 1000);
+  return left > 0 ? left : 0;
+}
+let resendTimer;
+function tickResend() {
+  clearInterval(resendTimer);
+  resendTimer = setInterval(() => {
+    if (route() !== "welcome" || app.signup.step !== "code") return clearInterval(resendTimer);
+    const b = document.querySelector('[data-action="resend"]');
+    if (!b) return;
+    const w = resendWait();
+    b.disabled = w > 0;
+    b.textContent = w ? `Send a new email in ${w}s` : "Send a new email";
+    if (!w) clearInterval(resendTimer);
+  }, 1000);
+}
+
+// ---------------------------------------------------------------- idle lock
+// After NERI_LOCK_MINUTES with no activity (or that long in the background), the numbers are hidden.
+// With real sign-in, unlocking checks the session is still valid; an ended session goes back to sign-in.
+const LOCK_MS = (Number(window.NERI_LOCK_MINUTES ?? 15) || 0) * 60000;
+let lastActive = Date.now();
+let hiddenAt = 0;
+function lockIfIdle() {
+  if (!LOCK_MS || !app.account || app.account.sample || document.querySelector(".lock")) return;
+  if (Date.now() - lastActive >= LOCK_MS) lockScreen();
+}
+function lockScreen() {
+  app.stopSpeak?.();
+  app.stopSpeak = null;
+  const el = document.createElement("div");
+  el.className = "lock";
+  el.setAttribute("role", "dialog");
+  el.setAttribute("aria-label", "Neri is locked");
+  el.innerHTML = `<div class="lock-card">${logoLarge}<h2>Locked</h2><p>Your numbers are hidden after ${Math.round(LOCK_MS / 60000)} minutes away.</p><button class="btn primary big" data-action="unlock">Unlock</button></div>`;
+  document.body.append(el);
+  document.body.classList.add("locked");
+}
+async function unlock() {
+  let session = true;
+  if (authLive) session = await currentSession().catch(() => null);
+  if (!session) {
+    document.querySelector(".lock")?.remove();
+    document.body.classList.remove("locked");
+    await api.signOut();
+    app.signup = { step: "email", mode: "signin", email: app.account?.email ?? "", name: "", error: "Your session ended. Sign in again with your email and password." };
+    location.hash = "#/welcome";
+    return load();
+  }
+  document.querySelector(".lock")?.remove();
+  document.body.classList.remove("locked");
+  lastActive = Date.now();
+}
+for (const ev of ["pointerdown", "keydown", "scroll", "touchstart"]) addEventListener(ev, () => (lastActive = Date.now()), { passive: true });
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) hiddenAt = Date.now();
+  else if (hiddenAt && LOCK_MS && Date.now() - hiddenAt >= LOCK_MS) {
+    lastActive = 0;
+    lockIfIdle();
+  }
+});
+setInterval(lockIfIdle, 30000);
+
+// ---------------------------------------------------------------- Set up (one page)
+const KINDS = [
+  { id: "trading", label: "Trading and import" },
+  { id: "restaurant", label: "Restaurant and retail" },
+  { id: "services", label: "Services" },
+  { id: "other", label: "Something else" },
+];
+const SUGGESTED = {
+  trading: ["zoho_books", "quickbooks", "bank_feed", "zoho_crm", "m365", "whatsapp"],
+  restaurant: ["quickbooks", "bank_feed", "square", "toast", "gusto"],
+  services: ["quickbooks", "xero", "bank_feed", "hubspot", "gusto"],
+  other: ["quickbooks", "bank_feed"],
+};
+function viewSetup() {
+  const st = app.setup;
+  const name = app.signup.name || "your business";
+  const suggested = SUGGESTED[st.kind].map((id) => CONNECTORS.find((c) => c.id === id)).filter(Boolean);
+  const more = CATEGORIES.flatMap((cat) => CONNECTORS.filter((c) => c.category === cat.id && !SUGGESTED[st.kind].includes(c.id)));
+  let tz = "";
+  try {
+    tz = new Intl.DateTimeFormat("en-US", { timeZoneName: "longGeneric" }).formatToParts(new Date()).find((x) => x.type === "timeZoneName")?.value ?? "";
+  } catch {}
+  const tile = (c) => {
+    const available = c.availability === "live";
+    const on = available && st.picked.has(c.id);
+    const state = st.connecting && on ? "waiting" : "";
+    return `<button class="app-tile ${on ? "on" : ""} ${available ? "" : "is-unavailable"}" data-action="pick" data-id="${esc(c.id)}" aria-pressed="${on}" ${available ? "" : "disabled"} title="${esc(c.reads)}">
+      ${logoTile(c)}<span class="app-name">${esc(c.name)}</span>
+      ${available ? `<span class="tick" aria-hidden="true">${state ? `<i class="d amber"></i>` : icon.check}</span>` : `<span class="soon">${c.availability === "next" ? "Coming next" : "Planned"}</span>`}
+    </button>`;
+  };
+  return `
+  <div class="setup">
+    <h1 class="portal-title">Set up ${esc(name)}</h1>
+    <p class="portal-sub">Choose the available tools you use. Greyed-out connectors are still being built; you can upload their exports on Sources.</p>
+    <div class="kind-row" role="radiogroup" aria-label="Type of business">
+      ${KINDS.map((k) => `<button class="kind-pill" role="radio" aria-checked="${st.kind === k.id}" data-action="kind" data-k="${k.id}">${k.label}</button>`).join("")}
+    </div>
+    <section class="rail" aria-label="Suggested apps">
+      <h2>Suggested for ${esc(KINDS.find((k) => k.id === st.kind).label.toLowerCase())}</h2>
+      <div class="rail-track">${suggested.map(tile).join("")}</div>
+    </section>
+    <section class="rail" aria-label="More apps">
+      <h2>More apps</h2>
+      <div class="rail-track">${more.map(tile).join("")}</div>
+    </section>
+    <div class="reserve-row">
+      <label for="reserve">Keep at least</label>
+      <span class="money-input"><span>$</span><input id="reserve" inputmode="numeric" placeholder="35,000" value="${esc(st.reserve)}" data-change="reserve" /></span>
+      <span class="reserve-note">in the bank. Neri warns you before you go under it.${tz ? ` Times in ${esc(tz)}.` : ""}</span>
+    </div>
+    <div class="connect-bar">
+      <span class="bar-note" id="bar-note">Your choices are preferences. No account is connected until a source sync succeeds.</span>
+      <button class="btn primary big" data-action="connect-all" ${st.connecting ? "disabled" : ""}>${st.connecting ? "Creating business…" : "Create business"}</button>
+    </div>
+  </div>`;
+}
+
+// ---------------------------------------------------------------- sheets
+function openSheet(html, { mask = true } = {}) {
+  closeSheet();
+  const scrim = document.createElement("div");
+  scrim.className = "scrim";
+  scrim.dataset.action = "close-sheet";
+  const sheet = document.createElement("div");
+  sheet.className = "sheet";
+  sheet.setAttribute("role", "dialog");
+  sheet.setAttribute("aria-modal", "true");
+  sheet.innerHTML = mask ? masked(html) : html;
+  document.body.append(scrim, sheet);
+  sheet.querySelector("button, input, textarea")?.focus();
+}
+function closeSheet() {
+  document.querySelectorAll(".scrim, .sheet").forEach((n) => n.remove());
+}
+const sheetHead = (title, sub) => `<div class="sheet-head"><div style="flex:1"><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ""}</div><button class="icon-btn" data-action="close-sheet" aria-label="Close">${icon.close}</button></div>`;
+
+async function showRecord(id) {
+  const rec = await api.record(id);
+  if (!rec) {
+    openSheet(sheetHead("Not found", "That record isn't in this business."));
+    return;
+  }
+  const c = rec.commitment;
+  const p = rec.party;
+  const lag = p?.lagStats;
+  const statusWord = { actual: "In the bank", committed: "Committed", likely: "Likely", possible: "Possible" };
+  openSheet(`
+    ${sheetHead(esc(c.sourceRef.record), `${esc(p?.name ?? "Your plan")}${c.type ? `, ${esc(c.type.replace("_", " "))}` : ""}`)}
+    <dl class="kv">
+      <dt>Amount</dt><dd>${money(c.amount, { currency: c.currency })}${c.currency !== (app.ctx.profile.baseCurrency ?? "USD") && rec.events[0] ? ` <span style="color:var(--ink-faint)">(${money(rec.events.reduce((t, e) => t + e.amountBase, 0))})</span>` : ""}</dd>
+      ${c.anchors.due ? `<dt>Due</dt><dd>${dayDate(c.anchors.due)}</dd>` : ""}
+      ${c.anchors.order ? `<dt>Order date</dt><dd>${dayDate(c.anchors.order)}</dd>` : ""}
+      <dt>Status</dt><dd>${esc(statusWord[c.status] ?? c.status)}${c.probability ? `, ${Math.round(c.probability * 100)}% chance` : ""}</dd>
+      ${lag ? `<dt>How they pay</dt><dd>${Math.abs(lag.medianDaysLate)} days ${lag.medianDaysLate >= 0 ? "late" : "early"}, last ${lag.n} payments</dd>` : ""}
+      ${c.discount ? `<dt>Discount</dt><dd>${c.discount.pct}% if paid by ${shortDate(c.discount.byDate)}</dd>` : ""}
+      <dt>Source</dt><dd>${/^https?:\/\//.test(c.sourceRef.url ?? "") ? `<a href="${esc(c.sourceRef.url)}" target="_blank" rel="noopener">${esc(sourceName(c.sourceRef.system))}: ${esc(c.sourceRef.record)}</a>` : `${esc(sourceName(c.sourceRef.system))}: ${esc(c.sourceRef.record)}`}</dd>
+    </dl>
+    <h3 class="section-title">In the forecast</h3>
+    ${rec.events.map((e) => `<div class="event"><b>${dayDate(e.date)}<span class="status">${esc(statusWord[e.status] ?? e.status)}</span></b><span class="amt ${e.direction === "in" ? "in" : "out"}">${e.direction === "in" ? "+" : "−"}${money(e.amountBase)}</span><p>${esc(e.basis)}</p></div>`).join("") || `<p style="color:var(--ink-soft)">Outside the 13-week view.</p>`}
+    ${rec.message ? `<h3 class="section-title" style="margin-top:18px">The message behind the date</h3><div class="message">${esc(rec.message.body).replace(esc(rec.message.excerpt), `<mark>${esc(rec.message.excerpt)}</mark>`)}</div>` : ""}
+    ${rec.rules.length ? `<h3 class="section-title" style="margin-top:18px">Your notes about ${esc(p?.name ?? "")}</h3>${rec.rules.map((r) => `<div class="rule-item"><q>${esc(r.fromNote)}</q></div>`).join("")}` : ""}
+    <p class="fineprint">A payment link or a promise is never treated as paid. Only the bank confirms that.</p>`);
+}
+
+function sourceName(sys) {
+  return { zoho_books: "Zoho Books", bank_csv: "Bank statement", email: "Email", whatsapp: "WhatsApp", crm: "Zoho CRM", owner: "Your note", generic_file: "Uploaded file", profile: "Your setup" }[sys] ?? sys;
+}
+
+function showWeek(start) {
+  const run = app.scenario === "stress" && app.stressRun ? app.stressRun : app.brief.run;
+  const w = run.weeks.find((x) => x.start === start);
+  if (!w) return;
+  app.selectedWeek = start;
+  const evs = run.events.filter((e) => e.date >= start && e.date <= addDays(start, 6) && e.status !== "possible");
+  openSheet(`
+    ${sheetHead(`Week of ${weekLabel(start)}`, `Ends at ${money(w.closing)}. Lowest day ${money(w.minClosing)}.`)}
+    ${evs.length ? evs.map((e) => `<div class="event"><b>${esc(partyNameFor(e))}<span class="status">${dayDate(e.date)}</span></b><span class="amt ${e.direction === "in" ? "in" : "out"}">${e.direction === "in" ? "+" : "−"}${money(e.amountBase)}</span><p>${esc(e.basis)}</p><button class="src" data-action="record" data-id="${esc(e.id)}">${esc(e.sourceRef.record)}</button></div>`).join("") : `<p>No money moves this week.</p>`}`);
+}
+function partyNameFor(e) {
+  const pid = commitmentParty(e.commitmentId);
+  return app.ctx.parties.find((p) => p.id === pid)?.name ?? (e.sourceRef.system === "owner" ? "Your plan" : (app.ctx.profile?.recurring?.find((r) => r.id === e.sourceRef.record)?.name ?? (/^(rec-|revenueModel\.)/.test(e.sourceRef.record) ? humanizeId(e.sourceRef.record) : e.sourceRef.record)));
+}
+
+async function showDraft(itemId) {
+  const d = await api.draft(itemId);
+  openSheet(`
+    ${sheetHead("Draft email", "Edit it, then copy it or open it in your mail app.")}
+    <div class="draft-field"><label for="d-to">To</label><input id="d-to" value="${esc(d.to)}"${d.to || !d.toHint ? "" : ` placeholder="${esc(d.toHint)}"`} /></div>
+    <div class="draft-field"><label for="d-sub">Subject</label><input id="d-sub" value="${esc(d.subject)}" /></div>
+    <div class="draft-field"><label for="d-body">Message</label><textarea id="d-body">${esc(d.body)}</textarea></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn primary" data-action="copy-draft">${icon.copy}Copy</button>
+      <button class="btn" data-action="mail-draft">${icon.mail}Open in mail app</button>
+      <button class="btn quiet" data-action="done" data-id="${esc(itemId)}" data-close="1">Mark as done</button>
+    </div>
+    <p class="fineprint">Neri never sends anything for you. You send it, from your own mail.</p>`, { mask: false });
+}
+
+// Apps Neri can read for real today (Sources > Connect). Everything else connects by file until its connector is ready.
+function showConnect(id) {
+  const c = CONNECTORS.find((x) => x.id === id);
+  if (!c) return;
+  const connection = app.connections.find((x) => x.id === connectorId(id));
+  openSheet(`
+    ${sheetHead(esc(c.name), "Read-only source records")}
+    <p>${esc(c.reads)}.</p>
+    ${connection?.available === true
+      ? `<p>This server can read this source for your business.</p><button class="btn primary" data-action="connection-sync" data-id="${esc(connection.id)}">Sync now</button>`
+      : `<p>Automatic sync isn't configured for your business. Export a file from ${esc(c.name)} and upload it, or paste a message on Sources.</p>
+         <label class="btn primary">${icon.upload}Upload an export<input type="file" accept=".csv,.xlsx,.pdf,.eml,.txt,.zip" data-change="upload" hidden /></label>`}`);
+}
+
+// ---------------------------------------------------------------- toast
+let toastTimer;
+function toast(title, detail, actionLabel, onAction) {
+  document.querySelector(".toast")?.remove();
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.setAttribute("role", "status");
+  t.innerHTML = masked(`<span class="sunmark"></span><div><b>${esc(title)}</b>${detail ? `<span>${esc(detail)}</span>` : ""}</div>${actionLabel ? `<button>${esc(actionLabel)}</button>` : ""}`);
+  if (actionLabel) t.querySelector("button").onclick = () => { onAction?.(); t.remove(); };
+  document.body.append(t);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.remove(), 7000);
+}
+
+// ---------------------------------------------------------------- listen (play brief) + drive mode
+function toggleListen() {
+  if (app.stopSpeak) {
+    app.stopSpeak();
+    app.stopSpeak = null;
+    app.speakingIndex = -1;
+    render();
+    return;
+  }
+  const parts = spokenBrief();
+  app.stopSpeak = speak(parts, {
+    onPart: (i) => {
+      app.speakingIndex = i;
+      if (app.drive) renderDrive();
+    },
+    onEnd: () => {
+      app.stopSpeak = null;
+      app.speakingIndex = -1;
+      render();
+    },
+  });
+  render();
+}
+
+let wakeLock = null;
+async function openDrive() {
+  app.drive = true;
+  try {
+    wakeLock = await navigator.wakeLock?.request("screen");
+  } catch {}
+  renderDrive();
+  if (!app.stopSpeak) toggleListen();
+}
+function closeDrive() {
+  app.drive = false;
+  app.stopSpeak?.();
+  app.stopSpeak = null;
+  app.stopListen?.();
+  app.stopListen = null;
+  wakeLock?.release?.();
+  document.querySelector(".drive")?.remove();
+  render();
+}
+
+function renderDrive() {
+  let el = document.querySelector(".drive");
+  if (!el) {
+    el = document.createElement("div");
+    el.className = "drive";
+    el.setAttribute("role", "dialog");
+    el.setAttribute("aria-label", "Drive mode");
+    document.body.append(el);
+  }
+  const s = summary();
+  const open = forecastEmpty() ? [] : app.brief.three.filter((i) => i.state !== "done");
+  // parts: [0]=headline, [1]=count, [2..]=items
+  const itemSpeaking = (n) => app.speakingIndex === n + 2;
+  el.innerHTML = masked(`
+    <div class="drive-top"><span class="drive-brand">${logo}${dayDate(app.ctx.business.asOf)}</span><button data-action="drive-close">Done</button></div>
+    <div class="drive-body">
+      <p class="drive-line">${esc(s.headline)}</p>
+      ${forecastReview() ? `<p>${esc(forecastReview().message)}</p>` : ""}
+      <ol class="drive-list">${open.map((i, n) => `<li class="${itemSpeaking(n) ? "speaking" : ""}"><span>${n + 1}</span>${esc(i.title.replace(/\s*\([A-Z]+-[\w-]+\)/, ""))}</li>`).join("")}</ol>
+    </div>
+    <div class="drive-controls">
+      <button class="drive-btn main" data-action="listen" aria-label="${app.stopSpeak ? "Stop" : "Play brief"}">${app.stopSpeak ? icon.stop : icon.play}</button>
+      ${canListen ? `<button class="drive-btn rec" data-action="mic-drive" aria-pressed="${app.stopListen ? "true" : "false"}" aria-label="Park a thought">${icon.mic}</button>` : ""}
+    </div>
+    <div class="drive-caption" id="drive-caption">${canListen ? (app.stopListen ? "Listening…" : "Tap the mic to park a thought. Neri will ask you to confirm when you're parked.") : ""}</div>`);
+}
+
+// ---------------------------------------------------------------- Talk to Neri (the big mic)
+function openTalk() {
+  app.stopSpeak?.();
+  app.stopSpeak = null;
+  let el = document.querySelector(".voice");
+  if (!el) {
+    el = document.createElement("div");
+    el.className = "voice";
+    el.setAttribute("role", "dialog");
+    el.setAttribute("aria-label", "Talk to Neri");
+    document.body.append(el);
+  }
+  const paint = (heard, status) => {
+    el.innerHTML = `
+      <div class="voice-card">
+        <div class="orb ${app.stopListen ? "live" : ""}" aria-hidden="true">${icon.mic}</div>
+        <p class="voice-heard" aria-live="polite">${heard ? esc(heard) : "Ask about cash, or tell me what's on your mind."}</p>
+        <p class="voice-status">${esc(status)}</p>
+        ${canListen ? "" : `<form class="askbar" data-submit="talk-typed"><input name="q" placeholder="Type it instead" aria-label="Type your question" /><button class="send" type="submit">${icon.send}<span class="sr">Ask</span></button></form>`}
+        <div class="voice-actions">${app.stopListen ? `<button class="btn primary" data-action="talk-stop">I'm done</button>` : ""}<button class="btn" data-action="talk-close">Close</button></div>
+      </div>`;
+  };
+  if (!canListen) {
+    paint("", "Voice needs Chrome or Safari, with microphone access allowed.");
+    el.querySelector("input")?.focus();
+    return;
+  }
+  app.stopListen = listen({
+    onText: (t) => paint(t, "Listening…"),
+    onError: (msg) => {
+      app.stopListen = null;
+      paint("", msg);
+    },
+    onEnd: async (text) => {
+      app.stopListen = null;
+      if (!text) return paint("", "Didn't catch that. Tap the mic and try again.");
+      closeTalk();
+      await doAsk(text, "voice");
+    },
+  });
+  paint("", "Listening…");
+}
+function closeTalk() {
+  app.stopListen?.();
+  app.stopListen = null;
+  document.querySelector(".voice")?.remove();
+}
+
+// ---------------------------------------------------------------- voice capture
+function startCapture(target) {
+  if (app.stopListen) {
+    app.stopListen();
+    return;
+  }
+  app.stopSpeak?.();
+  app.stopSpeak = null;
+  const caption = () => (target === "drive" ? $("#drive-caption") : target === "note" ? $("#capture-status") : null);
+  app.stopListen = listen({
+    onText: (text) => {
+      if (target === "note") $("#thought").value = text;
+      if (target === "ask") $("#askq").value = text;
+      if (caption()) caption().textContent = text;
+    },
+    onError: (msg) => {
+      if (caption()) caption().textContent = msg;
+      else toast(msg);
+    },
+    onEnd: async (text) => {
+      app.stopListen = null;
+      if (target === "drive") {
+        if (text) {
+          try {
+            const n = await api.parkNote(text, "voice");
+            app.notes = await api.notes();
+            speak([`Parked. ${readingSentence(n)} I'll ask you to confirm when you're parked.`]);
+          } catch (err) {
+            speak([`I couldn't park that. ${speakable(err.message)}`]);
+            failed(err);
+          }
+        }
+        renderDrive();
+      } else if (target === "ask") {
+        if (text) await doAsk(text, "voice");
+        else render();
+      } else {
+        const btn = document.querySelector('[data-action="mic-note"]');
+        btn?.setAttribute("aria-pressed", "false");
+        if (caption()) caption().textContent = text ? "Got it. Check it and park it." : "Didn't catch that. Try again.";
+      }
+    },
+  });
+  if (target === "drive") renderDrive();
+  else {
+    document.querySelectorAll(`[data-action="mic-${target}"]`).forEach((b) => b.setAttribute("aria-pressed", "true"));
+    if (caption()) caption().textContent = "Listening…";
+  }
+}
+
+function readingSentence(n) {
+  const r = n.reading;
+  if (r.kind === "note") return "I'll keep it as a note.";
+  const parts = [KIND_LABEL[r.kind]];
+  if (r.amount != null) parts.push(spokenMoney(r.amount));
+  if (r.date) parts.push(`around ${speakable(shortDate(r.date))}`);
+  return `${parts.join(", ")}.`;
+}
+
+// ---------------------------------------------------------------- actions
+// Re-render without losing what the owner was typing in the Ask bar.
+function keepTyped(fn) {
+  const typed = $("#askq")?.value ?? "";
+  fn();
+  const box = $("#askq");
+  if (box && typed) box.value = typed;
+}
+
+// Files from the Ask bar's + or an Upload button. The server reads them and anything that could move cash
+// waits in Review; the preview has no server, so it says so instead of pretending.
+async function sendFiles(files) {
+  const label = files.length === 1 ? files[0].name : `${files.length} files`;
+  if (api.mode === "preview") {
+    toast(`${label} not read`, "This preview runs on sample data, so files stay in your browser. On your Neri server they're read and wait in Review.");
+    return;
+  }
+  let sent = 0;
+  for (const f of files) {
+    try {
+      await api.uploadFile(f);
+      sent++;
+    } catch (e) {
+      toast(`${f.name} wasn't read`, e.message);
+    }
+  }
+  if (sent) {
+    await refresh();
+    toast(sent === files.length ? `${label} read` : `${sent} of ${files.length} files read`, "Anything that could move your cash is waiting in Review.", "Open Review", () => (location.hash = "#/review"));
+    render();
+  }
+}
+
+async function doAsk(q, via = "typed") {
+  q = q.trim();
+  if (!q) return;
+  if (route() !== "today") location.hash = "#/today";
+  const parking = !isQuestion(q);
+  const turn = { q, pending: true, parking };
+  app.askLog.push(turn);
+  render();
+  scrollToDock();
+  try {
+    if (parking) {
+      const n = await api.parkNote(q, via);
+      turn.note = n.id;
+      // The note is saved; a failed list reload shouldn't make the owner park it twice.
+      app.notes = await api.notes().catch(() => app.notes);
+      if (via === "voice") speak([`Got it. ${readingSentence(n)} It's in your notes, and nothing changes until you add it.`]);
+    } else {
+      turn.a = await api.ask(q);
+      if (via === "voice") speak([speakable(turn.a.text)]);
+    }
+  } catch (err) {
+    // Drop the half-finished turn so it doesn't spin forever, then say why.
+    app.askLog.splice(app.askLog.indexOf(turn), 1);
+    render();
+    return failed(err);
+  }
+  turn.pending = false;
+  render();
+  scrollToDock();
+}
+
+function scrollToDock() {
+  requestAnimationFrame(() => document.querySelector(".dock")?.scrollIntoView({ block: "end", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+}
+
+// A failed action tells the owner why, in the API's own words, instead of silently doing nothing.
+// A work item that's gone (404) or a stale Review (409) means the list moved on: reload it.
+async function failed(err) {
+  console.error(err);
+  const stale = err?.status === 409 || (err?.status === 404 && /^\/work-items\//.test(err.path ?? ""));
+  toast("Couldn't do that", err?.message || "Something went wrong. Try again.");
+  if (stale && app.ctx) {
+    closeSheet();
+    await refresh().catch((e) => console.error(e));
+  }
+}
+
+document.addEventListener("click", (ev) => onClick(ev).catch(failed));
+async function onClick(ev) {
+  const el = ev.target.closest("[data-action]");
+  if (!el) return;
+  const a = el.dataset.action;
+  const id = el.dataset.id;
+  if (a === "close-sheet") {
+    closeSheet();
+    if (app.selectedWeek) {
+      app.selectedWeek = null;
+      if (route() === "details") render();
+    }
+    return;
+  }
+  if (a === "talk") return openTalk();
+  if (a === "deck") return moveDeck(Number(el.dataset.dir));
+  if (a === "unlock") return unlock();
+  if (a === "auth-mode") {
+    if (app.signup.busy) return;
+    app.signup = { ...app.signup, mode: el.dataset.mode, error: "" };
+    render();
+    return;
+  }
+  if (a === "retry-signin") {
+    if (app.signup.busy) return;
+    app.signup.busy = true;
+    render();
+    try {
+      const session = await currentSession();
+      if (session) await resumeSignin(session);
+      else {
+        app.signup.retry = false;
+        app.signup.error = "Your session ended. Sign in again with your email and password.";
+      }
+    } finally {
+      app.signup.busy = false;
+      render();
+    }
+    return;
+  }
+  if (a === "resend") {
+    try {
+      await api.startSignup(app.signup.email);
+      app.signup.sentAt = Date.now();
+      app.signup.error = "";
+      toast("Sign-in email sent", `Check ${app.signup.email}.`);
+    } catch (e) {
+      app.signup.error = e.message;
+    }
+    render();
+    tickResend();
+    return;
+  }
+  if (a === "signout-all") {
+    await api.signOut({ everywhere: true });
+    app.signup = { step: "email", email: "", name: "", error: "" };
+    app.askLog = [];
+    location.hash = "#/welcome";
+    await load();
+    toast("Signed out everywhere", "Other devices are signed out within the hour.");
+    return;
+  }
+  if (a === "talk-stop") return app.stopListen?.();
+  if (a === "talk-close") return closeTalk();
+  if (a === "signup-back") {
+    app.signup = { step: "email", email: app.signup.email, name: "", error: "" };
+    return render();
+  }
+  if (a === "sample") {
+    if (!demoAllowed) return;
+    await api.useSample(SANDBOXES[0].id);
+    history.replaceState(null, "", "#/today");
+    return load();
+  }
+  if (a === "sample-load" || a === "sample-clear") {
+    if (api.mode !== "live") return toast("Not available in the preview", "Open your Neri server to load sample data.");
+    await (a === "sample-load" ? api.loadSample() : api.clearSample());
+    await refresh();
+    return toast(a === "sample-load" ? "Sample data loaded" : "Sample data cleared");
+  }
+  if (a === "signout") {
+    await api.signOut();
+    app.signup = { step: "email", email: "", name: "", error: "" };
+    app.setup = { kind: "trading", picked: new Set(), reserve: "", connecting: false };
+    app.askLog = [];
+    location.hash = "#/welcome";
+    return load();
+  }
+  if (a === "kind") {
+    app.setup.kind = el.dataset.k;
+    return render();
+  }
+  if (a === "pick") {
+    if (!CONNECTORS.some((c) => c.id === id && c.availability === "live")) return;
+    const p = app.setup.picked;
+    p.has(id) ? p.delete(id) : p.add(id);
+    el.classList.toggle("on", p.has(id));
+    el.setAttribute("aria-pressed", String(p.has(id)));
+    render();
+    return;
+  }
+  if (a === "connect-all") {
+    const st = app.setup;
+    st.connecting = true;
+    render();
+    const dollars = Number(String(st.reserve).replace(/[^\d.]/g, ""));
+    try {
+      await api.completeSetup({ email: app.signup.email, businessName: app.signup.name, kind: st.kind, reserve: dollars ? Math.round(dollars * 100) : null, connect: [...st.picked].filter((id) => CONNECTORS.some((c) => c.id === id && c.availability === "live")) });
+    } catch (e) {
+      st.connecting = false;
+      render();
+      toast("Couldn't finish setup", `${e.message} Try again, or upload a file instead.`);
+      return;
+    }
+    st.connecting = false;
+    history.replaceState(null, "", "#/today");
+    await load();
+    toast("Your business is ready", "Add a bank statement and your books on Sources to build your forecast.", "Add a source", () => (location.hash = "#/sources"));
+    return;
+  }
+  if (a === "done") {
+    ev.preventDefault();
+    await api.approve(id);
+    if (el.dataset.close) closeSheet();
+    await refresh();
+    toast("Marked as done", "It stays on today's list, ticked off.");
+    return;
+  }
+  if (a === "draft") return showDraft(id);
+  if (a === "record") return showRecord(id);
+  if (a === "week") {
+    showWeek(el.dataset.week);
+    if (route() === "details") {
+      const holder = $('[data-chart="main"]');
+      if (holder) holder.innerHTML = masked(viewForecastChartOnly());
+    }
+    return;
+  }
+  if (a === "listen") return toggleListen();
+  if (a === "drive") return openDrive();
+  if (a === "drive-close") return closeDrive();
+  if (a === "unattach") {
+    app.attach.splice(Number(el.dataset.k), 1);
+    return keepTyped(render);
+  }
+  if (a === "mic-ask") return startCapture("ask");
+  if (a === "mic-note") return startCapture("note");
+  if (a === "mic-drive") return startCapture("drive");
+  if (a === "hint") return doAsk(el.dataset.q);
+  if (a === "scenario") {
+    app.scenario = el.dataset.s;
+    if (app.scenario === "stress") app.stressRun = await api.forecast("stress");
+    return render();
+  }
+  if (a === "clear-whatif") {
+    app.whatIf = null;
+    return render();
+  }
+  if (a === "show-whatif") {
+    const t = app.askLog[Number(el.dataset.i)];
+    app.whatIf = t.a.scenario;
+    location.hash = "#/details";
+    return;
+  }
+  if (a === "add-plan") {
+    const t = app.askLog[Number(el.dataset.i)];
+    await api.confirmPlan(t.a.proposal);
+    t.added = true;
+    app.whatIf = null;
+    await refresh();
+    toast("Added to your forecast", `${money(t.a.proposal.amount)} on ${shortDate(t.a.proposal.date)}. Today's list is updated.`);
+    return;
+  }
+  if (a === "overdue") {
+    if (app.deciding) return;
+    app.deciding = true;
+    const cid = el.dataset.cid;
+    const leg = el.dataset.leg !== undefined ? Number(el.dataset.leg) : undefined;
+    const decision = el.dataset.decision;
+    try {
+      await api.overdueDecision(cid, leg, decision, app.reviewDocs.storeRevision);
+      await refresh();
+      if (decision === "clear") toast("Choice undone", "The item is back as Neri first saw it.");
+      else toast(decision === "done" ? "Marked paid / done" : "Kept as still open", decision === "done" ? "It is out of your forecast and checks. This is your note, not a bank record." : "It stays in your forecast as expected now.", "Undo", () => { api.overdueDecision(cid, leg, "clear", app.reviewDocs.storeRevision).then(refresh, () => {}); });
+    } catch (err) {
+      if (err.status === 409) { await refresh(); toast("Your books changed", "We reloaded. Choose again."); }
+      else toast("Couldn't save that", err.message);
+    } finally {
+      app.deciding = false;
+    }
+    return;
+  }
+  if (a === "proposal") {
+    if (app.decidingProposal) return;
+    app.decidingProposal = true;
+    render();
+    try {
+      await api.decideProposal(id, el.dataset.d, app.reviewDocs.storeRevision);
+      await refresh();
+      toast(el.dataset.d === "confirm" ? "Imported item confirmed" : "Imported item dismissed", "Your records and forecast are updated.");
+    } finally {
+      app.decidingProposal = false;
+      render();
+    }
+    return;
+  }
+  if (a === "signal") {
+    const res = await api.decideSignal(id, el.dataset.d);
+    await refresh();
+    if (el.dataset.d === "apply") {
+      location.hash = "#/today";
+      const low = app.brief.run.lowPoint;
+      toast(res?.alert?.title ?? "Change applied", forecastEmpty() ? "Add your bank balance and source records to see the cash effect." : res?.alert?.detail ? `${res.alert.detail} Today's list is re-ranked.` : `Your low point is now ${money(low.amount)} on ${shortDate(low.date)}. Today's list is re-ranked.`, "Details", () => (location.hash = "#/details"));
+    } else {
+      toast("Dismissed", "The forecast stays as it was.");
+    }
+    return;
+  }
+  if (a === "rule") {
+    const d = el.dataset.d;
+    await api.decideRule(id, d);
+    await refresh();
+    if (d === "confirm") toast("Rule saved", "Your forecast now uses it.");
+    else toast("Dismissed", "The forecast stays as it was.");
+    return;
+  }
+  if (a === "note-filter") {
+    app.noteFilter = el.dataset.k;
+    return render();
+  }
+  if (a === "note-direction") {
+    await api.updateNote(id, { direction: el.dataset.to });
+    app.notes = await api.notes();
+    render();
+    toast(el.dataset.to === "in" ? "Now reads as money in" : "Now reads as money out", "The cash effect is updated. Nothing is added until you choose Add to forecast.");
+    return;
+  }
+  if (a === "note-decide") {
+    const d = el.dataset.d;
+    await api.decideNote(id, d);
+    await refresh();
+    toast(d === "add" ? "Added to your forecast" : d === "keep" ? "Kept as a note" : "Removed", d === "add" ? "Today's list and the chart are updated." : "");
+    return;
+  }
+  if (a === "connect") return showConnect(id);
+  if (a === "connection-sync") {
+    const connection = app.connections.find((c) => c.id === id);
+    if (api.mode !== "live" || connection?.available !== true || app.syncing) return;
+    app.syncing = id;
+    closeSheet();
+    render();
+    try {
+      const result = await api.syncConnection(id);
+      await refresh();
+      const pending = (result.counts?.proposals ?? 0) + (result.counts?.signals ?? 0);
+      const incomplete = result.connection?.state === "error" || (result.counts?.failed ?? 0) > 0 || (result.counts?.rejected ?? 0) > 0;
+      const hasData = pending > 0 || (result.counts?.commitments ?? 0) > 0 || (result.counts?.settlements ?? 0) > 0;
+      const title = incomplete ? (hasData ? "Some source records need attention" : "Source sync needs attention") : "Source sync completed";
+      const detail = incomplete
+        ? `${pending ? `${pending} imported ${pending === 1 ? "item is" : "items are"} waiting for review. ` : ""}${result.connection?.message || "Some source records could not be read. Check the source and try again."}`
+        : pending ? `${pending} imported ${pending === 1 ? "item is" : "items are"} waiting for your review.` : result.summary?.written === false ? "No new or changed records were found." : "Open Review to check anything that needs your OK.";
+      toast(title, detail, "Open Review", () => (location.hash = "#/review"));
+    } finally {
+      app.syncing = null;
+      render();
+    }
+    return;
+  }
+  if (a === "interest") {
+    app.interest.add(id);
+    closeSheet();
+    render();
+    toast("Noted", "You'll hear when it's ready. Upload an export meanwhile.");
+    return;
+  }
+  if (a === "mask") {
+    app.mask = !app.mask;
+    try { localStorage.setItem("neri.mask", app.mask ? "1" : "0"); } catch {}
+    return render();
+  }
+  if (a === "theme") {
+    const t = el.dataset.t;
+    if (t === "auto") delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = t;
+    try { t === "auto" ? localStorage.removeItem("neri.theme") : localStorage.setItem("neri.theme", t); } catch {}
+    return render();
+  }
+  if (a === "copy-draft") {
+    const text = `Subject: ${$("#d-sub").value}\n\n${$("#d-body").value}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Copied", "Paste it into your email.");
+    } catch {
+      toast("Couldn't copy", "Select the text and copy it instead.");
+    }
+    return;
+  }
+  if (a === "mail-draft") {
+    const href = `mailto:${encodeURIComponent($("#d-to").value)}?subject=${encodeURIComponent($("#d-sub").value)}&body=${encodeURIComponent($("#d-body").value)}`;
+    location.href = href;
+    return;
+  }
+}
+
+function viewForecastChartOnly() {
+  const run = app.scenario === "stress" && app.stressRun ? app.stressRun : app.brief.run;
+  return cashChart(run, { width: chartWidth(), height: window.innerWidth < 760 ? 240 : 320, ghost: app.scenario === "stress" ? app.brief.run : null, whatIf: app.whatIf?.run ?? null, selectedWeek: app.selectedWeek });
+}
+
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape") {
+    if (document.querySelector(".sheet")) closeSheet();
+    else if (app.drive) closeDrive();
+  }
+  if ((ev.key === "Enter" || ev.key === " ") && ev.target.matches("tr[data-action='week']")) {
+    ev.preventDefault();
+    showWeek(ev.target.dataset.week);
+  }
+});
+
+document.addEventListener("submit", (ev) => onSubmit(ev).catch(failed));
+async function onSubmit(ev) {
+  const f = ev.target.closest("[data-submit]");
+  if (!f) return;
+  ev.preventDefault();
+  const kind = f.dataset.submit;
+  if (kind === "ask") {
+    const q = new FormData(f).get("q") ?? "";
+    if (app.attach.length) {
+      const files = app.attach;
+      app.attach = [];
+      await sendFiles(files);
+      if (!String(q).trim()) return render();
+    }
+    return doAsk(q);
+  }
+  if (kind === "talk-typed") {
+    const q = String(new FormData(f).get("q") ?? "");
+    closeTalk();
+    return doAsk(q);
+  }
+  if (authLive && (kind === "signup" || kind === "password-signin")) {
+    if (app.signup.busy) return;
+    const fd = new FormData(f);
+    const email = String(fd.get("email") ?? "").trim();
+    const password = String(fd.get("password") ?? "");
+    app.signup = { ...app.signup, email, busy: true, error: "" };
+    render();
+    try {
+      const session = kind === "signup" ? await api.createAccount(email, password) : await api.signIn(email, password);
+      await resumeSignin(session);
+    } catch (e) {
+      app.signup.error = e.message;
+    } finally {
+      app.signup.busy = false;
+      render();
+    }
+    return;
+  }
+  if (kind === "signup") {
+    const email = String(new FormData(f).get("email") ?? "").trim();
+    try {
+      const r = await api.startSignup(email);
+      app.signup = { step: "code", email, name: r.suggestedName ?? suggestBusinessName(email), error: "", sentAt: Date.now() };
+      tickResend();
+    } catch (e) {
+      app.signup.error = e.message;
+      app.signup.email = email;
+    }
+    render();
+    if (!authLive) $("#code")?.focus();
+    return;
+  }
+  if (kind === "verify") {
+    const fd = new FormData(f);
+    const name = String(fd.get("biz") ?? "").trim();
+    try {
+      if (!name) throw new Error("Add your business name.");
+      await api.verifyCode(app.signup.email, String(fd.get("code") ?? ""));
+      await resumeSignin(authLive ? await currentSession() : null, name);
+    } catch (e) {
+      app.signup.error = e.message;
+      app.signup.name = name;
+      render();
+    }
+    return;
+  }
+  if (kind === "setup-name") {
+    const name = String(new FormData(f).get("biz") ?? "").trim();
+    if (!name || name.length > 120) {
+      app.signup.error = "Add your business name (up to 120 characters).";
+      return render();
+    }
+    app.signup = { ...app.signup, name, step: "done", error: "" };
+    location.hash = "#/setup";
+    return;
+  }
+  if (kind === "bank-balance") {
+    const fd = new FormData(f);
+    const amount = parseBalance(fd.get("amount") ?? "");
+    const asOf = String(fd.get("asOf") ?? "");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(asOf)) throw new Error("Choose the date shown on your bank balance.");
+    if (api.mode !== "live") return toast("Balance not saved", "Open your Neri server to add your real bank balance.");
+    const accounts = app.ctx.balanceAccounts ?? [];
+    const account = String(fd.get("account") ?? (accounts.length ? "" : "main"));
+    if (accounts.length && !accounts.some((a) => a.account === account && a.currency === (app.ctx.profile.baseCurrency ?? "USD"))) throw new Error("Choose one of your bank accounts to update.");
+    await api.setBalance(amount, asOf, account);
+    await refresh();
+    toast("Bank balance saved", "Your user-entered balance is now part of your source records.");
+    return;
+  }
+  if (kind === "source-paste") {
+    const text = String(new FormData(f).get("text") ?? "").trim();
+    if (!text) return toast("Paste the source text first");
+    if (api.mode !== "live") return toast("Text not read", "This preview uses sample data. Open your Neri server to import your records.");
+    await api.importText(text);
+    await refresh();
+    toast("Text received", "Open Review to check anything Neri found.", "Open Review", () => (location.hash = "#/review"));
+    return;
+  }
+  if (kind === "park") {
+    const text = (new FormData(f).get("text") ?? "").toString().trim();
+    if (!text) return;
+    await api.parkNote(text, app.lastVia ?? "typed");
+    app.notes = await api.notes();
+    app.noteFilter = "all";
+    render();
+    return;
+  }
+  if (kind === "safety") {
+    const dollars = Number(String(new FormData(f).get("amt")).replace(/[^\d.]/g, ""));
+    if (!Number.isFinite(dollars) || dollars < 0) return toast("Enter an amount in dollars");
+    await api.setSafetyLine(Math.round(dollars * 100));
+    await refresh();
+    toast("Your line is updated", `${money(Math.round(dollars * 100))}. The forecast and today's list are recalculated.`);
+  }
+}
+
+document.addEventListener("change", (ev) => onChange(ev).catch(failed));
+async function onChange(ev) {
+  const el = ev.target;
+  if (el.dataset.change === "reserve") {
+    app.setup.reserve = el.value;
+    return;
+  }
+  if (el.dataset.change === "biz") {
+    if (!demoAllowed) return;
+    app.bizId = el.value;
+    if (app.account?.sample) app.account = await api.useSample(el.value);
+    else if (app.account) {
+      app.account = { ...app.account, sandbox: el.value };
+      try { localStorage.setItem("neri.account", JSON.stringify(app.account)); } catch {}
+    }
+    app.askLog = [];
+    app.whatIf = null;
+    app.brief = null;
+    app.scenario = "base";
+    await load();
+    return;
+  }
+  if (el.dataset.change === "attach") {
+    app.attach.push(...Array.from(el.files ?? []));
+    el.value = "";
+    keepTyped(render);
+    $("#askq")?.focus();
+    return;
+  }
+  if (el.dataset.change === "upload") {
+    const files = Array.from(el.files ?? []);
+    el.value = "";
+    if (files.length) await sendFiles(files);
+    return;
+  }
+  if (el.dataset.noteField) {
+    const field = el.dataset.noteField;
+    let value = el.value;
+    if (field === "amount") {
+      const d = Number(value.replace(/[^\d.]/g, ""));
+      if (!d) return;
+      value = Math.round(d * 100);
+    }
+    if (!value) return;
+    await api.updateNote(el.dataset.id, { [field]: value });
+    app.notes = await api.notes();
+    render();
+  }
+}
+
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (["details", "today"].includes(route())) render();
+  }, 150);
+});
+
+// Complete authentication before load() interprets the hash route or requests business data.
+async function resumeSignin(session, name = "") {
+  try {
+    const account = authLive ? await api.restoreAccount(session) : null;
+    app.account = account;
+    if (account) {
+      history.replaceState(null, "", "#/today");
+      return await load();
+    }
+    app.signup = { step: name ? "done" : "name", email: session?.user?.email ?? app.signup.email, name: name || suggestBusinessName(session?.user?.email ?? ""), error: "" };
+    history.replaceState(null, "", name ? "#/setup" : "#/welcome");
+    render();
+  } catch {
+    // Authentication succeeded. Keep its session, but do not show a half-loaded or cached business.
+    app.account = null;
+    app.ctx = null;
+    app.brief = null;
+    app.signup = { step: "email", mode: "signin", email: session?.user?.email ?? "", name: "", retry: true,
+      error: "You're signed in, but Neri couldn't load your business. Try loading it again." };
+    history.replaceState(null, "", "#/welcome");
+    render();
+  }
+}
+
+async function start() {
+  if (!demoAllowed && app.account && (app.account.sample || !app.account.businessId)) app.account = null;
+  if (authLive) {
+    let session;
+    let fromLink;
+    try {
+      fromLink = await consumeEmailLink();
+      session = fromLink ?? await currentSession();
+    } catch (error) {
+      // Callback failures belong on sign-in, with no URL credentials or raw provider text rendered.
+      app.account = null;
+      app.signup.error = error.message;
+      history.replaceState(null, "", "#/welcome");
+      return render();
+    }
+    if (fromLink || (session && (!app.account || (!app.account.sample && app.account.email !== session.user.email)))) return resumeSignin(session);
+    if (!session && app.account && !app.account.sample) {
+      await api.signOut();
+      app.account = null;
+      app.signup.mode = "signin";
+      app.signup.error = "Your session ended. Sign in again with your email and password.";
+    }
+  }
+  return load();
+}
+
+start().catch((err) => {
+  $("#view").innerHTML = `<section class="panel" style="max-width:640px;margin-top:40px"><h2 style="color:var(--ink);font-size:18px">Neri couldn't load your numbers</h2><p>${esc(err.message)}</p><p style="color:var(--ink-soft)">If you're running against the API, check the server is up, then reload.</p></section>`;
+  console.error(err);
+});

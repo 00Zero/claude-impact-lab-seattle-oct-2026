@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>GTMagic: Ticket Wallet sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1c2c5b;--red:#c8102e;--stock:#ffffff;--carbon:#5b3f8c;--ground:#e8eaf0;--rule:#b9c0d4}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;font-family:Archivo,system-ui,sans-serif;background:var(--ground);color:var(--navy)}
+header{height:60px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:24px;padding:0 40px}
+.mark{font:800 22px Archivo}.mark span{color:#ff6b7f}
+.tag{font:700 12px "Archivo Narrow";letter-spacing:.14em;border:1.5px solid #fff;padding:3px 8px}
+.wrap{display:grid;grid-template-columns:1fr 560px;gap:40px;padding:32px 40px}
+.thread{display:flex;flex-direction:column;gap:18px}
+.coupon{background:var(--stock);border:1px solid var(--rule);display:grid;grid-template-columns:120px 1fr}
+.stub{background:var(--navy);color:#fff;padding:14px;font:700 13px "Archivo Narrow";letter-spacing:.12em;border-right:2px dashed #fff}
+.body{padding:16px 22px;font-size:19px;line-height:1.45}
+.coupon.me .stub{background:var(--carbon)}
+.step{display:flex;gap:10px;flex-wrap:wrap}
+.leg{background:var(--stock);border:1px solid var(--rule);padding:10px 14px;font:700 13px "Archivo Narrow";letter-spacing:.1em;position:relative}
+.leg.done::after{content:"DONE";position:absolute;right:-6px;top:-10px;font-size:11px;color:var(--red);border:2px solid var(--red);padding:1px 5px;transform:rotate(-8deg);background:#fff}
+.fare{background:var(--stock);border:1px solid var(--rule);padding:24px;position:relative}
+.fare h3{font:800 14px "Archivo Narrow";letter-spacing:.14em;margin-bottom:14px}
+.fr{display:grid;grid-template-columns:40px 1fr 60px;border-top:1px solid var(--rule);padding:12px 0;align-items:center}
+.fr b{font:800 22px Archivo;color:var(--carbon)}.fr span{font-size:16px}.fr i{font:800 22px Archivo;font-style:normal;color:var(--carbon);text-align:right}
+.stamp{position:absolute;right:24px;top:70px;font:800 26px "Archivo Narrow";letter-spacing:.12em;color:var(--red);border:4px solid var(--red);padding:4px 14px;transform:rotate(-12deg);opacity:.85}
+.composer{position:absolute;left:40px;width:800px;bottom:28px;display:flex;gap:10px}
+.composer input{flex:1;height:56px;border:1.5px solid var(--navy);background:#fff;padding:0 18px;font:18px Archivo}
+.composer button{height:56px;padding:0 28px;background:var(--red);color:#fff;border:0;font:800 16px Archivo;letter-spacing:.06em}
+</style></head>
+<body>
+<header><div class="mark">GT<span>Magic</span></div><div class="tag">EXAMPLE RUN</div></header>
+<div class="wrap">
+  <div class="thread">
+    <div class="coupon"><div class="stub">GTMAGIC<br>01</div><div class="body">What do you sell, and who do you think buys it most?</div></div>
+    <div class="coupon me"><div class="stub">YOU<br>02</div><div class="body">A neighbourhood bakery adding office catering. I think office managers at small tech firms are our best customers.</div></div>
+    <div class="step"><span class="leg done">RESEARCH</span><span class="leg done">AUDIENCE</span><span class="leg done">MESSAGES</span><span class="leg">TEST · 31/48</span><span class="leg">RESULTS</span></div>
+    <div class="coupon"><div class="stub">GTMAGIC<br>03</div><div class="body">Customers are choosing blind between six messages, including your current headline. Counts land on the right as they come in.</div></div>
+  </div>
+  <div class="fare">
+    <h3>WHICH MESSAGE WOULD MAKE YOU ACT · n = 31</h3>
+    <div class="stamp">SIMULATED</div>
+    <div class="fr"><b>A</b><span>Breakfast that lands before the meeting starts</span><i>13</i></div>
+    <div class="fr"><b>C</b><span>Your current headline</span><i>7</i></div>
+    <div class="fr"><b>B</b><span>Feed the whole team without the spreadsheet</span><i>5</i></div>
+    <div class="fr"><b>D</b><span>Fresh at 7am, gone by 9</span><i>2</i></div>
+    <div class="fr"><b>E</b><span>One order, every dietary need</span><i>1</i></div>
+    <div class="fr"><b>F</b><span>Local flour, local hands</span><i>1</i></div>
+    <div class="fr"><b>–</b><span>None of these</span><i>2</i></div>
+  </div>
+</div>
+<div class="composer"><input placeholder="Ask about the results…"><button>SEND</button></div>
+</body></html>

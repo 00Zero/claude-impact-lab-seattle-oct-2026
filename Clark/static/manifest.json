@@ -1,0 +1,9 @@
+{
+  "name": "Clark",
+  "short_name": "Clark",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F6F5",
+  "theme_color": "#1F5C46",
+  "icons": [{"src": "/static/logo.svg", "sizes": "any", "type": "image/svg+xml"}]
+}

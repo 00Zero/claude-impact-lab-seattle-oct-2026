@@ -1,0 +1,612 @@
+<title>ALongTable Taste Index</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand.css">
+<style>
+  /* Layout: a clean kitchen before service. White surfaces on a barely-green page, no outlines, generous space, answer-first headlines. Light only by design (DESIGN.md: V0 is light). */
+  :root { color-scheme: light; --page-max: 1120px; }
+  body { background: var(--alt-page); color: var(--alt-ink); font-family: var(--alt-font); }
+  code { font-family: var(--alt-font); font-weight: 600; font-size: 0.95em; color: var(--alt-basil); }
+  .wrap { max-width: var(--page-max); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  section { padding-block: var(--alt-space-16) 0; }
+  .eyebrow { font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-basil); margin-bottom: var(--alt-space-3); }
+  .section-head { display: grid; gap: var(--alt-space-3); max-width: 64ch; margin-bottom: var(--alt-space-8); }
+  .stack { display: grid; gap: var(--alt-space-4); }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: var(--alt-space-3); flex-wrap: wrap; }
+  .toast-region:empty { display: none; }
+
+  .top { display: flex; justify-content: space-between; align-items: center; gap: var(--alt-space-4); padding-block: var(--alt-space-6); flex-wrap: wrap; }
+  .wordmark { font-weight: 800; font-size: 1.375rem; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; }
+  .wordmark .dots { display: inline-flex; gap: 3px; }
+  .wordmark .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--alt-ink); }
+  .wordmark .dots i:nth-child(4) { background: var(--alt-basil); }
+  .wordmark .dots i:nth-child(5) { background: transparent; box-shadow: inset 0 0 0 1.5px var(--alt-ink-soft); }
+  .top nav { display: flex; gap: var(--alt-space-1); flex-wrap: wrap; }
+  .top nav a { color: var(--alt-ink); text-decoration: none; font-weight: 600; font-size: var(--alt-text-small); padding: 8px 12px; border-radius: var(--alt-radius-small); }
+  .top nav a:hover { background: var(--alt-sunken); }
+
+  .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--alt-space-12); align-items: center; padding-block: var(--alt-space-8) var(--alt-space-4); }
+  .hero .alt-lead { max-width: 46ch; margin-top: var(--alt-space-6); }
+  .facts { display: flex; gap: var(--alt-space-8); margin-top: var(--alt-space-8); flex-wrap: wrap; }
+  .facts div { display: grid; gap: 2px; }
+  .facts b { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .facts span { font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-ink-soft); }
+
+  .principles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--alt-space-8) var(--alt-space-6); }
+  .principles .principle:first-child { grid-column: span 2; }
+  .principles .principle:first-child h3 { font-size: 1.75rem; }
+  .principles .principle:first-child p { font-size: var(--alt-text-lead); }
+  .principle { display: grid; gap: var(--alt-space-2); align-content: start; padding-top: var(--alt-space-4); border-top: 2px solid var(--alt-ink); }
+  .principle h3 { margin: 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+  .principle p { margin: 0; color: var(--alt-ink-soft); }
+  .principle:first-child { border-top-color: var(--alt-basil); }
+
+  .scale { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--alt-space-4); }
+  .stop { display: grid; gap: var(--alt-space-3); align-content: start; min-width: 0; }
+  .stop .demo { border-radius: var(--alt-radius-card); padding: var(--alt-space-5); min-height: 300px; display: grid; gap: var(--alt-space-3); align-content: start; background: var(--alt-surface); }
+  .stop h3 { margin: var(--alt-space-2) 0 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+  .stop p { margin: 0; color: var(--alt-ink-soft); }
+  .stop .ask { font-weight: 600; color: var(--alt-ink); }
+  .tent { background: var(--alt-basil-deep) !important; color: #FFFFFF; align-content: space-between !important; }
+  .tent .big { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .tent .seats-big { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tent .seats-big i { width: 22px; height: 22px; border-radius: 50%; background: var(--alt-mint); }
+  .tent .seats-big i.o { background: transparent; box-shadow: inset 0 0 0 2px var(--alt-mint); }
+  .tent .alt-label-text { color: var(--alt-mint); }
+
+  .layer-label { display: flex; align-items: baseline; gap: var(--alt-space-3); flex-wrap: wrap; margin: var(--alt-space-8) 0 var(--alt-space-4); }
+  .layer-label:first-of-type { margin-top: 0; }
+  .layer-label h3 { margin: 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+  .layer-label p { margin: 0; color: var(--alt-ink-soft); }
+  .swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--alt-space-4); }
+  .swatch { display: grid; gap: var(--alt-space-2); min-width: 0; align-content: start; }
+  .swatch .tile { height: 112px; border-radius: var(--alt-radius-card); }
+  .swatch .tile.edge { box-shadow: inset 0 0 0 1px var(--alt-divider); }
+  .swatch b { font-size: 0.9375rem; }
+  .swatch code { color: var(--alt-ink-soft); font-variant-numeric: tabular-nums; font-size: var(--alt-text-small); }
+  .swatch span { font-size: var(--alt-text-small); color: var(--alt-ink-soft); line-height: 1.4; }
+  .swatch .lines { display: grid; gap: 1px; }
+
+  .meaning { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--alt-space-4); }
+  .meaning > div { background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-5); display: grid; gap: var(--alt-space-2); justify-items: start; }
+  .meaning p { margin: 0; color: var(--alt-ink-soft); font-size: 0.9375rem; }
+
+  .table-card { overflow-x: auto; margin-top: var(--alt-space-8); background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-2) var(--alt-space-4); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--alt-divider); font-size: 0.9375rem; }
+  thead th { font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-ink-soft); }
+  tbody th { font-weight: 600; }
+  tr:last-child td, tr:last-child th { border-bottom: none; }
+  td.no { color: var(--alt-red); font-weight: 600; }
+
+  .type-card { background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: 0 var(--alt-space-6); }
+  .type-row { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: var(--alt-space-6); align-items: baseline; padding: var(--alt-space-6) 0; border-bottom: 1px solid var(--alt-divider); }
+  .type-row:last-child { border-bottom: none; }
+  .type-row .spec { font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-ink-soft); font-variant-numeric: tabular-nums; display: grid; gap: 2px; }
+
+  .sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--alt-space-6); margin-bottom: var(--alt-space-6); align-items: start; }
+  .side-label { font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-ink-soft); margin-bottom: var(--alt-space-3); }
+  .event-photo { aspect-ratio: 16 / 9; border-radius: var(--alt-radius-photo); background: var(--alt-mint); display: grid; place-items: center; }
+  .host { display: flex; align-items: center; gap: var(--alt-space-3); }
+  .meta-list { display: grid; gap: var(--alt-space-2); }
+
+  .comp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--alt-space-4); }
+  .comp { background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-6); display: grid; gap: var(--alt-space-4); align-content: start; min-width: 0; }
+  .comp h3 { margin: 0; font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-ink-soft); }
+  .comp .wraprow { display: flex; gap: var(--alt-space-3); flex-wrap: wrap; align-items: center; }
+
+  .icon-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: var(--alt-space-3); }
+  .icon-cell { background: var(--alt-surface); border-radius: var(--alt-radius-control); padding: var(--alt-space-4) var(--alt-space-2); display: grid; justify-items: center; gap: var(--alt-space-2); text-align: center; min-width: 0; }
+  .icon-cell span { font-size: 0.8125rem; font-weight: 600; color: var(--alt-ink-soft); line-height: 1.3; overflow-wrap: anywhere; }
+  .icon-scale { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--alt-space-4); margin-top: var(--alt-space-6); }
+  .icon-scale > div { background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-6); display: grid; gap: var(--alt-space-3); align-content: start; }
+  .icon-scale h3 { margin: 0; font-size: var(--alt-text-small); font-weight: 600; color: var(--alt-ink-soft); }
+  .duo-row { display: flex; gap: var(--alt-space-3); flex-wrap: wrap; }
+  .photo-dir { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--alt-space-8); align-items: start; margin-top: var(--alt-space-12); }
+  .photo-dir ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--alt-space-4); }
+  .photo-dir li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--alt-space-3); align-items: start; }
+  .photo-dir li b { display: block; }
+  .photo-dir li span { color: var(--alt-ink-soft); }
+  .shot { aspect-ratio: 1; display: grid; place-items: center; align-content: center; gap: var(--alt-space-2); padding: var(--alt-space-3); text-align: center; font-size: 0.8125rem; font-weight: 600; line-height: 1.3; color: var(--alt-ink); }
+
+  .covers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--alt-space-4); }
+  .cover { border-radius: var(--alt-radius-card); padding: var(--alt-space-6); min-height: 230px; display: flex; flex-direction: column; justify-content: space-between; color: var(--alt-ink); }
+  .cover .k { font-size: var(--alt-text-small); font-weight: 600; }
+  .cover .t { font-size: 1.625rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .cover .m { font-size: var(--alt-text-small); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .social { margin-top: var(--alt-space-4); border-radius: var(--alt-radius-card); padding: var(--alt-space-12) var(--alt-space-8); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--alt-space-8); align-items: center; }
+  .social .alt-display { color: #FFFFFF; }
+  .social p { margin: var(--alt-space-3) 0 0; color: var(--alt-mint); max-width: 40ch; font-size: var(--alt-text-lead); }
+  .social .seatdemo { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .social .seatdemo i { width: 26px; height: 26px; border-radius: 50%; background: var(--alt-mint); }
+  .social .seatdemo i.o { background: transparent; box-shadow: inset 0 0 0 2px var(--alt-mint); }
+
+  .voice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--alt-space-4); margin-top: var(--alt-space-6); }
+  .voice-col { background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-6); }
+  .voice-col h3 { margin: 0 0 var(--alt-space-3); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+  .voice-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--alt-space-3); }
+  .voice-col li { display: flex; gap: var(--alt-space-3); align-items: baseline; }
+  .voice-col li::before { flex: none; font-weight: 800; width: 16px; }
+  .voice-col.do li::before { content: "+"; color: var(--alt-basil); }
+  .voice-col.dont li::before { content: "\00d7"; color: var(--alt-red); }
+
+  .files { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--alt-space-4); }
+  .file { background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-6); display: grid; gap: var(--alt-space-2); align-content: start; }
+  .file code { font-weight: 800; font-size: 1.125rem; color: var(--alt-ink); }
+  .file p { margin: 0; color: var(--alt-ink-soft); }
+  .claude-line { margin-top: var(--alt-space-4); display: flex; gap: var(--alt-space-4); align-items: center; flex-wrap: wrap; background: var(--alt-surface); border-radius: var(--alt-radius-card); padding: var(--alt-space-4) var(--alt-space-6); }
+  .claude-line p { margin: 0; flex: 1 1 320px; min-width: 0; font-weight: 600; }
+
+  footer { margin-top: var(--alt-space-16); }
+  footer .alt-band-deep { padding-block: var(--alt-space-12); }
+  footer .inner { display: flex; justify-content: space-between; gap: var(--alt-space-6); flex-wrap: wrap; align-items: flex-end; }
+  footer p { margin: 0; max-width: 52ch; }
+
+  @media (max-width: 960px) {
+    .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .principles .principle:first-child { grid-column: span 2; }
+    .swatches, .covers, .meaning, .icon-grid, .files { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .icon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .comp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .hero, .sides, .social, .voice, .scale, .icon-scale, .photo-dir { grid-template-columns: minmax(0, 1fr); }
+    .hero { gap: var(--alt-space-8); }
+    .social { padding: var(--alt-space-8) var(--alt-space-6); }
+    .social .seatdemo { justify-content: flex-start; }
+    .type-row { grid-template-columns: minmax(0, 1fr); gap: var(--alt-space-2); }
+    section { padding-block: var(--alt-space-12) 0; }
+  }
+  @media (max-width: 560px) {
+    .principles, .covers, .meaning, .files, .comp-grid { grid-template-columns: minmax(0, 1fr); }
+    .principles .principle:first-child { grid-column: auto; }
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-chair" viewBox="0 0 256 256"><path d="M208,136H176V104h16a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16H64A16,16,0,0,0,48,40V88a16,16,0,0,0,16,16H80v32H48a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16h8v40a8,8,0,0,0,16,0V184H184v40a8,8,0,0,0,16,0V184h8a16,16,0,0,0,16-16V152A16,16,0,0,0,208,136ZM64,40H192V88H64Zm32,64h64v32H96Zm112,64H48V152H208v16Z"/></symbol><symbol id="i-users-three" viewBox="0 0 256 256"><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"/></symbol><symbol id="i-calendar-blank" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></symbol><symbol id="i-clock" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></symbol><symbol id="i-map-pin" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></symbol><symbol id="i-storefront" viewBox="0 0 256 256"><path d="M232,96a7.89,7.89,0,0,0-.3-2.2L217.35,43.6A16.07,16.07,0,0,0,202,32H54A16.07,16.07,0,0,0,38.65,43.6L24.31,93.8A7.89,7.89,0,0,0,24,96h0v16a40,40,0,0,0,16,32v72a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V144a40,40,0,0,0,16-32V96ZM54,48H202l11.42,40H42.61Zm50,56h48v8a24,24,0,0,1-48,0Zm-16,0v8a24,24,0,0,1-35.12,21.26,7.88,7.88,0,0,0-1.82-1.06A24,24,0,0,1,40,112v-8ZM200,208H56V151.2a40.57,40.57,0,0,0,8,.8,40,40,0,0,0,32-16,40,40,0,0,0,64,0,40,40,0,0,0,32,16,40.57,40.57,0,0,0,8-.8Zm4.93-75.8a8.08,8.08,0,0,0-1.8,1.05A24,24,0,0,1,168,112v-8h48v8A24,24,0,0,1,204.93,132.2Z"/></symbol><symbol id="i-fork-knife" viewBox="0 0 256 256"><path d="M72,88V40a8,8,0,0,1,16,0V88a8,8,0,0,1-16,0ZM216,40V224a8,8,0,0,1-16,0V176H152a8,8,0,0,1-8-8,268.75,268.75,0,0,1,7.22-56.88c9.78-40.49,28.32-67.63,53.63-78.47A8,8,0,0,1,216,40ZM200,53.9c-32.17,24.57-38.47,84.42-39.7,106.1H200ZM119.89,38.69a8,8,0,1,0-15.78,2.63L112,88.63a32,32,0,0,1-64,0l7.88-47.31a8,8,0,1,0-15.78-2.63l-8,48A8.17,8.17,0,0,0,32,88a48.07,48.07,0,0,0,40,47.32V224a8,8,0,0,0,16,0V135.32A48.07,48.07,0,0,0,128,88a8.17,8.17,0,0,0-.11-1.31Z"/></symbol><symbol id="i-wine" viewBox="0 0 256 256"><path d="M205.33,103.67,183.56,29.74A8,8,0,0,0,175.89,24H80.11a8,8,0,0,0-7.67,5.74L50.67,103.67a63.46,63.46,0,0,0,17.42,64.67A87.39,87.39,0,0,0,120,191.63V232H88a8,8,0,1,0,0,16h80a8,8,0,1,0,0-16H136V191.63a87.41,87.41,0,0,0,51.91-23.29A63.46,63.46,0,0,0,205.33,103.67ZM86.09,40h83.82L190,108.19c.09.3.17.6.25.9-21.42,7.68-45.54-1.6-58.63-8.23C106.43,88.11,86.43,86.49,71.68,88.93ZM177,156.65a71.69,71.69,0,0,1-98,0,47.55,47.55,0,0,1-13-48.46l.45-1.52c12-4.06,31.07-5.14,57.93,8.47,11.15,5.65,29.16,12.85,48.43,12.85a68.64,68.64,0,0,0,19.05-2.6A47.2,47.2,0,0,1,177,156.65Z"/></symbol><symbol id="i-chats-circle" viewBox="0 0 256 256"><path d="M232.07,186.76a80,80,0,0,0-62.5-114.17A80,80,0,1,0,23.93,138.76l-7.27,24.71a16,16,0,0,0,19.87,19.87l24.71-7.27a80.39,80.39,0,0,0,25.18,7.35,80,80,0,0,0,108.34,40.65l24.71,7.27a16,16,0,0,0,19.87-19.86ZM62,159.5a8.28,8.28,0,0,0-2.26.32L32,168l8.17-27.76a8,8,0,0,0-.63-6,64,64,0,1,1,26.26,26.26A8,8,0,0,0,62,159.5Zm153.79,28.73L224,216l-27.76-8.17a8,8,0,0,0-6,.63,64.05,64.05,0,0,1-85.87-24.88A79.93,79.93,0,0,0,174.7,89.71a64,64,0,0,1,41.75,92.48A8,8,0,0,0,215.82,188.23Z"/></symbol><symbol id="i-bell" viewBox="0 0 256 256"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"/></symbol><symbol id="i-check-circle" viewBox="0 0 256 256"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol><symbol id="i-info" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/></symbol><symbol id="i-warning-circle" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol><symbol id="i-plus" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol><symbol id="i-pencil-simple" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"/></symbol><symbol id="i-share-network" viewBox="0 0 256 256"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></symbol><symbol id="i-hand-waving" viewBox="0 0 256 256"><path d="M220.17,100,202.86,70a28,28,0,0,0-38.24-10.25,27.69,27.69,0,0,0-9,8.34L138.2,38a28,28,0,0,0-48.48,0A28,28,0,0,0,48.15,74l1.59,2.76A27.67,27.67,0,0,0,38,80.41a28,28,0,0,0-10.24,38.25l40,69.32a87.47,87.47,0,0,0,53.43,41,88.56,88.56,0,0,0,22.92,3,88,88,0,0,0,76.06-132Zm-6.66,62.64A72,72,0,0,1,81.62,180l-40-69.32a12,12,0,0,1,20.78-12L81.63,132a8,8,0,1,0,13.85-8L62,66A12,12,0,1,1,82.78,54L114,108a8,8,0,1,0,13.85-8L103.57,58h0a12,12,0,1,1,20.78-12l33.42,57.9a48,48,0,0,0-5.54,60.6,8,8,0,0,0,13.24-9A32,32,0,0,1,172.78,112a8,8,0,0,0,2.13-10.4L168.23,90A12,12,0,1,1,189,78l17.31,30A71.56,71.56,0,0,1,213.51,162.62ZM184.25,31.71A8,8,0,0,1,194,26a59.62,59.62,0,0,1,36.53,28l.33.57a8,8,0,1,1-13.85,8l-.33-.57a43.67,43.67,0,0,0-26.8-20.5A8,8,0,0,1,184.25,31.71ZM80.89,237a8,8,0,0,1-11.23,1.33A119.56,119.56,0,0,1,40.06,204a8,8,0,0,1,13.86-8,103.67,103.67,0,0,0,25.64,29.72A8,8,0,0,1,80.89,237Z"/></symbol><symbol id="d-chair" viewBox="0 0 256 256"><path d="M56,88V40a8,8,0,0,1,8-8H192a8,8,0,0,1,8,8V88a8,8,0,0,1-8,8H64A8,8,0,0,1,56,88Zm152,56H48a8,8,0,0,0-8,8v16a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V152A8,8,0,0,0,208,144Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M208,136H176V104h16a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16H64A16,16,0,0,0,48,40V88a16,16,0,0,0,16,16H80v32H48a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16h8v40a8,8,0,0,0,16,0V184H184v40a8,8,0,0,0,16,0V184h8a16,16,0,0,0,16-16V152A16,16,0,0,0,208,136ZM64,40H192V88H64Zm32,64h64v32H96Zm112,64H48V152H208v16Z"/></symbol><symbol id="d-fork-knife" viewBox="0 0 256 256"><path d="M208,40V168H152S152,64,208,40Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M72,88V40a8,8,0,0,1,16,0V88a8,8,0,0,1-16,0ZM216,40V224a8,8,0,0,1-16,0V176H152a8,8,0,0,1-8-8,268.75,268.75,0,0,1,7.22-56.88c9.78-40.49,28.32-67.63,53.63-78.47A8,8,0,0,1,216,40ZM200,53.9c-32.17,24.57-38.47,84.42-39.7,106.1H200ZM119.89,38.69a8,8,0,1,0-15.78,2.63L112,88.63a32,32,0,0,1-64,0l7.88-47.31a8,8,0,1,0-15.78-2.63l-8,48A8.17,8.17,0,0,0,32,88a48.07,48.07,0,0,0,40,47.32V224a8,8,0,0,0,16,0V135.32A48.07,48.07,0,0,0,128,88a8.17,8.17,0,0,0-.11-1.31Z"/></symbol><symbol id="d-wine" viewBox="0 0 256 256"><path d="M182.48,162.5a79.77,79.77,0,0,1-109,0A55.86,55.86,0,0,1,58.3,105.93l1.57-5.31h0C72.49,95.21,95.2,91.4,128,108c35.86,18.16,59.67,11.89,71.42,5.84h0A55.72,55.72,0,0,1,182.48,162.5Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M205.33,103.67,183.56,29.74A8,8,0,0,0,175.89,24H80.11a8,8,0,0,0-7.67,5.74L50.67,103.67a63.46,63.46,0,0,0,17.42,64.67A87.41,87.41,0,0,0,120,191.63V232H88a8,8,0,1,0,0,16h80a8,8,0,1,0,0-16H136V191.63a87.39,87.39,0,0,0,51.91-23.29A63.48,63.48,0,0,0,205.33,103.67ZM86.09,40h83.82L190,108.19c.09.3.17.6.25.9-21.42,7.68-45.54-1.6-58.63-8.23C106.43,88.11,86.43,86.49,71.68,88.93ZM177,156.65a71.69,71.69,0,0,1-98,0,47.55,47.55,0,0,1-13-48.46l.45-1.52c12-4.06,31.07-5.14,57.93,8.47,11.15,5.65,29.16,12.85,48.43,12.85a68.64,68.64,0,0,0,19.05-2.6A47.2,47.2,0,0,1,177,156.65Z"/></symbol><symbol id="d-coffee" viewBox="0 0 256 256"><path d="M208,88v48a88,88,0,0,1-51.3,80H83.3A88,88,0,0,1,32,136V88Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M80,56V24a8,8,0,0,1,16,0V56a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,120,64Zm32,0a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,152,64Zm96,56v8a40,40,0,0,1-37.51,39.91,96.59,96.59,0,0,1-27,40.09H208a8,8,0,0,1,0,16H32a8,8,0,0,1,0-16H56.54A96.3,96.3,0,0,1,24,136V88a8,8,0,0,1,8-8H208A40,40,0,0,1,248,120ZM200,96H40v40a80.27,80.27,0,0,0,45.12,72h69.76A80.27,80.27,0,0,0,200,136Zm32,24a24,24,0,0,0-16-22.62V136a95.78,95.78,0,0,1-1.2,15A24,24,0,0,0,232,128Z"/></symbol><symbol id="d-storefront" viewBox="0 0 256 256"><path d="M224,96v16a32,32,0,0,1-64,0V96H96v16a32,32,0,0,1-64,0V96L46.34,45.8A8,8,0,0,1,54,40H202a8,8,0,0,1,7.69,5.8Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M231.69,93.81,217.35,43.6A16.07,16.07,0,0,0,202,32H54A16.07,16.07,0,0,0,38.65,43.6L24.31,93.81A7.94,7.94,0,0,0,24,96v16a40,40,0,0,0,16,32v72a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V144a40,40,0,0,0,16-32V96A7.94,7.94,0,0,0,231.69,93.81ZM54,48H202l11.42,40H42.61Zm98,56v8a24,24,0,0,1-48,0v-8ZM51.06,132.2A24,24,0,0,1,40,112v-8H88v8a24,24,0,0,1-35.12,21.26A7.88,7.88,0,0,0,51.06,132.2ZM200,208H56V151.2a40.57,40.57,0,0,0,8,.8,40,40,0,0,0,32-16,40,40,0,0,0,64,0,40,40,0,0,0,32,16,40.57,40.57,0,0,0,8-.8Zm16-96a24,24,0,0,1-11.07,20.2,8.08,8.08,0,0,0-1.8,1.05A24,24,0,0,1,168,112v-8h48Z"/></symbol><symbol id="d-users-three" viewBox="0 0 256 256"><path d="M168,144a40,40,0,1,1-40-40A40,40,0,0,1,168,144ZM64,56A32,32,0,1,0,96,88,32,32,0,0,0,64,56Zm128,0a32,32,0,1,0,32,32A32,32,0,0,0,192,56Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1,0-16,24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.85,8,57,57,0,0,0-98.15,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"/></symbol><symbol id="d-hand-waving" viewBox="0 0 256 256"><path d="M184,213.27A80,80,0,0,1,74.7,184l-40-69.32a20,20,0,0,1,34.64-20L55.08,70A20,20,0,0,1,89.73,50l6.92,12h0a20,20,0,0,1,34.64-20l30,52A20,20,0,0,1,196,74l17.31,30A80,80,0,0,1,184,213.27Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M220.17,100,202.86,70a28,28,0,0,0-38.24-10.25,27.69,27.69,0,0,0-9,8.34L138.2,38a28,28,0,0,0-48.48,0A28,28,0,0,0,48.15,74l1.59,2.76A27.67,27.67,0,0,0,38,80.41a28,28,0,0,0-10.24,38.25l40,69.32a87.47,87.47,0,0,0,53.43,41,88.56,88.56,0,0,0,22.92,3,88,88,0,0,0,76.06-132Zm-6.66,62.64A72,72,0,0,1,81.62,180l-40-69.32a12,12,0,0,1,20.78-12L81.63,132a8,8,0,1,0,13.85-8L62,66A12,12,0,1,1,82.78,54L114,108a8,8,0,1,0,13.85-8L103.57,58h0a12,12,0,1,1,20.78-12l33.42,57.9a48,48,0,0,0-5.54,60.6,8,8,0,0,0,13.24-9A32,32,0,0,1,172.78,112a8,8,0,0,0,2.13-10.4L168.23,90A12,12,0,1,1,189,78l17.31,30A71.56,71.56,0,0,1,213.51,162.62ZM184.25,31.71A8,8,0,0,1,194,26a59.62,59.62,0,0,1,36.53,28l.33.57a8,8,0,1,1-13.85,8l-.33-.57a43.67,43.67,0,0,0-26.8-20.5A8,8,0,0,1,184.25,31.71ZM80.89,237a8,8,0,0,1-11.23,1.33A119.56,119.56,0,0,1,40.06,204a8,8,0,0,1,13.86-8,103.67,103.67,0,0,0,25.64,29.72A8,8,0,0,1,80.89,237Z"/></symbol><symbol id="d-calendar-check" viewBox="0 0 256 256"><path d="M216,48V88H40V48a8,8,0,0,1,8-8H208A8,8,0,0,1,216,48Z" style="fill: var(--alt-icon-fill, #E2F0E7)"/><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"/></symbol></svg>
+
+<div class="wrap">
+  <header class="top">
+    <div class="wordmark" aria-label="ALongTable"><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>a long table</div>
+    <nav aria-label="Sections">
+      <a href="#principles">Principles</a>
+      <a href="#scale">Scale</a>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#components">Components</a>
+      <a href="#icons">Icons and photos</a>
+      <a href="#brand">Brand layer</a>
+      <a href="#voice">Voice</a>
+      <a href="#files">Files</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Taste Index · v0 · October 2026</div>
+      <h1 class="alt-hero">We've got this table.</h1>
+      <p class="alt-lead alt-secondary">Fresh basil on a clean table: a calm kitchen before service, everything prepped, nothing in the way. This page shows every rule in <code>DESIGN.md</code> working with the real tokens.</p>
+      <div class="facts">
+        <div><b>1</b><span>action color</span></div>
+        <div><b>4</b><span>meaning colors</span></div>
+        <div><b>0</b><span>outlines around cards</span></div>
+      </div>
+    </div>
+
+    <article class="alt-card stack" aria-labelledby="own-hero">
+      <div class="row"><span class="alt-label-text alt-secondary">Café Pinot</span><span class="alt-label-text alt-secondary alt-num">Oct 26 – Nov 1</span></div>
+      <h2 class="alt-answer" id="own-hero">2 tables booked</h2>
+      <ul class="alt-list">
+        <li class="alt-row"><div class="alt-row__main"><span class="alt-row__title">Wed, Oct 28 · 6–9 PM</span><span class="alt-row__meta">Back room · 10 seats</span></div><span class="alt-chip alt-chip--booked">Booked</span></li>
+        <li class="alt-row"><div class="alt-row__main"><span class="alt-row__title">Thu, Oct 29 · 6–9 PM</span><span class="alt-row__meta">Front window · 8 seats</span></div><span class="alt-chip alt-chip--filling">6 of 8 taken</span></li>
+        <li class="alt-row"><div class="alt-row__main"><span class="alt-row__title">Sat, Oct 31 · 5–8 PM</span><span class="alt-row__meta">Back room · 10 seats</span></div><span class="alt-chip">Open</span></li>
+      </ul>
+      <div class="alt-notice alt-notice--info"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-info"/></svg><span>We'll text you the guest list at 3 PM on the day.</span></div>
+      <button class="alt-button alt-button--primary alt-button--block" type="button">Publish a space</button>
+    </article>
+  </div>
+
+  <section id="principles">
+    <div class="section-head">
+      <div class="eyebrow">Principles</div>
+      <h2 class="alt-h2">Seven rules that cover the cases nobody wrote down</h2>
+    </div>
+    <div class="principles">
+      <div class="principle"><h3>Calm is the feature</h3><p>Fewer things on screen, more space, no urgency tricks. After every action, say what happens next.</p></div>
+      <div class="principle"><h3>Answer first</h3><p>Lead with the one fact the person came for, in big type. Details come after.</p></div>
+      <div class="principle"><h3>One basil action per screen</h3><p>Basil marks the single next step. Two basil buttons means one is wrong.</p></div>
+      <div class="principle"><h3>A color means one thing</h3><p>Mint is booked, apricot is filling, sky is information, red is a problem. Always.</p></div>
+      <div class="principle"><h3>Surfaces, not outlines</h3><p>Separate things with space and a change of surface. Borders only where an edge must be seen.</p></div>
+      <div class="principle"><h3>The table is the product</h3><p>Show seats, not statistics. The seat row goes anywhere capacity matters.</p></div>
+      <div class="principle"><h3>Readable at every age</h3><p>16px body, 44px targets, AA contrast everywhere, no pale grey text.</p></div>
+    </div>
+  </section>
+
+  <section id="scale">
+    <div class="section-head">
+      <div class="eyebrow">Functional to expressive</div>
+      <h2 class="alt-h2">One brand, dialed up or down</h2>
+      <p class="alt-lead alt-secondary">Every piece sits on one scale. The foundation never changes; expression is added only where the piece can afford it. When unsure, go one step more functional. Owners trust calm.</p>
+    </div>
+    <div class="scale">
+      <div class="stop">
+        <div class="demo">
+          <span class="alt-label-text alt-secondary">Your spaces</span>
+          <ul class="alt-list">
+            <li class="alt-row"><div class="alt-row__main"><span class="alt-row__title">Wed · 6–9 PM</span><span class="alt-row__meta">Back room · 10 seats</span></div><span class="alt-chip alt-chip--booked">Booked</span></li>
+          </ul>
+          <div class="alt-field"><label class="alt-label" for="s-seats">Seats in this space</label><input class="alt-input alt-num" id="s-seats" value="8" inputmode="numeric"></div>
+        </div>
+        <h3>Functional</h3>
+        <p class="ask">Is someone trying to get a task done?</p>
+        <p>Owner dashboard, forms, booking lists, texts, settings. Product palette only. Quiet and fast to scan.</p>
+      </div>
+      <div class="stop">
+        <div class="demo">
+          <div class="event-photo" style="aspect-ratio: 16 / 7; background: var(--alt-apricot)"><svg class="alt-icon alt-icon--md" aria-hidden="true"><use href="#i-fork-knife"/></svg></div>
+          <span class="alt-title" style="font-size: 1.125rem">First-timers' tasting menu</span>
+          <div><ul class="alt-seats" id="seats-scale" data-alt-seats="8" data-alt-taken="5"></ul><p class="alt-seat-count" data-alt-count-for="seats-scale"></p></div>
+          <button class="alt-button alt-button--primary alt-button--block" type="button">Pull up a chair</button>
+        </div>
+        <h3>In between</h3>
+        <p class="ask">Is someone deciding whether to go?</p>
+        <p>Discovery, event pages, confirmations, host profiles. Adds photos, event covers and the seat row large.</p>
+      </div>
+      <div class="stop">
+        <div class="demo tent">
+          <span class="alt-label-text">On the table at Café Pinot</span>
+          <div class="big">This seat is for someone new.</div>
+          <div class="seats-big" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i></div>
+          <span class="alt-label-text">alongtable.com · Wednesdays from 6 PM</span>
+        </div>
+        <h3>Expressive</h3>
+        <p class="ask">Is someone meeting ALongTable for the first time?</p>
+        <p>Website, social, campaigns, table tents, window stickers. Full brand palette and big type. Status colors keep their meanings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="color">
+    <div class="section-head">
+      <div class="eyebrow">Color</div>
+      <h2 class="alt-h2">Fresh basil on a clean table</h2>
+      <p class="alt-lead alt-secondary">Two layers, the way Spotify and Uber separate them: a product palette that never gets decorative, and a brand palette for covers, social and signage.</p>
+    </div>
+
+    <div class="layer-label"><h3>Product palette</h3><p>Every screen.</p></div>
+    <div class="swatches">
+      <div class="swatch"><div class="tile" style="background: var(--alt-basil)"></div><div class="lines"><b>Basil</b><code>#1E7A53</code><span>The one action, links, focus, your seat.</span></div></div>
+      <div class="swatch"><div class="tile" style="background: var(--alt-ink)"></div><div class="lines"><b>Ink</b><code>#15191A</code><span>All text and taken seats.</span></div></div>
+      <div class="swatch"><div class="tile" style="background: var(--alt-ink-soft)"></div><div class="lines"><b>Ink soft</b><code>#5A6360</code><span>Secondary text and open seats.</span></div></div>
+      <div class="swatch"><div class="tile edge" style="background: var(--alt-page)"></div><div class="lines"><b>Page</b><code>#F5F6F2</code><span>Page background. A hint of green, no beige.</span></div></div>
+      <div class="swatch"><div class="tile edge" style="background: var(--alt-surface)"></div><div class="lines"><b>Surface</b><code>#FFFFFF</code><span>Cards, sheets and inputs.</span></div></div>
+      <div class="swatch"><div class="tile" style="background: var(--alt-sunken)"></div><div class="lines"><b>Sunken</b><code>#ECEEE8</code><span>Quiet fills, tab tracks, secondary buttons.</span></div></div>
+      <div class="swatch"><div class="tile" style="background: var(--alt-divider)"></div><div class="lines"><b>Divider</b><code>#E2E5DF</code><span>Hairlines between rows. Never around cards.</span></div></div>
+      <div class="swatch"><div class="tile" style="background: var(--alt-field-border)"></div><div class="lines"><b>Field border</b><code>#8D9592</code><span>Text fields and checkboxes only.</span></div></div>
+    </div>
+
+    <div class="layer-label"><h3>Status colors</h3><p>One meaning each, everywhere.</p></div>
+    <div class="meaning">
+      <div><span class="alt-chip alt-chip--booked">Booked</span><b>Mint · #E2F0E7</b><p>Confirmed, done. Nothing to do.</p></div>
+      <div><span class="alt-chip alt-chip--filling">6 of 8 taken</span><b>Apricot · #FBE3D6</b><p>Filling up. Worth a look, never an alarm.</p></div>
+      <div><span class="alt-chip alt-chip--info">Tip</span><b>Sky · #DCEAF3</b><p>Information and what happens next.</p></div>
+      <div><span class="alt-chip alt-chip--problem">Needs a fix</span><b>Red · #B42318</b><p>Something went wrong. Nothing else.</p></div>
+    </div>
+
+    <div class="layer-label"><h3>Brand palette</h3><p>Website, covers and social only. Never on buttons, forms or status.</p></div>
+    <div class="swatches">
+      <div class="swatch"><div class="tile" style="background: var(--alt-basil-deep)"></div><div class="lines"><b>Deep basil</b><code>#0E3B2A</code><span>Big brand blocks with white or mint text.</span></div></div>
+      <div class="swatch"><div class="tile" style="background: var(--alt-blush)"></div><div class="lines"><b>Blush</b><code>#F4D3DA</code><span>Covers and social, the warm counterpoint.</span></div></div>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <caption style="position:absolute;left:-9999px">Measured WCAG contrast ratios for text colors on each background</caption>
+        <thead><tr><th scope="col">Text on</th><th scope="col">White</th><th scope="col">Page</th><th scope="col">Sunken</th><th scope="col">Mint</th><th scope="col">Apricot</th><th scope="col">Sky</th><th scope="col">Blush</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Ink</th><td>17.7</td><td>16.3</td><td>15.1</td><td>15.1</td><td>14.4</td><td>14.4</td><td>12.8</td></tr>
+          <tr><th scope="row">Ink soft</th><td>6.2</td><td>5.7</td><td>5.3</td><td>5.3</td><td>5.0</td><td>5.0</td><td>4.5</td></tr>
+          <tr><th scope="row">Basil</th><td>5.3</td><td>4.9</td><td>4.5</td><td>4.5</td><td class="no">4.3 · don't</td><td class="no">4.3 · don't</td><td class="no">3.8 · don't</td></tr>
+          <tr><th scope="row">Red</th><td>6.6</td><td>6.1</td><td>5.6</td><td>5.6</td><td>5.3</td><td>5.4</td><td>4.8</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="alt-body alt-secondary" style="margin-top: var(--alt-space-3)">WCAG AA needs 4.5 for normal text. White on basil is 5.3, on red 6.6 and on deep basil 12.5.</p>
+  </section>
+
+  <section id="type">
+    <div class="section-head">
+      <div class="eyebrow">Type</div>
+      <h2 class="alt-h2">One family, three weights</h2>
+      <p class="alt-lead alt-secondary">Figtree, free on Google Fonts. Hierarchy comes from size and weight, the way Airbnb Experiences sets type: big confident headlines, quiet body, lots of room.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-row"><div class="spec"><code>--alt-text-hero</code>64 / 1.0 · 800</div><div class="alt-hero">Pull up a chair</div></div>
+      <div class="type-row"><div class="spec"><code>--alt-text-display</code>44 / 1.05 · 800</div><div class="alt-display">2 tables booked</div></div>
+      <div class="type-row"><div class="spec"><code>--alt-text-h2</code>32 / 1.1 · 800</div><div class="alt-h2">Your spaces this week</div></div>
+      <div class="type-row"><div class="spec"><code>--alt-text-title</code>24 / 1.2 · 600</div><div class="alt-title">Debating Pythagoras</div></div>
+      <div class="type-row"><div class="spec"><code>--alt-text-lead</code>18 / 1.5 · 400</div><p class="alt-lead">Your space is live. We'll text you when someone books it.</p></div>
+      <div class="type-row"><div class="spec"><code>--alt-text-body</code>16 / 1.55 · 400</div><p class="alt-body">Café Pinot's back room seats ten. Dinner is ordered at the table; nobody pays through ALongTable.</p></div>
+      <div class="type-row"><div class="spec"><code>--alt-text-small</code>14 / 1.4 · 600</div><span class="alt-label-text alt-num">Wed, Oct 28 · 6–9 PM · 4 of 10 seats open</span></div>
+    </div>
+  </section>
+
+  <section id="components">
+    <div class="section-head">
+      <div class="eyebrow">Components</div>
+      <h2 class="alt-h2">Built on Base UI</h2>
+      <p class="alt-lead alt-secondary">Base UI renders the accessible roles and states. These classes style those states; pass them through each part's <code>className</code>.</p>
+    </div>
+
+    <div class="sides">
+      <div>
+        <div class="side-label">Owner · after publishing</div>
+        <article class="alt-card stack" aria-labelledby="own-pub">
+          <span class="alt-label-text alt-secondary">Space published</span>
+          <h3 class="alt-title" id="own-pub">Front window, Thursday</h3>
+          <div class="alt-notice alt-notice--success"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-check-circle"/></svg><span>Your space is live. Guests can book it now, and we'll text you when they do.</span></div>
+          <ul class="alt-list">
+            <li class="alt-row"><div class="alt-row__main"><span class="alt-row__title">Thu, Oct 29 · 6–9 PM</span><span class="alt-row__meta">8 seats</span></div><span class="alt-chip">Open</span></li>
+          </ul>
+          <div class="row" style="justify-content: flex-start"><button class="alt-button" type="button">View this week</button><button class="alt-button alt-button--quiet" type="button">Edit space</button></div>
+        </article>
+      </div>
+      <div>
+        <div class="side-label">Guest · joining a table</div>
+        <article class="alt-card stack" aria-labelledby="g-title">
+          <div class="event-photo"><svg class="alt-icon alt-icon--lg alt-icon--action" aria-hidden="true"><use href="#i-users-three"/></svg></div>
+          <div class="row"><span class="alt-chip">Philosophy</span><span class="alt-label-text alt-secondary">Hosted by Maya</span></div>
+          <h3 class="alt-title" id="g-title">Debating Pythagoras</h3>
+          <div class="meta-list">
+            <span class="alt-meta"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-calendar-blank"/></svg>Wed, Oct 28 · 6–9 PM</span>
+            <span class="alt-meta"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-map-pin"/></svg>Café Pinot, Capitol Hill</span>
+          </div>
+          <div><ul class="alt-seats alt-seats--lg" id="seats-guest" data-alt-seats="10" data-alt-taken="6"></ul><p class="alt-seat-count" data-alt-count-for="seats-guest"></p></div>
+          <button class="alt-button alt-button--primary alt-button--block" data-alt-join="seats-guest" data-alt-toast="toast-guest">Pull up a chair</button>
+          <div class="toast-region" id="toast-guest" aria-live="polite"></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="comp-grid">
+      <div class="comp">
+        <h3>Buttons · <code>alt-button</code></h3>
+        <div class="wraprow"><button class="alt-button alt-button--primary" type="button">Publish a space</button><button class="alt-button" type="button">Edit</button></div>
+        <div class="wraprow"><button class="alt-button alt-button--quiet" type="button">Cancel</button><button class="alt-button" type="button" aria-disabled="true">Table's full</button></div>
+      </div>
+      <div class="comp">
+        <h3>Notices · <code>alt-notice</code></h3>
+        <div class="alt-notice alt-notice--info"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-info"/></svg><span>We'll send guests the address the day before.</span></div>
+        <div class="alt-notice alt-notice--problem"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-warning-circle"/></svg><span>That time overlaps your back room space. Pick a different end time.</span></div>
+      </div>
+      <div class="comp">
+        <h3>Seat row above 12 seats becomes a bar</h3>
+        <div><ul class="alt-seats" id="seats-big" data-alt-seats="24" data-alt-taken="15"></ul><p class="alt-seat-count" data-alt-count-for="seats-big"></p></div>
+        <h3>Chips · <code>alt-chip</code></h3>
+        <div class="wraprow"><span class="alt-chip alt-chip--booked">Booked</span><span class="alt-chip alt-chip--filling">Filling up</span><span class="alt-chip alt-chip--info">Tip</span><span class="alt-chip alt-chip--you">You</span></div>
+      </div>
+      <div class="comp">
+        <h3>Field · <code>alt-field</code></h3>
+        <div class="alt-field">
+          <label class="alt-label" for="f-name">Restaurant name</label>
+          <input class="alt-input" id="f-name" value="Café Pinot">
+          <p class="alt-help">Guests see this on every event.</p>
+        </div>
+        <div class="alt-field">
+          <label class="alt-label" for="f-cap">Seats in this space</label>
+          <input class="alt-input alt-num" id="f-cap" value="0" aria-invalid="true" aria-describedby="f-cap-err" inputmode="numeric">
+          <p class="alt-error" id="f-cap-err">A space needs at least 2 seats.</p>
+        </div>
+      </div>
+      <div class="comp">
+        <h3>Checkbox and tabs</h3>
+        <label class="alt-check-row" for="c-desc"><input type="checkbox" class="alt-checkbox" id="c-desc" checked> Add a description and price</label>
+        <label class="alt-check-row" for="c-rec"><input type="checkbox" class="alt-checkbox" id="c-rec"> Repeat every Wednesday</label>
+        <div class="alt-tabs" role="tablist" aria-label="Spaces">
+          <button class="alt-tab" role="tab" aria-selected="true" id="t-up">Upcoming</button>
+          <button class="alt-tab" role="tab" aria-selected="false" id="t-past">Past</button>
+        </div>
+      </div>
+      <div class="comp">
+        <h3>Dialog and toast</h3>
+        <div class="alt-dialog" role="dialog" aria-labelledby="d-title" style="width: auto; background: var(--alt-page)">
+          <h4 class="alt-title" id="d-title" style="font-size: 1.25rem">Remove this space?</h4>
+          <p class="alt-body alt-secondary" style="margin: 8px 0 16px">No one has booked it yet, so nobody will be affected.</p>
+          <div class="wraprow" style="justify-content: flex-end"><button class="alt-button alt-button--quiet" type="button">Keep it</button><button class="alt-button alt-button--danger" type="button">Remove</button></div>
+        </div>
+        <div class="alt-toast" role="status" style="animation: none"><span class="alt-chip">Done</span>Space published</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="icons">
+    <div class="section-head">
+      <div class="eyebrow">Icons and photos</div>
+      <h2 class="alt-h2">Friendly icons, real moments</h2>
+      <p class="alt-lead alt-secondary">Icons come from Phosphor, an MIT-licensed set with rounded shapes that match Figtree. Photos follow 222: candid moments, never stock.</p>
+    </div>
+    <div class="icon-grid">
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-chair"/></svg><span>Seat</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-users-three"/></svg><span>Guests</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-calendar-blank"/></svg><span>Date</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Time</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-map-pin"/></svg><span>Location</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-storefront"/></svg><span>Space</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-fork-knife"/></svg><span>Dinner</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-wine"/></svg><span>Drinks</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-chats-circle"/></svg><span>Theme</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Alerts</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-check-circle"/></svg><span>Confirmed</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-info"/></svg><span>Information</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-warning-circle"/></svg><span>Problem</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Add</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-pencil-simple"/></svg><span>Edit</span></div>
+      <div class="icon-cell"><svg class="alt-icon" aria-hidden="true"><use href="#i-share-network"/></svg><span>Share</span></div>
+    </div>
+    <div class="icon-scale">
+      <div>
+        <h3>Functional · regular, ink, 20px with a word</h3>
+        <span class="alt-meta"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-calendar-blank"/></svg>Wed, Oct 28</span>
+        <span class="alt-meta"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-clock"/></svg>6–9 PM</span>
+        <span class="alt-meta"><svg class="alt-icon alt-icon--sm" aria-hidden="true"><use href="#i-map-pin"/></svg>Café Pinot, Capitol Hill</span>
+      </div>
+      <div>
+        <h3>In between · regular, basil, 32px</h3>
+        <div class="duo-row"><svg class="alt-icon alt-icon--md alt-icon--action" aria-hidden="true"><use href="#i-chair"/></svg><svg class="alt-icon alt-icon--md alt-icon--action" aria-hidden="true"><use href="#i-users-three"/></svg><svg class="alt-icon alt-icon--md alt-icon--action" aria-hidden="true"><use href="#i-fork-knife"/></svg></div>
+        <p class="alt-body alt-secondary">Event pages and confirmations: a few larger icons to anchor the facts.</p>
+      </div>
+      <div>
+        <h3>Expressive · duotone, soft fills, 48px+</h3>
+        <div class="duo-row">
+          <svg class="alt-icon alt-icon--lg alt-icon--fill-mint" aria-hidden="true"><use href="#d-chair"/></svg>
+          <svg class="alt-icon alt-icon--lg alt-icon--fill-apricot" aria-hidden="true"><use href="#d-wine"/></svg>
+          <svg class="alt-icon alt-icon--lg alt-icon--fill-sky" aria-hidden="true"><use href="#d-coffee"/></svg>
+          <svg class="alt-icon alt-icon--lg alt-icon--fill-blush" aria-hidden="true"><use href="#d-hand-waving"/></svg>
+        </div>
+        <p class="alt-body alt-secondary">Website, social and table tents only.</p>
+      </div>
+    </div>
+
+    <div class="photo-dir">
+      <div>
+        <h3 class="alt-title" style="margin-bottom: var(--alt-space-4)">What to shoot</h3>
+        <ul>
+          <li><svg class="alt-icon alt-icon--action" aria-hidden="true"><use href="#i-fork-knife"/></svg><div><b>Hands and tables</b><span>Bread passed down the table, glasses meeting, a shared plate.</span></div></li>
+          <li><svg class="alt-icon alt-icon--action" aria-hidden="true"><use href="#i-chats-circle"/></svg><div><b>Faces mid-conversation</b><span>Laughing or listening, never posing.</span></div></li>
+          <li><svg class="alt-icon alt-icon--action" aria-hidden="true"><use href="#i-storefront"/></svg><div><b>The room before service</b><span>A set table, low light, the restaurant's real character.</span></div></li>
+          <li><svg class="alt-icon alt-icon--action" aria-hidden="true"><use href="#i-hand-waving"/></svg><div><b>Owners in their space</b><span>Behind the bar, at the pass, in the doorway.</span></div></li>
+        </ul>
+        <p class="alt-body alt-secondary" style="margin-top: var(--alt-space-6)">Natural warm light, real color, close and a little imperfect. Real restaurants only, with consent from everyone recognizable. In the product, photos get 12px corners; polaroid collages are for expressive pieces.</p>
+      </div>
+      <div>
+        <div class="alt-collage" aria-label="Example shot list laid out as a polaroid collage">
+          <figure class="alt-polaroid"><div class="shot" style="background: var(--alt-mint)"><svg class="alt-icon alt-icon--md" aria-hidden="true"><use href="#i-fork-knife"/></svg>Bread passed down the table</div><figcaption>Last Wednesday at Café Pinot</figcaption></figure>
+          <figure class="alt-polaroid"><div class="shot" style="background: var(--alt-sky)"><svg class="alt-icon alt-icon--md" aria-hidden="true"><use href="#i-users-three"/></svg>Six strangers, mid-laugh</div><figcaption>Debating Pythagoras</figcaption></figure>
+          <figure class="alt-polaroid"><div class="shot" style="background: var(--alt-apricot)"><svg class="alt-icon alt-icon--md" aria-hidden="true"><use href="#i-wine"/></svg>Glasses meeting over candles</div><figcaption>Spanish over tapas</figcaption></figure>
+          <figure class="alt-polaroid"><div class="shot" style="background: var(--alt-blush)"><svg class="alt-icon alt-icon--md" aria-hidden="true"><use href="#i-storefront"/></svg>Maya at the pass before service</div><figcaption>Your host, Maya</figcaption></figure>
+        </div>
+        <p class="alt-body alt-secondary">Shot list shown as placeholders. Replace each with a real photo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="brand">
+    <div class="section-head">
+      <div class="eyebrow">Brand layer</div>
+      <h2 class="alt-h2">Where the personality lives</h2>
+      <p class="alt-lead alt-secondary">Event covers, social posts and the website use the soft colors and deep basil as backgrounds. None of this appears on controls.</p>
+    </div>
+    <div class="covers">
+      <div class="cover" style="background: var(--alt-blush)"><span class="k">Philosophy night</span><span class="t">Debating Pythagoras</span><span class="m">Wed · Café Pinot</span></div>
+      <div class="cover" style="background: var(--alt-mint)"><span class="k">Supper club</span><span class="t">First-timers' tasting menu</span><span class="m">Thu · Fennel House</span></div>
+      <div class="cover" style="background: var(--alt-sky)"><span class="k">Language table</span><span class="t">Spanish over tapas</span><span class="m">Fri · Casa Luz</span></div>
+      <div class="cover" style="background: var(--alt-apricot)"><span class="k">Neighbors</span><span class="t">New in Seattle dinner</span><span class="m">Sun · The Long Room</span></div>
+    </div>
+    <div class="social alt-band-deep">
+      <div>
+        <div class="alt-display">Your empty Wednesday, filled.</div>
+        <p>Publish a space in two minutes. We bring the guests, and you just set the table.</p>
+      </div>
+      <div class="seatdemo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></div>
+    </div>
+  </section>
+
+  <section id="voice">
+    <div class="section-head">
+      <div class="eyebrow">Voice</div>
+      <h2 class="alt-h2">A calm host who has it handled</h2>
+    </div>
+    <div class="table-card" style="margin-top: 0">
+      <table style="min-width: 520px">
+        <thead><tr><th scope="col">Say</th><th scope="col">Don't say</th></tr></thead>
+        <tbody>
+          <tr><td><b>Pull up a chair</b></td><td>Book now!</td></tr>
+          <tr><td><b>4 of 10 seats open</b></td><td>Only a few spots left, hurry!</td></tr>
+          <tr><td><b>You're in. We'll send the address the day before.</b></td><td>Reservation successfully confirmed</td></tr>
+          <tr><td><b>Your space is live. We'll text you when someone books it.</b></td><td>Listing created.</td></tr>
+          <tr><td><b>That space was just booked. Here are two more nearby.</b></td><td>Error 409: Conflict</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="voice">
+      <div class="voice-col do">
+        <h3>Do</h3>
+        <ul>
+          <li>Lead every owner screen with the answer in big type.</li>
+          <li>Put the seat row on every event and space card.</li>
+          <li>Use one basil button per screen.</li>
+          <li>Follow every action with what happens next.</li>
+          <li>Separate things with space and surfaces.</li>
+          <li>Keep each status color to its one meaning.</li>
+        </ul>
+      </div>
+      <div class="voice-col dont">
+        <h3>Don't</h3>
+        <ul>
+          <li>Put borders or shadows around cards, chips or panels.</li>
+          <li>Use soft colors as text, icons or thin lines.</li>
+          <li>Use bright yellow, orange or anything that reads as an alarm.</li>
+          <li>Use red for anything but a problem.</li>
+          <li>Add urgency: countdowns, "hurry", exclamation marks.</li>
+          <li>Animate anything the person didn't cause.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="files">
+    <div class="section-head">
+      <div class="eyebrow">The four files</div>
+      <h2 class="alt-h2">Rules, tokens, motion, proof</h2>
+      <p class="alt-lead alt-secondary">Keep them together in <code>brand/</code> at the root of the repo.</p>
+    </div>
+    <div class="files">
+      <div class="file"><code>DESIGN.md</code><p>The rules and the why. Read first.</p></div>
+      <div class="file"><code>brand.css</code><p>Every token as a CSS variable, plus component classes.</p></div>
+      <div class="file"><code>brand.js</code><p>The seat row and the few things that move. No dependencies.</p></div>
+      <div class="file"><code>index.html</code><p>This page. Open it next to your build and compare.</p></div>
+    </div>
+    <div class="claude-line">
+      <p id="claude-md-line">Before you build anything visual, read brand/DESIGN.md and link brand/brand.css. Never hardcode a color, font or size that isn't a token there.</p>
+      <button class="alt-button" type="button" id="copy-line">Copy line for CLAUDE.md</button>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="alt-band-deep">
+    <div class="wrap inner">
+      <div>
+        <div class="alt-h2" style="color: #FFFFFF">See you at the table.</div>
+        <p class="alt-secondary" style="margin-top: 8px">ALongTable Taste Index, v0. Direction: Basil. Type: Figtree. Icons: Phosphor.</p>
+      </div>
+      <span class="alt-chip alt-chip--booked">v0 · light only</span>
+    </div>
+  </div>
+</footer>
+
+<script src="brand.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById("copy-line");
+    var line = document.getElementById("claude-md-line");
+    btn.addEventListener("click", function () {
+      function selectIt() {
+        var r = document.createRange(); r.selectNodeContents(line);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = "Selected, press copy";
+      }
+      try {
+        navigator.clipboard.writeText(line.textContent).then(function () { btn.textContent = "Copied"; }, selectIt);
+      } catch (e) { selectIt(); }
+    });
+    var tabs = document.querySelectorAll(".alt-tab");
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        tabs.forEach(function (o) { o.setAttribute("aria-selected", o === t ? "true" : "false"); });
+      });
+    });
+  })();
+</script>

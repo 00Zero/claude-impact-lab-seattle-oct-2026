@@ -1,0 +1,217 @@
+# UnitedHealthcare Prior Authorization criteria: oral CGRP antagonists (gepants) for migraine
+# Source: UHC Pharmacy Clinical Pharmacy Programs, Program 2026 P 2189-15
+# Effective: 2026-06-01 (P&T last approved 3/2026)
+# Scope: Ubrelvy, Nurtec ODT, Qulipta (Zavzpret intentionally omitted)
+# NOTE: DEMO DATA. Distilled from the policy PDF; verify against the current
+# official policy before any real-world use. Not medical or coverage advice.
+
+policy:
+  payer: UnitedHealthcare
+  program_number: "2026 P 2189-15"
+  program_name: Prior Authorization/Medical Necessity
+  effective_date: 2026-06-01
+  authorization_duration_months: 12   # same for initial and reauthorization, all three drugs
+
+# Reusable lists referenced by the drug criteria below
+definitions:
+  trial_requirement_triptan: >
+    Failure (after at least 3 migraine episodes and a minimum 30-day trial),
+    contraindication, or intolerance. Document drug name and date tried.
+  trial_requirement_preventive: >
+    Failure (after a trial of at least 2 months), contraindication, or
+    intolerance. Document drug name and date tried.
+  triptans:
+    - almotriptan (Axert)
+    - eletriptan (Relpax)
+    - frovatriptan (Frova)
+    - naratriptan (Amerge)
+    - rizatriptan (Maxalt / Maxalt MLT)
+    - sumatriptan (Imitrex)
+    - zolmitriptan (Zomig / Zomig-ZMT)
+  # Used when the patient is "currently treated with" a preventive (acute-use pathways)
+  preventives_current_or_failed_acute_pathway:
+    - beta-blocker (atenolol, metoprolol, nadolol, propranolol, or timolol)
+    - candesartan (Atacand)
+    - CGRP monoclonal antibody or gepant for prevention (Aimovig, Ajovy*, Emgality, Nurtec ODT, Qulipta, Vyepti^)
+    - divalproex sodium (Depakote / Depakote ER)
+    - onabotulinumtoxinA (Botox)   # may have extra benefit/coverage review
+    - SNRI (duloxetine/Cymbalta, venlafaxine/Effexor)
+    - topiramate (Topamax)
+    - tricyclic antidepressant (amitriptyline/Elavil, nortriptyline/Pamelor)
+  # Used for the preventive-use pathways (Nurtec ODT preventive, Qulipta): must have tried TWO
+  preventives_for_preventive_pathways:
+    nurtec_odt:
+      - beta-blocker (atenolol, metoprolol, nadolol, propranolol, or timolol; counts as one)
+      - candesartan (Atacand)
+      - divalproex sodium (Depakote / Depakote ER)
+      - SNRI (duloxetine/Cymbalta, venlafaxine/Effexor)
+      - topiramate (Topamax)
+      - tricyclic antidepressant (amitriptyline/Elavil, nortriptyline/Pamelor)
+    qulipta:
+      - beta-blocker (atenolol, metoprolol, nadolol, propranolol, or timolol; counts as one)
+      - candesartan (Atacand)
+      - divalproex sodium (Depakote / Depakote ER)
+      - onabotulinumtoxinA (Botox)   # may have extra benefit/coverage review
+      - SNRI (duloxetine/Cymbalta, venlafaxine/Effexor)
+      - topiramate (Topamax)
+      - tricyclic antidepressant (amitriptyline/Elavil, nortriptyline/Pamelor)
+
+drugs:
+
+  ubrelvy:
+    generic_name: ubrogepant
+    use: acute treatment of migraine
+    initial_authorization:
+      logic: ALL of the following
+      criteria:
+        - id: ubrelvy_acute_use
+          requirement: Used for acute treatment of migraine
+        - id: ubrelvy_triptan_step
+          requirement: >
+            Tried and failed, or has a contraindication/intolerance to, TWO different triptans.
+          trial_rule: triptan
+          triptan_choices: ref:definitions.triptans
+          count_required: 2
+        - id: ubrelvy_prevention_status
+          requirement: ONE of the following
+          options:
+            - Currently treated with a preventive therapy (see preventives_current_or_failed_acute_pathway)
+            - Has fewer than 4 migraine days per month
+            - >
+              Has 4 or more migraine days per month AND has a contraindication or
+              intolerance to ONE preventive therapy (see preventives_current_or_failed_acute_pathway)
+        - id: ubrelvy_no_gepant_combo
+          requirement: >
+            Will not be used together with another gepant (Nurtec ODT, Qulipta, Zavzpret)
+    reauthorization:
+      logic: ALL of the following
+      criteria:
+        - Documentation of positive clinical response to therapy
+        - Will not be used together with another gepant (Nurtec ODT, Qulipta)
+
+  nurtec_odt:
+    generic_name: rimegepant
+    use: acute treatment of migraine OR preventive treatment of episodic migraine
+    initial_authorization:
+      logic: ONE of the two pathways below
+      pathways:
+        acute_treatment:
+          logic: ALL of the following
+          criteria:
+            - id: nurtec_acute_use
+              requirement: Used for acute treatment of migraine
+            - id: nurtec_acute_triptan_step
+              requirement: >
+                Tried and failed, or has a contraindication/intolerance to, TWO different triptans.
+              trial_rule: triptan
+              triptan_choices: ref:definitions.triptans
+              count_required: 2
+            - id: nurtec_acute_prevention_status
+              requirement: ONE of the following
+              options:
+                - Currently treated with a preventive therapy (see preventives_current_or_failed_acute_pathway)
+                - Has fewer than 4 migraine days per month
+                - >
+                  Has 4 or more migraine days per month AND has a contraindication or
+                  intolerance to ONE preventive therapy (see preventives_current_or_failed_acute_pathway)
+            - id: nurtec_acute_no_gepant_combo
+              requirement: >
+                Will not be used together with another gepant (Qulipta, Ubrelvy, Zavzpret)
+        preventive_treatment:
+          logic: ALL of the following
+          criteria:
+            - id: nurtec_prev_diagnosis
+              requirement: Diagnosis of episodic migraine with 4 or more migraine days per month
+            - id: nurtec_prev_use
+              requirement: Used for preventive treatment of migraine
+            - id: nurtec_prev_step
+              requirement: >
+                Tried and failed (at least 2 months), or has a contraindication/intolerance to,
+                TWO different preventive therapies.
+              trial_rule: preventive
+              choices: ref:definitions.preventives_for_preventive_pathways.nurtec_odt
+              count_required: 2
+            - id: nurtec_prev_no_combo
+              requirement: BOTH of the following
+              options:
+                - Will not be used with a CGRP monoclonal antibody (Aimovig, Ajovy*, Emgality, Vyepti^)
+                - Will not be used with another gepant (Qulipta, Ubrelvy, Zavzpret)
+    reauthorization:
+      logic: ALL of the following
+      criteria:
+        - Documentation of positive clinical response to therapy
+        - ONE of the following, depending on use
+      use_specific:
+        acute_treatment:
+          - Used for acute treatment of migraine
+          - Will not be used together with another gepant (Qulipta, Ubrelvy, Zavzpret)
+        preventive_treatment:
+          - Used for preventive treatment of migraine
+          - Will not be used with a CGRP monoclonal antibody (Aimovig, Ajovy*, Emgality, Vyepti^)
+          - Will not be used with another gepant (Qulipta, Ubrelvy, Zavzpret)
+
+  qulipta:
+    generic_name: atogepant
+    use: preventive treatment of migraine (episodic or chronic)
+    initial_authorization:
+      logic: ALL of the following
+      criteria:
+        - id: qulipta_diagnosis
+          requirement: >
+            Diagnosis of migraine consistent with the International Classification of
+            Headache Disorders, 3rd edition (ICHD-3)
+        - id: qulipta_frequency
+          requirement: ONE of the following
+          options:
+            - >
+              4 to 7 migraine days per month AND at least one of: (a) fewer than 15 headache
+              days per month, or (b) provider attests migraine is the patient's predominant
+              headache diagnosis (not a different, non-migrainous condition)
+            - 8 or more migraine days per month
+        - id: qulipta_preventive_step
+          requirement: >
+            Tried and failed (at least 2 months), or has a contraindication/intolerance to,
+            TWO different preventive therapies.
+          trial_rule: preventive
+          choices: ref:definitions.preventives_for_preventive_pathways.qulipta
+          count_required: 2
+        - id: qulipta_no_combo
+          requirement: BOTH of the following
+          options:
+            - Will not be used with a CGRP monoclonal antibody (Aimovig, Ajovy*, Emgality, Vyepti^)
+            - Will not be used with another gepant (Nurtec ODT, Ubrelvy, Zavzpret)
+    reauthorization:
+      logic: ALL of the following
+      criteria:
+        - Documentation of positive clinical response to therapy
+        - Will not be used with a CGRP monoclonal antibody (Aimovig, Ajovy*, Emgality, Vyepti^)
+        - Will not be used with another gepant (Nurtec ODT, Ubrelvy, Zavzpret)
+
+# Footnotes and caveats from the policy
+state_and_plan_notes:
+  - State mandates, federal requirements, and the member's specific benefit plan may change coverage criteria. Other policies and utilization management programs may apply.
+  - "Connecticut, Kentucky, Mississippi business: only a 30-day trial is required (instead of 2 months) for the preventive-therapy steps."
+  - "California business: a trial of non-CGRP preventive treatments is NOT required."
+  - "* Ajovy is typically excluded from coverage."
+  - "^ Vyepti may be subject to additional benefit and coverage review requirements."
+  - Botox coverage may be subject to additional benefit and coverage review requirements.
+  - Supply limits may apply.
+  - UnitedHealthcare may approve initial and reauthorization requests based solely on prior claim/medication history, diagnosis codes (ICD-10), and/or claim logic (automated approval).
+
+# Plain-language prompts for the patient-facing chatbot
+chatbot_intake_questions:
+  common:
+    - What will you take this medicine for: stopping a migraine once it starts, or preventing migraines?
+    - About how many migraine days do you have per month?
+    - Which migraine medicines (triptans) have you tried, for how long, and what happened?
+    - Which daily preventive medicines have you tried, for how long, and what happened?
+    - Are you currently taking, or planning to take, any other gepant or CGRP injection?
+    - Is your insurance plan based in California, Connecticut, Kentucky, or Mississippi?
+  qulipta_extra:
+    - Have you been diagnosed with migraine by a clinician?
+    - Do you have fewer than 15 headache days per month, or has your provider confirmed migraine is your main headache condition?
+
+disclaimer: >
+  This tool summarizes a payer policy for demonstration purposes. It does not guarantee
+  coverage, and it is not medical advice. Final decisions rest with the health plan and
+  the patient's prescriber.

@@ -1,0 +1,47 @@
+[
+  {
+    "vendor": "BargainBarn",
+    "item": "bread flour 50lb",
+    "qty": 10,
+    "unit_price": 31.90,
+    "shipping": 0,
+    "tax_rate": 0.0875,
+    "delivery_date": "2026-10-28",
+    "vendor_rating": 3.6,
+    "past_orders": 0
+  },
+  {
+    "vendor": "NorthStar Foods",
+    "item": "bread flour 50lb",
+    "qty": 10,
+    "unit_price": 33.50,
+    "shipping": 45.00,
+    "tax_rate": 0.0875,
+    "delivery_date": "2026-11-03",
+    "vendor_rating": 4.4,
+    "past_orders": 2
+  },
+  {
+    "vendor": "Harvest Wholesale",
+    "item": "bread flour 50lb",
+    "qty": 10,
+    "unit_price": 34.20,
+    "price_breaks": [{"min_qty": 10, "unit_price": 33.40}],
+    "shipping": 12.00,
+    "tax_rate": 0.0875,
+    "delivery_date": "2026-10-29",
+    "vendor_rating": 4.7,
+    "past_orders": 14
+  },
+  {
+    "vendor": "SwiftSupply",
+    "item": "bread flour 50lb",
+    "qty": 10,
+    "unit_price": 38.00,
+    "shipping": 0,
+    "tax_rate": 0.0875,
+    "delivery_date": "2026-10-27",
+    "vendor_rating": 4.5,
+    "past_orders": 0
+  }
+]

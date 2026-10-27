@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "_note": "FAKE: computed from FAKE responses generated for testing. Not a finding.",
+  "experimentId": "exp_1",
+  "protocolVersion": "protocol-v1",
+  "answered": 48,
+  "skipped": 0,
+  "candidates": [
+    {
+      "candidateId": "hyp_3",
+      "choiceCount": 13,
+      "preferenceShare": 0.2708,
+      "dimensionMeans": {
+        "relevance": 3.27,
+        "credibility": 3.44,
+        "differentiation": 3.25,
+        "clarity": 3.25,
+        "actionIntent": 3.25
+      },
+      "segmentBreakdown": [
+        {
+          "segmentId": "seg_1",
+          "choiceCount": 1,
+          "n": 24
+        },
+        {
+          "segmentId": "seg_2",
+          "choiceCount": 12,
+          "n": 24
+        }
+      ],
+      "preferenceRange": [
+        0.1797,
+        0.3864
+      ]
+    },
+    {
+      "candidateId": "hyp_1",
+      "choiceCount": 10,
+      "preferenceShare": 0.2083,
+      "dimensionMeans": {
+        "relevance": 3.54,
+        "credibility": 3.31,
+        "differentiation": 3.27,
+        "clarity": 3.23,
+        "actionIntent": 3.19
+      },
+      "segmentBreakdown": [
+        {
+          "segmentId": "seg_1",
+          "choiceCount": 10,
+          "n": 24
+        },
+        {
+          "segmentId": "seg_2",
+          "choiceCount": 0,
+          "n": 24
+        }
+      ],
+      "preferenceRange": [
+        0.1288,
+        0.319
+      ]
+    },
+    {
+      "candidateId": "hyp_4",
+      "choiceCount": 8,
+      "preferenceShare": 0.1667,
+      "dimensionMeans": {
+        "relevance": 3.35,
+        "credibility": 3.15,
+        "differentiation": 3.35,
+        "clarity": 3.35,
+        "actionIntent": 3.33
+      },
+      "segmentBreakdown": [
+        {
+          "segmentId": "seg_1",
+          "choiceCount": 7,
+          "n": 24
+        },
+        {
+          "segmentId": "seg_2",
+          "choiceCount": 1,
+          "n": 24
+        }
+      ],
+      "preferenceRange": [
+        0.0965,
+        0.2724
+      ]
+    },
+    {
+      "candidateId": "hyp_6",
+      "choiceCount": 0,
+      "preferenceShare": 0.0,
+      "dimensionMeans": {
+        "relevance": 1.6,
+        "credibility": 1.5,
+        "differentiation": 1.79,
+        "clarity": 1.65,
+        "actionIntent": 1.88
+      },
+      "segmentBreakdown": [
+        {
+          "segmentId": "seg_1",
+          "choiceCount": 0,
+          "n": 24
+        },
+        {
+          "segmentId": "seg_2",
+          "choiceCount": 0,
+          "n": 24
+        }
+      ],
+      "preferenceRange": [
+        0.0,
+        0.0534
+      ]
+    },
+    {
+      "candidateId": "hyp_5",
+      "choiceCount": 2,
+      "preferenceShare": 0.0417,
+      "dimensionMeans": {
+        "relevance": 3.04,
+        "credibility": 3.17,
+        "differentiation": 3.06,
+        "clarity": 3.17,
+        "actionIntent": 2.83
+      },
+      "segmentBreakdown": [
+        {
+          "segmentId": "seg_1",
+          "choiceCount": 1,
+          "n": 24
+        },
+        {
+          "segmentId": "seg_2",
+          "choiceCount": 1,
+          "n": 24
+        }
+      ],
+      "preferenceRange": [
+        0.0139,
+        0.1184
+      ]
+    },
+    {
+      "candidateId": "hyp_2",
+      "choiceCount": 14,
+      "preferenceShare": 0.2917,
+      "dimensionMeans": {
+        "relevance": 3.79,
+        "credibility": 3.85,
+        "differentiation": 3.5,
+        "clarity": 3.73,
+        "actionIntent": 3.56
+      },
+      "segmentBreakdown": [
+        {
+          "segmentId": "seg_1",
+          "choiceCount": 4,
+          "n": 24
+        },
+        {
+          "segmentId": "seg_2",
+          "choiceCount": 10,
+          "n": 24
+        }
+      ],
+      "preferenceRange": [
+        0.1972,
+        0.4084
+      ]
+    }
+  ],
+  "noneCount": 1,
+  "segmentRanking": [
+    {
+      "segmentId": "seg_2",
+      "n": 24,
+      "noneShare": 0.0,
+      "bestCandidateId": "hyp_3",
+      "bestShare": 0.5,
+      "actionIntent": 4.46,
+      "score": 0.8917
+    },
+    {
+      "segmentId": "seg_1",
+      "n": 24,
+      "noneShare": 0.0417,
+      "bestCandidateId": "hyp_1",
+      "bestShare": 0.4167,
+      "actionIntent": 4.43,
+      "score": 0.85
+    }
+  ],
+  "icpVerdict": "guess-holds",
+  "stability": {
+    "bootstrapWinnerRate": 0.508,
+    "repeatConsistency": 0.1
+  },
+  "confidenceFlags": [
+    "unstable-winner",
+    "thin-evidence"
+  ],
+  "objectionThemes": [
+    {
+      "theme": "Wants to see how it works first",
+      "count": 20,
+      "candidateIds": [
+        "hyp_1",
+        "hyp_2",
+        "hyp_3",
+        "hyp_4",
+        "hyp_5",
+        "hyp_6"
+      ],
+      "simulatedQuotes": [
+        "I'd need to see how it works first.",
+        "I'd need to see how it works first.",
+        "I'd need to see how it works first."
+      ]
+    },
+    {
+      "theme": "Doesn't feel meant for them",
+      "count": 20,
+      "candidateIds": [
+        "hyp_1",
+        "hyp_2",
+        "hyp_3",
+        "hyp_4",
+        "hyp_5",
+        "hyp_6"
+      ],
+      "simulatedQuotes": [
+        "Doesn't sound like it's for someone like me.",
+        "Doesn't sound like it's for someone like me.",
+        "Doesn't sound like it's for someone like me."
+      ]
+    },
+    {
+      "theme": "Unsure it's worth the price",
+      "count": 18,
+      "candidateIds": [
+        "hyp_1",
+        "hyp_3",
+        "hyp_4",
+        "hyp_5",
+        "hyp_6"
+      ],
+      "simulatedQuotes": [
+        "Not sure it's worth the price.",
+        "Not sure it's worth the price.",
+        "Not sure it's worth the price."
+      ]
+    },
+    {
+      "theme": "Sounds like every other app",
+      "count": 16,
+      "candidateIds": [
+        "hyp_1",
+        "hyp_2",
+        "hyp_3",
+        "hyp_4",
+        "hyp_5",
+        "hyp_6"
+      ],
+      "simulatedQuotes": [
+        "Sounds like every other app.",
+        "Sounds like every other app.",
+        "Sounds like every other app."
+      ]
+    }
+  ],
+  "limitations": [
+    "FAKE responses generated for testing; nothing here is a finding.",
+    "Simulated customers, not real ones: these are hypotheses to test, not results."
+  ],
+  "messageVerdict": "no-clear-winner",
+  "recommendedCandidateId": null,
+  "checks": [
+    {
+      "id": "decoy",
+      "status": "pass",
+      "detail": "The generic decoy \"The fitness app for everyone\" (0 of 48) placed 6 of 6, as it should."
+    },
+    {
+      "id": "winner",
+      "status": "warn",
+      "detail": "\"Habits that keep the weight off\" (14 of 48) was chosen more often than \"Gain the confidence to use the free weights\" (13 of 48) in 289 of 500 reshuffles of the answers; too close to call."
+    },
+    {
+      "id": "current-message",
+      "status": "pass",
+      "detail": "\"Habits that keep the weight off\" (14 of 48) beat the current message \"Lose weight without losing muscle\" (2 of 48) in 500 of 500 reshuffles of the answers."
+    },
+    {
+      "id": "consistency",
+      "status": "warn",
+      "detail": "1 of 10 customers asked twice chose the same message again (luck alone: about 2); answers aren't steady enough to name a winner."
+    },
+    {
+      "id": "customer-group",
+      "status": "pass",
+      "detail": "The owner's guess came first in 401 of 500 reshuffles."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>GTMagic: category standard sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;font-family:Inter,system-ui,sans-serif;background:#fff;color:#111827;display:grid;grid-template-columns:260px 1fr}
+aside{background:#f9fafb;border-right:1px solid #e5e7eb;padding:20px;display:flex;flex-direction:column;gap:8px}
+.mark{font:600 18px Inter;margin-bottom:16px}
+.new{background:#2563eb;color:#fff;border-radius:8px;padding:10px 14px;font-size:14px;font-weight:500}
+.item{padding:8px 10px;border-radius:6px;font-size:14px;color:#374151}.item.on{background:#e5e7eb}
+main{display:flex;flex-direction:column;align-items:center;padding:40px 0 0;position:relative}
+.col{width:760px;display:flex;flex-direction:column;gap:20px}
+.bot{font-size:16px;line-height:1.6}
+.me{align-self:flex-end;background:#f3f4f6;border-radius:16px;padding:12px 16px;max-width:520px;font-size:16px;line-height:1.5}
+.card{border:1px solid #e5e7eb;border-radius:12px;padding:20px}
+.card h3{font-size:15px;font-weight:600;margin-bottom:12px}
+.bar{display:grid;grid-template-columns:24px 1fr 40px;gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.track{height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden}.track i{display:block;height:100%;background:#2563eb}
+.dots{display:grid;grid-template-columns:repeat(16,1fr);gap:6px;margin-top:14px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#2563eb}.dots i.o{background:#93c5fd}.dots i.e{background:#e5e7eb}
+.note{font-size:12px;color:#6b7280;margin-top:10px}
+.composer{position:absolute;bottom:28px;width:760px;border:1px solid #d1d5db;border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;color:#6b7280;font-size:15px}
+.composer b{background:#111827;color:#fff;border-radius:8px;padding:4px 12px;font-weight:500}
+</style></head>
+<body>
+<aside><div class="mark">GTMagic</div><div class="new">+ New run</div><div class="item on">Bakery catering (example)</div><div class="item">Gym repositioning</div></aside>
+<main><div class="col">
+  <div class="bot">What do you sell, and who do you think buys it most?</div>
+  <div class="me">A neighbourhood bakery adding office catering. I think office managers at small tech firms are our best customers.</div>
+  <div class="bot">Testing your guess. 31 of 48 simulated customers have chosen so far.</div>
+  <div class="card"><h3>Which message would make you act?</h3>
+    <div class="bar"><b>A</b><div class="track"><i style="width:42%"></i></div><span>13</span></div>
+    <div class="bar"><b>C</b><div class="track"><i style="width:23%"></i></div><span>7</span></div>
+    <div class="bar"><b>B</b><div class="track"><i style="width:16%"></i></div><span>5</span></div>
+    <div class="dots"><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="e"></i></div>
+    <div class="note">Simulated preference · n = 31 · not a conversion rate</div>
+  </div>
+</div>
+<div class="composer">Ask about the results… <b>Send</b></div>
+</main>
+</body></html>

@@ -1,0 +1,89 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-25T19:20:02.972Z",
+        "reason": "model: spent decision-round sketch, not a shipping surface; direction already chosen"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-25T19:20:02.990Z",
+        "reason": "model: spent decision-round sketch, not a shipping surface; direction already chosen"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-25T19:20:03.007Z",
+        "reason": "model: spent decision-round sketch, not a shipping surface; direction already chosen"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-ticket-wallet.html"
+        ],
+        "createdAt": "2026-10-25T19:20:03.024Z",
+        "reason": "model: spent decision-round sketch, not a shipping surface; direction already chosen"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-ticket-wallet.html"
+        ],
+        "createdAt": "2026-10-25T19:20:03.041Z",
+        "reason": "model: spent decision-round sketch, not a shipping surface; direction already chosen"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-25T19:20:12.170Z",
+        "reason": "model: canon card deliberately depicts the category-standard look; spent decision sketch"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-25T20:10:31.332Z",
+        "reason": "model: unchosen direction sketch from the spent decision round; its fonts are intentionally outside DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-ticket-wallet.html"
+        ],
+        "createdAt": "2026-10-25T20:10:31.349Z",
+        "reason": "model: unchosen direction sketch from the spent decision round; its fonts are intentionally outside DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-25T20:10:31.367Z",
+        "reason": "model: unchosen direction sketch from the spent decision round; its fonts are intentionally outside DESIGN.md"
+      }
+    ]
+  }
+}

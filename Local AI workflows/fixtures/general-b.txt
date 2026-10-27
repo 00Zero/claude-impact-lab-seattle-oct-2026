@@ -1,0 +1,15 @@
+FICTIONAL TRANSCRIPT — created for this demo. Not a real session. Fixture general-b v1 (simulation; never used for refinement).
+
+Therapist: You mentioned the dinner with your partner's family was this weekend. How did it go?
+Client: Better than I feared. I was dreading it for days. I kept imagining Sam's mother asking about my job and me freezing.
+Therapist: Did that happen?
+Client: She did ask. I said I'm between roles and focusing on a certification. She said that sounded smart. That was it.
+Therapist: What did you notice in your body when she asked?
+Client: My face got hot, my heart was racing. But it passed in maybe a minute.
+Therapist: And before the dinner, how much time did you spend worrying about it?
+Client: Probably three or four hours across the week. More than the dinner itself.
+Therapist: What do you make of that difference?
+Client: That the worrying is worse than the thing. I've heard that before, but this time I actually felt it.
+Therapist: That's an important observation to have from your own experience.
+Client: It is. I'm still tired from the week, though.
+Therapist: Of course. Let's end there for today.

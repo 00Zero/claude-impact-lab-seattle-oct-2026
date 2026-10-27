@@ -1,0 +1,66 @@
+# Machine-readable overlay for the "Is this for me?" step (UnitedHealthcare, program 2026 P 2189-15).
+# The criteria text lives in pa_criteria_uhc.yaml. This file says how to ask about each criterion id
+# and how to score the answers. Patient answers are held in memory only.
+
+drug_use:
+  ubrelvy: [acute]
+  nurtec_odt: [acute, preventive]
+  qulipta: [preventive]
+
+intake:
+  triptans:
+    - { id: almotriptan, label: "Almotriptan (Axert)" }
+    - { id: eletriptan, label: "Eletriptan (Relpax)" }
+    - { id: frovatriptan, label: "Frovatriptan (Frova)" }
+    - { id: naratriptan, label: "Naratriptan (Amerge)" }
+    - { id: rizatriptan, label: "Rizatriptan (Maxalt)" }
+    - { id: sumatriptan, label: "Sumatriptan (Imitrex)" }
+    - { id: zolmitriptan, label: "Zolmitriptan (Zomig)" }
+  # counts_for names the criteria lists a medicine can satisfy
+  preventives:
+    - { id: beta_blocker, label: "Beta-blocker (propranolol, metoprolol, atenolol, nadolol, timolol)", counts_for: [acute_pathway, nurtec_odt, qulipta] }
+    - { id: candesartan, label: "Candesartan (Atacand)", counts_for: [acute_pathway, nurtec_odt, qulipta] }
+    - { id: divalproex, label: "Divalproex (Depakote)", counts_for: [acute_pathway, nurtec_odt, qulipta] }
+    - { id: botox, label: "Botox (onabotulinumtoxinA)", counts_for: [acute_pathway, qulipta] }
+    - { id: snri, label: "Duloxetine (Cymbalta) or venlafaxine (Effexor)", counts_for: [acute_pathway, nurtec_odt, qulipta] }
+    - { id: topiramate, label: "Topiramate (Topamax)", counts_for: [acute_pathway, nurtec_odt, qulipta] }
+    - { id: tca, label: "Amitriptyline (Elavil) or nortriptyline (Pamelor)", counts_for: [acute_pathway, nurtec_odt, qulipta] }
+    - { id: cgrp_preventive, label: "A CGRP preventive (Aimovig, Emgality, Ajovy, Vyepti, Qulipta, Nurtec)", counts_for: [acute_pathway] }
+
+# One entry per criterion id in the criteria file (first-approval criteria only)
+checks:
+  ubrelvy_acute_use:
+    { type: use, label: Used to treat a migraine attack }
+  ubrelvy_triptan_step:
+    { type: tried_triptans, min: 2, label: Two different triptans tried first }
+  ubrelvy_prevention_status:
+    { type: prevention_status, label: Preventive medicine status }
+  ubrelvy_no_gepant_combo:
+    { type: no_other_gepant, label: Not taken with another gepant pill }
+
+  nurtec_acute_use:
+    { type: use, label: Used to treat a migraine attack }
+  nurtec_acute_triptan_step:
+    { type: tried_triptans, min: 2, label: Two different triptans tried first }
+  nurtec_acute_prevention_status:
+    { type: prevention_status, label: Preventive medicine status }
+  nurtec_acute_no_gepant_combo:
+    { type: no_other_gepant, label: Not taken with another gepant pill }
+
+  nurtec_prev_diagnosis:
+    { type: episodic_ge4, label: Episodic migraine with 4 or more migraine days a month }
+  nurtec_prev_use:
+    { type: use, label: Used to prevent migraines }
+  nurtec_prev_step:
+    { type: tried_preventives, list: nurtec_odt, min: 2, label: Two daily preventives tried first }
+  nurtec_prev_no_combo:
+    { type: no_cgrp_mab_or_gepant, label: Not taken with a CGRP injection or another gepant }
+
+  qulipta_diagnosis:
+    { type: dx_migraine, label: Migraine diagnosed by a clinician }
+  qulipta_frequency:
+    { type: qulipta_frequency, label: Enough migraine days each month }
+  qulipta_preventive_step:
+    { type: tried_preventives, list: qulipta, min: 2, label: Two daily preventives tried first }
+  qulipta_no_combo:
+    { type: no_cgrp_mab_or_gepant, label: Not taken with a CGRP injection or another gepant }

@@ -1,0 +1,22 @@
+{
+  "title": "What's in KnowledgeForge, Internexio's second brain",
+  "flags": {},
+  "clusters": {
+    "0": {"label": "Git, PRs and release pipelines", "summary": "How multi-repo compile pipelines, stacked PRs, force-pushes and issue trackers drift out of sync, and the discipline that keeps them aligned.", "action": "Turn the top five into a 'multi-repo release hygiene' checklist to offer clients."},
+    "1": {"label": "Running teams of AI agents", "summary": "Patterns for Critic, Builder and Strategist agent roles: handoffs, triage, validation gates and when to escalate to a human.", "action": "This is the core IP; package it as a paid 'agent workflow design' workshop."},
+    "2": {"label": "Prompt and template gotchas", "summary": "Silent failures in structured output, YAML, JSON streaming and Jinja2 templates that break LLM pipelines.", "action": "Publish as a 'silent LLM pipeline bugs' blog series to attract technical clients."},
+    "3": {"label": "Background jobs that fail silently", "summary": "Daemons, cron, tmux and CLI wrappers that look healthy but do nothing, and how to monitor what they actually produce.", "action": "Bundle into a monitoring audit offered alongside agent deployments."},
+    "4": {"label": "API and backend debugging", "summary": "FastAPI, streaming responses, HTTP/2 and vendor API quirks that show up as misleading errors.", "action": ""},
+    "5": {"label": "Beads issue tracker workflows", "summary": "How work is tracked with the beads (bd) CLI: migrations, stale open issues, dependency wiring and checking status before building.", "action": "Close or archive beads that are already done; several notes say the tracker lags reality."},
+    "6": {"label": "Python testing and project setup", "summary": "Test isolation with pytest fixtures and subprocesses, vendoring code and splitting oversized modules.", "action": "Merge the two copies of the vendor-in decision note."},
+    "7": {"label": "Queues, caches and expiry", "summary": "Append-only queues, deduplication and TTLs that make entries immortal or raise false alarms.", "action": ""},
+    "8": {"label": "Evidence-backed marketing claims", "summary": "How to cite research honestly in marketing copy: effective evidence base, hedging lost in edits, verifying numbers at the primary source.", "action": "Offer this as a 'claims you can defend' review service for founders' marketing copy."},
+    "9": {"label": "Google Ads and keyword research", "summary": "Keyword data triangulation, Search Console quirks, ad-performance analysis and Google Ads API pitfalls.", "action": "Package as an SEO and paid-search data audit for small businesses."},
+    "10": {"label": "KnowledgeForge's own architecture", "summary": "How KnowledgeForge itself is compiled, versioned and deployed across Claude Code, Claude Projects and other platforms.", "action": "Use these as the backbone of the product documentation."},
+    "11": {"label": "Safe database migrations", "summary": "Two-phase, additive and expand-contract migrations for SQLite and Postgres, plus checks before switching vendors.", "action": ""},
+    "12": {"label": "Infographics and HTML rendering", "summary": "Rendering text-heavy social infographics with HTML and headless Chrome, and auditing page copy for typography rules.", "action": "Turn the infographic pipeline into a repeatable content offer for clients' LinkedIn posts."},
+    "13": {"label": "Ghost blog administration", "summary": "Fixes for self-hosted Ghost CMS: themes, author pages, the Admin API and Docker-hosted databases.", "action": ""},
+    "14": {"label": "SEO for content sites", "summary": "Cross-posting between blogs, head-term targeting, UTM tracking and SEO metadata in Laravel sites.", "action": "Combine with the Google Ads group into one 'search visibility' service page."},
+    "15": {"label": "GitHub Actions and CI security", "summary": "Required status checks, token rotation, PyPI trusted publishing and sparse-checkout traps in GitHub Actions.", "action": ""}
+  }
+}

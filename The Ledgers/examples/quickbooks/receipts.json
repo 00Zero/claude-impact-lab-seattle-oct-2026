@@ -1,0 +1,20 @@
+{
+  "business": "Your Business Name",
+  "mode": "watch",
+  "source": {
+    "type": "quickbooks",
+    "environment": "production",
+    "realm_id": "REPLACE_WITH_YOUR_COMPANY_ID",
+    "client_id": "REPLACE_WITH_THE_INTUIT_APP_CLIENT_ID"
+  },
+  "approval_threshold_cents": 50000,
+  "require_purchase_order": false,
+  "payment_tools": {
+    "mcp__bank__send_transfer": {
+      "bill_id": "memo",
+      "amount_cents": "amount",
+      "to_account": "account_number",
+      "amount_unit": "dollars"
+    }
+  }
+}

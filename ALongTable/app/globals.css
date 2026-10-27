@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "../brand/brand.css";
+
+/* Brand tokens come from brand/brand.css. Light mode only (see brand/DESIGN.md). */
+:root {
+  /* next/font renames the family, so point the brand font token at it. */
+  --alt-font: var(--font-figtree), "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Brand tokens as Tailwind utilities (bg-page, text-ink-soft, rounded-card, ...). */
+@theme inline {
+  --color-basil: var(--alt-basil);
+  --color-basil-hover: var(--alt-basil-hover);
+  --color-ink: var(--alt-ink);
+  --color-ink-soft: var(--alt-ink-soft);
+  --color-page: var(--alt-page);
+  --color-surface: var(--alt-surface);
+  --color-sunken: var(--alt-sunken);
+  --color-divider: var(--alt-divider);
+  --color-mint: var(--alt-mint);
+  --color-apricot: var(--alt-apricot);
+  --color-sky: var(--alt-sky);
+  --color-problem: var(--alt-red);
+  --color-blush: var(--alt-blush);
+  --color-basil-deep: var(--alt-basil-deep);
+  --radius-card: var(--alt-radius-card);
+  --radius-control: var(--alt-radius-control);
+  --radius-small: var(--alt-radius-small);
+  --font-sans: var(--alt-font);
+}
+
+/* Landing motion (components/landing/use-reveal.ts). The script in app/page.tsx adds `motion` to <html> on a hard
+   load, so these items are hidden from the very first paint instead of flashing visible and then fading in. */
+@media (prefers-reduced-motion: no-preference) {
+  html.motion [data-reveal-item]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  html.motion [data-seat-row]:not([data-revealed]) .alt-seat[data-state="taken"] {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "title": "What Lakeview Coffee & Bakery's customers are saying",
+  "flags": {
+    "r259": "follower-selling spam",
+    "r094": "crypto scam",
+    "r175": "meant for a car wash",
+    "r160": "meant for a dentist"
+  },
+  "clusters": {
+    "0": {
+      "label": "Staff people love",
+      "summary": "Regulars single out Marisol, Priya and Dev for remembering them and going out of their way; one weekend newcomer came across as curt.",
+      "action": "Share these quotes with the team, and pair new weekend hires with Marisol for a few shifts."
+    },
+    "1": {
+      "label": "Mobile orders not ready",
+      "summary": "The app says orders are ready before anyone has started them, so customers wait at pickup for 10 to 20 minutes.",
+      "action": "Send the 'ready' notification when the drink is handed off, not when the ticket prints, and show a realistic wait time."
+    },
+    "2": {
+      "label": "Long weekday morning lines",
+      "summary": "The 8 to 9am weekday line runs out the door with only two people working, and regulars report watching others give up and leave.",
+      "action": "Add a third person on weekdays from 7:30 to 9:30; the lost walk-outs likely cover the wage."
+    },
+    "3": {
+      "label": "Seasonal drinks, maple latte",
+      "summary": "The maple latte is a fan favorite; people were upset when it left the menu after six weeks and noticed the recipe changed.",
+      "action": "Keep the maple latte all autumn and announce its return date in advance."
+    },
+    "4": {
+      "label": "Oat milk and vegan options",
+      "summary": "Plant-based customers love the oat milk and vegan bakes, but oat milk regularly runs out by noon.",
+      "action": "Raise the oat milk standing order and add the weekend vegan sandwich on weekdays."
+    },
+    "5": {
+      "label": "Loyalty app losing points",
+      "summary": "The rewards app crashes, logs people out, won't scan, and has wiped customers' points and banked drinks.",
+      "action": "Restore lost points for anyone with a screenshot, and keep paper punch cards until the app is fixed."
+    },
+    "6": {
+      "label": "Working from laptops",
+      "summary": "Remote workers like the seating and usually the wifi, but outlets are scarce and the wifi sometimes drops during calls.",
+      "action": "Add power strips at the communal table and check the router for the dropouts."
+    },
+    "7": {
+      "label": "Famous morning buns",
+      "summary": "The orange-zest morning bun is the café's signature; people plan commutes and birthday brunches around it.",
+      "action": "Feature the morning bun in marketing and offer it in catering dozens."
+    },
+    "8": {
+      "label": "Catering and office orders",
+      "summary": "Office catering wins praise for quality, but some orders arrived late or short and the online form is clunky.",
+      "action": "Add an order checklist before delivery and let offices set up standing weekly orders online."
+    },
+    "9": {
+      "label": "Croissants, mostly great",
+      "summary": "Croissants are compared to Paris, though a few were stale, cold or underbaked.",
+      "action": "Label which pastries came out of the oven today."
+    },
+    "10": {
+      "label": "Espresso quality",
+      "summary": "Most people love the bright, light-roast espresso and the new blend, but shots get rushed and sour when it's busy.",
+      "action": "Weigh every shot even during the rush; it's what fans praise you for."
+    },
+    "11": {
+      "label": "Restroom problems",
+      "summary": "The single restroom is often dirty, the lock doesn't latch, and the code on the receipt is out of date.",
+      "action": "Add the restroom to an hourly checklist, fix the latch, and update the receipt code."
+    },
+    "12": {
+      "label": "Dog-friendly patio",
+      "summary": "Dog owners love the patio, water bowls and treats; tables are scarce and leashes tangle.",
+      "action": "Add leash hooks and a couple more patio tables for summer."
+    },
+    "13": {
+      "label": "Prices going up",
+      "summary": "Regulars notice repeated price increases and are cutting back on visits; one misfiled car-wash review also landed here.",
+      "action": "Explain price changes on a counter sign and consider a regulars' discount."
+    },
+    "14": {
+      "label": "Parking and accessibility",
+      "summary": "There's no parking, but the bigger issue is no ramp, a heavy door and tables too tight for walkers, strollers or wheelchairs.",
+      "action": "Keep one clear path to the counter and unlock the side entrance, and look into a ramp."
+    },
+    "15": {
+      "label": "$7 lattes and tip screens",
+      "summary": "Customers balk at $7 to $9 drinks, oat milk upcharges and a 25% default tip on the screen.",
+      "action": "Lower the default tip options and drop or reduce the oat milk upcharge."
+    }
+  }
+}

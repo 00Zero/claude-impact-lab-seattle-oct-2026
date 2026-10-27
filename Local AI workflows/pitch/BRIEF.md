@@ -1,0 +1,30 @@
+Create a polished editable 16:9 PowerPoint pitch deck and PDF for Scribular. You are implementing this artifact on the Mac VM as requested. Work only in /Users/admin/Projects/scribular-pitch-deck (no private patient data). Read vendor/anthropic-skills/skills/pptx/SKILL.md completely; use this popular skills.sh skill. It is installed on coordinator too. Follow its design, speaker notes, and QA advice. Also inspect sibling project docs if needed, NOT private customer data.
+Deliver output/scribular-pitch.pptx, PDF if feasible, output/slide-1.png etc, editable generator source, README.md. Use pptxgenjs (require first, install only missing). Native editable text and bridge geometry. Do not replace slides with images. 5 slides exactly matching user slide boundaries:
+1 HUMAN HOOK. "She became a therapist to help people." Supporting small text "Paperwork is getting in the way." Evocative original native-shape illustration of paperwork blocking a path to client care; absolutely no generic bullet deck. Can use clean office/note illustration.
+2 PRIVACY. "AI could help. Confidentiality changes everything." Data-focused slide with source citation. Verified public source https://sbecouncil.org/wp-content/uploads/2026/03/SBE-Technology-Use-Survey-March-2026-Final-2.pdf (downloaded source-survey.pdf). Extract and verify full context/denominator/methodology. Search result says reliability/accuracy 45%, security/privacy 42%; DO NOT use unsupported #1 ranking. Source caption URL (short readable title plus hyperlink) and page number must be visible. Preserve original script in notes, append editorial note that this public research does NOT support #1 claim and recommend saying "a major concern." If cannot extract survey, use verified source text via download+pdftotext or install pymupdf.
+3 BRIDGE. "Local AI exists. Making it useful is the gap." Prominent incomplete bridge spanning from "Local / private" to "Easy to use" and "Accurate / clinician-reviewed". Last segment distinguished as missing/self-service customization. Bridge carries labels "Scribular today: transcript → draft note" and "Built today: customize in plain language". Show private, ease, quality without claiming clinically validated accuracy. Clear Scribular identity and introduction. This slide combines local hurdle + introducing Scribular as user script specifies. No extra slide.
+4 DEMO. Simple beautiful full-stage placeholder with EXACT large word "DEMO", with smaller "Transcript → draft → request → review → preview → save". No fake screenshot. Keep fictional nature of transcript in notes, and original command "Add the diagnoses, but keep the client's quotes." exactly in speaker notes. Append recommendation in notes: "Include only diagnoses explicitly documented in the transcript; do not infer new diagnoses." Ensure user can switch to live product.
+5 OUTCOME. "Back to what she loves." Completed version of same bridge visual. Requested metrics prominent "5+ hours / week" and "$3,000 / month" but explicitly labeled "Illustrative goal" or "Illustrative value of time" on slide; NOT achieved/measured product result. Assumption: 5 hrs/week × 4 weeks/month × $150/hr = $3,000/month of time value, not cash cost savings. Small readable footer states this and unvalidated estimate. Bridge crossed, endpoint "More time with clients." Hero outcome not metric disclaimers.
+
+VISUAL DIRECTION: warm human clinician feel but no beige default. White content slides, deep forest green title/closing, mint/sage and very restrained coral gap accent. Cambria editorial headline + Arial body, large readable stage typography 38-52pt headline, 20-26 body, 10-12 source. Consistent reusable bridge motif, lots of negative space. Native geometry illustrated, not corporate icons or templated 3-cards every slide. Need all objects editable. Original notes preserve script below verbatim split by 5 slide markers, plus separated editorial note where indicated. Don't change provided speech without noting.
+
+ORIGINAL SCRIPT:
+[SLIDE 1]
+My wife became a therapist because she wanted to help people. But the paperwork gets in the way, and it's draining the love she has for her profession.
+[SLIDE 2]
+AI could help, but therapy is confidential. And its not just in therapy- In our research, privacy and security ranked as the top concern for small businesses who need AI.
+[SLIDE 3]
+Local models exist, and its no problem for big business IT departments to build and maintain it. But its a huge hurdle for small businesses. Its costly and requires technical expertise.
+
+Introducing Scribular- it already turns a session transcript into a draft note with local processing. Today, we built self-service customization, so clinicians stop emailing us or engineering prompts by hand.
+[SLIDE 4]
+Today, we built that missing piece.
+Here is a transcript. Scribular generates a draft. She types: “Add the diagnoses, but keep the client's quotes.” Scribular shows the proposed change. She reviews it, confirms, and previews the result. If it works for her, she saves that style for future notes. If not, she stays with what she had.
+No prompt engineering. No email thread. She decides what changes.
+[SLIDE 5]
+Local AI gets us most of the way across the bridge. We are closing the gap between a model that runs and a tool a therapist can use.
+Now my wife can go back to doing what she loves- taking care of her clients
+
+QA: Run skill's OOXML validation script; dependency installs into project venv allowed. Try render PowerPoint with LibreOffice if installed; on Mac no office preinstalled. You may install brew libreoffice if quick, but don't burn time on big downloads. Prefer generate HTML/SVG preview mirroring identical slide geometry using generator data + render via Playwright/Chrome and PDF if Office unavailable; mark mirror vs PPTX render clearly. Coordinator can also render true PPTX using LibreOffice on Linux. Do not claim visual verification without actual renders.
+Write output/REVIEW.md summarizing exact files, evidence/source details, editorial notes, and validation status. Finish actual artifacts. No questions needed.
+

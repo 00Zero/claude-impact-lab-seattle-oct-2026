@@ -1,0 +1,89 @@
+# Cigna Drug Coverage Policy: Migraine - Nurtec ODT
+# Source: Cigna Healthcare, Coverage Policy Number IP0147, effective 04/15/2026
+# Scope: Nurtec ODT only (this policy does not cover Ubrelvy or Qulipta)
+# NOTE: DEMO DATA. Distilled from the policy PDF; verify against the current
+# official policy before any real-world use. Not medical or coverage advice.
+
+policy:
+  payer: Cigna
+  program_number: "IP0147"
+  program_name: Drug Coverage Policy, Migraine - Nurtec ODT
+  effective_date: "2026-04-15"
+  authorization_duration_months: 12
+
+definitions:
+  triptans:
+    - almotriptan (Axert, generics)
+    - eletriptan (Relpax, generics)
+    - frovatriptan (Frova, generics)
+    - naratriptan (Amerge, generics)
+    - rizatriptan (Maxalt, generics)
+    - sumatriptan (Imitrex, generics)
+    - zolmitriptan (Zomig, generics)
+
+drugs:
+
+  nurtec_odt:
+    generic_name: rimegepant
+    use: acute treatment of migraine OR preventive treatment of episodic migraine
+    initial_authorization:
+      logic: ONE of the two pathways below
+      pathways:
+        acute_treatment:
+          logic: ALL of the following
+          criteria:
+            - id: cigna_nurtec_acute_age
+              requirement: Patient is 18 years of age or older
+            - id: cigna_nurtec_acute_triptan
+              requirement: ONE of the following
+              count_required: 1
+              triptan_choices: ref:definitions.triptans
+              options:
+                - Has tried one triptan
+                - Has tried one triptan and NSAID combination product (for example Treximet or Symbravo, which may need prior authorization), or a triptan taken together with an NSAID
+                - Per the prescriber, has a contraindication to triptans (for example heart or blood vessel disease, prior stroke or TIA, hemiplegic or basilar migraine, uncontrolled high blood pressure, or severe liver impairment)
+                - Per the prescriber, has had a significant intolerance to one or more triptans
+        preventive_treatment:
+          logic: ALL of the following
+          criteria:
+            - id: cigna_nurtec_prev_age
+              requirement: Patient is 18 years of age or older
+            - id: cigna_nurtec_prev_frequency
+              requirement: >
+                Has 4 or more and fewer than 15 migraine headache days per month
+                (counted before starting a migraine preventive medicine)
+            - id: cigna_nurtec_prev_no_combo
+              requirement: >
+                Not taking another CGRP inhibitor prescribed to prevent migraine
+                (Aimovig, Ajovy, Emgality, Vyepti, Qulipta)
+    reauthorization:
+      logic: ALL of the following
+      criteria:
+        - Patient is 18 years of age or older
+      use_specific:
+        acute_treatment:
+          - The same acute-treatment criteria apply again (a triptan tried, or a triptan contraindication or significant intolerance per the prescriber)
+        preventive_treatment:
+          - Had 4 or more and fewer than 15 migraine headache days per month before starting a migraine preventive
+          - Prescriber confirms significant clinical benefit, such as fewer migraine days or fewer severe migraine days since starting Nurtec ODT
+          - Not taking another CGRP inhibitor prescribed to prevent migraine
+
+state_and_plan_notes:
+  - Prior authorization is required for Nurtec ODT. Approvals last 1 year.
+  - Employer plans and Individual and Family plans currently have the same Nurtec ODT requirements.
+  - The current policy has no requirement to try other migraine preventive medicines first.
+  - Your own benefit plan document always takes priority over this policy. Some employers only use Cigna for utilization review and decide coverage themselves.
+  - Nurtec ODT for any use other than these two is considered not medically necessary.
+
+chatbot_intake_questions:
+  common:
+    - Are you 18 or older?
+    - Do you want the medicine to stop attacks or to prevent migraines?
+    - Have you tried a triptan, or can your doctor say you cannot take one?
+    - About how many migraine days a month do you have?
+    - Are you taking another CGRP medicine to prevent migraines?
+
+disclaimer: >
+  This tool summarizes a payer policy for demonstration purposes. It does not guarantee
+  coverage, and it is not medical advice. Final decisions rest with the health plan and
+  the patient's prescriber.

@@ -1,0 +1,78 @@
+// POST /demo/reset (reseed the synthetic samples) and POST /ask (Ask Neri, ai/ask/index.ts).
+
+import { randomUUID } from "node:crypto";
+import type { FastifyInstance } from "fastify";
+import type { Signal } from "../../schema/records";
+import { handleAsk } from "../../ai/ask/index";
+import type { Deps } from "../app";
+import { loadSample, SAMPLES } from "../demo";
+import { loadForRun, runInputs } from "../engine";
+import { storeFor, type NeriRequest, businessOf, HttpError } from "../http";
+
+export const demoRoutes = (deps: Deps) => async (app: FastifyInstance) => {
+  // Body (optional): { business: "cascade_trade" | "pike_noodle" }; default all samples.
+  // Synthetic businesses only; never touches a private business with the same id.
+  app.post("/demo/reset", async (req) => {
+    // Demo visitors reset only their own copy; the shared samples are never touched.
+    const visitor = (req as NeriRequest).visitorId;
+    if (deps.demoMode && visitor) {
+      deps.sandboxes.reset(visitor);
+      return { reset: ["sandbox"] };
+    }
+    if (!deps.allowReset) throw new HttpError(403, "FORBIDDEN", "Resetting samples is turned off on this server.");
+    const asked = (req.body as { business?: unknown } | undefined)?.business;
+    const ids = typeof asked === "string" ? [asked] : SAMPLES.map((s) => s.id);
+    const done: string[] = [];
+    for (const id of ids) {
+      const sample = loadSample(id);
+      if (!sample) throw new HttpError(404, "NOT_FOUND", "That sample doesn't exist.");
+      const existing = await storeFor(req).getBusiness(id);
+      if (existing && !existing.isSynthetic) throw new HttpError(409, "CONFLICT", "That id belongs to a real business; not resetting it.");
+      await storeFor(req).resetBusiness(sample, sample.records);
+      done.push(id);
+    }
+    return { reset: done };
+  });
+
+  // Body: { question, via?: "text" | "voice" }. Returns the CfoAnswer with `text`, `scenario: { label, run }`
+  // and `proposal: { kind: "plan", amount, date, note }`. A plan or rule the owner states is stored as
+  // proposed (owner Signal or Rule); nothing is applied until the owner confirms.
+  app.post("/ask", async (req, reply) => {
+    const b = businessOf(req);
+    const [{ records, overrides }, proposals] = await Promise.all([loadForRun(storeFor(req), b.id), storeFor(req).listProposals(b.id)]);
+    const { profile, asOf, fxRates } = runInputs(b, deps.now);
+    const body = (req.body ?? {}) as { question?: unknown };
+    const question = typeof body.question === "string" ? body.question : "";
+    // Ask has its own mode: live Claude on a cache miss only, capped per hour; everything else stays on deps.aiMode.
+    const live = deps.askGuard.begin(deps.askMode, deps.askClient);
+    const r = await handleAsk(req.body, {
+      records, profile, asOf, fxRates, baseOverrides: overrides,
+      pendingReviewCount: proposals.filter((p) => p.state === "proposed").length,
+      business: { name: b.name },
+      mode: live.mode,
+      ...(live.client ? { client: live.client } : {}),
+      ...(deps.askCacheDirs ? { cacheDirs: deps.askCacheDirs } : {}),
+      ...(deps.askModel ? { liveModel: deps.askModel } : {}),
+      persistProposal: async (p) => {
+        const id = `ask-${randomUUID().slice(0, 8)}`;
+        if (p.kind === "rule") {
+          await storeFor(req).upsertRecords(b.id, { rules: [{ ...p.rule, id, state: "proposed" }] });
+        } else {
+          const sourceRef = { system: "owner", record: id, excerpt: { start: 0, end: question.length, text: question } };
+          const signal: Signal = {
+            id, channel: "owner", receivedAt: deps.now().toISOString(), ...(p.draft.partyId ? { partyId: p.draft.partyId } : {}),
+            claim: { kind: "plan", draft: { ...p.draft, sourceRef: p.draft.sourceRef ?? sourceRef } }, confidence: 0.9, state: "proposed", sourceRef,
+          };
+          await storeFor(req).upsertRecords(b.id, { signals: [signal] });
+        }
+        return id;
+      },
+    });
+    live.finish(r.status);
+    if (r.status !== 200) {
+      const msg = (r.body as { error?: string }).error ?? "Ask a question about your cash.";
+      throw new HttpError(r.status, "INVALID_ARGUMENT", msg, { fieldIssues: [{ field: "question", issue: "invalid" }] });
+    }
+    return reply.code(200).send(r.body);
+  });
+};

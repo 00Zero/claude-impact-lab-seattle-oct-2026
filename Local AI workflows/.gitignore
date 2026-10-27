@@ -1,0 +1,25 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.mp3
+*.wav
+*.mp4
+private/
+raw/
+inbound/
+customer-data/
+outputs/
+logs/
+*.log
+
+# Local demo data: templates, notes, feedback (never commit)
+app/data/

@@ -1,0 +1,107 @@
+/* Plates built from the Intake Brief. Same world: ruled plates, flat ink, hue only for groups. */
+
+/* Questions asked in a round, numbered like the question bank asks. */
+.turn.bot .asks { display: grid; gap: .375rem; padding-left: 1.5rem; font-size: var(--step1); line-height: 1.4; max-width: 40rem; }
+.turn.me .file { display: flex; width: fit-content; align-items: center; gap: .375rem; margin-top: .5rem; font-size: .875rem; background: #fff; border: 1px solid var(--rule); padding: .125rem .5rem; }
+.research-count { font-size: var(--step0) !important; color: var(--ink-2); }
+.research-count b { font-size: var(--step2); color: var(--ink); margin-right: .25rem; }
+
+/* Plain-AI baseline: model output from before research, so it shares the dashed, hue-free register. */
+.baseline { border: 1px dashed var(--sim-rule); background: var(--sim-bg); color: var(--ink-2); padding: .875rem 1rem; display: grid; gap: .625rem; }
+.baseline .sim-label { font-size: .8125rem; font-weight: 500; }
+.baseline-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem 2rem; }
+.baseline h4 { font-size: .9375rem; font-weight: 500; color: var(--ink); margin-bottom: .25rem; }
+.baseline ul { padding-left: 1.125rem; font-size: .9375rem; display: grid; gap: .125rem; }
+
+/* Tags: hue belongs to groups, so state is carried by fill, outline and dash. */
+.tag { display: inline-block; font-size: .8125rem; font-weight: 500; line-height: 1.4; padding: 0 .4375rem; border: 1px solid var(--ink); white-space: nowrap; }
+.tag.v-serviceable, .tag.h-supported, .tag.v-worked, .tag.s-resolved, .tag.k-observed { background: var(--ink); color: var(--on-ink); }
+.tag.k-inferred, .tag.s-unresolved { border-style: dashed; }
+.tag.v-not-serviceable, .tag.h-refuted, .tag.v-didnt-work { border-color: var(--bad); color: var(--bad); }
+
+.board td .strong, .lines .strong { display: block; font-weight: 500; }
+.board td .sub, .lines .sub { display: block; font-size: .875rem; color: var(--ink-2); margin-top: .125rem; }
+
+mark { background: #f2d8a0; color: inherit; padding: 0 .125rem; }
+
+/* What you told me, sorted into buckets. */
+.buckets { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.25rem 2rem; }
+.bucket ul { list-style: none; padding: 0; display: grid; gap: 0; }
+.bucket li { display: grid; grid-template-columns: 7.5rem 1fr; gap: .125rem .75rem; padding: .5rem 0; border-bottom: 1px solid var(--rule); font-size: .9375rem; }
+.bucket .dim { color: var(--ink-2); }
+.bucket .applies { grid-column: 2; }
+.applies { font-size: .8125rem; color: var(--ink-3); }
+
+/* A customer group from research. */
+.group { display: grid; gap: .625rem; padding: 1rem 0 1.25rem; border-bottom: 1px solid var(--rule); }
+.group:last-child { border-bottom: 0; }
+.group .group-name h4 { font-size: var(--step1); font-weight: 500; }
+.group h5 { font-size: .875rem; font-weight: 500; color: var(--ink-2); margin-top: .375rem; }
+.verdict-line { font-size: .9375rem; color: var(--ink-2); }
+.concerns { list-style: none; padding: 0; display: grid; gap: .25rem; max-width: 30rem; }
+.concerns li { display: grid; grid-template-columns: 15rem 1fr 1.5rem; gap: .75rem; align-items: center; font-size: .9375rem; }
+.marks { display: flex; gap: .1875rem; }
+.marks i { width: .5rem; height: .875rem; background: currentColor; }
+.concerns .count { text-align: right; font-weight: 500; }
+.facts-grid { display: grid; grid-template-columns: 9rem 1fr; gap: .375rem 1rem; font-size: .9375rem; margin-top: .25rem; }
+.facts-grid dt { color: var(--ink-2); }
+
+/* Findings and the case against. */
+.findings { list-style: none; padding: 0; display: grid; }
+.findings li { display: grid; grid-template-columns: 11rem 1fr; gap: .125rem 1rem; padding: .625rem 0; border-bottom: 1px solid var(--rule); font-size: .9375rem; align-items: baseline; }
+.findings .tag { justify-self: start; }
+.findings .applies { grid-column: 2; }
+
+/* The save file. */
+.answer dd.list ul { padding-left: 1.125rem; font-size: var(--step0); font-weight: 400; display: grid; gap: .125rem; }
+.hyp { padding: .875rem 1rem; border: 1px solid var(--rule); display: grid; gap: .375rem; }
+.hyp.primary { border: 1.5px solid var(--ink); background: #fff; }
+.hyp p { font-size: var(--step0); line-height: 1.45; }
+.hyp .sub { font-size: .875rem; color: var(--ink-2); }
+.lines { list-style: none; padding: 0; display: grid; }
+.lines li { display: grid; grid-template-columns: 1.75rem 1fr; gap: .75rem; padding: .75rem 0; border-bottom: 1px solid var(--rule); }
+.lines li > b { font-size: var(--step1); font-weight: 500; }
+.borrowed { display: block; font-size: .8125rem; color: var(--ink-3); margin-top: .375rem; }
+.open { padding-left: 1.125rem; font-size: .9375rem; display: grid; gap: .25rem; }
+.checks { list-style: none; padding: 0; display: grid; gap: .25rem; }
+.checks li { display: grid; grid-template-columns: 1.375rem 1fr auto; gap: .5rem; align-items: center; font-size: .9375rem; }
+.checks li.fail { color: var(--bad); }
+
+@media (max-width: 52rem) {
+  .bucket li, .findings li, .facts-grid { grid-template-columns: 1fr; }
+  .bucket .applies, .findings .applies { grid-column: 1; }
+  .concerns li { grid-template-columns: 1fr auto; }
+  .concerns .marks { grid-column: 1 / -1; grid-row: 2; }
+  .checks li { grid-template-columns: 1.375rem 1fr; }
+  .checks .applies { grid-column: 2; }
+}
+
+/* What a new customer can cost. Shares are ink values, not hues: hue belongs to customer groups. */
+.econ-head { display: flex; align-items: baseline; gap: .75rem; flex-wrap: wrap; font-size: .9375rem; color: var(--ink-2); }
+.econ-big { font-size: var(--step3); font-weight: 500; color: var(--ink); line-height: 1; }
+.econ-bar { display: flex; height: 1.75rem; border: 1.5px solid var(--ink); }
+.econ-bar span + span { border-left: 1.5px solid var(--ground); }
+.seg-serve { background: var(--ink-3); }
+.seg-win { background: var(--ink); }
+.seg-keep { background: var(--ground); }
+.econ-key { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .375rem 1.25rem; font-size: .875rem; }
+.econ-key li { display: flex; align-items: center; gap: .375rem; }
+.econ-key i { width: .875rem; height: .875rem; border: 1.5px solid var(--ink); }
+.econ-facts b { font-weight: 500; }
+.findings .q { display: block; font-size: .8125rem; color: var(--ink-3); }
+
+/* Attachments in the composer. */
+.composer-files { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.composer-files .file { display: inline-flex; align-items: center; gap: .375rem; font-size: .875rem; background: #fff; border: 1px solid var(--rule); padding: .125rem .5rem; }
+.turn.bot.ask-cancelled { opacity: .6; }
+.lines.creatives li { grid-template-columns: 3rem 1fr; }
+.lines.creatives li > b { font-size: var(--step0); color: var(--ink-2); }
+
+/* Home lists: name and detail on the left, status on the right. */
+.home-list { list-style: none; padding: 0; display: grid; }
+.home-list li { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--rule); }
+.home-list .strong { display: block; font-weight: 500; }
+.home-list .sub { display: block; font-size: .875rem; color: var(--ink-2); }
+
+/* Links styled as buttons. */
+a.btn { text-decoration: none; }

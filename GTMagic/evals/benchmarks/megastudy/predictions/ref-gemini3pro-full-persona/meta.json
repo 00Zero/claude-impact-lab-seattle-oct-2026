@@ -1,0 +1,6 @@
+{
+ "source": "Twin-2K-500-Mega-Study results.zip: results/infotainment/gemini_3_pro_2025-12-04",
+ "model": "google/gemini-3-pro-preview",
+ "temperature": 1,
+ "note": "Published twin predictions (persona from all 4 waves unless the folder says otherwise); reference row, not our run."
+}

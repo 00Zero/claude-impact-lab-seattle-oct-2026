@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>/datamap: see everything your business has written, on one map</title>
+<meta name="description" content="/datamap is a Claude skill for small business owners. Point Claude at your reviews, notes or website and get an interactive map, plus a partner to explore it with.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f3f5f4; --panel: #ffffff; --ink: #17231f; --muted: #5b6b65; --line: #d5ddd9;
+  --accent: #1f6f5c; --accent-ink: #ffffff; --accent-soft: #e1efea; --mark: #e3a72f;
+  --user: #1f6f5c; --user-ink: #ffffff;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --radius: 10px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 1rem; line-height: 1.55; }
+a { color: var(--accent); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+
+/* Top bar */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
+.logo { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+.logo b { color: var(--accent); }
+.top nav { display: flex; gap: 20px; font-size: 0.95rem; }
+.top nav a { color: var(--muted); text-decoration: none; }
+.top nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 48px; align-items: center; padding: 48px 0 64px; }
+.hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); font-weight: 700; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lede { font-size: 1.2rem; color: var(--muted); max-width: 34em; margin: 20px 0 28px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; font: inherit; font-weight: 700; text-decoration: none; padding: 12px 18px; border-radius: 8px; border: 1.5px solid var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.ghost { color: var(--accent); background: transparent; }
+.badges { margin-top: 26px; display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); }
+.badges span { border: 1px solid var(--line); border-radius: 99px; padding: 4px 10px; background: var(--panel); }
+
+/* Chat */
+.chat { display: flex; flex-direction: column; gap: 14px; }
+.msg { max-width: 92%; padding: 12px 15px; border-radius: 14px; font-size: 0.97rem; }
+.msg p { margin: 0 0 8px; } .msg p:last-child { margin-bottom: 0; }
+.msg ol { margin: 6px 0 8px; padding-left: 20px; } .msg li { margin: 4px 0; }
+.msg.user { align-self: flex-end; background: var(--user); color: var(--user-ink); border-bottom-right-radius: 4px; }
+.msg.user code { color: #fff; background: rgba(255,255,255,0.16); padding: 1px 5px; border-radius: 4px; }
+.msg.claude { align-self: flex-start; background: var(--panel); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+.who { font-size: 0.75rem; font-weight: 700; color: var(--muted); margin: 0 4px -8px; }
+.who.user { align-self: flex-end; }
+.steps { list-style: none; padding: 0; margin: 0; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); display: grid; gap: 4px; }
+.steps li::before { content: "✓ "; color: var(--accent); font-weight: 700; }
+.msg .region, .msg .search {
+  font: inherit; font-size: 0.92em; font-weight: 700; cursor: pointer; color: var(--accent);
+  background: var(--accent-soft); border: 0; border-radius: 6px; padding: 1px 7px; margin: 0 1px;
+}
+.msg .region::before { content: "◎ "; font-weight: 400; }
+.msg .search::before { content: "⌕ "; font-weight: 400; }
+.msg .region:hover, .msg .search:hover { background: var(--accent); color: #fff; }
+.msg .n { font-family: var(--font-mono); font-size: 0.85em; color: var(--muted); }
+
+/* Hero mini chat */
+.hero-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; box-shadow: 0 10px 40px rgba(23,35,31,0.08); }
+.hero-card .chat { gap: 12px; }
+
+/* Sections */
+section { padding: 56px 0; }
+section > .wrap > h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+.sub { color: var(--muted); font-size: 1.1rem; max-width: 46em; margin: 12px 0 0; }
+.how { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
+.how div { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.how .k { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
+.how h3 { font-size: 1.2rem; margin: 6px 0 6px; }
+.how p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.credit { margin-top: 18px; font-size: 0.9rem; color: var(--muted); }
+
+/* Showcase */
+.case { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.case + .case { border-top: 0; }
+.case-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; flex-wrap: wrap; }
+.case-head .kicker { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; }
+.case-head h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+.facts { display: flex; gap: 22px; }
+.facts div { font-size: 0.85rem; color: var(--muted); }
+.facts b { display: block; font-family: var(--font-display); font-size: 1.7rem; color: var(--ink); line-height: 1; }
+.case-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 28px; margin-top: 28px; align-items: start; }
+.case .chat { background: var(--bg); border-radius: 16px; padding: 20px; }
+.mapbox { position: sticky; top: 16px; }
+.mapbox iframe { width: 100%; height: min(640px, 78vh); border: 1px solid var(--line); border-radius: 12px; background: #fff; display: block; }
+.mapbar { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; font-size: 0.88rem; color: var(--muted); }
+.mapbar button { font: inherit; color: var(--accent); background: none; border: 0; cursor: pointer; padding: 0; }
+.note { font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+
+/* Use it */
+.works { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 28px 0; }
+.works div { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--panel); }
+.works b { display: block; font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 4px; }
+.works span { color: var(--muted); font-size: 0.92rem; }
+.install { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.install ol { margin: 0; padding-left: 22px; } .install li { margin: 8px 0; }
+.install pre { margin: 0; background: #17231f; color: #e6eeeb; border-radius: 10px; padding: 16px; font-family: var(--font-mono); font-size: 0.85rem; overflow-x: auto; line-height: 1.6; }
+.install pre .c { color: #9aaba4; }
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 28px; }
+.card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; color: var(--ink); text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+.card:hover, .card:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(23,35,31,0.12); }
+.card img { width: 100%; aspect-ratio: 16 / 8.5; object-fit: cover; object-position: top left; display: block; border-bottom: 1px solid var(--line); background: #fff; }
+.card-body { padding: 16px 20px 20px; }
+.card-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.card .pill { font-family: var(--font-mono); font-size: 0.8rem; color: var(--warn-ink, #7a5310); background: #fbf1dc; border: 1px solid #ecd9ae; border-radius: 99px; padding: 3px 10px; }
+.card .tag { margin-left: auto; font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+.card h3 { font-size: 1.35rem; margin: 12px 0 6px; }
+.card p { margin: 0; color: var(--muted); font-size: 0.97rem; }
+.more-cta { text-align: center; margin-top: 32px; }
+.more-cta .note { margin: 10px 0 0; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+footer { padding: 40px 0 60px; color: var(--muted); font-size: 0.9rem; }
+footer .wrap { display: grid; gap: 8px; }
+.scarab { text-align: center; margin-top: 28px; }
+.scarab img { width: 120px; height: auto; }
+
+/* Reveal chat messages as they scroll in */
+.reveal { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+@media (max-width: 960px) {
+  .hero, .case-grid, .install { grid-template-columns: minmax(0, 1fr); }
+  .how, .works { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+  .mapbox { position: static; }
+  .top nav { display: none; }
+}
+@media (max-width: 560px) { .how, .works { grid-template-columns: minmax(0, 1fr); } .facts { gap: 14px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#"><b>/</b>datamap</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#knowledgeforge">Internexio</a>
+      <a href="#thinkspace">thinkspace</a>
+      <a href="#sourcegraph">Sourcegraph</a>
+      <a href="#use">Use it</a>
+      <a href="https://connoiter.com/datamap/">More demos</a>
+      <a href="https://github.com/Connoiter/claude_for_small_businesses_hackathon">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>See everything your business has written, <em>on one map.</em></h1>
+      <p class="lede"><code>/datamap</code> is a Claude skill for small business owners. Point Claude at your reviews, your notes or your website. A few minutes later you have a map you can explore, and a partner to explore it with.</p>
+      <div class="cta">
+        <a class="btn primary" href="#knowledgeforge">See three real maps</a>
+        <a class="btn ghost" href="#use">Get the skill</a>
+        <a class="btn ghost" href="https://connoiter.com/datamap/">See more demos</a>
+      </div>
+      <div class="badges"><span>Runs on your computer</span><span>No code needed</span><span>Built on Tutte Institute maths</span></div>
+    </div>
+    <div class="hero-card" aria-label="Example: asking Claude for a datamap">
+      <div class="chat">
+        <div class="msg user"><code>/datamap</code> my KnowledgeForge repo. What do I actually know?</div>
+        <div class="msg claude">
+          <ul class="steps"><li>Read 587 notes from the repo</li><li>Tidied them into one OKF bundle</li><li>Mapped them on this computer</li><li>Named 18 regions</li></ul>
+        </div>
+        <div class="msg claude"><p>587 notes in 18 regions. The biggest, <b>SEO and content craft</b> (65 notes), is know-how you could sell to clients. And 88 notes are the same instructions copied for each AI tool. <a href="#knowledgeforge">Open the map ↓</a></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <h2>One command. A map, then a conversation.</h2>
+    <p class="sub">Type <code>/datamap</code> and say what to map. Claude does the rest, and then stays with you to work out what the map means for your business.</p>
+    <div class="how">
+      <div><span class="k">01 · Ask</span><h3>Say what to map</h3><p>A reviews or survey export, a folder of notes, your inbox, or your website.</p></div>
+      <div><span class="k">02 · Gather</span><h3>Claude reads it</h3><p>It reads pages and files itself and tidies them into clean notes (Open Knowledge Format), fixing what AI tools can't read.</p></div>
+      <div><span class="k">03 · Map</span><h3>Similar things land together</h3><p>On your computer, every note becomes a dot; dots about the same thing form regions.</p></div>
+      <div><span class="k">04 · Talk</span><h3>Ask what it means</h3><p>Claude names every region in plain words, writes a short report, and answers your questions by pointing at the map.</p></div>
+    </div>
+    <p class="credit">The mapping is a "King Tutte pipeline": UMAP, HDBSCAN and DataMapPlot, open-source tools from the <a href="https://github.com/TutteInstitute">Tutte Institute for Mathematics and Computing</a>.</p>
+  </div>
+</section>
+
+<!-- Showcase 1: KnowledgeForge -->
+<section class="case" id="knowledgeforge">
+  <div class="wrap">
+    <div class="case-head">
+      <div>
+        <div class="kicker">Showcase · a second brain</div>
+        <h2>Internexio, a one-person software studio</h2>
+        <p class="sub">A solo consultant maps 587 notes of hard-won know-how, finds what to sell, and sees what to clean up.</p>
+      </div>
+      <div class="facts"><div><b>587</b>notes</div><div><b>18</b>regions</div><div><b>1</b>person's know-how</div></div>
+    </div>
+    <div class="case-grid">
+      <div>
+        <div class="chat" data-map="kf">
+          <div class="who user reveal">Owner</div>
+          <div class="msg user reveal"><code>/datamap</code> my KnowledgeForge repo. What do I actually know?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal"><ul class="steps"><li>Read 587 notes from the repo</li><li>Tidied them into one OKF bundle</li><li>Mapped them on this computer</li><li>Named 18 regions</li></ul></div>
+          <div class="msg claude reveal">
+            <p>The biggest region is <button class="region" data-region="SEO and content craft">SEO and content craft</button> <span class="n">65</span>: your marketing and search know-how. Next come <button class="region" data-region="KnowledgeForge core guides">KnowledgeForge core guides</button> <span class="n">63</span> and <button class="region" data-region="Agent review chain logs">Agent review chain logs</button> <span class="n">37</span>, which document the product itself, and <button class="region" data-region="Silent background job failures">Silent background job failures</button> <span class="n">35</span>.</p>
+            <p>173 notes don't fit any one region; they're the grey dots.</p>
+          </div>
+          <div class="who user reveal">Owner</div>
+          <div class="msg user reveal">Which of this could I sell to small-business clients?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal">
+            <p>Start with <button class="region" data-region="SEO and content craft">SEO and content craft</button>. Its 65 notes cover ad-performance checks, Search Console fixes, marketing copy without the tell-tale signs of AI, and rules for founder posts. That's a "search and content" package small businesses already pay for.</p>
+            <p>Your agent regions, like <button class="region" data-region="Agent coordination templates">Agent coordination templates</button> <span class="n">18</span> and <button class="region" data-region="Strategy and prioritization agents">Strategy and prioritization agents</button> <span class="n">12</span>, are a second offer: a workshop for technical founders.</p>
+          </div>
+          <div class="who user reveal">Owner</div>
+          <div class="msg user reveal">Anything I should clean up first?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal">
+            <p>Two things:</p>
+            <ol>
+              <li><b>One copy per instruction.</b> 88 notes are the same instructions repeated for each AI tool. They're spread over 9 regions, 26 of them in <button class="region" data-region="KnowledgeForge core guides">KnowledgeForge core guides</button>, which makes your product docs look bigger than they are. Map one copy next time.</li>
+              <li><b>Date your notes.</b> 194 have no date, so the map can't show when you learned them. I can add dates from the git history.</li>
+            </ol>
+          </div>
+        </div>
+        <p class="note">Example conversation, built on the real map of the open-source <a href="https://github.com/internexio/knowledgeforge">KnowledgeForge</a> repo (Apache-2.0, David Pedersen). Every number above comes from it.</p>
+      </div>
+      <div class="mapbox">
+        <iframe id="map-kf" src="maps/knowledgeforge.html" title="Datamap of the KnowledgeForge notes"></iframe>
+        <div class="mapbar"><span>Scroll to zoom · hover a dot to read the note · click it to open</span><span><button type="button" data-reset="kf">Reset view</button> · <a href="maps/knowledgeforge.html" target="_blank" rel="noopener">Full screen</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase 2: thinkspace -->
+<section class="case" id="thinkspace">
+  <div class="wrap">
+    <div class="case-head">
+      <div>
+        <div class="kicker">Showcase · a website</div>
+        <h2>thinkspace, coworking in Seattle and Redmond</h2>
+        <p class="sub">The owner asks what 18 years of their own website say. The map answers in one picture, and the conversation turns it into a content plan.</p>
+      </div>
+      <div class="facts"><div><b>629</b>pages read</div><div><b>23</b>regions</div><div><b>2008–2026</b>years covered</div></div>
+    </div>
+    <div class="case-grid">
+      <div>
+        <div class="chat" data-map="ts">
+          <div class="who user reveal">Owner</div>
+          <div class="msg user reveal"><code>/datamap</code> thinkspace.com. What does our website actually say about us?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal"><ul class="steps"><li>Read 629 pages from thinkspace.com</li><li>Saved each page as a note and tidied them</li><li>Mapped them on this computer</li><li>Named 23 regions</li></ul></div>
+          <div class="msg claude reveal">
+            <p>The biggest regions are <button class="region" data-region="Startup and founder advice">Startup and founder advice</button> <span class="n">60</span>, <button class="region" data-region="Our story, awards and locations">Our story, awards and locations</button> <span class="n">52</span> and <button class="region" data-region="Founder mindset and reflections">Founder mindset and reflections</button> <span class="n">39</span>.</p>
+            <p>The <b>Over time</b> chart in the corner tells the bigger story: 459 pages are from 2008–2013, and 2011 alone has 152. Since 2021 there are 16 new pages, and 13 of them are <button class="region" data-region="Meeting room bookings">meeting-room listings</button>.</p>
+          </div>
+          <div class="who user reveal">Owner</div>
+          <div class="msg user reveal">Our homepage says "Deeply human. AI-native." Does the rest of the site back that up?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal">
+            <p>Barely. Find <button class="search" data-q="AI" data-urls='["https://thinkspace.com/21-questions-to-ask-yourself-before-you-try-and-sell-your-company/", "https://thinkspace.com/52-books-in-a-year-week-6/", "https://thinkspace.com/", "https://thinkspace.com/seattle-event-space/", "https://thinkspace.com/staff-at-thinkspace/", "https://thinkspace.com/virtual-office-ai-native/", "https://thinkspace.com/virtual-office-seattle-wa/", "https://thinkspace.com/virtual-office/"]'>AI</button> on the map: 8 of 629 pages mention it. Six are the homepage and your offer pages (virtual offices, event space, staff). Only two are blog posts: a 2013 book review and "21 Questions to Ask Yourself Before You Try and Sell Your Company" (2026).</p>
+            <p>Green living, meanwhile, fills three whole regions: <button class="region" data-region="Green office and energy savings">Green office and energy savings</button> <span class="n">23</span>, <button class="region" data-region="Redmond Earth Day events">Redmond Earth Day events</button> <span class="n">19</span> and <button class="region" data-region="Recycling and green materials">Recycling and green materials</button> <span class="n">18</span>. 42 of those 60 pages are from 2008. A visitor who reads past the homepage meets the thinkspace of 2008–2013.</p>
+          </div>
+          <div class="who user reveal">Owner</div>
+          <div class="msg user reveal">What should we do about it this month?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal">
+            <p>Three things, in this order:</p>
+            <ol>
+              <li><b>Fill the empty space.</b> Write the posts the map can't find today: how members use AI day to day, a spotlight on an AI startup in the space, and a recap of today's Claude hackathon.</li>
+              <li><b>Bring back member stories.</b> <button class="region" data-region="&quot;How I Work&quot; member stories">"How I Work" member stories</button> <span class="n">17</span> stopped in 2019, and <button class="region" data-region="Press, tours and member spotlights">member spotlights</button> <span class="n">11</span> in 2016. They're the most human part of the site.</li>
+              <li><b>Give 2008 a home.</b> Move the green-living posts to an "Our history" page, so new visitors land on today's thinkspace.</li>
+            </ol>
+            <p>Want me to draft the hackathon recap first?</p>
+          </div>
+        </div>
+        <p class="note">Example conversation, built on the real map. Every number above comes from it. Click a highlighted region or search to see it on the map.</p>
+      </div>
+      <div class="mapbox">
+        <iframe id="map-ts" src="maps/thinkspace.html" title="Datamap of thinkspace.com"></iframe>
+        <div class="mapbar"><span>Scroll to zoom · hover a dot to read the page · click it to open</span><span><button type="button" data-reset="ts">Reset view</button> · <a href="maps/thinkspace.html" target="_blank" rel="noopener">Full screen</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase 3: Sourcegraph handbook -->
+<section class="case" id="sourcegraph">
+  <div class="wrap">
+    <div class="case-head">
+      <div>
+        <div class="kicker">Showcase · a team handbook</div>
+        <h2>Sourcegraph's company handbook</h2>
+        <p class="sub">An operations lead maps 835 handbook pages to fix onboarding. The same works for a ten-person team's SOPs and policies.</p>
+      </div>
+      <div class="facts"><div><b>835</b>pages</div><div><b>20</b>regions</div><div><b>85%</b>in team folders</div></div>
+    </div>
+    <div class="case-grid">
+      <div>
+        <div class="chat" data-map="sg">
+          <div class="who user reveal">Ops lead</div>
+          <div class="msg user reveal"><code>/datamap</code> our handbook. New hires keep saying they can't find anything.</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal"><ul class="steps"><li>Read 835 handbook pages</li><li>Tidied them into one OKF bundle</li><li>Mapped them on this computer</li><li>Named 20 regions</li></ul></div>
+          <div class="msg claude reveal">
+            <p>Here's why. 709 of the 835 pages (85%) sit inside team folders: engineering alone has 175, support 120 and security 85. Only 58 pages explain how the company works as a whole.</p>
+            <p>The biggest region, <button class="region" data-region="Cloud and infrastructure ops">Cloud and infrastructure ops</button> <span class="n">179</span>, is written for engineers on call, not for someone in their first week.</p>
+          </div>
+          <div class="who user reveal">Ops lead</div>
+          <div class="msg user reveal">What should a new support engineer read in week one?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal">
+            <p>There are 38 <button class="search" data-q="onboarding" data-urls='["https://github.com/sourcegraph/handbook/blob/main/content/company-info-and-process/onboarding/git-intro/github-notifications/overview.md", "https://github.com/sourcegraph/handbook/blob/main/content/company-info-and-process/onboarding/glossary.md", "https://github.com/sourcegraph/handbook/blob/main/content/company-info-and-process/onboarding/product-onboarding-videos.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/cloud/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/dev/onboarding/engineering-manager-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/dev/onboarding/overview.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/dev/onboarding/software-engineer-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/teams/code-search/batch-changes/ce-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/teams/code-search/batch-changes/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/teams/devops/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/teams/release/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/engineering/teams/search-platform/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/onboarding/overview.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/onboarding-feedback-milestones.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/onboarding-for-hiring-managers.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/onboarding-mentor.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/onboarding-reviews.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/people-ops/process/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/people-talent/people-ops/tools/internal-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/product/onboarding/overview.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/product/onboarding/recommended_reading.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/onboarding/ae-onboarding-mentor.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/onboarding/data_onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/onboarding/joining_customer_calls.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/onboarding/overview.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/onboarding/quiz.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/onboarding/transition-ae-onboarding-mentor.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/sales/sales-ops/onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/security/security-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/ce/onboarding/ce-onboarding-mentor.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/ce/onboarding/deployment-methods.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/ce/onboarding/education.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/ce/onboarding/enterprise-vs-oss.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/ce/onboarding/overview.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/support/onboarding/cs-onboard-mentor.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/support/onboarding/customer-support-manager-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/support/onboarding/customer-support-onboarding.md", "https://github.com/sourcegraph/handbook/blob/main/content/departments/technical-success/ta/enterprise-success/onboarding/ta-onboarding.md"]'>onboarding</button> guides, and 22 of them already sit together in <button class="region" data-region="Team onboarding and mentors">Team onboarding and mentors</button>. For support, read those first, then <button class="region" data-region="Team workflows and support rotations">Team workflows and support rotations</button> and <button class="region" data-region="Customer support workflow">Customer support workflow</button>.</p>
+            <p>I can turn those three regions into one week-one reading list, in order.</p>
+          </div>
+          <div class="who user reveal">Ops lead</div>
+          <div class="msg user reveal">What's cluttering it?</div>
+          <div class="who reveal">Claude</div>
+          <div class="msg claude reveal">
+            <ol>
+              <li><b>Machine-made pages.</b> Security-scan records fill two whole regions, <button class="region" data-region="Recent CVE acceptance lists">Recent CVE acceptance lists</button> <span class="n">32</span> and <button class="region" data-region="Older CVE acceptance lists">Older CVE acceptance lists</button> <span class="n">15</span>, and another 21 pages are <button class="region" data-region="Auto-generated service runbooks">Auto-generated service runbooks</button>. Engineers need them; new hires keep landing on them. Move them out of the main handbook search.</li>
+              <li><b>Orphans.</b> 104 pages fit no region (the grey dots). They're often outdated or misfiled; I can list them for an owner to review.</li>
+            </ol>
+          </div>
+        </div>
+        <p class="note">Example conversation, built on the real map of Sourcegraph's public handbook (<a href="https://github.com/sourcegraph/handbook">GitHub</a>, Apache-2.0). Every number above comes from it.</p>
+      </div>
+      <div class="mapbox">
+        <iframe id="map-sg" src="maps/sourcegraph.html" title="Datamap of the Sourcegraph handbook"></iframe>
+        <div class="mapbar"><span>Scroll to zoom · hover a dot to read the page · click it to open</span><span><button type="button" data-reset="sg">Reset view</button> · <a href="maps/sourcegraph.html" target="_blank" rel="noopener">Full screen</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="more" id="gallery">
+  <div class="wrap">
+    <h2>Bigger maps, same pipeline</h2>
+    <p class="sub">The same Tutte Institute tools scale from a few hundred notes to millions of documents. These maps open in your browser; the larger ones take a moment to load.</p>
+    <div class="gallery">
+      <a class="card" href="https://connoiter.com/datamap/55948af4-903c-41cb-997e-a1dfda45eb5f/" target="_blank" rel="noopener" aria-label="Open CORD-19 Research Landscape">
+        <img src="https://connoiter.com/datamap/covers/cord-19.png" alt="Preview of the CORD-19 Research Landscape" loading="lazy">
+        <div class="card-body">
+          <div class="card-meta"><span class="pill">517,229 points</span><span class="pill">39.0 MB</span><span class="tag">CORD-19</span></div>
+          <h3>CORD-19 Research Landscape</h3>
+          <p>An interactive map of COVID-19 research literature, organized into a navigable visual landscape.</p>
+        </div>
+      </a>
+      <a class="card" href="https://connoiter.com/datamap/83e5fa97-9600-4af2-a656-6e128c6e5171/" target="_blank" rel="noopener" aria-label="Open ArXiv Data Map">
+        <img src="https://connoiter.com/datamap/covers/arxiv-data-map.png" alt="Preview of the ArXiv Data Map" loading="lazy">
+        <div class="card-body">
+          <div class="card-meta"><span class="pill">2,477,303 points</span><span class="pill">184.7 MB</span><span class="tag">Full arXiv</span></div>
+          <h3>ArXiv Data Map</h3>
+          <p>A map of papers on arXiv using UMAP and nomic-embed.</p>
+        </div>
+      </a>
+    </div>
+    <div class="more-cta">
+      <a class="btn primary" href="https://connoiter.com/datamap/">See more demos →</a>
+      <p class="note">at connoiter.com/datamap</p>
+    </div>
+  </div>
+</section>
+
+<section id="use">
+  <div class="wrap">
+    <h2>Map your own business</h2>
+    <p class="sub">Anything with words in it works. Most tools already have an "Export to CSV" button.</p>
+    <div class="works">
+      <div><b>Reviews &amp; surveys</b><span>Google, Yelp, Shopify or Typeform exports. Ratings and dates are used automatically.</span></div>
+      <div><b>Notes &amp; wikis</b><span>An Obsidian vault, a folder of Markdown, a "second brain", an OKF bundle.</span></div>
+      <div><b>Your website</b><span>Claude reads the pages itself. Each dot links back to the live page.</span></div>
+      <div><b>Documents</b><span>A folder of PDFs or text files: proposals, reports, meeting notes.</span></div>
+    </div>
+    <div class="install">
+      <div>
+        <h3>Set up once</h3>
+        <ol>
+          <li>Get <a href="https://claude.com/claude-code">Claude Code</a>, in the Claude desktop app or the terminal. Any paid Claude plan works.</li>
+          <li>Ask Claude: <i>"Install the /datamap skill from <a href="https://github.com/Connoiter/claude_for_small_businesses_hackathon">github.com/Connoiter/claude_for_small_businesses_hackathon</a>"</i>. It downloads the project and sets everything up. No ZIP, no code.</li>
+          <li>Type <code>/datamap</code> in any folder and say what to map.</li>
+        </ol>
+        <p class="note">Mapping runs on your computer. Claude reads short samples from each region to name it.</p>
+      </div>
+      <pre><span class="c"># Once: ask Claude to install it</span>
+Install the /datamap skill from https://github.com/Connoiter/claude_for_small_businesses_hackathon
+
+<span class="c"># Then, in any folder</span>
+/datamap reviews.csv
+/datamap ~/Notes/my-vault
+/datamap https://yourbusiness.com
+
+<span class="c"># Or ask in plain words</span>
+What are my customers saying in reviews.csv?</pre>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Built at the Claude for Small Business hackathon, Seattle, October 25, 2026, by John Tigue, Cato Lin, Poonam Sharma and Jolie Martin, with mentor Brendan MacLean.</div>
+    <div>Maps made with UMAP, HDBSCAN and DataMapPlot from the Tutte Institute. Notes tidied into Google's Open Knowledge Format. Code on <a href="https://github.com/Connoiter/claude_for_small_businesses_hackathon">GitHub</a> (Apache-2.0). An earlier prototype, <a href="builder.html">the file-upload builder</a>, is still online. More datamap demos at <a href="https://connoiter.com/datamap/">connoiter.com/datamap</a>.</div>
+    <div class="scarab"><img src="images/tutte-scarab.png" width="120" height="103" alt="The pectoral scarab from Tutankhamun's tomb, the King Tutte emblem"></div>
+  </div>
+</footer>
+
+<script>
+// Region and search chips in the chats drive the map next to them. The maps are DataMapPlot
+// pages on the same site, so the page can reach their `datamap` object directly.
+const frames = {
+  ts: document.getElementById("map-ts"),
+  kf: document.getElementById("map-kf"),
+  sg: document.getElementById("map-sg"),
+};
+const startView = {};
+
+function mapOf(key) {
+  const frame = frames[key];
+  try {
+    const w = frame.contentWindow;
+    if (w && w.datamap && w.datamap.labelLayer) return { frame, w, dm: w.datamap };
+  } catch (e) { /* not loaded yet */ }
+  return null;
+}
+
+function remember(key, m) {
+  if (!startView[key]) startView[key] = { ...m.dm.deckgl.props.initialViewState };
+}
+
+function fly(m, key, view) {
+  const vs = { ...view, transitionDuration: 900, transitionInterpolator: new m.w.deck.FlyToInterpolator() };
+  m.dm.deckgl.setProps({ initialViewState: vs });
+  if (m.dm.notifyViewStateChange) m.dm.notifyViewStateChange(vs);
+}
+
+function bringIntoView(frame) {
+  const r = frame.getBoundingClientRect();
+  if (r.top < 0 || r.bottom > innerHeight) frame.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function showRegion(key, name) {
+  const m = mapOf(key);
+  if (!m) return;
+  remember(key, m);
+  const want = name.toLowerCase();
+  const label = m.dm.labelLayer.props.data.find((l) => l.label.replace(/\s+/g, " ").toLowerCase() === want);
+  if (!label) return;
+  clearSearch(m);
+  bringIntoView(m.frame);
+  fly(m, key, { ...startView[key], longitude: label.x, latitude: label.y, zoom: startView[key].zoom + 1.6 });
+}
+
+function clearSearch(m) {
+  const input = m.w.document.getElementById("text-search");
+  if (input && input.value) { input.value = ""; m.dm.searchText(""); }
+}
+
+function searchMap(key, q, urls) {
+  const m = mapOf(key);
+  if (!m) return;
+  remember(key, m);
+  const input = m.w.document.getElementById("text-search");
+  if (input) input.value = q;
+  if (urls && m.dm.metaData) {
+    const wanted = new Set(urls);
+    const indices = m.dm.metaData.url.flatMap((u, i) => (wanted.has(u) ? [i] : []));
+    m.dm.dataSelectionManager.addOrUpdateSelectedIndicesOfItem(indices, m.dm.searchItemId);
+    m.dm.highlightPoints(m.dm.searchItemId);
+  } else {
+    m.dm.searchText(q);
+  }
+  bringIntoView(m.frame);
+  fly(m, key, startView[key]);
+}
+
+function resetMap(key) {
+  const m = mapOf(key);
+  if (!m) return;
+  remember(key, m);
+  clearSearch(m);
+  fly(m, key, startView[key]);
+}
+
+document.querySelectorAll(".chat[data-map]").forEach((chat) => {
+  const key = chat.dataset.map;
+  chat.querySelectorAll(".region").forEach((b) => (b.onclick = () => showRegion(key, b.dataset.region)));
+  chat.querySelectorAll(".search").forEach((b) => (b.onclick = () =>
+    searchMap(key, b.dataset.q, b.dataset.urls ? JSON.parse(b.dataset.urls) : null)));
+});
+document.querySelectorAll("[data-reset]").forEach((b) => (b.onclick = () => resetMap(b.dataset.reset)));
+
+// DataMapPlot hides its bottom-left panel (the "Over time" chart) below 768px wide, and these
+// frames are narrower than that. Keep the chart visible inside the frames.
+const FRAME_CSS = [
+  "@media (max-width: 768px) { .bottom-left { display: flex !important; } }",
+  // Large map titles (e.g. the CORD-19 style's 30pt) crowd these narrow frames; full screen keeps them.
+  "#title-container { max-width: 80% !important; padding: 8px 12px !important; }",
+  "#title-container span:first-of-type { font-size: 19px !important; line-height: 1.2 !important; }",
+  "#title-container span:last-of-type { font-size: 11px !important; }",
+].join(" ");
+Object.values(frames).forEach((frame) => {
+  const style = () => {
+    try {
+      const doc = frame.contentDocument;
+      if (!doc || !doc.head || doc.getElementById("landing-frame-css")) return;
+      const el = doc.createElement("style");
+      el.id = "landing-frame-css";
+      el.textContent = FRAME_CSS;
+      doc.head.appendChild(el);
+    } catch (e) { /* not ready */ }
+  };
+  frame.addEventListener("load", style);
+  style();
+});
+
+// Messages appear as the reader scrolls to them.
+const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+  entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+}, { rootMargin: "0px 0px -8% 0px" }) : null;
+document.querySelectorAll(".reveal").forEach((el, i) => {
+  el.style.transitionDelay = (i % 3) * 60 + "ms";
+  io ? io.observe(el) : el.classList.add("in");
+});
+</script>
+</body>
+</html>

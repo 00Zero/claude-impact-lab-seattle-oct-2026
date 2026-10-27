@@ -1,0 +1,39 @@
+# Secrets: never commit
+.env
+.env.*
+!.env.example
+
+# Run data (founder inputs + model outputs): stays on the owner's machine
+runs/
+gtm-workspace/
+
+# Dependencies & build output
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Python
+__pycache__/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local Claude Code settings and agent worktrees
+.claude/settings.local.json
+.claude/worktrees/
+
+# Local tooling output
+.playwright-mcp/
+.impeccable/review/
+.superpowers/

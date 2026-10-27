@@ -1,0 +1,32 @@
+{
+  "vendors": {
+    "asphalt": {"coreServices": ["paving", "pothole_repair"], "counties": ["King", "Pierce"], "contractorRegistration": "yes", "bonding": "yes", "insurance": "yes", "description": "Two-person crew doing asphalt patching and pothole repair."},
+    "asphalt_unsure": {"coreServices": ["paving", "pothole_repair"], "counties": ["King", "Pierce"], "description": "Two-person crew doing asphalt patching and pothole repair."},
+    "asphalt_no_bond": {"coreServices": ["paving", "pothole_repair"], "counties": ["King", "Pierce"], "contractorRegistration": "yes", "bonding": "no", "insurance": "yes"},
+    "paving_only": {"coreServices": ["paving"], "counties": ["King", "Pierce"], "contractorRegistration": "yes", "bonding": "yes", "insurance": "yes"},
+    "excavation": {"coreServices": ["excavation"], "counties": ["King", "Pierce"], "contractorRegistration": "yes", "bonding": "yes", "insurance": "yes", "description": "Excavation and trenching with a mini excavator."},
+    "no_services": {"counties": ["King"]}
+  },
+  "cases": [
+    {"name": "1 asphalt vendor vs. local paving repair", "vendor": "asphalt", "expect": ["good_fit"],
+     "bid": {"title": "2026 Residential Pothole Repair and Asphalt Patching", "summary": "Patch and seal potholes on residential streets.", "categories": ["paving"], "county": "Pierce", "requirements": ["licensed", "bonded", "insured"], "bid_type": "small_works"}},
+    {"name": "2 same vendor vs. office software", "vendor": "asphalt", "expect": ["not_a_fit"],
+     "bid": {"title": "Purchase of a cloud-based human resources information system", "summary": "Software licensing and implementation for city HR.", "categories": ["it_services"], "county": "King", "requirements": [], "bid_type": "rfp"}},
+    {"name": "3 excavation vendor vs. mixed-scope site prep", "vendor": "excavation", "expect": ["possible_fit"],
+     "bid": {"title": "Fire Station Site Preparation", "summary": "Clearing, excavation, grading and landscape restoration.", "categories": ["excavation", "site_prep", "landscaping"], "county": "King", "requirements": ["licensed"], "bid_type": "itb"}},
+    {"name": "4 strong match, outside service area", "vendor": "asphalt", "expect": ["not_a_fit"],
+     "bid": {"title": "Pothole Repair and Asphalt Patching", "summary": "Patch potholes on city streets.", "categories": ["paving"], "county": "Spokane", "requirements": ["licensed"], "bid_type": "small_works"}},
+    {"name": "5 mandatory requirement the vendor lacks", "vendor": "asphalt_no_bond", "expect": ["not_a_fit"],
+     "bid": {"title": "Street Paving", "summary": "Asphalt overlay on arterial streets.", "categories": ["paving"], "county": "King", "requirements": ["licensed", "bonded"], "bid_type": "itb"}},
+    {"name": "6 mandatory requirement, status unknown", "vendor": "asphalt_unsure", "expect": ["possible_fit", "needs_review"],
+     "bid": {"title": "Street Paving", "summary": "Asphalt overlay on arterial streets.", "categories": ["paving"], "county": "King", "requirements": ["licensed", "bonded"], "bid_type": "itb"}},
+    {"name": "7 vague one-line scope", "vendor": "asphalt", "expect": ["needs_review"],
+     "bid": {"title": "General services contract", "summary": "Miscellaneous services as needed.", "categories": [], "county": "King", "requirements": [], "bid_type": "other"}},
+    {"name": "8 location not stated (e.g. statewide)", "vendor": "asphalt", "expect": ["needs_review"],
+     "bid": {"title": "Statewide Pavement Marking Services", "summary": "Pavement markings on state routes.", "categories": ["paving"], "county": null, "requirements": ["licensed"], "bid_type": "itb"}},
+    {"name": "9 adjacent category (paving vendor vs. pothole repair)", "vendor": "paving_only", "expect": ["possible_fit"],
+     "bid": {"title": "Pothole Repair", "summary": "Patch potholes.", "categories": ["pothole_repair"], "county": "King", "requirements": ["licensed"], "bid_type": "small_works"}},
+    {"name": "10 profile has no services yet", "vendor": "no_services", "expect": ["needs_review"],
+     "bid": {"title": "Street Paving", "summary": "Asphalt overlay.", "categories": ["paving"], "county": "King", "requirements": ["licensed"], "bid_type": "itb"}}
+  ]
+}

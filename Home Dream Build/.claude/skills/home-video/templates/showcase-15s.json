@@ -1,0 +1,149 @@
+{
+  "kind": "showcase",
+  "duration": 15,
+  "aspect": "9:16",
+  "info": {
+    "home_name": "",
+    "location": "",
+    "specs": "",
+    "builder": "",
+    "highlight": ""
+  },
+  "voice": {
+    "provider": "auto"
+  },
+  "music": null,
+  "_music": "Upbeat pop / house / funk, 95-125 bpm (see catalog.json)",
+  "beat_sync": true,
+  "captions": true,
+  "style": {
+    "transition": "cut",
+    "music_volume": 0.45,
+    "fit": "cover"
+  },
+  "shots": [
+    {
+      "source": "media/showcase/hero-1.jpg",
+      "beats": 0.5,
+      "duration": 0.35,
+      "motion": "none",
+      "note": "same file as a later shot"
+    },
+    {
+      "source": "media/showcase/hero-2.jpg",
+      "beats": 0.5,
+      "duration": 0.35,
+      "motion": "none",
+      "note": "same file as a later shot"
+    },
+    {
+      "source": "media/showcase/hero-3.jpg",
+      "beats": 0.5,
+      "duration": 0.35,
+      "motion": "none",
+      "note": "same file as a later shot"
+    },
+    {
+      "source": "media/showcase/hero-4.jpg",
+      "beats": 0.5,
+      "duration": 0.35,
+      "motion": "none",
+      "note": "same file as a later shot"
+    },
+    {
+      "source": "media/showcase/hero-5.jpg",
+      "beats": 0.5,
+      "duration": 0.35,
+      "motion": "none",
+      "note": "same file as a later shot"
+    },
+    {
+      "source": "media/showcase/hero-1.jpg",
+      "beats": 2.5,
+      "duration": 1.75,
+      "motion": "zoom_in",
+      "motion_amount": 0.04,
+      "title": [
+        "{highlight}",
+        "{home_name}"
+      ],
+      "layout": "center",
+      "narration": [
+        "{highlight}.",
+        "Welcome home."
+      ]
+    },
+    {
+      "source": "media/showcase/living.jpg",
+      "beats": 2,
+      "duration": 1.4,
+      "motion": "zoom_in",
+      "motion_amount": 0.04
+    },
+    {
+      "source": "media/showcase/kitchen.jpg",
+      "beats": 2,
+      "duration": 1.4,
+      "motion": "zoom_in",
+      "motion_amount": 0.04
+    },
+    {
+      "source": "media/showcase/dining.jpg",
+      "beats": 1.5,
+      "duration": 1.05,
+      "motion": "zoom_in",
+      "motion_amount": 0.04,
+      "narration": "Light, warmth, and room to live."
+    },
+    {
+      "source": "media/showcase/hero-2.jpg",
+      "beats": 2,
+      "duration": 1.4,
+      "motion": "zoom_in",
+      "motion_amount": 0.04
+    },
+    {
+      "source": "media/showcase/bedroom.jpg",
+      "beats": 1.5,
+      "duration": 1.05,
+      "motion": "zoom_in",
+      "motion_amount": 0.04
+    },
+    {
+      "source": "media/showcase/outdoor.jpg",
+      "beats": 2,
+      "duration": 1.4,
+      "motion": "zoom_in",
+      "motion_amount": 0.04,
+      "narration": "Every corner, considered."
+    },
+    {
+      "source": "media/showcase/hero-1-other-light.jpg",
+      "beats": 2,
+      "duration": 1.4,
+      "motion": "zoom_in",
+      "motion_amount": 0.04,
+      "note": "same angle as hero-1"
+    },
+    {
+      "source": "media/showcase/detail-styled.jpg",
+      "duration": 1.6,
+      "motion": "zoom_in",
+      "motion_amount": 0.04,
+      "narration": [
+        "{slogan}. Find us at {website_spoken}.",
+        "{slogan}."
+      ]
+    },
+    {
+      "source": "media/showcase/calm-wide.jpg",
+      "duration": 3.2,
+      "motion": "zoom_out",
+      "motion_amount": 0.04,
+      "layout": "center",
+      "kicker": "{slogan}",
+      "title": "{website}",
+      "subtitle": "{cta}"
+    }
+  ]
+}

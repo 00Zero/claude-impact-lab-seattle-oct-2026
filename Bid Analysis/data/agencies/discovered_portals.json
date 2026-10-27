@@ -1,0 +1,337 @@
+{
+  "_note": "Portals found 2026-10-25 by probing homepage hosts for CivicPlus /Bids.aspx and by matching OpenGov's public government list (api.procurement.opengov.com/api/v1/government) to WA/OR/ID agencies.",
+  "updates": [
+    {
+      "id": "wa-county-yakima",
+      "platform": "civicplus",
+      "procurement_url": "https://www.yakimacounty.us/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-fire-tualatin-valley-fire-and-rescue",
+      "platform": "civicplus",
+      "procurement_url": "https://www.tvfr.com/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-water-tualatin-valley-water-district",
+      "platform": "civicplus",
+      "procurement_url": "https://www.tvwd.org/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-city-kelso",
+      "platform": "civicplus",
+      "procurement_url": "https://www.kelso.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-city-pasco",
+      "platform": "civicplus",
+      "procurement_url": "https://www.pasco-wa.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-city-port-orchard",
+      "platform": "civicplus",
+      "procurement_url": "https://portorchardwa.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-city-prosser",
+      "platform": "civicplus",
+      "procurement_url": "https://www.cityofprosser.com/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-columbia",
+      "platform": "civicplus",
+      "procurement_url": "https://www.columbiaco.com/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-franklin",
+      "platform": "civicplus",
+      "procurement_url": "https://www.franklincountywa.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-grant",
+      "platform": "civicplus",
+      "procurement_url": "https://www.grantcountywa.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-island",
+      "platform": "civicplus",
+      "procurement_url": "https://www.islandcountywa.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-klickitat",
+      "platform": "civicplus",
+      "procurement_url": "https://www.klickitatcounty.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-lincoln",
+      "platform": "civicplus",
+      "procurement_url": "https://www.lincolncountywa.com/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-okanogan",
+      "platform": "civicplus",
+      "procurement_url": "https://www.okanogancounty.org/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-san-juan",
+      "platform": "civicplus",
+      "procurement_url": "https://www.sanjuancountywa.gov/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-whitman",
+      "platform": "civicplus",
+      "procurement_url": "https://www.whitmancounty.org/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-county-whkiakum",
+      "platform": "civicplus",
+      "procurement_url": "https://www.co.wahkiakum.wa.us/Bids.aspx",
+      "status": "verified",
+      "discovered_via": "probe: /Bids.aspx on homepage host",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "id-special-district-ada-county-highway-district",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/achdidaho",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-city-beaverton",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/beavertonoregon",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "id-city-caldwell",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/cityofcaldwell",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-city-forest-grove",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/forestgrove-or",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-city-lynnwood",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/lynnwoodwa",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "wa-city-mount-vernon",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/mountvernonwa",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-city-sweet-home",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/sweethomeor",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-school-gresham-barlow",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/gresham",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-port-port-of-morrow",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/pom",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    },
+    {
+      "id": "or-county-washington",
+      "platform": "opengov",
+      "procurement_url": "https://procurement.opengov.com/portal/washington-county-or",
+      "status": "verified",
+      "discovered_via": "OpenGov public government list",
+      "last_verified": "2026-10-25"
+    }
+  ],
+  "new": [
+    {
+      "id": "wa-transit-ben-franklin-transit",
+      "name": "Ben Franklin Transit",
+      "state": "WA",
+      "agency_type": "transit",
+      "county": "Benton",
+      "city": "Richland",
+      "lat": 46.2856,
+      "lng": -119.2845,
+      "homepage_url": null,
+      "procurement_url": "https://procurement.opengov.com/portal/bft",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "last_verified": "2026-10-25",
+      "discovered_via": "OpenGov public government list",
+      "notes": null,
+      "raw": {}
+    },
+    {
+      "id": "wa-city-mercer-island",
+      "name": "City of Mercer Island",
+      "state": "WA",
+      "agency_type": "city",
+      "county": "King",
+      "city": "Mercer Island",
+      "lat": 47.5707,
+      "lng": -122.2221,
+      "homepage_url": null,
+      "procurement_url": "https://procurement.opengov.com/portal/mercerislandwa",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "last_verified": "2026-10-25",
+      "discovered_via": "OpenGov public government list",
+      "notes": null,
+      "raw": {}
+    },
+    {
+      "id": "wa-city-ridgefield",
+      "name": "City of Ridgefield",
+      "state": "WA",
+      "agency_type": "city",
+      "county": "Clark",
+      "city": "Ridgefield",
+      "lat": 45.8151,
+      "lng": -122.7426,
+      "homepage_url": null,
+      "procurement_url": "https://procurement.opengov.com/portal/ridgefieldwa",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "last_verified": "2026-10-25",
+      "discovered_via": "OpenGov public government list",
+      "notes": null,
+      "raw": {}
+    },
+    {
+      "id": "wa-library-king-county-library-system",
+      "name": "King County Library System",
+      "state": "WA",
+      "agency_type": "special_district",
+      "county": "King",
+      "city": "Issaquah",
+      "lat": 47.5301,
+      "lng": -122.0326,
+      "homepage_url": null,
+      "procurement_url": "https://procurement.opengov.com/portal/kcls",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "last_verified": "2026-10-25",
+      "discovered_via": "OpenGov public government list",
+      "notes": null,
+      "raw": {}
+    },
+    {
+      "id": "wa-state-office-of-public-defense",
+      "name": "Washington State Office of Public Defense",
+      "state": "WA",
+      "agency_type": "state",
+      "county": "Thurston",
+      "city": "Olympia",
+      "lat": 47.0379,
+      "lng": -122.9007,
+      "homepage_url": null,
+      "procurement_url": "https://procurement.opengov.com/portal/opdwa",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "last_verified": "2026-10-25",
+      "discovered_via": "OpenGov public government list",
+      "notes": null,
+      "raw": {}
+    },
+    {
+      "id": "wa-city-washougal",
+      "name": "City of Washougal",
+      "state": "WA",
+      "agency_type": "city",
+      "county": "Clark",
+      "city": "Washougal",
+      "lat": 45.5826,
+      "lng": -122.3534,
+      "homepage_url": null,
+      "procurement_url": "https://procurement.opengov.com/portal/cityofwashougal",
+      "platform": "opengov",
+      "fetch_method": "api",
+      "status": "verified",
+      "last_verified": "2026-10-25",
+      "discovered_via": "OpenGov public government list",
+      "notes": null,
+      "raw": {}
+    }
+  ]
+}

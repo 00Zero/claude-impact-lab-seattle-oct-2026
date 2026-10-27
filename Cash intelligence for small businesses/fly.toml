@@ -1,0 +1,32 @@
+# Neri Cash production service on Fly.io: API + app on one origin. Deploy: `fly deploy` (or the fly-deploy workflow on main).
+# Secrets: fly secrets set SUPABASE_URL=... SUPABASE_ANON_KEY=... SUPABASE_SERVICE_ROLE_KEY=... [ANTHROPIC_API_KEY=...]
+# Live Ask Neri on the demo (brief, drafts, intake stay cached): fly secrets set ANTHROPIC_API_KEY=... NERI_ASK_MODE=live  [NERI_ASK_LIVE_MAX_PER_HOUR=200]
+app = "neri-cash"
+primary_region = "sjc"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  DEMO_MODE = "0"
+  NERI_STORE = "supabase"
+  NERI_AI_MODE = "live"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Keep one machine warm so the demo never waits on a cold start.
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    grace_period = "20s"
+    interval = "30s"
+    timeout = "5s"
+    method = "GET"
+    path = "/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

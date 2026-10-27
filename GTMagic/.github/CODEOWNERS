@@ -1,0 +1,6 @@
+# Only contract changes require a code-owner review; everything else needs passing CI only
+# (see docs/COLLABORATION.md). Any listed owner other than the PR author can approve.
+# Fifth teammate: add their handle to both lines once their GitHub username is confirmed.
+
+/src/contracts/    @nsbogert @Shimin-Zhang @SeanSun6814 @koolestasian
+/docs/CONTRACTS.md @nsbogert @Shimin-Zhang @SeanSun6814 @koolestasian

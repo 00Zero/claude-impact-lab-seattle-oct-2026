@@ -1,0 +1,75 @@
+# Original entries (pre-import)
+I hope this email finds you well
+I came across your profile
+Quick question for you
+I wanted to reach out
+I know you're busy, so I'll keep this short
+I was impressed by your work at
+We help companies like yours
+I'd love to pick your brain
+Just circling back
+Just following up on my previous email
+Hope you're having a great week
+I noticed we have some mutual connections
+Are you the right person to speak to about
+Let me know if this resonates
+Looking forward to connecting
+I'll be brief
+Our cutting-edge AI-powered solution
+In today's fast-paced business environment
+I wanted to touch base
+Does your team struggle with
+
+# Source: anthropics/knowledge-work-plugins (Apache-2.0), small-business/skills/outreach-composer/reference/slop_test.md, banned openers
+i hope you're doing well
+i came across your company and
+i've been following your work
+i'll keep this brief
+i know you're busy, so
+
+# Source: anthropics/knowledge-work-plugins (Apache-2.0), same file, banned filler
+reach out
+circle back
+touch base
+leverage
+utilize
+solutions
+at your earliest convenience
+i'd love to
+excited to
+synergy
+align
+unlock
+just following up
+just bumping this
+let me know if you have any questions
+
+# Source: cursor/plugins pstack (MIT), pstack/skills/unslop/SKILL.md, rule 7 (AI vocabulary)
+additionally
+crucial
+delve
+enduring
+enhance
+fostering
+garner
+interplay
+intricate
+landscape
+pivotal
+showcase
+tapestry
+testament
+underscore
+vibrant
+
+# Source: cursor/plugins pstack (MIT), same file, rule 20 (chatbot phrases)
+i hope this helps
+let me know if
+of course
+certainly
+found the smoking gun
+
+# Source: cursor/plugins pstack (MIT), same file, rule 23 (filler phrases)
+in order to
+due to the fact that
+it is important to note that

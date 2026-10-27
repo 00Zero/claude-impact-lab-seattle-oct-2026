@@ -1,0 +1,32 @@
+# Machine-readable overlay for the "Is this for me?" step (Cigna, policy IP0147).
+# The criteria text lives in pa_criteria_cigna.yaml.
+
+drug_use:
+  nurtec_odt: [acute, preventive]
+
+intake:
+  # Only these questions are asked for this insurer
+  questions: [use, age, mdays, hdays, triptans, otherCgrp]
+  mdays_for: [preventive]          # migraine day counts matter only for prevention
+  cgrp_question_for: [preventive]  # combination rule applies only to prevention
+  triptan_trial_question: false    # the policy asks only that a triptan was tried
+  triptans:
+    - { id: almotriptan, label: "Almotriptan (Axert)" }
+    - { id: eletriptan, label: "Eletriptan (Relpax)" }
+    - { id: frovatriptan, label: "Frovatriptan (Frova)" }
+    - { id: naratriptan, label: "Naratriptan (Amerge)" }
+    - { id: rizatriptan, label: "Rizatriptan (Maxalt)" }
+    - { id: sumatriptan, label: "Sumatriptan (Imitrex)" }
+    - { id: zolmitriptan, label: "Zolmitriptan (Zomig)" }
+
+checks:
+  cigna_nurtec_acute_age:
+    { type: age18, label: Adult, 18 or older }
+  cigna_nurtec_acute_triptan:
+    { type: tried_triptans, min: 1, trial_length: false, label: A triptan tried first, or a medical reason you cannot take one }
+  cigna_nurtec_prev_age:
+    { type: age18, label: Adult, 18 or older }
+  cigna_nurtec_prev_frequency:
+    { type: episodic_ge4, label: Episodic migraine with 4 to 14 migraine days a month }
+  cigna_nurtec_prev_no_combo:
+    { type: no_cgrp_mab_or_gepant, label: Not taken with another CGRP preventive }

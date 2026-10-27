@@ -1,0 +1,233 @@
+// What the owner tells Neri: POST /setup, PATCH|PUT /profile, owner notes (GET/POST /notes,
+// PATCH /notes/:id, POST /notes/:id/add|keep|remove) and POST /plans. Notes and plans are the owner
+// channel of the signals pipeline: they reach the forecast only as an owner Signal, after the owner's OK.
+
+import { createHash, randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import type { FastifyInstance, FastifyRequest } from "fastify";
+import type { Profile } from "../../schema/profile";
+import type { BalanceSnapshot } from "../../schema/records";
+import type { Deps } from "../app";
+import { loadForRun, runInputs } from "../engine";
+import { storeFor, businessOf, HttpError, isIsoDate, minorUnits, userOf } from "../http";
+import type { Business, StoredProfile, Thought, ThoughtReading } from "../store";
+import { ownerSignal, priceThought, readThought } from "../thoughts";
+import { refreshPending } from "./review";
+
+// Starter profiles the setup screen offers -> files in profiles/.
+const STARTER: Record<string, string> = {
+  trading: "trading", restaurant: "restaurant", services: "agency", agency: "agency", contractor: "contractor", other: "trading",
+};
+const SAMPLE_FOR: Record<string, string> = { restaurant: "pike_noodle" };
+
+const readProfile = (id: string): Profile =>
+  JSON.parse(readFileSync(join(import.meta.dirname, "../../profiles", `${id}.json`), "utf8")) as Profile;
+
+const ownerNameFrom = (email: string) => {
+  const local = (email.split("@")[0] ?? "").split(/[._-]/)[0] ?? "";
+  return local ? local[0]!.toUpperCase() + local.slice(1).toLowerCase() : "";
+};
+
+function safetyLineFrom(v: unknown): Profile["safetyLine"] {
+  const s = v as { kind?: unknown; amount?: unknown; weeks?: unknown } | null;
+  if (s && s.kind === "fixed") return { kind: "fixed", amount: minorUnits(s.amount, "safetyLine.amount") };
+  if (s && s.kind === "weeksOfFixedCosts" && typeof s.weeks === "number" && s.weeks > 0 && s.weeks <= 52) return { kind: "weeksOfFixedCosts", weeks: s.weeks };
+  throw new HttpError(400, "INVALID_ARGUMENT", "Set your safety line as an amount in cents or a number of weeks of fixed costs.", { fieldIssues: [{ field: "safetyLine", issue: "invalid" }] });
+}
+
+const READING_EDITABLE = new Set(["amount", "date", "direction", "status", "probability", "partyId", "kind"]);
+
+export const ownerRoutes = (deps: Deps) => async (app: FastifyInstance) => {
+  const nowIso = () => deps.now().toISOString();
+
+  // Body: { email, businessName, kind, reserve (cents), connect: string[] }. Returns the account completeSetup stores.
+  app.post("/setup", async (req) => {
+    const user = userOf(req);
+    if (!user) throw new HttpError(401, "UNAUTHENTICATED", "Sign in with your work email first.");
+    const body = (req.body ?? {}) as { email?: unknown; businessName?: unknown; kind?: unknown; reserve?: unknown; connect?: unknown };
+    const name = typeof body.businessName === "string" ? body.businessName.trim() : "";
+    if (!name || name.length > 120) throw new HttpError(400, "INVALID_ARGUMENT", "Enter your business name (up to 120 characters).", { fieldIssues: [{ field: "businessName", issue: "required" }] });
+    const kind = typeof body.kind === "string" && STARTER[body.kind] ? body.kind : "other";
+    const reserve = body.reserve === undefined || body.reserve === null ? undefined : minorUnits(body.reserve, "reserve");
+    const connect = Array.isArray(body.connect) ? body.connect.filter((c): c is string => typeof c === "string" && /^[a-z0-9_-]{1,40}$/.test(c)).slice(0, 30) : [];
+    const email = user.email ?? (typeof body.email === "string" ? body.email : "");
+    const createdAt = nowIso();
+    const connections = connect.map((id) => ({ id, name: id, state: "waiting" as const }));
+    const starter = readProfile(STARTER[kind]!);
+    // The starter's sample recurring costs (payroll, rent) are not this owner's: start empty, so nothing
+    // on screen is a number the owner didn't give us.
+    const profile: StoredProfile = {
+      ...starter,
+      recurring: [],
+      // A template's example reserve is not the owner's preference. No reserve is assumed until set.
+      safetyLine: { kind: "fixed", amount: reserve ?? 0 },
+      account: { owner: ownerNameFrom(email), email, kind, connections, ownerUserId: user.id, createdAt },
+    };
+    // One business per owner for now: setting up again updates it (notes and import notes are kept).
+    const existing = await storeFor(req).findUserBusiness(user.id);
+    let businessId: string;
+    if (existing) {
+      const b = await storeFor(req).getBusiness(existing);
+      await storeFor(req).saveProfile(existing, { ...profile, account: { ...b?.profile.account, ...profile.account } }, name);
+      businessId = existing;
+    } else {
+      businessId = await storeFor(req).createBusiness({ name, profile, isSynthetic: false, ownerUserId: user.id });
+    }
+    return {
+      businessId, email, owner: profile.account!.owner, businessName: name, kind, sandbox: SAMPLE_FOR[kind] ?? "cascade_trade",
+      reserve: reserve ?? null, connections, createdAt,
+    };
+  });
+
+  // Partial update, read-modify-write. Today: safetyLine, plus owner name and time zone.
+  const updateProfile = async (req: FastifyRequest) => {
+    const b = businessOf(req);
+    const body = (req.body ?? {}) as { safetyLine?: unknown; owner?: unknown; timezone?: unknown };
+    const next: StoredProfile = structuredClone(b.profile);
+    if (body.safetyLine !== undefined) next.safetyLine = safetyLineFrom(body.safetyLine);
+    if (typeof body.owner === "string") next.account = { ...next.account, owner: body.owner.slice(0, 80) };
+    if (typeof body.timezone === "string" && /^[A-Za-z_]+(\/[A-Za-z_+-]+)*$/.test(body.timezone)) next.account = { ...next.account, timezone: body.timezone };
+    await storeFor(req).saveProfile(b.id, next);
+    const storeRevision = await storeFor(req).bumpRevision(b.id);
+    const latest = await storeFor(req).load(b.id);
+    await refreshPending(storeFor(req), b.id, latest.records, latest.storeRevision, nowIso());
+    const { account: _a, ...profile } = next;
+    return { profile, storeRevision };
+  };
+  app.patch("/profile", updateProfile);
+  app.put("/profile", updateProfile);
+
+  // Owner-confirmed opening cash. This records a snapshot; it never touches a bank or books a payment.
+  app.put("/balance", async (req) => {
+    if (!userOf(req)) throw new HttpError(401, "UNAUTHENTICATED", "Sign in before entering your bank balance.");
+    const b = businessOf(req);
+    const body = req.body as Record<string, unknown> | null;
+    if (!body || typeof body !== "object" || Array.isArray(body) || Object.keys(body).some((k) => !["amount", "asOf", "account"].includes(k)))
+      throw new HttpError(400, "INVALID_ARGUMENT", "Enter an amount, balance date, and optional account name. The currency comes from your business.");
+    if (typeof body.amount !== "number" || !Number.isSafeInteger(body.amount))
+      throw new HttpError(400, "INVALID_ARGUMENT", "Enter the balance as a whole number of cents; an overdraft can be negative.", { fieldIssues: [{ field: "amount", issue: "signed integer cents required" }] });
+    const asOf = body.asOf;
+    if (!isIsoDate(asOf) || new Date(`${asOf}T00:00:00Z`).toISOString().slice(0, 10) !== asOf || asOf > runInputs(b, deps.now).asOf)
+      throw new HttpError(400, "INVALID_ARGUMENT", "Choose a valid balance date on or before today.", { fieldIssues: [{ field: "asOf", issue: "valid date, not in the future" }] });
+    const account = body.account === undefined ? "main" : typeof body.account === "string" ? body.account.trim() : "";
+    if (!account || account.length > 64 || (typeof body.account === "string" && /[\u0000-\u001f\u007f]/.test(body.account)))
+      throw new HttpError(400, "INVALID_ARGUMENT", "Use an account name of 1 to 64 characters, without line breaks.", { fieldIssues: [{ field: "account", issue: "1 to 64 printable characters" }] });
+    const key = createHash("sha256").update(`${account}\0${asOf}`).digest("hex").slice(0, 24);
+    const { records } = await storeFor(req).load(b.id);
+    if (records.balances.some((balance) => balance.account === account && balance.currency !== b.profile.baseCurrency))
+      throw new HttpError(422, "INVALID_ARGUMENT", "That account uses another currency. Choose an account in your business currency.", { fieldIssues: [{ field: "account", issue: "account currency must match the business" }] });
+    // Correct an imported snapshot in place so equal-date balances cannot compete in the forecast.
+    const id = records.balances.find((balance) => balance.account === account && balance.asOf === asOf && balance.currency === b.profile.baseCurrency)?.id ?? `balance-owner-${key}`;
+    const balance: BalanceSnapshot = { id, account, amount: body.amount, currency: b.profile.baseCurrency, asOf, sourceRef: { system: "owner", record: id } };
+    const storeRevision = await storeFor(req).upsertRecords(b.id, { balances: [balance] });
+    const latest = await storeFor(req).load(b.id);
+    await refreshPending(storeFor(req), b.id, latest.records, latest.storeRevision, nowIso());
+    return { balance, storeRevision };
+  });
+
+  // ---- owner notes -----------------------------------------------------------------------
+  const view = async (req: FastifyRequest, b: Business, thoughts: Thought[]) => {
+    const { records, overrides } = await loadForRun(storeFor(req), b.id);
+    const { profile, asOf, fxRates } = runInputs(b, deps.now);
+    return thoughts.map((t) => ({ ...t, effect: t.state === "new" ? priceThought(t, records, profile, asOf, fxRates, overrides) : null }));
+  };
+  const saveThoughts = (req: FastifyRequest, b: Business, thoughts: Thought[]) =>
+    storeFor(req).saveProfile(b.id, { ...b.profile, account: { ...b.profile.account, thoughts: thoughts.slice(0, 200) } });
+  const findThought = (b: Business, id: string) => {
+    const t = (b.profile.account?.thoughts ?? []).find((x) => x.id === id);
+    if (!t) throw new HttpError(404, "NOT_FOUND", "That note isn't here any more.");
+    return t;
+  };
+
+  app.get("/notes", async (req) => {
+    const b = businessOf(req);
+    return view(req, b, b.profile.account?.thoughts ?? []);
+  });
+
+  app.post("/notes", async (req) => {
+    const b = businessOf(req);
+    const body = (req.body ?? {}) as { text?: unknown; via?: unknown };
+    const text = typeof body.text === "string" ? body.text.trim() : "";
+    if (!text || text.length > 2000) throw new HttpError(400, "INVALID_ARGUMENT", "Type or say the note first (up to 2000 characters).", { fieldIssues: [{ field: "text", issue: "required" }] });
+    const { records } = await storeFor(req).load(b.id);
+    const { asOf } = runInputs(b, deps.now);
+    const t: Thought = {
+      id: `th-${randomUUID().slice(0, 8)}`, text, via: body.via === "voice" ? "voice" : "typed", createdAt: nowIso(), state: "new",
+      reading: readThought(text, records, asOf),
+    };
+    await saveThoughts(req, b, [t, ...(b.profile.account?.thoughts ?? [])]);
+    return (await view(req, b, [t]))[0];
+  });
+
+  // Owner corrects the reading: { amount?, date?, direction?, status?, probability?, partyId?, kind? }.
+  app.patch("/notes/:id", async (req) => {
+    const b = businessOf(req);
+    const t = findThought(b, (req.params as { id: string }).id);
+    const edits = (req.body ?? {}) as Record<string, unknown>;
+    const r: ThoughtReading = { ...t.reading };
+    for (const [k, v] of Object.entries(edits)) {
+      if (!READING_EDITABLE.has(k)) throw new HttpError(400, "INVALID_ARGUMENT", `You can't change ${k} here.`, { fieldIssues: [{ field: k, issue: "not editable" }] });
+      if (k === "amount") r.amount = v === null ? null : minorUnits(v, "amount");
+      if (k === "date") { if (v !== null && !isIsoDate(v)) throw new HttpError(400, "INVALID_ARGUMENT", "Dates look like 2026-11-03."); r.date = v as string | null; }
+      if (k === "direction") { if (v !== "in" && v !== "out") throw new HttpError(400, "INVALID_ARGUMENT", "Money in or out?"); r.direction = v; }
+      if (k === "status") { if (v !== "likely" && v !== "possible") throw new HttpError(400, "INVALID_ARGUMENT", "Likely or possible?"); r.status = v; }
+      if (k === "probability") { if (typeof v !== "number" || v < 0 || v > 1) throw new HttpError(400, "INVALID_ARGUMENT", "Chance is between 0 and 1."); r.probability = v; }
+      if (k === "partyId") { if (typeof v !== "string") throw new HttpError(400, "INVALID_ARGUMENT", "Pick a customer or supplier."); r.partyId = v; }
+      if (k === "kind") { if (!["investment", "new_business", "collection", "spend", "note"].includes(String(v))) throw new HttpError(400, "INVALID_ARGUMENT", "Pick a kind."); r.kind = v as ThoughtReading["kind"]; }
+    }
+    r.missing = r.missing.filter((m) => (m === "amount" ? r.amount == null : m === "date" ? r.date == null : m === "direction" ? r.direction == null : true));
+    const next = { ...t, reading: r };
+    await saveThoughts(req, b, (b.profile.account?.thoughts ?? []).map((x) => (x.id === t.id ? next : x)));
+    return (await view(req, b, [next]))[0];
+  });
+
+  app.post("/notes/:id/:decision", async (req) => {
+    const b = businessOf(req);
+    const { id, decision } = req.params as { id: string; decision: string };
+    const t = findThought(b, id);
+    const thoughts = b.profile.account?.thoughts ?? [];
+    if (decision === "remove") {
+      await saveThoughts(req, b, thoughts.filter((x) => x.id !== id));
+      return { id, state: "removed" };
+    }
+    if (decision === "keep") {
+      await saveThoughts(req, b, thoughts.map((x) => (x.id === id ? { ...x, state: "kept" as const } : x)));
+      return { id, state: "kept" };
+    }
+    if (decision !== "add") throw new HttpError(404, "NOT_FOUND", "Add, keep or remove.");
+    if (t.state === "added") throw new HttpError(409, "NOT_PROPOSED", "That note is already in your forecast.");
+    if (t.reading.missing.length) throw new HttpError(422, "MISSING_FIELDS", `Add the ${t.reading.missing.join(" and ")} first.`, { fieldIssues: t.reading.missing.map((f) => ({ field: f, issue: "required" })) });
+    const { profile } = runInputs(b, deps.now);
+    // The owner's own words, confirmed by the owner: the signal is applied, not waiting in Review.
+    const signal = ownerSignal(`sig-${t.id}`, t, t.reading, profile, "applied");
+    if (!signal) throw new HttpError(422, "MISSING_FIELDS", "Add the amount and date first.");
+    const revision = await storeFor(req).upsertRecords(b.id, { signals: [signal] });
+    await saveThoughts(req, b, thoughts.map((x) => (x.id === id ? { ...x, state: "added" as const } : x)));
+    const { records } = await storeFor(req).load(b.id);
+    await refreshPending(storeFor(req), b.id, records, revision, nowIso());
+    return { id, state: "added", signalId: signal.id, storeRevision: revision };
+  });
+
+  // Owner confirms a plan from Ask Neri ("Add to forecast"): { amount, date, note, direction?, status?, probability?, partyId?, via? }.
+  app.post("/plans", async (req) => {
+    const b = businessOf(req);
+    const p = (req.body ?? {}) as Record<string, unknown>;
+    const amount = minorUnits(p.amount, "amount");
+    if (!isIsoDate(p.date)) throw new HttpError(400, "INVALID_ARGUMENT", "Dates look like 2026-11-03.", { fieldIssues: [{ field: "date", issue: "YYYY-MM-DD" }] });
+    const note = typeof p.note === "string" ? p.note.slice(0, 2000) : "Owner plan";
+    const direction = p.direction === "in" ? "in" : "out";
+    const status = p.status === "possible" ? "possible" : "likely";
+    const probability = typeof p.probability === "number" && p.probability >= 0 && p.probability <= 1 ? p.probability : undefined;
+    const { records } = await storeFor(req).load(b.id);
+    const partyId = typeof p.partyId === "string" && records.parties.some((x) => x.id === p.partyId) ? p.partyId : undefined;
+    const id = `plan-${randomUUID().slice(0, 8)}`;
+    const { profile } = runInputs(b, deps.now);
+    const signal = ownerSignal(id, { text: note, createdAt: nowIso() }, {
+      date: p.date, amount, direction, status, ...(probability !== undefined ? { probability } : {}), ...(partyId ? { partyId } : {}),
+    }, profile, "applied")!;
+    const revision = await storeFor(req).upsertRecords(b.id, { signals: [signal] });
+    await refreshPending(storeFor(req), b.id, { ...records, signals: [...records.signals, signal] }, revision, nowIso());
+    return { id: signal.id, signal, storeRevision: revision };
+  });
+};

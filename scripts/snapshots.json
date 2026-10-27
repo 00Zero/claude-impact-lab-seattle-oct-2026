@@ -1,0 +1,200 @@
+{
+  "Bid Analysis": {
+    "slug": "bid-hackathon/Bid-Analytics",
+    "status": "ok",
+    "sha": "b39f8192262fdcd1e94c496107b78e68070d9d8b",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Clark": {
+    "slug": "sagarrat7/clark",
+    "status": "ok",
+    "sha": "f5daa997767b470b7d5f99ea50a21c301316b8bf",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Government Contract Bidwriting for any business": {
+    "slug": "p0linal1/Government-Contract-Bidwriting",
+    "status": "ok",
+    "sha": "b078db2bf09d21699ff0b044c1d04549da02f487",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Cash intelligence for small businesses": {
+    "slug": "thomashillyer/cashflow",
+    "status": "ok",
+    "sha": "73ef5c0148a44f5c905ab0e21239cf0d1624ff66",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Relationship Copilot": {
+    "slug": "WillZhao2021/sea-claude-impact-warmsignal",
+    "status": "ok",
+    "sha": "7d3e9c8c053beda8b0714375836221f1a2e312a6",
+    "date": "2026-10-25",
+    "license": "Apache-2.0",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "GTMagic": {
+    "slug": "nsbogert/GTMagic",
+    "status": "ok",
+    "sha": "8b5c5e01bb83813f0d23873cd03a1a34145b48de",
+    "date": "2026-10-26",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Datamaps for small business": {
+    "slug": "Connoiter/claude_for_small_businesses_hackathon",
+    "status": "ok",
+    "sha": "c5e270f9a5a1d16c31b9609227f736247d535feb",
+    "date": "2026-10-25",
+    "license": "Apache-2.0",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Chartly": {
+    "slug": "AmoghAtreya/Claude-Impact-Lab",
+    "status": "ok",
+    "sha": "14eca6e6edb5585adafc115a85d0b332d234b3dd",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Online bakery shop automation": {
+    "slug": "honeychawla/home-bakery",
+    "status": "ok",
+    "sha": "b1fd6a75dde17dad9e9304b06f3ca2fbfbad6459",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Send Check": {
+    "slug": "internexio/send-check",
+    "status": "ok",
+    "sha": "c7b036357b330f20e3cf2a9f94a579e5b044567a",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Local AI workflows": {
+    "slug": "pi0neerpat/scribular-note-style-coach",
+    "status": "ok",
+    "sha": "6bea93b28a981825ba7e3e947a4dd960a991deb0",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "BizOS": {
+    "slug": "enginkantar/enginkantar",
+    "status": "ok",
+    "sha": "72588fc0af087ab5524223c0346cb1b16736bb13",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "RingAround": {
+    "slug": "RingAround/web-frontend",
+    "status": "ok",
+    "sha": "862f50412c1dc9d1e82391c3a483bdbe4384516b",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Home Dream Build": {
+    "slug": "duoduo-weekend-coder/HomeDreamBuildAgent",
+    "status": "ok",
+    "sha": "bae5cc8cc416a1169a4a944a759c7c69e3baec27",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Corporate Meets Creatives": {
+    "slug": "corporate-meets-creatives/synapse",
+    "status": "ok",
+    "sha": "18d33dab6382b62a05418de12b5f0cb790410667",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "BizAutoGenie": {
+    "slug": "Leadline-Claude-Impact-Lab/claude-impact-lab",
+    "status": "ok",
+    "sha": "cf5f61e04666e8275a44e6a41b195ae342678138",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "ALongTable": {
+    "slug": "amarjahin/alongtable",
+    "status": "ok",
+    "sha": "210c66bd90e558b1aa05e765e2bba41fd2235f3a",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Lantern": {
+    "slug": "sanandani/lantern",
+    "status": "ok",
+    "sha": "a06bc1cbac9204ccf269ec25712fbe2d97c4d6e3",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Get my drugs": {
+    "slug": "postweb21/getmydrug",
+    "status": "ok",
+    "sha": "856d96448c3403bbabeb9cbd78075f12b79aeb71",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Automate Everything": {
+    "slug": "RuthGajj05/crumbs",
+    "status": "ok",
+    "sha": "56694f1c555c454642357b717b926c8a0b6758ba",
+    "date": "2026-10-25",
+    "license": "None",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "Clippy 2.0": {
+    "slug": "Calypso11/Team-Clippy",
+    "status": "ok",
+    "sha": "9e6a7ba759febf81699e3ec7614100a135361c5f",
+    "date": "2026-10-25",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  },
+  "The Ledgers": {
+    "slug": "ronaldon2023/receipts-claudesmb",
+    "status": "ok",
+    "sha": "8ec0bb253b2466e623a0f459b13fc93f66c2668f",
+    "date": "2026-10-26",
+    "license": "MIT",
+    "large_removed": [],
+    "secrets_removed": []
+  }
+}

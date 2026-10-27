@@ -1,0 +1,15 @@
+FICTIONAL TRANSCRIPT — created for this demo. Not a real session. Fixture general-c v1 (fresh check for proposed template updates).
+
+Therapist: Last week you planned to call your friend Lena. Did that happen?
+Client: I texted instead. I kept putting the call off. I told myself she'd be busy.
+Therapist: What did you predict would happen if you called?
+Client: That it would be awkward and she'd be polite but distant.
+Therapist: And what happened with the text?
+Client: She replied within ten minutes with three exclamation points. She wants to get coffee.
+Therapist: How does that fit with the prediction?
+Client: Not very well. I think I assumed the worst again.
+Therapist: How often do you think that "she'd be busy" thought has stopped you reaching out?
+Client: A lot. Probably most of the time this year.
+Therapist: Would you be willing to test it again this week?
+Client: Yes. I'll set up the coffee with Lena for Saturday and text one other person.
+Therapist: Next time we'll look at how those went.

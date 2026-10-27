@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "receipts",
+  "displayName": "Receipts",
+  "description": "Checks every payment an AI agent makes with plain code before it runs, logs every tool call to a tamper-evident hash chain, and verifies the log against your records. The AI never grades itself.",
+  "author": {
+    "name": "Receipts",
+    "url": "https://github.com/ronaldon2023/receipts-claudesmb"
+  },
+  "homepage": "https://github.com/ronaldon2023/receipts-claudesmb",
+  "repository": "https://github.com/ronaldon2023/receipts-claudesmb",
+  "license": "MIT",
+  "keywords": ["small-business", "payments", "audit", "guardrails"]
+}

@@ -1,0 +1,103 @@
+Coach: Good to see you. Before we start, take a breath. Where are you landing today?
+
+Leader: Honestly, I'm fried. It's been a brutal two weeks. We shipped the Q2 roadmap, but I feel like I left pieces of myself all over the floor doing it.
+
+Coach: "Pieces of yourself all over the floor." Say more about that.
+
+Leader: I don't know. I kept things moving, but I wasn't in it. I was just dispatching — approvals, unblocks, reassuring the CEO. I didn't lead anything. I managed it.
+
+Coach: There's a difference for you between leading and managing. What's the distinction, as you feel it?
+
+Leader: Leading feels like I'm bringing something. An instinct, a read on the room, a point of view. Managing is just... keeping the trains running. And this quarter I was a train conductor. That's not why I took this job.
+
+Coach: So you took the job to bring something. What was that thing, when you said yes?
+
+Leader: I wanted to build a team that actually trusted each other. A product org where design, eng, and PM weren't at war. I said I'd change the culture. And I don't think I have. I think I've just absorbed the dysfunction and translated it.
+
+Coach: Absorbed and translated. That's a vivid image. Who else is paying the cost of you absorbing it?
+
+Leader: My team. Probably my partner. Probably me — my sleep is wrecked. My lead PM told me last week she thinks I'm "doing too much of the emotional labor." She used that phrase. I laughed it off and then cried in my car.
+
+Coach: What did the crying know that the laugh didn't?
+
+Leader: That she's right. I'm covering for people. I'm smoothing every edge. I'm the one sending the follow-up Slack when two directors have a tense meeting. Nobody asked me to do that. I just do it.
+
+Coach: When did that pattern start?
+
+Leader: Probably the first week I took the role. The CEO told me "I need you to be the glue." And I took that literally. I became glue.
+
+Coach: Glue holds things together by sticking to them. What's the cost of being glue?
+
+Leader: You can't move. You can't have your own shape. You're defined by what you're holding together.
+
+Coach: That's a powerful reframe. If you were not glue, what would you be?
+
+Leader: I think I'd be... a compass. Something that has a direction, that points somewhere, that helps people orient. Glue keeps things in place. A compass moves people forward.
+
+Coach: A compass versus glue. Sit with that contrast. What's true for you right now?
+
+Leader: The truth is I've been performing a version of leadership I don't believe in. I've been deferential when I should have been declarative. My intuition has been telling me for months that our priorities are wrong, and I've been swallowing it to keep the peace.
+
+Coach: Your intuition has been speaking. What has it been saying?
+
+Leader: That we are building for the wrong customer. That the CEO's pet account is a distraction. That my best engineer is going to quit if we don't fix the on-call rotation. I've known all three of those things for a quarter and I haven't named any of them out loud.
+
+Coach: What has been the price of not naming them?
+
+Leader: Trust. My team doesn't trust that I see what they see. Because I don't say it. So they think I either don't notice or I don't care. Both of those are worse than the truth, which is that I'm afraid.
+
+Coach: What are you afraid of?
+
+Leader: Being seen as political. Being seen as someone who pushes back on the CEO. Being seen as "not a team player."
+
+Coach: And if you were seen that way — what would that actually cost you?
+
+Leader: Honestly? Maybe nothing. The CEO respects people who push back. He has said that. I've watched him promote people who push back. I've just been too scared to test whether that's real for me too.
+
+Coach: So there's evidence the risk is smaller than the story. What would you want to test this week?
+
+Leader: I want to tell him the pet account is killing our focus. I have the data. I just haven't been willing to be the one to say it.
+
+Coach: What would it look like to be the one to say it — in a way that's you, not a performance?
+
+Leader: I'd bring my read on the room, not just a slide deck. I'd say: "I think we're losing our best people to this. Here's what I'm seeing. I'd like us to decide together." That's the win-win-win version — he gets real information, the team gets real advocacy, and I get to lead instead of translate.
+
+Coach: Listen to what you just said. "Lead instead of translate." How does that land in your body?
+
+Leader: It feels... taller. Like I actually have a spine again.
+
+Coach: Good. Before next session, what's the one concrete thing you'll do with that spine?
+
+Leader: I'll put a thirty-minute meeting on the CEO's calendar for Thursday. I'll prep one page — not a deck — and I'll tell him the three things I've been sitting on. The pet account, the on-call crisis, and the trust cost to my team.
+
+Coach: One page, three things, Thursday. What support do you need to actually do it?
+
+Leader: I need to not rehearse it into a corporate performance. I need to keep it honest.
+
+Coach: How will you keep it honest?
+
+Leader: I'll write it Wednesday night in one sitting. No editing for tone. I'll read it out loud once. That's it.
+
+Coach: What might get in the way?
+
+Leader: Me softening. Me adding "I might be wrong, but..." to every sentence. That's my tell.
+
+Coach: What would you rather do instead of softening?
+
+Leader: State it. Let it land. Let him respond. Trust that my read is worth taking seriously, even if he disagrees.
+
+Coach: That's a big shift. What's one thing you want to carry from this conversation into Thursday?
+
+Leader: Compass, not glue. That's the thing. If I'm the compass, I point. I don't stick.
+
+Coach: Compass, not glue. Let's anchor there. Anything else you want to name before we close?
+
+Leader: Just — thank you. I came in fried and I'm leaving clear. That's new.
+
+Coach: Let's plan to pick up next session with how Thursday went and what it surfaced in your team. Same time next week?
+
+Leader: Same time. I'll send you the one-pager Wednesday so you've seen it before we debrief.
+
+Coach: I'd welcome that. Take care of yourself this week.
+
+Leader: I will. Thank you.

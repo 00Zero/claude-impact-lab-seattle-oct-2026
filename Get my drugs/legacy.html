@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>getmydrug</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+<style>
+:root {
+  --bg: #eef3f5;
+  --surface: #ffffff;
+  --ink: #12252d;
+  --muted: #5a6f78;
+  --line: #d3dfe3;
+  --teal: #0c6b73;
+  --teal-soft: #dcecee;
+  --cap: #e2512b;
+  --cap-ink: #ffffff;
+  --ok: #1d7a4b;
+  --warn: #9a5b00;
+  --warn-soft: #fbefd9;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1a1f; --surface: #15262d; --ink: #e6f0f2; --muted: #93a9b1; --line: #28404a;
+    --teal: #4fc0c9; --teal-soft: #17353b; --cap: #ff6a42; --cap-ink: #1a0b06;
+    --ok: #5fcf93; --warn: #f0b259; --warn-soft: #2e2412; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1a1f; --surface: #15262d; --ink: #e6f0f2; --muted: #93a9b1; --line: #28404a;
+  --teal: #4fc0c9; --teal-soft: #17353b; --cap: #ff6a42; --cap-ink: #1a0b06;
+  --ok: #5fcf93; --warn: #f0b259; --warn-soft: #2e2412; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 28px;
+}
+.wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.capsule { width: 34px; height: 16px; border-radius: 8px; transform: rotate(-35deg);
+  background: linear-gradient(90deg, var(--cap) 0 50%, var(--teal) 50% 100%); box-shadow: inset 0 0 0 2px var(--surface); outline: 2px solid var(--ink); }
+.brand h1 { margin: 0; font: 700 1.6rem/1 var(--font-display); letter-spacing: -0.02em; }
+.tagline { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.reset { font: 500 0.85rem var(--font-body); background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.reset:hover { border-color: var(--teal); }
+
+.chat { display: flex; flex-direction: column; gap: 14px; }
+.msg { display: flex; gap: 10px; max-width: 100%; }
+.msg.bot { align-items: flex-start; }
+.msg.me { justify-content: flex-end; }
+.avatar { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--teal); display: grid; place-items: center; margin-top: 2px; }
+.avatar::after { content: ""; width: 14px; height: 7px; border-radius: 4px; transform: rotate(-35deg); background: linear-gradient(90deg, var(--cap-ink) 0 50%, var(--teal-soft) 50% 100%); }
+.bubble { padding: 10px 14px; border-radius: 16px; max-width: min(100%, 560px); min-width: 0; overflow-wrap: anywhere; }
+.bot .bubble { background: var(--surface); border: 1px solid var(--line); border-top-left-radius: 4px; }
+.me .bubble { background: var(--cap); color: var(--cap-ink); border-top-right-radius: 4px; font-weight: 500; }
+.bubble p { margin: 0; }
+.bubble p + p { margin-top: 8px; }
+.stack { display: flex; flex-direction: column; gap: 10px; min-width: 0; flex: 1; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 0.95rem var(--font-body); padding: 9px 16px; border-radius: 999px; border: 1.5px solid var(--teal); background: var(--surface); color: var(--teal); cursor: pointer; text-align: left; }
+.chip:hover:not(:disabled) { background: var(--teal); color: var(--surface); }
+.chip:disabled { border-color: var(--line); color: var(--muted); cursor: not-allowed; }
+.chip small { font-family: var(--font-mono); font-size: 0.68rem; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+.chip.used { opacity: 0.45; pointer-events: none; }
+:focus-visible { outline: 3px solid var(--cap); outline-offset: 2px; }
+
+.rx { background: var(--surface); border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; }
+.rx-head { padding: 14px 16px 12px; border-bottom: 1.5px dashed var(--line); display: flex; flex-direction: column; gap: 2px; }
+.rx-kicker { font: 500 0.7rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.rx-name { font: 700 1.7rem/1.1 var(--font-display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.rx-name span { font: 400 1rem var(--font-mono); color: var(--muted); letter-spacing: 0; }
+.rx-use { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+.seg { display: flex; border-bottom: 1.5px dashed var(--line); }
+.seg button { flex: 1; font: 600 0.9rem var(--font-body); padding: 11px 8px; background: none; border: 0; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; }
+.seg button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--cap); }
+.rx-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 14px; }
+.logic { font: 500 0.75rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal); margin: 0; }
+.pathway { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.pathway h4 { margin: 0; font: 700 1.05rem var(--font-display); }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.checks > li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; min-width: 0; }
+.box { width: 18px; height: 18px; border: 2px solid var(--teal); border-radius: 4px; margin-top: 3px; }
+.checks .req { min-width: 0; overflow-wrap: anywhere; }
+.count { display: inline-block; font: 500 0.7rem var(--font-mono); background: var(--teal-soft); color: var(--teal); padding: 1px 8px; border-radius: 999px; margin-left: 6px; letter-spacing: 0.04em; white-space: nowrap; }
+.opts { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.93rem; }
+.opts li { margin: 2px 0; }
+details { margin-top: 6px; }
+summary { cursor: pointer; font-size: 0.9rem; color: var(--teal); font-weight: 600; }
+details ul { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.93rem; }
+
+.notes { background: var(--warn-soft); border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; color: var(--ink); }
+.notes strong { color: var(--warn); }
+.notes ul { margin: 6px 0 0; padding-left: 18px; }
+
+.next { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.tile { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 8px; text-decoration: none; color: var(--ink); background: var(--bg); min-width: 0; }
+a.tile:hover { border-color: var(--cap); }
+.tile b { font: 700 1rem var(--font-display); }
+.tile span { font-size: 0.85rem; color: var(--muted); }
+.tile .go { font: 500 0.75rem var(--font-mono); color: var(--cap); text-transform: uppercase; letter-spacing: 0.06em; }
+.tile.soon { border-style: dashed; }
+.tile.soon .go { color: var(--muted); }
+
+.composer { display: flex; gap: 8px; position: sticky; bottom: max(10px, env(safe-area-inset-bottom, 0px)); background: var(--bg); padding-top: 6px; }
+.composer input { flex: 1; min-width: 0; font: 400 1rem var(--font-body); padding: 11px 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); }
+.composer input:focus { border-color: var(--teal); outline: none; }
+.composer button { font: 600 0.95rem var(--font-body); padding: 0 20px; border-radius: 999px; border: 0; background: var(--cap); color: var(--cap-ink); cursor: pointer; }
+
+footer.src { font: 400 0.75rem/1.5 var(--font-mono); color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+.err { background: var(--warn-soft); border: 1px solid var(--warn); color: var(--ink); padding: 12px 14px; border-radius: 8px; }
+.typing { display: inline-flex; gap: 4px; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: blink 1s infinite; }
+.typing i:nth-child(2) { animation-delay: 0.15s; } .typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .typing i { animation: none; } }
+@media (max-width: 480px) { .rx-name { font-size: 1.45rem; } }
+
+/* "Is this for me?" step */
+.chip[aria-pressed="true"] { background: var(--teal); color: var(--surface); }
+.chip.go { border-color: var(--cap); color: var(--cap); font-weight: 600; }
+.chip.go:hover { background: var(--cap); color: var(--cap-ink); }
+.verdict { margin: 4px 0 0; font: 600 1rem/1.35 var(--font-body); }
+.rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.rows li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; min-width: 0; }
+.mark { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font: 700 0.8rem var(--font-mono); border: 2px solid currentColor; margin-top: 1px; }
+.s-met .mark { color: var(--ok); }
+.s-gap .mark { color: var(--warn); }
+.s-unsure .mark { color: var(--muted); }
+.rows .what { min-width: 0; overflow-wrap: anywhere; }
+.rows .what b { font-weight: 600; }
+.rows .tag { font: 500 0.68rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; margin-left: 6px; }
+.s-met .tag { color: var(--ok); } .s-gap .tag { color: var(--warn); } .s-unsure .tag { color: var(--muted); }
+.rows .why { display: block; color: var(--muted); font-size: 0.93rem; margin-top: 2px; }
+.note { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 400 0.82rem/1.55 var(--font-mono); background: var(--bg); border: 1px dashed var(--line); border-radius: 6px; padding: 12px 14px; }
+.copy { align-self: flex-start; font: 600 0.9rem var(--font-body); padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--cap); background: none; color: var(--cap); cursor: pointer; }
+.copy:hover { background: var(--cap); color: var(--cap-ink); }
+.tagline.demo { font: 500 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--cap); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="capsule" aria-hidden="true"></div>
+      <div>
+        <h1>getmydrug</h1>
+        <p class="tagline">Find out what your insurer needs before it covers your medicine.</p>
+        <p class="tagline demo">Demo: migraine medicines, two insurers</p>
+      </div>
+    </div>
+    <button class="reset" id="reset" type="button">Start over</button>
+  </header>
+
+  <main class="chat" id="chat" aria-live="polite"></main>
+
+  <form class="composer" id="composer" autocomplete="off">
+    <input id="ask" type="text" placeholder="Or type here, for example: Ubrelvy" aria-label="Type a message">
+    <button type="submit">Send</button>
+  </form>
+
+  <footer class="src" id="src"></footer>
+</div>
+
+<script>
+(function () {
+  var DATA = { dir: null, criteria: {}, error: null };
+  var state = { condition: null, insurer: null, drug: null };
+  var chat = document.getElementById('chat');
+
+  /* ---------- data layer: everything below reads from YAML files fetched at runtime ---------- */
+  function getYaml(path) {
+    return fetch(path).then(function (r) {
+      if (!r.ok) throw new Error(path + ' returned ' + r.status);
+      return r.text();
+    }).then(function (t) { return jsyaml.load(t); });
+  }
+  function loadDirectory() { return getYaml('data/directory.yaml').then(function (d) { DATA.dir = d; }); }
+  function loadCriteria(insurer) {
+    if (DATA.criteria[insurer.id]) return Promise.resolve(DATA.criteria[insurer.id]);
+    return getYaml(insurer.criteria_file).then(function (c) { DATA.criteria[insurer.id] = c; return c; });
+  }
+  function resolveRef(root, v) {
+    if (typeof v !== 'string' || v.indexOf('ref:') !== 0) return v;
+    return v.slice(4).split('.').reduce(function (o, k) { return o && o[k]; }, root) || [];
+  }
+
+  /* ---------- small DOM helpers ---------- */
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function clean(s) { return String(s).replace(/\s+/g, ' ').trim(); }
+  function scrollDown() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+
+  function botMsg(nodes) {
+    var row = el('div', 'msg bot');
+    row.appendChild(el('div', 'avatar'));
+    var stack = el('div', 'stack');
+    [].concat(nodes).forEach(function (n) { stack.appendChild(n); });
+    row.appendChild(stack);
+    chat.appendChild(row);
+    scrollDown();
+    return stack;
+  }
+  function say() {
+    var b = el('div', 'bubble');
+    [].slice.call(arguments).forEach(function (t) { b.appendChild(el('p', null, t)); });
+    return b;
+  }
+  function meMsg(text) {
+    var row = el('div', 'msg me');
+    row.appendChild(el('div', 'bubble', text));
+    chat.appendChild(row);
+    scrollDown();
+  }
+  function chips(items, onPick) {
+    var wrap = el('div', 'chips');
+    items.forEach(function (it) {
+      var b = el('button', 'chip', it.label);
+      b.type = 'button';
+      if (it.go) b.classList.add('go');
+      if (it.tag) { b.appendChild(el('small', null, it.tag)); }
+      if (it.disabled) b.disabled = true;
+      b.addEventListener('click', function () {
+        if (wrap.classList.contains('used')) return;
+        wrap.classList.add('used');
+        meMsg(it.label);
+        onPick(it);
+      });
+      wrap.appendChild(b);
+    });
+    return wrap;
+  }
+
+  /* ---------- conversation steps ---------- */
+  function askCondition() {
+    state = { condition: null, insurer: null, drug: null };
+    botMsg([
+      say('Hi, I can show what your insurance requires before it will cover a medicine, and where to look for cash prices.', 'What condition is the medicine for?'),
+      chips(DATA.dir.conditions.map(function (c) {
+        return { id: c.id, label: c.label, tag: c.status === 'soon' ? 'soon' : '', disabled: c.status === 'soon' };
+      }), function (it) { state.condition = it.id; askInsurer(); })
+    ]);
+  }
+  function askInsurer() {
+    botMsg([
+      say('Who is your insurance with?'),
+      chips(DATA.dir.insurers.map(function (i) {
+        var off = i.status === 'soon';
+        return { id: i.id, label: i.label, tag: off ? 'soon' : '', disabled: off };
+      }), function (it) {
+        state.insurer = DATA.dir.insurers.filter(function (i) { return i.id === it.id; })[0];
+        askDrug();
+      })
+    ]);
+  }
+  function askDrug() {
+    var list = DATA.dir.drugs[state.condition] || [];
+    var intro = state.insurer.status === 'cash_only'
+      ? 'No insurance means no prior authorization. Which medicine do you want cash price options for?'
+      : 'Which medicine are you asking about?';
+    botMsg([
+      say(intro),
+      chips(list.map(function (d) {
+        var off = state.insurer.drug_ids && state.insurer.drug_ids.indexOf(d.id) < 0;
+        return { id: d.id, label: d.name + ' (' + d.generic + ')', tag: off ? 'soon' : '', disabled: !!off };
+      }), function (it) {
+        state.drug = list.filter(function (d) { return d.id === it.id; })[0];
+        showResult();
+      })
+    ]);
+  }
+
+  function showResult() {
+    var typing = botMsg(el('div', 'bubble'));
+    typing.firstChild.innerHTML = '<span class="typing" aria-label="Looking that up"><i></i><i></i><i></i></span>';
+    var row = typing.parentNode;
+
+    var work = state.insurer.status === 'cash_only' ? Promise.resolve(null) : loadCriteria(state.insurer);
+    work.then(function (crit) {
+      row.remove();
+      var nodes = [];
+      if (crit) {
+        var d = crit.drugs && crit.drugs[state.drug.id];
+        if (d) {
+          nodes.push(say('Here is what ' + state.insurer.label + ' asks for ' + state.drug.name + '. Your prescriber usually submits this for you.'));
+          nodes.push(rxCard(crit, d));
+          var n = notesBlock(crit);
+          if (n) nodes.push(n);
+        } else {
+          nodes.push(say('I do not have ' + state.insurer.label + ' criteria for ' + state.drug.name + ' yet.'));
+        }
+      }
+      nodes.push(say(crit ? 'If the plan will not approve it, or you want to compare, these are the next places to look.' : 'Here is where to compare cash prices.'));
+      nodes.push(nextTiles());
+      var after = [];
+      if (crit && state.insurer.rules_file && crit.drugs && crit.drugs[state.drug.id]) after.push({ id: 'qualify', label: 'Is this for me? Check my situation', go: true });
+      after.push({ id: 'another', label: 'Check another drug' });
+      after.push({ id: 'insurer', label: 'Change insurance' });
+      after.push({ id: 'restart', label: 'Start over' });
+      nodes.push(chips(after, function (it) {
+        if (it.id === 'qualify') startIntake(crit);
+        else if (it.id === 'another') askDrug();
+        else if (it.id === 'insurer') askInsurer();
+        else askCondition();
+      }));
+      botMsg(nodes);
+      renderSource(crit);
+    }).catch(function (e) {
+      row.remove();
+      var box = el('div', 'err');
+      box.textContent = 'I could not load the criteria data (' + e.message + '). Check that the data folder is published next to this page, then try again.';
+      botMsg(box);
+    });
+  }
+
+  /* ---------- rendering criteria from YAML ---------- */
+  function rxCard(crit, d) {
+    var card = el('article', 'rx');
+    var head = el('div', 'rx-head');
+    head.appendChild(el('div', 'rx-kicker', state.insurer.label + ' · Prior authorization'));
+    var h = el('h3', 'rx-name', state.drug.name + ' ');
+    h.appendChild(el('span', null, state.drug.generic));
+    head.appendChild(h);
+    head.appendChild(el('p', 'rx-use', state.drug.plain_use));
+    card.appendChild(head);
+
+    var months = crit.policy && crit.policy.authorization_duration_months;
+    var seg = el('div', 'seg');
+    seg.setAttribute('role', 'tablist');
+    var body = el('div', 'rx-body');
+    var tabs = [
+      { id: 'initial', label: 'First approval', build: function () { return buildInitial(crit, d.initial_authorization); } },
+      { id: 'renew', label: 'Renewal' + (months ? ' (every ' + months + ' months)' : ''), build: function () { return buildRenewal(d.reauthorization); } }
+    ];
+    function select(i) {
+      [].slice.call(seg.children).forEach(function (b, k) { b.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+      body.innerHTML = '';
+      tabs[i].build().forEach(function (n) { body.appendChild(n); });
+    }
+    tabs.forEach(function (t, i) {
+      var b = el('button', null, t.label);
+      b.type = 'button'; b.setAttribute('role', 'tab');
+      b.addEventListener('click', function () { select(i); });
+      seg.appendChild(b);
+    });
+    card.appendChild(seg);
+    card.appendChild(body);
+    select(0);
+    return card;
+  }
+
+  function logicLabel(l) {
+    if (!l) return '';
+    var u = l.toUpperCase();
+    if (u.indexOf('ALL') === 0) return 'You need all of these';
+    if (u.indexOf('ONE') === 0) return 'You need one of these';
+    return l;
+  }
+
+  function buildInitial(crit, init) {
+    var out = [];
+    if (init.pathways) {
+      out.push(el('p', 'logic', 'Approval can come through one of ' + Object.keys(init.pathways).length + ' routes'));
+      Object.keys(init.pathways).forEach(function (k) {
+        var p = init.pathways[k];
+        var box = el('section', 'pathway');
+        box.appendChild(el('h4', null, (DATA.dir.pathway_labels && DATA.dir.pathway_labels[k]) || k));
+        box.appendChild(el('p', 'logic', logicLabel(p.logic)));
+        box.appendChild(checkList(crit, p.criteria));
+        out.push(box);
+      });
+    } else {
+      out.push(el('p', 'logic', logicLabel(init.logic)));
+      out.push(checkList(crit, init.criteria));
+    }
+    return out;
+  }
+
+  function buildRenewal(re) {
+    var out = [el('p', 'logic', logicLabel(re.logic))];
+    var plain = (re.criteria || []).filter(function (c) { return !(typeof c === 'string' && /depending on use/i.test(c)); });
+    out.push(checkList(null, plain));
+    if (re.use_specific) {
+      Object.keys(re.use_specific).forEach(function (k) {
+        var box = el('section', 'pathway');
+        box.appendChild(el('h4', null, 'If it is used ' + ((DATA.dir.pathway_labels && DATA.dir.pathway_labels[k]) || k).toLowerCase()));
+        box.appendChild(checkList(null, re.use_specific[k]));
+        out.push(box);
+      });
+    }
+    return out;
+  }
+
+  function checkList(crit, items) {
+    var ul = el('ul', 'checks');
+    (items || []).forEach(function (c) {
+      var li = el('li');
+      li.appendChild(el('span', 'box'));
+      var req = el('div', 'req');
+      if (typeof c === 'string') {
+        req.appendChild(document.createTextNode(clean(c)));
+      } else {
+        req.appendChild(document.createTextNode(clean(c.requirement)));
+        if (c.count_required) req.appendChild(el('span', 'count', 'tried ' + c.count_required));
+        if (c.trial_rule && crit && crit.definitions) {
+          var rule = crit.definitions['trial_requirement_' + c.trial_rule];
+          if (rule) req.appendChild(el('div', null, clean(rule))).style.cssText = 'font-size:.88rem;color:var(--muted);margin-top:2px';
+        }
+        if (c.options) {
+          var o = el('ul', 'opts');
+          c.options.forEach(function (t) { o.appendChild(el('li', null, clean(t))); });
+          req.appendChild(o);
+        }
+        var choices = resolveRef(crit, c.triptan_choices || c.choices);
+        if (choices && choices.length) {
+          var det = el('details');
+          det.appendChild(el('summary', null, 'See the accepted medicines (' + choices.length + ')'));
+          var cu = el('ul');
+          choices.forEach(function (t) { cu.appendChild(el('li', null, clean(t))); });
+          det.appendChild(cu);
+          req.appendChild(det);
+        }
+      }
+      li.appendChild(req);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function notesBlock(crit) {
+    var notes = crit.state_and_plan_notes || [];
+    if (!notes.length) return null;
+    var box = el('div', 'notes');
+    box.appendChild(el('strong', null, 'Plan and state differences'));
+    var ul = el('ul');
+    notes.forEach(function (n) { ul.appendChild(el('li', null, clean(n))); });
+    box.appendChild(ul);
+    if (crit.disclaimer) box.appendChild(el('p', null, clean(crit.disclaimer))).style.cssText = 'margin:8px 0 0;font-size:.85rem;color:var(--muted)';
+    return box;
+  }
+
+  function nextTiles() {
+    var d = state.drug;
+    var grid = el('div', 'next');
+    function tile(title, sub, href, label, soon) {
+      var t = href ? el('a', 'tile') : el('div', 'tile soon');
+      if (href) { t.href = href; t.target = '_blank'; t.rel = 'noopener'; }
+      t.appendChild(el('b', null, title));
+      t.appendChild(el('span', null, sub));
+      t.appendChild(el('span', 'go', label));
+      return t;
+    }
+    grid.appendChild(tile('GoodRx', 'Coupon prices at nearby pharmacies for ' + d.name + '.', d.goodrx_url, 'Open GoodRx'));
+    grid.appendChild(tile('Mark Cuban Cost Plus Drugs', d.costplus.note, d.costplus.url, 'Open Cost Plus'));
+    if (d.support && d.support.url) {
+      grid.appendChild(tile(d.support.label, 'Savings card and patient support from the maker of ' + d.name + '.', d.support.url, 'Open site'));
+    }
+    if (d.cash_estimate && d.cash_estimate.amount) {
+      var ce = d.cash_estimate;
+      var sub = 'About ' + ce.amount + ' for ' + ce.quantity + ' without insurance (' + ce.source + ', ' + ce.as_of + '). Coupons and savings cards can be much lower.';
+      grid.appendChild(tile('Cash price estimate', sub, ce.url || null, ce.url ? 'See current price' : 'Estimate'));
+    } else {
+      grid.appendChild(tile('Cash price estimate', 'No estimate loaded for ' + d.name + ' yet. Add a cash_estimate entry in data/directory.yaml.', null, 'Not loaded'));
+    }
+    return grid;
+  }
+
+  function fmtDate(v) {
+    return v instanceof Date ? v.toISOString().slice(0, 10) : String(v);
+  }
+
+  function renderSource(crit) {
+    var f = document.getElementById('src');
+    f.innerHTML = '';
+    if (crit && crit.policy) {
+      f.appendChild(el('div', null, 'Criteria file: ' + crit.policy.payer + ', program ' + crit.policy.program_number + ', effective ' + fmtDate(crit.policy.effective_date)));
+    }
+    f.appendChild(el('div', null, 'Data is read from YAML files at load time. Your answers stay in this browser tab and are never sent or saved. This is a demo and not medical or coverage advice.'));
+  }
+
+  /* ---------- "Is this for me?" intake: answers live in memory only ---------- */
+  var A = null;
+
+  function loadRules(insurer) {
+    DATA.rules = DATA.rules || {};
+    if (DATA.rules[insurer.id]) return Promise.resolve(DATA.rules[insurer.id]);
+    return getYaml(insurer.rules_file).then(function (r) { DATA.rules[insurer.id] = r; return r; });
+  }
+
+  function multiChips(items, onDone) {
+    var wrap = el('div', 'chips');
+    var picked = {};
+    var buttons = {};
+    function paint() {
+      Object.keys(buttons).forEach(function (k) { buttons[k].setAttribute('aria-pressed', picked[k] ? 'true' : 'false'); });
+    }
+    items.concat([{ id: '__none', label: 'None of these' }]).forEach(function (it) {
+      var b = el('button', 'chip', it.label);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () {
+        if (wrap.classList.contains('used')) return;
+        if (it.id === '__none') { picked = {}; picked.__none = true; }
+        else { delete picked.__none; picked[it.id] = !picked[it.id]; }
+        paint();
+      });
+      buttons[it.id] = b;
+      wrap.appendChild(b);
+    });
+    var go = el('button', 'chip go', 'Continue');
+    go.type = 'button';
+    go.addEventListener('click', function () {
+      if (wrap.classList.contains('used')) return;
+      wrap.classList.add('used');
+      var ids = items.filter(function (it) { return picked[it.id]; });
+      meMsg(ids.length ? ids.map(function (it) { return it.label; }).join(', ') : 'None of these');
+      onDone(ids.map(function (it) { return it.id; }));
+    });
+    wrap.appendChild(go);
+    return wrap;
+  }
+
+  function labelOf(list, id) {
+    var m = list.filter(function (x) { return x.id === id; })[0];
+    return m ? m.label : id;
+  }
+
+  function startIntake(crit) {
+    loadRules(state.insurer).then(function (rules) {
+      A = { rules: rules, crit: crit, uses: (rules.drug_use || {})[state.drug.id] || ['acute'] };
+      A.use = A.uses.length === 1 ? A.uses[0] : null;
+      botMsg(say('Let us compare your situation with the criteria for ' + state.drug.name + '. I will ask a few questions.', 'Your answers stay in this browser tab. Nothing is sent or saved.'));
+      runStep(0);
+    }).catch(function (e) {
+      var box = el('div', 'err');
+      box.textContent = 'I could not load the eligibility rules (' + e.message + ').';
+      botMsg(box);
+    });
+  }
+
+  function intakeSteps() {
+    var drug = state.drug;
+    var intake = A.rules.intake;
+    function single(prompt, items, key) {
+      return function (next) {
+        botMsg([say(prompt), chips(items, function (it) { A[key] = it.id; next(); })]);
+      };
+    }
+    function multi(prompt, items, key) {
+      return function (next) {
+        botMsg([say(prompt), multiChips(items, function (ids) { A[key] = ids; next(); })]);
+      };
+    }
+    var yesNo = [{ id: 'yes', label: 'Yes' }, { id: 'no', label: 'No' }, { id: 'unsure', label: 'Not sure' }];
+    function trial() { return A.region === '30day' ? '30 days' : '2 months'; }
+    return [
+      { when: function () { return A.uses.length > 1; },
+        ask: single('Would you take ' + drug.name + ' to stop migraine attacks, or to prevent them?', [{ id: 'acute', label: 'Stop attacks' }, { id: 'preventive', label: 'Prevent migraines' }], 'use') },
+      { when: function () { return true; },
+        ask: single('Are you 18 or older?', [{ id: 'yes', label: 'Yes' }, { id: 'no', label: 'No' }], 'age') },
+      { when: function () { var f = A.rules.intake.mdays_for; return !f || f.indexOf(A.use) > -1; },
+        ask: single('About how many migraine days do you have in a typical month?', [{ id: 'lt4', label: 'Fewer than 4' }, { id: '4to7', label: '4 to 7' }, { id: '8plus', label: '8 or more' }], 'mdays') },
+      { when: function () { return A.use === 'preventive' && A.mdays !== 'lt4'; },
+        ask: single('Counting every kind of headache, not only migraines, about how many headache days a month?', [{ id: 'lt15', label: 'Fewer than 15' }, { id: '15plus', label: '15 or more' }], 'hdays') },
+      { when: function () { return drug.id === 'qulipta' && A.mdays === '4to7' && A.hdays === '15plus'; },
+        ask: single('Does your doctor consider migraine your main headache problem?', yesNo, 'predominant') },
+      { when: function () { return drug.id === 'qulipta'; },
+        ask: single('Has a clinician told you that you have migraine?', yesNo, 'dx') },
+      { when: function () { return A.use === 'preventive' || A.mdays !== 'lt4'; },
+        ask: single('Which state is your insurance plan issued in?', [{ id: 'CA', label: 'California' }, { id: '30day', label: 'Connecticut, Kentucky or Mississippi' }, { id: 'other', label: 'Somewhere else' }], 'region') },
+      { when: function () { return A.use === 'acute'; },
+        ask: multi('Which migraine attack medicines (triptans) have you tried that did not work well, caused side effects, or that you cannot take?', intake.triptans, 'triptans') },
+      { when: function () { return A.use === 'acute' && A.triptans.length > 0 && A.rules.intake.triptan_trial_question !== false; },
+        ask: function (next) {
+          botMsg([say('Did you try each one for at least 30 days, covering about 3 migraine attacks? Say yes if side effects or a medical reason stopped you sooner.'),
+            chips(yesNo, function (it) { A.triptanLong = it.id; next(); })]);
+        } },
+      { when: function () { return A.region !== 'CA' && (A.use === 'preventive' || A.mdays !== 'lt4'); },
+        ask: multi('Which daily preventive medicines do you take now or have tried?', intake.preventives, 'prev') },
+      { when: function () { return A.prev && A.prev.length > 0; },
+        ask: single('Where do things stand with these?', [{ id: 'now', label: 'I take one now' }, { id: 'failed', label: 'They did not work or caused problems' }, { id: 'other', label: 'I stopped for another reason' }], 'prevStatus') },
+      { when: function () { return A.prevStatus === 'failed'; },
+        ask: function (next) {
+          botMsg([say('Did you try each one for at least ' + trial() + '? Say yes if side effects or a medical reason stopped you sooner.'),
+            chips(yesNo, function (it) { A.prevLong = it.id; next(); })]);
+        } },
+      { when: function () { var f = A.rules.intake.cgrp_question_for; return !f || f.indexOf(A.use) > -1; },
+        ask: single('Besides ' + drug.name + ', do you take or plan to take another CGRP medicine?', [
+          { id: 'none', label: 'No' },
+          { id: 'gepant', label: 'Another pill like it (Nurtec, Ubrelvy, Qulipta, Zavzpret)' },
+          { id: 'mab', label: 'A CGRP injection (Aimovig, Emgality, Ajovy, Vyepti)' },
+          { id: 'unsure', label: 'Not sure' }], 'otherCgrp') }
+    ];
+  }
+
+  var STEP_IDS = ['use', 'age', 'mdays', 'hdays', 'predominant', 'dx', 'region', 'triptans', 'triptanLong', 'prev', 'prevStatus', 'prevLong', 'otherCgrp'];
+
+  // A rules file may list the questions it needs. Without a list, every step runs except age.
+  function wants(id) {
+    var q = A.rules.intake.questions;
+    if (id === 'age') return !!q && q.indexOf('age') > -1;
+    return !q || q.indexOf(id) > -1;
+  }
+
+  function runStep(i) {
+    var steps = intakeSteps();
+    while (i < steps.length && !(wants(STEP_IDS[i]) && steps[i].when())) i++;
+    if (i >= steps.length) { finishIntake(); return; }
+    steps[i].ask(function () { runStep(i + 1); });
+  }
+
+  function ok(t) { return { s: 'met', t: t }; }
+  function gap(t) { return { s: 'gap', t: t }; }
+  function maybe(t) { return { s: 'unsure', t: t }; }
+  function longCheck(flag, goodText, shortText) {
+    if (flag === 'yes') return ok(goodText);
+    if (flag === 'unsure') return maybe('Dates and length of each trial need to be confirmed. The plan wants them documented.');
+    return gap(shortText);
+  }
+
+  function runCheck(chk) {
+    var intake = A.rules.intake;
+    var days = { lt4: 'fewer than 4', '4to7': '4 to 7', '8plus': '8 or more' };
+    switch (chk.type) {
+      case 'age18':
+        if (A.age === 'yes') return ok('You are 18 or older.');
+        return gap('The plan covers this medicine for adults, 18 and older.');
+      case 'use':
+        return ok('You are asking about ' + state.drug.name + ' ' + (A.use === 'acute' ? 'for stopping attacks.' : 'for preventing migraines.'));
+      case 'tried_triptans': {
+        var n = A.triptans.length;
+        var names = A.triptans.map(function (id) { return labelOf(intake.triptans, id); }).join(', ');
+        if (n < chk.min) return gap('The plan wants ' + chk.min + (chk.min === 1 ? ' triptan' : ' different triptans') + ' tried first, or a medical reason you cannot take one. You named ' + n + '.');
+        if (chk.trial_length === false) return ok('You named ' + names + '.');
+        return longCheck(A.triptanLong, 'You named ' + names + ', each tried long enough.', 'Each triptan needs at least 30 days across about 3 attacks, unless side effects or a medical reason stopped it sooner.');
+      }
+      case 'tried_preventives': {
+        if (A.region === 'CA') return ok('Not required for plans issued in California.');
+        var eligible = (A.prev || []).filter(function (id) {
+          var def = intake.preventives.filter(function (p) { return p.id === id; })[0];
+          return def && def.counts_for.indexOf(chk.list) > -1;
+        });
+        var cnt = A.prevStatus === 'failed' ? eligible.length : 0;
+        if (cnt < chk.min) {
+          return gap(A.prevStatus === 'now'
+            ? 'Taking a preventive now does not count here. The plan wants ' + chk.min + ' that did not work or caused problems.'
+            : 'The plan wants ' + chk.min + ' of these preventives tried first. You named ' + cnt + '.');
+        }
+        return longCheck(A.prevLong, 'You named ' + cnt + ' preventives, each tried long enough.', 'Each preventive needs at least ' + (A.region === '30day' ? '30 days' : '2 months') + ', unless side effects or a medical reason stopped it sooner.');
+      }
+      case 'prevention_status':
+        if (A.region === 'CA') return ok('A preventive trial is not required for plans issued in California.');
+        if (A.mdays === 'lt4') return ok('You have fewer than 4 migraine days a month, so no preventive is required.');
+        if (A.prevStatus === 'now' && A.prev.length) return ok('You take a preventive now.');
+        if (A.prevStatus === 'failed' && A.prev.length) return longCheck(A.prevLong, 'A preventive did not work for you, and you tried it long enough.', 'The preventive needs a trial of at least ' + (A.region === '30day' ? '30 days' : '2 months') + ', unless side effects or a medical reason stopped it sooner.');
+        return gap('At 4 or more migraine days a month, the plan wants you on a preventive now, or to have had a problem with one.');
+      case 'no_other_gepant':
+        if (A.otherCgrp === 'gepant') return gap('The plan does not cover two gepant pills taken together.');
+        if (A.otherCgrp === 'unsure') return maybe('Check with your prescriber whether any of your medicines is a gepant.');
+        return ok('You are not taking another gepant.');
+      case 'no_cgrp_mab_or_gepant':
+        if (A.otherCgrp === 'gepant' || A.otherCgrp === 'mab') return gap('The plan does not cover this together with another CGRP medicine.');
+        if (A.otherCgrp === 'unsure') return maybe('Check with your prescriber whether any of your medicines targets CGRP.');
+        return ok('You are not taking another CGRP medicine.');
+      case 'episodic_ge4':
+        if (A.mdays === 'lt4') return gap('This use is covered at 4 or more migraine days a month. You reported ' + days[A.mdays] + '.');
+        if (A.hdays === '15plus') return gap('This use is for episodic migraine, which means fewer than 15 headache days a month.');
+        return ok('You reported ' + days[A.mdays] + ' migraine days and fewer than 15 headache days a month.');
+      case 'dx_migraine':
+        if (A.dx === 'yes') return ok('A clinician has diagnosed migraine.');
+        if (A.dx === 'no') return gap('The plan wants a clinician diagnosis of migraine.');
+        return maybe('Your prescriber would confirm the diagnosis.');
+      case 'qulipta_frequency':
+        if (A.mdays === 'lt4') return gap('The plan covers this at 4 or more migraine days a month. You reported ' + days[A.mdays] + '.');
+        if (A.mdays === '8plus') return ok('You reported 8 or more migraine days a month.');
+        if (A.hdays === 'lt15') return ok('You reported 4 to 7 migraine days and fewer than 15 headache days a month.');
+        if (A.predominant === 'yes') return ok('You reported 4 to 7 migraine days, and your doctor sees migraine as your main headache problem.');
+        if (A.predominant === 'unsure') return maybe('Your prescriber would need to confirm that migraine is your main headache problem.');
+        return gap('At 4 to 7 migraine days, the plan also wants fewer than 15 headache days a month, or your doctor to confirm migraine is your main problem.');
+      default:
+        return maybe('Your prescriber would confirm this one.');
+    }
+  }
+
+  function evaluate() {
+    var d = A.crit.drugs[state.drug.id];
+    var init = d.initial_authorization;
+    var list = init.pathways ? init.pathways[A.use === 'acute' ? 'acute_treatment' : 'preventive_treatment'].criteria : init.criteria;
+    return list.map(function (c) {
+      var chk = A.rules.checks[c.id];
+      var r = chk ? runCheck(chk) : maybe('Your prescriber would confirm this one.');
+      return { label: chk ? chk.label : clean(c.requirement), s: r.s, t: r.t };
+    });
+  }
+
+  function buildNote(rows) {
+    var intake = A.rules.intake;
+    var days = { lt4: 'fewer than 4', '4to7': '4 to 7', '8plus': '8 or more' };
+    var lines = [];
+    lines.push('Question for my prescriber: ' + state.drug.name + ' (' + state.drug.generic + ')');
+    lines.push('Insurance plan: ' + state.insurer.label);
+    lines.push('Would be used to ' + (A.use === 'acute' ? 'stop migraine attacks' : 'prevent migraines'));
+    if (A.mdays) lines.push('Migraine days per month: ' + days[A.mdays]);
+    if (A.hdays) lines.push('Headache days per month: ' + (A.hdays === 'lt15' ? 'fewer than 15' : '15 or more'));
+    if (A.use === 'acute') {
+      lines.push('Triptans tried: ' + (A.triptans.length ? A.triptans.map(function (id) { return labelOf(intake.triptans, id); }).join(', ') : 'none'));
+    }
+    if (A.prev) {
+      lines.push('Daily preventives: ' + (A.prev.length ? A.prev.map(function (id) { return labelOf(intake.preventives, id); }).join(', ') + ' (' + ({ now: 'taking now', failed: 'did not work or caused problems', other: 'stopped for another reason' }[A.prevStatus] || '') + ')' : 'none'));
+    }
+    lines.push('');
+    lines.push('Plan criteria checklist (my answers):');
+    rows.forEach(function (r) {
+      lines.push('[' + ({ met: 'likely met', gap: 'not met', unsure: 'confirm' }[r.s]) + '] ' + r.label + ': ' + r.t);
+    });
+    lines.push('');
+    lines.push('Please confirm against the plan\'s current prior authorization policy. I would like to know the cash price too.');
+    return lines.join('\n');
+  }
+
+  function finishIntake() {
+    var rows = evaluate();
+    var gaps = rows.filter(function (r) { return r.s === 'gap'; }).length;
+    var open = rows.filter(function (r) { return r.s === 'unsure'; }).length;
+    var verdict = gaps === 0 && open === 0 ? 'Based on your answers, you appear to meet every first-approval criterion.'
+      : gaps === 0 ? 'You may meet the criteria. ' + open + ' ' + (open === 1 ? 'item needs' : 'items need') + ' confirming.'
+      : gaps + ' of ' + rows.length + ' criteria ' + (gaps === 1 ? 'is' : 'are') + ' not met yet.';
+
+    var card = el('article', 'rx');
+    var head = el('div', 'rx-head');
+    head.appendChild(el('div', 'rx-kicker', 'Your answers vs. ' + state.insurer.label));
+    var h = el('h3', 'rx-name', state.drug.name + ' ');
+    h.appendChild(el('span', null, state.drug.generic));
+    head.appendChild(h);
+    head.appendChild(el('p', 'verdict', verdict));
+    card.appendChild(head);
+
+    var body = el('div', 'rx-body');
+    var ul = el('ul', 'rows');
+    rows.forEach(function (r) {
+      var li = el('li', 's-' + r.s);
+      li.appendChild(el('span', 'mark', r.s === 'met' ? '✓' : r.s === 'gap' ? '✕' : '?'));
+      var w = el('div', 'what');
+      var b = el('b', null, r.label);
+      b.appendChild(el('span', 'tag', r.s === 'met' ? 'likely met' : r.s === 'gap' ? 'not met' : 'confirm'));
+      w.appendChild(b);
+      w.appendChild(el('span', 'why', r.t));
+      li.appendChild(w);
+      ul.appendChild(li);
+    });
+    body.appendChild(ul);
+    card.appendChild(body);
+
+    var noteText = buildNote(rows);
+    var note = el('pre', 'note', noteText);
+    var copy = el('button', 'copy', 'Copy note for my prescriber');
+    copy.type = 'button';
+    copy.addEventListener('click', function () {
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(note);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        copy.textContent = 'Selected. Press copy on your device';
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(noteText).then(function () { copy.textContent = 'Copied'; }, fallback);
+      } else { fallback(); }
+    });
+
+    var after = [];
+    after.push({ id: 'criteria', label: 'Back to the criteria' });
+    after.push({ id: 'another', label: 'Check another drug' });
+    after.push({ id: 'restart', label: 'Start over' });
+    botMsg([
+      say('Here is how your answers line up. Only your plan can approve coverage, and your prescriber submits the request.'),
+      card,
+      say('You can bring this note to your prescriber so the first prescription starts from the plan\'s requirements.'),
+      note,
+      copy,
+      say('To compare cash prices, these are the next places to look.'),
+      nextTiles(),
+      chips(after, function (it) {
+        if (it.id === 'criteria') showResult();
+        else if (it.id === 'another') askDrug();
+        else askCondition();
+      })
+    ]);
+  }
+
+  /* ---------- free-text box: simple keyword routing ---------- */
+  function route(text) {
+    var t = text.toLowerCase();
+    var drugs = DATA.dir.drugs.migraine;
+    var hit = drugs.filter(function (d) { return t.indexOf(d.name.toLowerCase().split(' ')[0]) > -1 || t.indexOf(d.generic) > -1; })[0];
+    var ins = DATA.dir.insurers.filter(function (i) { return t.indexOf(i.label.toLowerCase().split(' ')[0]) > -1 && i.status !== 'soon'; })[0];
+    meMsg(text);
+    if (/start over|restart|reset/.test(t)) { askCondition(); return; }
+    if (t.indexOf('migraine') > -1 && !hit) { state.condition = 'migraine'; if (!state.insurer) { askInsurer(); } else { askDrug(); } return; }
+    if (hit) {
+      state.condition = 'migraine';
+      if (ins) state.insurer = ins;
+      state.drug = hit;
+      if (!state.insurer) { botMsg(say('Got it, ' + hit.name + '.')); askInsurer(); }
+      else showResult();
+      return;
+    }
+    botMsg(say('I can help with migraine medicines for now: Ubrelvy, Nurtec ODT and Qulipta. Pick from the buttons or type one of those names.'));
+  }
+
+  document.getElementById('composer').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var inp = document.getElementById('ask');
+    var v = inp.value.trim();
+    if (!v || !DATA.dir) return;
+    inp.value = '';
+    route(v);
+  });
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!DATA.dir) return;
+    chat.innerHTML = '';
+    askCondition();
+  });
+
+  loadDirectory().then(askCondition).catch(function (e) {
+    var box = el('div', 'err');
+    box.textContent = 'The data files did not load (' + e.message + '). This page reads data/directory.yaml and the criteria files published alongside it.';
+    chat.appendChild(box);
+  });
+})();
+</script>
+</body>
+</html>

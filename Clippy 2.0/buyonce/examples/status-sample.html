@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>BuyOnce run status</title><style>
+:root{--bg:#fafaf7;--fg:#1c1b19;--mut:#6b6860;--line:#dcd9d0;--card:#fff;--ok:#1a7f4b;--live:#b45309;--stop:#b42318}
+@media(prefers-color-scheme:dark){:root{--bg:#161614;--fg:#eeece6;--mut:#a09d94;--line:#34322d;--card:#1e1d1a;--ok:#4cc38a;--live:#f0a35c;--stop:#f97066}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:0 0 8px}
+h2{font-size:26px;margin:0 0 20px;color:var(--ok)}
+ol{list-style:none;display:flex;padding:0;margin:0 0 28px}
+ol li{flex:1;text-align:center;font-size:12px;color:var(--mut);position:relative}
+ol li b{display:block;width:18px;height:18px;border-radius:50%;margin:0 auto 6px;border:2px solid var(--line);background:var(--bg);position:relative;z-index:1}
+ol li::before{content:"";position:absolute;top:8px;left:-50%;width:100%;height:2px;background:var(--line)}
+ol li:first-child::before{display:none}
+ol li.on{color:var(--fg)} ol li.on b{background:var(--ok);border-color:var(--ok)} ol li.on::before{background:var(--ok)}
+ol li.now b{border-color:var(--live);box-shadow:0 0 0 4px color-mix(in srgb,var(--live) 25%,transparent)}
+.stop ol li.now b{border-color:var(--stop)}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse} th{text-align:left;color:var(--mut);font-weight:500;padding:5px 12px 5px 0;width:44%} td{padding:5px 0;word-break:break-word}
+pre{white-space:pre-wrap;font:13px/1.45 ui-monospace,monospace;margin:0}
+.log{list-style:none;padding:0;margin:0;font-size:13px} .log li{padding:3px 0;border-bottom:1px solid var(--line)} .log time{color:var(--mut);margin-right:6px}
+h3{font-size:13px;color:var(--mut);margin:0 0 8px;text-transform:uppercase;letter-spacing:.06em}
+@media(max-width:520px){ol li span{font-size:10px}}
+</style></head><body class="ok"><main>
+<h1>BuyOnce &middot; run_c952a74c &middot; zinc-buy</h1><h2>Order placed and confirmed</h2>
+<ol><li class="on"><b></b><span>Request</span></li><li class="on"><b></b><span>Quotes</span></li><li class="on"><b></b><span>Decision</span></li><li class="on"><b></b><span>Owner approval</span></li><li class="on"><b></b><span>Order placed</span></li><li class="on"><b></b><span>Done</span></li></ol>
+<section><table><tr><th>Item</th><td>1 x test product</td></tr><tr><th>Vendor</th><td>Zinc (sandbox)</td></tr><tr><th>Approved total</th><td>$15.00</td></tr><tr><th>Price ceiling sent to vendor</th><td>$15.75</td></tr><tr><th>Approved by</th><td>pre-authorized in chat for this sandbox order: &quot;You can go all the way to checkout&quot; - ok</td></tr><tr><th>Vendor order</th><td>W72110681</td></tr><tr><th>Vendor status</th><td>order_placed</td></tr><tr><th>Vendor total</th><td>$14.75</td></tr></table></section>
+<section><h3>What the owner was shown</h3><pre>+---------------------- APPROVAL NEEDED -----------------------+
+Buy:      1 x test product
+From:     Zinc (sandbox)
+Total:    $15.00  (items $15.00, shipping $0.00, tax $0.00)
+Arrives:  2026-10-28
+Card cap: $15.75 single-use (test mode)
+
+Why this one:
+  - Zinc (sandbox) is the best price ($15.00 delivered) among options that meet your rules.
+  - Arrives 2026-10-28 (3 days).
+
+Why I&#x27;m asking:
+  - your policy asks for approval on every order
+  - new vendor (no past orders, not on approved list)
+
+Reply &quot;approve&quot; to place it, or tell me what to change.
++--------------------------------------------------------------+</pre></section>
+<section><h3>Audit trail</h3><ul class="log"><li><time>21:13:47</time> <b>run started</b> zinc-buy (sandbox=False)</li><li><time>21:13:47</time> <b>quotes submitted</b> 1 quote(s)</li><li><time>21:14:04</time> <b>approved</b> owner said: pre-authorized in chat for this sandbox order: &quot;You can go all the way to checkout&quot; - ok</li><li><time>21:16:51</time> <b>api order requested</b> limit 15.75</li><li><time>21:16:51</time> <b>completed</b> api order 1ff90e53-5786-4785-be0b-d08a2af79042 status order_placed</li></ul></section>
+</main></body></html>

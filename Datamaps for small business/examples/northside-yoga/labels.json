@@ -1,0 +1,104 @@
+{
+  "title": "What Northside Yoga's members are saying",
+  "flags": {
+    "fa26-0140": "follower-selling spam",
+    "fa26-0236": "placeholder text, no content"
+  },
+  "clusters": {
+    "0": {
+      "label": "Hot room too hot",
+      "summary": "Members say the hot room has run dangerously hot (one saw 108 and got dizzy), and even after the thermostat fix it still feels stuffy and humid.",
+      "action": "Set a fixed target temperature with a posted thermostat check before each hot class, and add a fan or dehumidifier for airflow."
+    },
+    "1": {
+      "label": "More classes with Maya",
+      "summary": "Maya is the main reason many members joined and stay, and her classes fill so fast that people want more of them.",
+      "action": "Add one more Maya class in a popular slot, and ask Maya what would keep her happy here long term."
+    },
+    "2": {
+      "label": "Happy, nothing to change",
+      "summary": "Many members would change nothing and credit the community and the teachers with keeping them coming back.",
+      "action": "Ask these happy members for reviews or referrals, and quote their words in your marketing."
+    },
+    "3": {
+      "label": "Dirty shared mats",
+      "summary": "Rental mats and blocks smell or have hair and sweat on them, and the cleaning spray and towels often run out.",
+      "action": "Add a 'used mats' bin, clean rental mats every day, and keep spray and towels stocked at every rack."
+    },
+    "4": {
+      "label": "Prices too high vs ClassPass",
+      "summary": "Members feel $165 unlimited and $30 drop-ins are steep next to ClassPass, and some want longer class pack expiry or student and teacher discounts.",
+      "action": "Extend the 10-class pack expiry to 6 months and trial a student and teacher discount."
+    },
+    "5": {
+      "label": "Music too loud",
+      "summary": "Music in flow and barre classes drowns out the teacher's cues and savasana, and barre can be heard through the wall in the other room.",
+      "action": "Set a maximum music volume for every class, keep savasana quiet, and look at soundproofing the shared wall."
+    },
+    "6": {
+      "label": "Parking and bike racks",
+      "summary": "Street parking on Mississippi is full for evening classes and the two bike racks are always taken.",
+      "action": "Add more bike racks out front, and ask the church lot on Shaver about evening parking."
+    },
+    "7": {
+      "label": "Touched without asking",
+      "summary": "Members report teachers, especially newer ones and subs, giving hands-on adjustments without consent, including one injury blamed on Brandon; one comment about barre modifications is mixed in.",
+      "action": "Introduce consent cards, train all teachers and subs to ask before touching, and follow up personally with the injured member."
+    },
+    "8": {
+      "label": "Gentle, senior and family classes",
+      "summary": "Members ask for gentle or chair classes for older people, kids and parent-baby classes, and prenatal yoga; a few also miss early weekday mornings.",
+      "action": "Pilot one weekly gentle or chair class for 60+ members and see how many sign up."
+    },
+    "9": {
+      "label": "Barre too hard for beginners",
+      "summary": "New members find regular barre fast and intimidating and want a slower beginner version or an intro series.",
+      "action": "Start a 4-week Barre Basics series and add a barre orientation to the intro month."
+    },
+    "10": {
+      "label": "Unfair late cancel fees",
+      "summary": "Members are charged late cancel fees when the app fails to cancel or miscounts the window, and many find the 12-hour policy harsh; one complaint appears twice.",
+      "action": "Refund the fees members can show were app errors, and allow one free sick-day waiver per month."
+    },
+    "11": {
+      "label": "Bring back 6am classes",
+      "summary": "Commuters are upset that the new schedule cut the 6am flow and barre, and some threaten to cancel; one comment about the slow 6pm check-in line is mixed in.",
+      "action": "Bring back at least one 6am flow and one 6am barre class before November."
+    },
+    "12": {
+      "label": "Childcare during classes",
+      "summary": "Parents say they barely use or have paused their memberships because there is no childcare, and some would pay for a sitter.",
+      "action": "Trial a paid lobby sitter for the Saturday 9am class at about $5 per kid."
+    },
+    "13": {
+      "label": "Cramped wet locker room",
+      "summary": "The locker room is cramped and the floor is often wet, and there are not enough working lockers, hooks or benches; one request for a refilled water station is mixed in.",
+      "action": "Put down non-slip mats, fix the locks, add hooks and benches, and add the water station to the daily checklist."
+    },
+    "14": {
+      "label": "Booking app crashes",
+      "summary": "The booking app crashes, logs members out and double-books them, and they lose spots in classes as a result.",
+      "action": "Report these bugs to the booking software vendor, or compare alternatives before the next contract renewal."
+    },
+    "15": {
+      "label": "More class time options",
+      "summary": "Members want classes before 7am, later in the evening, and on Saturday afternoons; one also asks teachers to start classes on time.",
+      "action": "Add one 8pm class and one Saturday afternoon class, and ask teachers to start on the minute."
+    },
+    "16": {
+      "label": "Prenatal and postnatal classes",
+      "summary": "Pregnant members and new parents want a weekly prenatal class and a postnatal class so they can keep their membership; one asks for a teacher training program.",
+      "action": "Launch a weekly prenatal class taught by a certified teacher, and promote it as the only one nearby."
+    },
+    "17": {
+      "label": "More weekend classes",
+      "summary": "Saturday and Sunday classes fill days ahead, and members want more weekend time slots.",
+      "action": "Add a second Saturday morning class next to the 9am."
+    },
+    "18": {
+      "label": "Weekend waitlist frustrations",
+      "summary": "Members on unlimited plans rarely get off weekend waitlists, and the auto-add rule charges them on only an hour's notice.",
+      "action": "Stop charging people who are auto-added from the waitlist less than a few hours before class."
+    }
+  }
+}

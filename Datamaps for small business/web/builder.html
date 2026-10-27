@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Business Datamap Builder</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a left rail of the four steps beside one working panel; stacks to one column on phones. */
+:root {
+  --bg: #f3f5f4;
+  --panel: #ffffff;
+  --ink: #17231f;
+  --muted: #5b6b65;
+  --line: #d5ddd9;
+  --accent: #1f6f5c;
+  --accent-ink: #ffffff;
+  --accent-soft: #e1efea;
+  --mark: #e3a72f;
+  --warn-soft: #fbf1dc;
+  --warn-ink: #7a5310;
+  --danger: #a3392b;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step-0: 0.875rem; --step-1: 1rem; --step-2: 1.25rem; --step-3: 1.75rem; --step-4: 2.4rem;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101715; --panel: #18211e; --ink: #e6eeeb; --muted: #9aaba4; --line: #2c3934;
+    --accent: #5cc3a6; --accent-ink: #0b1411; --accent-soft: #1d332c; --mark: #f0bd55;
+    --warn-soft: #3a2f17; --warn-ink: #f3d79c; --danger: #f08a7b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101715; --panel: #18211e; --ink: #e6eeeb; --muted: #9aaba4; --line: #2c3934;
+  --accent: #5cc3a6; --accent-ink: #0b1411; --accent-soft: #1d332c; --mark: #f0bd55;
+  --warn-soft: #3a2f17; --warn-ink: #f3d79c; --danger: #f08a7b; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-1); line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.shell { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 32px; }
+header.brand { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+.brand h1 { font-family: var(--font-display); font-weight: 700; font-size: var(--step-4); line-height: 1.05; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+.brand h1 span { color: var(--accent); }
+.brand p { margin: 0; color: var(--muted); max-width: 46ch; }
+.demo-pill { font-family: var(--font-mono); font-size: 0.75rem; background: var(--warn-soft); color: var(--warn-ink); padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
+
+nav.steps { display: flex; flex-direction: column; gap: 4px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); align-self: start; }
+nav.steps button {
+  all: unset; cursor: pointer; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: var(--radius); color: var(--muted);
+}
+nav.steps button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+nav.steps button .n { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.8rem; }
+nav.steps button .t { display: flex; flex-direction: column; }
+nav.steps button .t b { font-weight: 700; color: inherit; }
+nav.steps button .t small { font-size: var(--step-0); }
+nav.steps button[aria-current="step"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+nav.steps button[aria-current="step"] .n { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+nav.steps button.done .n { border-color: var(--accent); color: var(--accent); }
+nav.steps button:disabled { cursor: default; opacity: 0.55; }
+
+main.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: clamp(20px, 3vw, 36px); min-width: 0; }
+section h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--step-3); line-height: 1.15; margin: 0 0 6px; text-wrap: balance; }
+section .lede { color: var(--muted); margin: 0 0 24px; max-width: 62ch; }
+.stack { display: flex; flex-direction: column; gap: 18px; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+.samples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: var(--step-0); color: var(--muted); }
+.chip { font: inherit; font-size: var(--step-0); cursor: pointer; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 6px 12px; border-radius: 99px; }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+
+.drop {
+  border: 2px dashed var(--line); border-radius: 12px; padding: 22px 20px; display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center;
+  transition: border-color 120ms, background 120ms;
+}
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop strong { font-family: var(--font-display); font-size: var(--step-2); font-weight: 500; }
+.drop .row { justify-content: center; }
+.drop .repo { display: flex; gap: 8px; width: 100%; max-width: 520px; }
+.drop .repo input { flex: 1; min-width: 0; }
+
+.btn {
+  font: inherit; font-weight: 700; cursor: pointer; border-radius: 8px; padding: 10px 16px; border: 1.5px solid var(--accent);
+  background: var(--accent); color: var(--accent-ink);
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.quiet { background: transparent; color: var(--muted); border-color: var(--line); font-weight: 400; }
+.btn.small { padding: 4px 10px; font-size: var(--step-0); }
+.btn:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible, .chip:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+input[type="file"] { display: none; }
+
+label.field { display: flex; flex-direction: column; gap: 6px; font-weight: 700; }
+label.field small { font-weight: 400; color: var(--muted); }
+input[type="text"], input[type="url"], textarea {
+  font: inherit; font-weight: 400; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%;
+}
+textarea { min-height: 72px; resize: vertical; }
+
+.sources { display: flex; flex-direction: column; gap: 12px; }
+.sources-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.sources-head h3 { font-family: var(--font-display); font-weight: 500; font-size: var(--step-2); margin: 0; }
+.sources-head span { font-family: var(--font-mono); font-size: var(--step-0); color: var(--muted); font-variant-numeric: tabular-nums; }
+.source { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 6px 14px; align-items: start; }
+.source .ext { width: 40px; height: 40px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; text-transform: uppercase; }
+.source .name { font-weight: 700; overflow-wrap: anywhere; }
+.source .meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.source .desc { grid-column: 2 / -1; display: flex; flex-direction: column; gap: 4px; }
+.source .desc span { font-size: var(--step-0); color: var(--muted); }
+.source .remove { color: var(--danger); border-color: var(--line); background: transparent; font-weight: 400; }
+.empty { border: 1px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); text-align: center; }
+
+[hidden] { display: none !important; }
+.units { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; border: 0; padding: 0; margin: 0; }
+.units legend { font-weight: 700; margin-bottom: 8px; padding: 0; }
+.unit { position: relative; border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; background: var(--panel); }
+.unit input { position: absolute; opacity: 0; pointer-events: none; }
+.unit b { font-family: var(--font-display); font-weight: 500; font-size: var(--step-2); }
+.unit small { color: var(--muted); font-size: var(--step-0); line-height: 1.4; }
+.unit:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.unit:has(input:focus-visible) { outline: 2px solid var(--mark); outline-offset: 2px; }
+.optional { border-top: 1px solid var(--line); padding-top: 18px; display: flex; flex-direction: column; gap: 14px; }
+.optional h3 { font-family: var(--font-display); font-weight: 500; font-size: var(--step-2); margin: 0; }
+.optional h3 small { font-family: var(--font-body); font-size: var(--step-0); color: var(--muted); font-weight: 400; }
+.note { font-size: var(--step-0); color: var(--muted); background: var(--bg); border-radius: 8px; padding: 12px 14px; margin: 0; }
+.note.warn { background: var(--warn-soft); color: var(--warn-ink); }
+
+.progress { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; margin-bottom: 20px; }
+.progress span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 400ms ease; }
+ul.stages { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+ul.stages li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: baseline; color: var(--muted); }
+ul.stages .icon { font-family: var(--font-mono); font-size: 0.9rem; text-align: center; }
+ul.stages li.done { color: var(--ink); }
+ul.stages li.done .icon { color: var(--accent); }
+ul.stages li.running { color: var(--ink); font-weight: 700; }
+ul.stages li.running .icon::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--mark); border-top-color: transparent; animation: spin 0.9s linear infinite; }
+ul.stages li.failed { color: var(--danger); font-weight: 700; }
+ul.stages small { display: block; font-weight: 400; color: var(--muted); font-size: var(--step-0); }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { ul.stages li.running .icon::before { animation: none; border-top-color: var(--mark); } .progress span { transition: none; } }
+
+.results { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+.mapframe { width: 100%; aspect-ratio: 16 / 11; max-height: 82vh; max-width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.regions { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.regions h3 { font-family: var(--font-display); font-weight: 500; font-size: var(--step-2); margin: 0; }
+.regions ol { margin: 0; padding: 0; list-style: none; columns: 3 220px; column-gap: 28px; }
+.regions li { break-inside: avoid; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: var(--step-0); display: grid; grid-template-columns: 14px minmax(0,1fr) auto; gap: 8px; align-items: center; }
+.regions .swatch { width: 12px; height: 12px; border-radius: 50%; background: var(--line); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12); }
+.regions li span:last-child { font-family: var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin: 18px 0 16px; }
+.tabs button { font: inherit; font-weight: 700; cursor: pointer; background: none; border: 0; border-bottom: 2.5px solid transparent; color: var(--muted); padding: 8px 14px; margin-bottom: -1px; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+.report { max-width: 72ch; min-width: 0; }
+.report h1 { font-family: var(--font-display); font-size: var(--step-3); line-height: 1.15; margin: 0 0 4px; text-wrap: balance; }
+.report h2 { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; margin: 28px 0 8px; }
+.report h3 { font-size: var(--step-1); margin: 22px 0 6px; }
+.report table { border-collapse: collapse; width: 100%; font-size: var(--step-0); font-variant-numeric: tabular-nums; }
+.report th, .report td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.report td:not(:first-child), .report th:not(:first-child) { text-align: right; }
+.report .tablewrap { overflow-x: auto; }
+.report blockquote { margin: 10px 0; padding: 8px 14px; border-left: 3px solid var(--line); color: var(--muted); font-size: var(--step-0); overflow-wrap: anywhere; }
+.report blockquote h1, .report blockquote h2, .report blockquote h3 { font: inherit; font-weight: 700; margin: 0; display: inline; }
+.report code { overflow-wrap: anywhere; }
+details.team { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 16px; }
+details.team summary { cursor: pointer; font-weight: 700; color: var(--muted); }
+pre { font-family: var(--font-mono); font-size: 0.8rem; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; overflow-x: auto; max-width: 100%; margin: 0; }
+code { font-family: var(--font-mono); font-size: 0.85em; }
+.nav-foot { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+a { color: var(--accent); }
+
+@media (max-width: 820px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  nav.steps { position: static; flex-direction: row; overflow-x: auto; gap: 4px; }
+  nav.steps button { grid-template-columns: 26px auto; padding: 8px 10px; }
+  nav.steps button .t small { display: none; }
+  .results { grid-template-columns: minmax(0, 1fr); }
+  .mapframe { aspect-ratio: 3 / 4; }
+  .source { grid-template-columns: 40px minmax(0, 1fr); }
+  .source .remove { grid-column: 2; justify-self: start; }
+}
+</style>
+
+<div class="shell">
+  <header class="brand">
+    <h1>Map your <span>business files</span></h1>
+    <p>Hand over your exports, notes and inbox. We turn them into one zoomable map where related things sit together.</p>
+    <span class="demo-pill" id="modePill">Demo mode</span>
+  </header>
+
+  <nav class="steps" aria-label="Steps">
+    <button data-step="0"><span class="n">1</span><span class="t"><b>What to map</b><small>One dot per what?</small></span></button>
+    <button data-step="1"><span class="n">2</span><span class="t"><b>Your files</b><small>Say what each one is</small></span></button>
+    <button data-step="2"><span class="n">3</span><span class="t"><b>Your datamap</b><small>Explore and share</small></span></button>
+  </nav>
+
+  <main class="panel">
+    <div class="samples" id="samplesBar" style="margin-bottom:22px">
+      <span>Try a sample:</span>
+      <span id="sampleChips" class="row" style="gap:8px"></span>
+    </div>
+
+    <!-- Step 1 -->
+    <section data-panel="0">
+      <h2>What do you want to map?</h2>
+      <p class="lede">Each dot on the map will be one of these. We pull everything your files say about each one into its own note, so dots that look alike end up near each other.</p>
+      <div class="stack">
+        <fieldset class="units" id="units">
+          <legend>One dot per…</legend>
+          <label class="unit"><input type="radio" name="unit" value="customer"><b>Customer</b><small>See groups of customers who buy, click or complain alike.</small></label>
+          <label class="unit"><input type="radio" name="unit" value="product"><b>Product or service</b><small>See which products get bought, reviewed or asked about together.</small></label>
+          <label class="unit"><input type="radio" name="unit" value="conversation"><b>Message or request</b><small>See what people write in about: emails, tickets, enquiries.</small></label>
+          <label class="unit"><input type="radio" name="unit" value="document"><b>Document or note</b><small>See the topics across your notes, reports or pages.</small></label>
+          <label class="unit"><input type="radio" name="unit" value="other"><b>Something else</b><small>Jobs, suppliers, locations, projects…</small></label>
+        </fieldset>
+        <label class="field" for="unitOther" id="unitOtherWrap" hidden>What is each dot?
+          <input type="text" id="unitOther" placeholder="For example: each catering job we've done">
+        </label>
+        <label class="field" for="goal">What are you hoping to spot? <small>Optional. For example: "which customers might stop buying".</small>
+          <input type="text" id="goal">
+        </label>
+        <div class="optional">
+          <h3>About the business <small>Optional. Skip it if your files explain themselves.</small></h3>
+          <label class="field" for="bizName">Business name
+            <input type="text" id="bizName" autocomplete="organization">
+          </label>
+          <label class="field" for="bizDesc">In a sentence or two, what does it do? <small>Helps when your files use product names or shorthand a stranger wouldn't know.</small>
+            <textarea id="bizDesc" placeholder="We sell loose-leaf tea online and at a Saturday market stall."></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="nav-foot"><span></span><button class="btn" type="button" data-go="1">Next: your files</button></div>
+    </section>
+
+    <!-- Step 2 -->
+    <section data-panel="1" hidden>
+      <h2>Add your files and say what each one is</h2>
+      <p class="lede">Add each export, folder, inbox or website you want on the map, then write a line about what's in it. That line tells us how to read the file, for example which column is the customer. Nothing is sent anywhere until you press Build.</p>
+      <div class="stack">
+        <div class="drop" id="drop">
+          <strong>Drop files or folders here</strong>
+          <div class="row">
+            <button class="btn" type="button" id="pickFiles">Choose files</button>
+            <button class="btn ghost" type="button" id="pickFolder">Choose a folder</button>
+          </div>
+          <div class="repo">
+            <input type="url" id="repoUrl" placeholder="or paste a link: your website, or a GitHub repo" aria-label="Website or GitHub link">
+            <button class="btn ghost" type="button" id="useRepo">Add</button>
+          </div>
+          <input type="file" id="folderInput" webkitdirectory multiple>
+          <input type="file" id="filesInput" multiple>
+        </div>
+        <div class="sources">
+          <div class="sources-head"><h3>Sources</h3><span id="srcTotals"></span></div>
+          <div id="sourceList"></div>
+        </div>
+      </div>
+      <div class="nav-foot"><button class="btn quiet" type="button" data-go="0">Back</button><button class="btn" type="button" id="buildBtn">Build the map</button></div>
+    </section>
+
+    <!-- Building: a status screen between files and map, not a step to fill in -->
+    <section data-panel="building" hidden aria-live="polite">
+      <h2 id="buildTitle">Building your map…</h2>
+      <p class="lede" id="buildLede"></p>
+      <div class="progress" role="progressbar" aria-label="Map progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressFill"></span></div>
+      <ul class="stages" id="stages"></ul>
+      <div class="nav-foot" id="buildFoot" hidden><button class="btn quiet" type="button" data-go="1">Back to your files</button><button class="btn" type="button" id="retryBtn">Try again</button></div>
+    </section>
+
+    <!-- Step 3 -->
+    <section data-panel="2" hidden>
+      <h2 id="resultTitle">Your datamap</h2>
+      <p class="lede">Scroll to zoom, drag to move around, and hover over a dot to see what it is. Use the search box on the map to find a word.</p>
+      <p class="note warn" id="resultNote"></p>
+      <div class="tabs" role="tablist" aria-label="Results">
+        <button type="button" role="tab" id="tabMap" aria-selected="true" aria-controls="resultsMap">Map</button>
+        <button type="button" role="tab" id="tabReport" aria-selected="false" aria-controls="resultsReport">Report</button>
+      </div>
+      <div class="report" id="resultsReport" role="tabpanel" aria-labelledby="tabReport" hidden></div>
+      <div class="results" id="resultsMap" role="tabpanel" aria-labelledby="tabMap">
+        <iframe class="mapframe" id="mapFrame" title="Datamap of your files" loading="lazy"></iframe>
+        <div class="regions">
+          <h3>Groups on the map</h3>
+          <ol id="regionList"></ol>
+          <a href="#" target="_blank" rel="noopener" id="openFull">Open the map full screen</a>
+        </div>
+      </div>
+      <div class="nav-foot"><button class="btn quiet" type="button" data-go="1">Change the files</button><span></span></div>
+    </section>
+
+    <details class="team">
+      <summary>For the team: what this page hands to the pipeline</summary>
+      <div class="stack" style="margin-top:12px">
+        <p class="note">When <code>PIPELINE_URL</code> is set at the top of the script, Build sends <code>POST {PIPELINE_URL}/jobs</code> as multipart form data: a <code>manifest</code> field holding this JSON, plus one <code>files</code> part per uploaded file, named <code>{source id}/{path}</code>. The server returns <code>{"job_id"}</code>. The page then polls <code>GET {PIPELINE_URL}/jobs/{job_id}</code>, which returns <code>{"stage": "okf" | "embed" | "cluster" | "name" | "render", "status": "running" | "done" | "failed", "map_url", "regions": [{"name", "count"}]}</code>. Run <code>uv run datamap serve</code> from the repository root and the page connects to the pipeline on its own; opened any other way, it runs in demo mode.</p>
+        <pre id="manifestOut"></pre>
+        <div class="row"><button class="btn ghost" type="button" id="copyManifest">Copy manifest</button><span id="copyMsg" class="note" hidden></span></div>
+      </div>
+    </details>
+  </main>
+</div>
+
+<script src="vendor/marked.min.js"></script><!-- marked 12.0.2, MIT; kept local so the report renders offline -->
+<script>
+// `uv run datamap serve` serves this page and answers GET /jobs; the page then connects to it
+// on its own (see the probe at the bottom). Opened any other way, it runs in demo mode.
+let PIPELINE_URL = "";
+let DEMO = true;
+
+const SAMPLES = {
+  cafe: {
+    label: "Lakeview Café reviews (made up)",
+    unit: "conversation", goal: "What to fix first, and what people love.",
+    business: { name: "Lakeview Coffee & Bakery", description: "A neighbourhood café and bakery in Seattle. We do espresso, pastries, mobile ordering and office catering." },
+    sources: [
+      { kind: "file", label: "reviews.csv", count: 1, bytes: 39987, description: "Every review since November 2025: Google and Yelp reviews, our in-store survey and customer emails. One row per review, with the star rating and where it came from." },
+    ],
+    map: "../examples/lakeview-cafe/map.html", report: "../examples/lakeview-cafe/insights.md",
+    note: "Demo: this map and report were made by the team's /datamap pipeline from 260 made-up reviews. Each dot is one review.",
+    regions: [["Staff people love",23],["Mobile orders not ready",22],["Long weekday morning lines",21],["Seasonal drinks, maple latte",20],["Oat milk and vegan options",16],["Loyalty app losing points",15],["Working from laptops",15],["Famous morning buns",14],["Catering and office orders",13],["Croissants, mostly great",12],["Espresso quality",11],["Restroom problems",10],["Dog-friendly patio",9],["Prices going up",7],["Parking and accessibility",6],["$7 lattes and tip screens",5],["Fits no group",41]],
+  },
+  yoga: {
+    label: "Northside Yoga survey (made up)",
+    unit: "conversation", goal: "What members want changed, and what keeps them coming back.",
+    business: { name: "Northside Yoga", description: "A neighbourhood yoga studio with hot, barre and gentle classes. Members buy unlimited plans, 10-class packs or drop in." },
+    sources: [
+      { kind: "file", label: "member_survey.csv", count: 1, bytes: 28372, description: "Our spring and fall member surveys: \"What's one thing we should change?\" One row per answer, with the member's plan, how long they've been a member and a 1 to 5 rating." },
+    ],
+    map: "../examples/northside-yoga/map.html", report: "../examples/northside-yoga/insights.md",
+    note: "Demo: this map and report were made by the team's /datamap pipeline from 238 made-up survey answers. Each dot is one answer.",
+    regions: [["Hot room too hot",20],["More classes with Maya",18],["Happy, nothing to change",16],["Dirty shared mats",15],["Prices too high vs ClassPass",15],["Music too loud",13],["Parking and bike racks",12],["Touched without asking",11],["Barre too hard for beginners",10],["Gentle, senior and family classes",10],["Unfair late cancel fees",9],["Bring back 6am classes",9],["Childcare during classes",8],["Cramped wet locker room",7],["Booking app crashes",7],["More class time options",7],["Prenatal and postnatal classes",6],["More weekend classes",5],["Weekend waitlist frustrations",5],["Fits no group",35]],
+  },
+  paws: {
+    label: "Rainier Paws grooming reviews (made up)",
+    unit: "conversation", goal: "What to fix first, and what people love.",
+    business: { name: "Rainier Paws", description: "A dog grooming salon with doggy daycare and walk-in nail trims." },
+    sources: [
+      { kind: "file", label: "reviews.csv", count: 1, bytes: 36467, description: "A year of reviews from Google, Yelp, Facebook and Nextdoor, plus emails from customers. One row per review, with the star rating and where it came from." },
+    ],
+    map: "../examples/rainier-paws/map.html", report: "../examples/rainier-paws/insights.md",
+    note: "Demo: this map and report were made by the team's /datamap pipeline from 241 made-up reviews. Each dot is one review.",
+    regions: [["Booking app double books",25],["Daycare tires dogs out",23],["Everyone loves Kenji",20],["Pickups run hours late",15],["Surprise fees and price hikes",14],["Daycare webcam keeps breaking",13],["Gentle with nervous dogs",13],["Doodles shaved, not teddy",13],["Kennel cough outbreak",13],["Brooke's cuts hit or miss",12],["People want cat grooming",11],["Cramped shared parking lot",11],["Walk-in nail trims",9],["Clipper burn and nicks",9],["Treats and retail shelf",9],["Photo events and good vibes",5],["Fits no group",26]],
+  },
+  tea: {
+    label: "Fern & Kettle tea shop (made up)",
+    unit: "customer", goal: "Which groups of customers I should email differently.",
+    business: { name: "Fern & Kettle", description: "Fern & Kettle is my small tea shop. I sell loose-leaf tea and handmade teaware online through Shopify and at a Saturday farmers market stall." },
+    sources: [
+      { kind: "file", label: "shopify_orders.csv", count: 1, bytes: 137972, description: "My Shopify orders export. Each row is one item in an order; the email is the customer." },
+      { kind: "file", label: "shopify_products.csv", count: 1, bytes: 717, description: "My product list from Shopify, with the type of each product." },
+      { kind: "file", label: "square_market_sales.csv", count: 1, bytes: 88653, description: "Sales from my Square reader at the farmers market. Some people give an email for a receipt, some just a name, most cash buyers give nothing." },
+      { kind: "file", label: "klaviyo_email_events.csv", count: 1, bytes: 494054, description: "Every newsletter and sale email I sent from Klaviyo and who opened or clicked it." },
+      { kind: "file", label: "judgeme_reviews.json", count: 1, bytes: 23514, description: "Product reviews from Judge.me. Older ones sometimes only have a first name and last initial." },
+      { kind: "file", label: "hello_inbox.mbox", count: 1, bytes: 74471, description: "An export of my hello@ inbox where customers write to me. My own replies and automated mail are in there too." },
+    ],
+    map: "teashop-datamap.html",
+    what: "255 customers",
+    note: "Demo: this map was built from the six made-up Fern & Kettle files with a simpler stand-in pipeline, so there is no report yet. Each dot is one customer, joined across all six sources by email or name.",
+    regions: [["Bought once · unhappy reviews",59],["Always use a code · started with sampler",44],["Gift boxes · gift orders",35],["Many online orders · open emails",35],["Started with sampler · high click rate",21],["Teaware · large baskets",20],["Market only · market stall regulars",17],["Market stall regulars · always use a code",13],["Bulk bags · discount codes",10],["Not in a region",1]],
+  },
+  kf: {
+    label: "KnowledgeForge notes (real)",
+    unit: "document", goal: "Which kinds of problems keep coming back.",
+    business: { name: "Internexio", description: "One-person software studio. I build AI writing tools and do SEO and web work for clients." },
+    sources: [
+      { kind: "github", label: "github.com/internexio/knowledgeforge", url: "https://github.com/internexio/knowledgeforge", subfolder: "wiki", count: 398, bytes: 2406527,
+        description: "The wiki folder: lessons I write down after each work session. Bugs I chased, patterns that worked, and decisions about tools, pricing and marketing." },
+    ],
+    map: "../examples/knowledgeforge/map.html", report: "../examples/knowledgeforge/insights.md",
+    note: "Demo: this map and report were made by the team's /datamap pipeline from the 398 real KnowledgeForge notes. Each dot is one note.",
+    regions: [["Git, PRs and release pipelines",46],["Running teams of AI agents",43],["Prompt and template gotchas",33],["Background jobs that fail silently",33],["API and backend debugging",24],["Beads issue tracker workflows",20],["Python testing and project setup",19],["Queues, caches and expiry",18],["Evidence-backed marketing claims",14],["Google Ads and keyword research",14],["KnowledgeForge's own architecture",13],["Safe database migrations",13],["Infographics and HTML rendering",12],["Ghost blog administration",8],["SEO for content sites",7],["GitHub Actions and CI security",7],["Fits no group",74]],
+  },
+};
+
+const PLACEHOLDERS = {
+  csv: "For example: My Shopify orders export. Each row is one item; the email is the customer.",
+  mbox: "For example: My customer inbox. My own replies are in there too.",
+  json: "For example: Product reviews from Judge.me.",
+  folder: "For example: My notes from client meetings, one file per meeting.",
+  github: "For example: The docs folder is our help center; ignore the code.",
+  website: "For example: Our website. The service pages and FAQ matter most; the blog less so.",
+  any: "What's in this file, and who or what does each row or page describe?",
+};
+
+const STAGES = [
+  { key: "upload", t: "Send your files", d: "", who: "this page" },
+  { key: "okf", t: "Write one note per dot", d: "Use your notes on each source to read it, gather everything about each dot across your files, and write it as an Open Knowledge Format note.", who: "Puna's converter" },
+  { key: "embed", t: "Read every note", d: "Turn each note into numbers that capture what it is about.", who: "embeddings" },
+  { key: "cluster", t: "Lay out the map", d: "Place similar notes near each other and find the groups.", who: "UMAP + HDBSCAN" },
+  { key: "name", t: "Name the regions", d: "Give each group a short name a person would use.", who: "cluster naming" },
+  { key: "render", t: "Draw the map", d: "Build the interactive map you can zoom and search.", who: "DataMapPlot" },
+];
+
+const $ = (s) => document.querySelector(s);
+const TEXTY = /\.(md|markdown|txt|docx?|pdf|csv|tsv|json|ya?ml|html?|eml|mbox|rtf|odt|xlsx?)$/i;
+const state = { step: 0, sample: "tea", sources: [], built: false };
+let nextId = 1;
+
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function fmtBytes(n) { if (n == null) return ""; if (n < 1024) return n + " B"; if (n < 1048576) return Math.round(n / 1024) + " KB"; return (n / 1048576).toFixed(1) + " MB"; }
+function extOf(s) { if (s.kind === "github") return "git"; if (s.kind === "website") return "web"; if (s.kind === "folder") return "dir"; const m = s.label.match(/\.([a-z0-9]+)$/i); return m ? m[1].slice(0, 4) : "file"; }
+
+function loadSample(key) {
+  const smp = SAMPLES[key]; state.sample = key; state.base = key; state.built = false;
+  $("#bizName").value = smp.business.name; $("#bizDesc").value = smp.business.description; setUnit(smp.unit, ""); $("#goal").value = smp.goal;
+  state.sources = smp.sources.map((s) => ({ ...s, id: "s" + nextId++, files: null }));
+  renderChips(); renderSources(); updatePill(); renderManifest();
+}
+function leaveSample() { if (state.sample) { state.sample = null; renderChips(); updatePill(); } }
+function renderChips() {
+  $("#sampleChips").innerHTML = Object.entries(SAMPLES).map(([k, s]) => `<button type="button" class="chip" data-sample="${k}" aria-pressed="${state.sample === k}">${esc(s.label)}</button>`).join("") +
+    `<button type="button" class="chip" data-sample="" aria-pressed="${!state.sample}">Start empty</button>`;
+  $("#sampleChips").querySelectorAll(".chip").forEach((b) => b.onclick = () => {
+    if (b.dataset.sample) loadSample(b.dataset.sample);
+    else { state.sample = null; state.sources = []; state.built = false; $("#bizName").value = ""; $("#bizDesc").value = ""; $("#goal").value = ""; setUnit(null, ""); renderChips(); renderSources(); updatePill(); renderManifest(); }
+  });
+}
+function updatePill() { $("#modePill").textContent = DEMO ? (state.sample ? "Demo mode · sample loaded" : "Demo mode · results show a sample map") : "Connected to the pipeline"; }
+
+function addSources(list) { leaveSample(); state.built = false; list.forEach((s) => state.sources.push({ id: "s" + nextId++, description: "", ...s })); renderSources(); renderManifest(); }
+function fromFiles(files) {
+  // A folder becomes one source; loose files become one source each, so each gets its own note.
+  const groups = {}, loose = [];
+  files.forEach((f) => { const p = f.webkitRelativePath || f._path || ""; const top = p.includes("/") ? p.split("/")[0] : null; if (top) (groups[top] ||= []).push(f); else loose.push(f); });
+  const out = Object.entries(groups).map(([name, fs]) => { const use = fs.filter((f) => TEXTY.test(f.name)); return { kind: "folder", label: name + "/", files: use, count: use.length, skipped: fs.length - use.length, bytes: use.reduce((a, f) => a + f.size, 0) }; });
+  loose.forEach((f) => out.push({ kind: "file", label: f.name, files: [f], count: 1, bytes: f.size, skipped: TEXTY.test(f.name) ? 0 : 1 }));
+  addSources(out);
+}
+
+function renderSources() {
+  const list = $("#sourceList");
+  if (!state.sources.length) { list.innerHTML = '<div class="empty">No sources yet. Add a file, a folder or a link above.</div>'; $("#srcTotals").textContent = ""; return; }
+  list.innerHTML = state.sources.map((s) => {
+    const ext = extOf(s); const ph = PLACEHOLDERS[ext] || PLACEHOLDERS[s.kind] || PLACEHOLDERS.any;
+    const meta = [s.kind === "folder" ? `${s.count} files` : null, s.kind === "github" ? (s.count ? `${s.count} files${s.subfolder ? " in " + s.subfolder + "/" : ""}` : "read when you build") : null, s.kind === "website" ? "pages on this site are read when you build" : null, fmtBytes(s.bytes), s.skipped ? `${s.skipped} skipped, not text` : null].filter(Boolean).join(" · ");
+    return `<div class="source" data-id="${s.id}">
+      <span class="ext" aria-hidden="true">${esc(ext)}</span>
+      <span><span class="name">${esc(s.label)}</span><br><span class="meta">${esc(meta)}</span></span>
+      <button type="button" class="btn small remove" data-remove="${s.id}">Remove</button>
+      <label class="desc" for="d_${s.id}"><span>What's in here?</span><textarea id="d_${s.id}" data-desc="${s.id}" rows="2" placeholder="${esc(ph)}">${esc(s.description)}</textarea></label>
+    </div>`;
+  }).join("");
+  const n = state.sources.length, described = state.sources.filter((s) => s.description.trim()).length;
+  $("#srcTotals").textContent = `${n} source${n === 1 ? "" : "s"} · ${described} described`;
+  list.querySelectorAll("[data-remove]").forEach((b) => b.onclick = () => { leaveSample(); state.built = false; state.sources = state.sources.filter((s) => s.id !== b.dataset.remove); renderSources(); renderManifest(); });
+  list.querySelectorAll("[data-desc]").forEach((t) => t.oninput = () => {
+    const s = state.sources.find((x) => x.id === t.dataset.desc); s.description = t.value; leaveSample(); state.built = false;
+    const d = state.sources.filter((x) => x.description.trim()).length; $("#srcTotals").textContent = `${state.sources.length} source${state.sources.length === 1 ? "" : "s"} · ${d} described`;
+    renderManifest();
+  });
+}
+
+$("#pickFolder").onclick = () => $("#folderInput").click();
+$("#pickFiles").onclick = () => $("#filesInput").click();
+$("#folderInput").onchange = (e) => { e.target.files.length && fromFiles([...e.target.files]); e.target.value = ""; };
+$("#filesInput").onchange = (e) => { e.target.files.length && fromFiles([...e.target.files]); e.target.value = ""; };
+$("#useRepo").onclick = () => {
+  const inp = $("#repoUrl"), v = inp.value.trim();
+  let url;
+  try { url = new URL(/^https?:\/\//i.test(v) ? v : "https://" + v); } catch { url = null; }
+  if (!url || !url.hostname.includes(".")) { inp.setCustomValidity("Paste a web address, like https://yourbusiness.com or https://github.com/owner/repo"); inp.reportValidity(); return; }
+  inp.setCustomValidity(""); inp.value = "";
+  const href = url.href, label = href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  // GitHub repos are cloned; any other site is read page by page (same site only).
+  const kind = /^(www\.)?github\.com$/i.test(url.hostname) && /^\/[\w.-]+\/[\w.-]+/.test(url.pathname) ? "github" : "website";
+  addSources([{ kind, label, url: href, count: null, bytes: null }]);
+};
+const drop = $("#drop");
+["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach((t) => drop.addEventListener(t, () => drop.classList.remove("over")));
+drop.addEventListener("drop", async (e) => {
+  e.preventDefault();
+  const entries = [...e.dataTransfer.items].map((i) => i.webkitGetAsEntry && i.webkitGetAsEntry()).filter(Boolean);
+  if (!entries.length) return fromFiles([...e.dataTransfer.files]);
+  const out = [];
+  async function walk(entry, path) {
+    if (entry.isFile) { await new Promise((res) => entry.file((f) => { f._path = path + f.name; out.push(f); res(); }, res)); return; }
+    const reader = entry.createReader(); let batch;
+    do { batch = await new Promise((res) => reader.readEntries(res, () => res([]))); for (const c of batch) await walk(c, path + entry.name + "/"); } while (batch.length);
+  }
+  for (const en of entries) await walk(en, "");
+  if (out.length) fromFiles(out);
+});
+
+const UNIT_WORDS = { customer: "customer", product: "product or service", conversation: "message or request", document: "document or note" };
+function getUnit() { const r = document.querySelector('input[name="unit"]:checked'); return r ? r.value : null; }
+function unitWord() { const u = getUnit(); return u === "other" ? ($("#unitOther").value.trim() || "item") : UNIT_WORDS[u] || null; }
+function setUnit(v, other) { document.querySelectorAll('input[name="unit"]').forEach((r) => r.checked = r.value === v); $("#unitOther").value = other; $("#unitOtherWrap").hidden = v !== "other"; }
+document.querySelectorAll('input[name="unit"]').forEach((r) => r.addEventListener("change", () => { $("#unitOtherWrap").hidden = getUnit() !== "other"; leaveSample(); state.built = false; renderManifest(); }));
+["#bizName", "#bizDesc", "#goal", "#unitOther"].forEach((s) => $(s).addEventListener("input", () => { leaveSample(); state.built = false; renderManifest(); }));
+
+function manifest() {
+  return {
+    schema: "datamap-job/0.3",
+    map: { unit: getUnit(), unit_label: getUnit() === "other" ? ($("#unitOther").value.trim() || null) : null, goal: $("#goal").value.trim() || null },
+    business: { name: $("#bizName").value.trim() || null, description: $("#bizDesc").value.trim() || null },
+    sources: state.sources.map((s) => {
+      const linked = s.kind === "github" || s.kind === "website";
+      const o = { id: s.id, kind: linked ? s.kind : "upload", label: s.label, description: s.description.trim() || null };
+      if (linked) { o.url = s.url; if (s.subfolder) o.subfolder = s.subfolder; }
+      else o.files = s.files ? s.files.slice(0, 20).map((f) => ({ path: f.webkitRelativePath || f._path || f.name, bytes: f.size })) : [{ path: s.label, bytes: s.bytes }];
+      if (s.files && s.files.length > 20) o.files_total = s.files.length;
+      return o;
+    }),
+  };
+}
+function renderManifest() { $("#manifestOut").textContent = JSON.stringify(manifest(), null, 2); }
+$("#copyManifest").onclick = async () => {
+  const msg = $("#copyMsg"); msg.hidden = false;
+  try { await navigator.clipboard.writeText($("#manifestOut").textContent); msg.textContent = "Copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents($("#manifestOut")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "Selected. Press Ctrl+C or Cmd+C to copy."; }
+};
+
+function go(step) {
+  if (step === 2 && !state.built) step = 1;
+  state.step = step; $("#samplesBar").hidden = false;
+  document.querySelectorAll("[data-panel]").forEach((p) => p.hidden = p.dataset.panel !== String(step));
+  document.querySelectorAll("nav.steps button").forEach((b) => {
+    const s = +b.dataset.step;
+    if (s === step) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+    b.classList.toggle("done", s < step);
+    b.disabled = s === 2 && !state.built;
+  });
+  renderManifest();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showBuilding() {
+  $("#samplesBar").hidden = true;
+  document.querySelectorAll("[data-panel]").forEach((p) => p.hidden = p.dataset.panel !== "building");
+  document.querySelectorAll("nav.steps button").forEach((b) => { b.removeAttribute("aria-current"); b.classList.toggle("done", +b.dataset.step < 2); b.disabled = true; });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function renderProgress(activeIdx, failed) {
+  const w = unitWord(), n = state.sources.length;
+  $("#buildLede").textContent = (w ? `One dot per ${w}` : "One dot per file") + `, from ${n} source${n === 1 ? "" : "s"}. This takes a few minutes for real files. You can leave this page open.`;
+  $("#stages").innerHTML = STAGES.map((s, i) => {
+    const cls = i < activeIdx ? "done" : i === activeIdx ? (failed ? "failed" : "running") : "";
+    const icon = cls === "done" ? "✓" : cls === "failed" ? "!" : cls === "running" ? "" : "·";
+    return `<li class="${cls}"><span class="icon" aria-hidden="true">${icon}</span><span>${s.t}${i === activeIdx && s.d ? `<small>${s.d}</small>` : ""}</span></li>`;
+  }).join("");
+  const pct = Math.round((Math.max(0, activeIdx) / STAGES.length) * 100);
+  $("#progressFill").style.width = pct + "%"; document.querySelector(".progress").setAttribute("aria-valuenow", pct);
+}
+async function build() {
+  if (!state.sources.length) { $("#srcTotals").textContent = "Add at least one source first"; return; }
+  showBuilding(); $("#buildFoot").hidden = true; $("#buildTitle").textContent = "Building your map…";
+  let at = 0;
+  try {
+    // Samples always show their ready-made map; only the owner's own files go to the pipeline.
+    const readyMade = !!state.sample;
+    if (DEMO || readyMade) {
+      for (at = 1; at <= STAGES.length; at++) { renderProgress(at); await new Promise((r) => setTimeout(r, at === STAGES.length ? 400 : 700)); }
+      const smp = SAMPLES[state.sample || state.base || "cafe"];
+      showResult({ map_url: smp.map, regions: smp.regions.map(([name, count]) => ({ name, count })) }, smp);
+    } else {
+      renderProgress(0);
+      const fd = new FormData(); fd.append("manifest", JSON.stringify(manifest()));
+      state.sources.forEach((s) => (s.files || []).forEach((f) => fd.append("files", f, `${s.id}/${f.webkitRelativePath || f._path || f.name}`)));
+      const res = await fetch(PIPELINE_URL + "/jobs", { method: "POST", body: fd });
+      if (!res.ok) throw new Error("the server didn't accept the files (" + res.status + ")");
+      const { job_id } = await res.json();
+      for (;;) {
+        const j = await (await fetch(`${PIPELINE_URL}/jobs/${job_id}`)).json();
+        at = Math.max(1, STAGES.findIndex((s) => s.key === j.stage));
+        if (j.status === "failed") throw new Error(j.error || "the pipeline stopped");
+        if (j.status === "done") { renderProgress(STAGES.length); showResult(j, null); break; }
+        renderProgress(at); await new Promise((r) => setTimeout(r, 2000));
+      }
+    }
+  } catch (err) {
+    renderProgress(at, true);
+    $("#buildTitle").textContent = "The map couldn't be built";
+    $("#buildLede").textContent = err.message.charAt(0).toUpperCase() + err.message.slice(1) + ". Check that the pipeline server is running, then try again.";
+    $("#buildFoot").hidden = false;
+  }
+}
+$("#buildBtn").onclick = build;
+$("#retryBtn").onclick = build;
+
+function showResult(job, smp) {
+  state.built = true;
+  const name = $("#bizName").value.trim();
+  $("#resultTitle").textContent = (name ? name + (/s$/i.test(name) ? "'" : "'s") : "Your") + " datamap";
+  const note = $("#resultNote"); note.hidden = !smp;
+  if (smp) note.textContent = state.sample ? smp.note : `Demo: the pipeline isn't connected yet, so this shows the ${smp.label} map instead of your files.`;
+  $("#mapFrame").src = job.map_url; $("#openFull").href = job.map_url;
+  const reportUrl = job.report_url || (smp && smp.report);
+  $("#tabReport").hidden = !reportUrl; $("#resultsReport").innerHTML = ""; showTab("map");
+  if (reportUrl) loadReport(reportUrl);
+  $("#regionList").innerHTML = (job.regions || []).map((r) => `<li data-name="${esc(norm(r.name))}"><span class="swatch" aria-hidden="true"></span><span>${esc(r.name === "Unlabelled" ? "Not in a region" : r.name)}</span><span>${r.count}</span></li>`).join("") || "<li><span></span><span>No groups listed</span><span></span></li>";
+  colorLegend();
+  go(2);
+}
+
+function norm(s) { return String(s).toLowerCase().replace(/\s+/g, " ").trim(); }
+const NO_GROUP = /^(fits no group|not in a region|unlabell?ed)$/;
+// Read each group's dot colour from the map itself. DataMapPlot exposes window.datamap with labelData
+// (name and position of each group) and pointData (columns x, y, r, g, b). Label text is drawn darker than the
+// dots, so take the most common colour among the dots nearest each label instead.
+function colorLegend() {
+  const frame = $("#mapFrame"), started = Date.now();
+  (function poll() {
+    let labels = null;
+    let pts = null;
+    try { const dm = frame.contentWindow && frame.contentWindow.datamap; labels = dm && dm.labelData; pts = dm && dm.pointData; } catch { return; }
+    if (!labels || !labels.length || !pts || !pts.x) { if (Date.now() - started < 30000) setTimeout(poll, 400); return; }
+    const n = pts.x.length, colours = {};
+    labels.forEach((l) => {
+      const k = norm(l.label); if (k in colours) return;
+      const near = [];
+      for (let i = 0; i < n; i++) {
+        if (pts.r[i] === pts.g[i] && pts.g[i] === pts.b[i]) continue; // grey = not in a group
+        near.push([(pts.x[i] - l.x) ** 2 + (pts.y[i] - l.y) ** 2, `rgb(${pts.r[i]}, ${pts.g[i]}, ${pts.b[i]})`]);
+      }
+      near.sort((p, q) => p[0] - q[0]);
+      const votes = {}; near.slice(0, 9).forEach(([, c]) => votes[c] = (votes[c] || 0) + 1);
+      const best = Object.entries(votes).sort((p, q) => q[1] - p[1])[0];
+      colours[k] = best ? best[0] : `rgb(${l.r}, ${l.g}, ${l.b})`;
+    });
+    document.querySelectorAll("#regionList li[data-name]").forEach((li) => {
+      const k = li.dataset.name, sw = li.querySelector(".swatch");
+      if (colours[k]) sw.style.background = colours[k];
+      else if (NO_GROUP.test(k)) sw.style.background = "#999999";
+    });
+  })();
+}
+function showTab(which) {
+  const map = which === "map";
+  $("#tabMap").setAttribute("aria-selected", map); $("#tabReport").setAttribute("aria-selected", !map);
+  $("#resultsMap").hidden = !map; $("#resultsReport").hidden = map;
+}
+$("#tabMap").onclick = () => showTab("map");
+$("#tabReport").onclick = () => showTab("report");
+async function loadReport(url) {
+  const el = $("#resultsReport");
+  try {
+    let md = await (await fetch(url)).text();
+    md = md.replace(/Open `map\.html` in any browser to explore them\./, "Switch to the Map tab to explore them.");
+    el.innerHTML = window.marked ? marked.parse(md) : "<pre>" + esc(md) + "</pre>";
+    el.querySelectorAll("table").forEach((t) => { const w = document.createElement("div"); w.className = "tablewrap"; t.replaceWith(w); w.appendChild(t); });
+  } catch { el.innerHTML = '<p class="note">The report couldn\'t be loaded. The map still works.</p>'; }
+}
+document.querySelectorAll("[data-go]").forEach((b) => b.onclick = () => go(+b.dataset.go));
+document.querySelectorAll("nav.steps button").forEach((b) => b.onclick = () => go(+b.dataset.step));
+loadSample("cafe"); go(0);
+fetch("/jobs").then((r) => (r.ok ? r.json() : null)).then((j) => {
+  if (j && j.ok) { PIPELINE_URL = location.origin; DEMO = false; updatePill(); }
+}).catch(() => {});
+</script>
+
+</html>

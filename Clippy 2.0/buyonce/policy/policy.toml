@@ -1,0 +1,28 @@
+# Written by `buyonce.py setup`. Edit in any text editor.
+
+[business]
+name = "Maple Street Bakery"
+currency = "USD"
+
+[spending]
+allow_auto_approve = false
+auto_approve_under = 0.00
+hard_cap = 2000.00
+card_buffer_pct = 5.0
+
+[vendors]
+approved = []
+blocked = ["ShadyDeals"]
+prefer_past_vendors = true
+
+[quality]
+min_rating = 4.0
+
+[delivery]
+max_days = 7
+
+[sandbox]
+hosts = ["www.saucedemo.com"]
+
+[api]
+allow_live = false
